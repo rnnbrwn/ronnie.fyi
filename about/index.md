@@ -7,10 +7,4 @@ eleventyNavigation:
   order: 3
 ---
 
-Senior Manager Digital Technology for Hilton, based in Glasgow.
-
-All views my own.
-
-- [Bluesky](https://bsky.app/profile/ronnie.fyi)
-- [Instagram](https://www.instagram.com/rnnbrwn)
-- [Last.fm](https://www.last.fm/user/rnnbrwn)
+[Reach out on BSKY](https://bsky.app/profile/ronnie.fyi)
