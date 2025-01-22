@@ -12,4 +12,5 @@ layout: layouts/post.njk
 
 Preach!
 
-I was one of those nerds. I still am.
+I was one of those nerds. Or at least, I wanted to be. I still do.
+
