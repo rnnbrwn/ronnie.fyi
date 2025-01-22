@@ -25,9 +25,9 @@ Right now, I'm on a ~~90-day~~ 94-day learning streak on [Gaelic Duolingo](https
 
 ## Build more web-sites (and learn more technologies)
 
-As previously mentioned, [my web development skills are a _wee_ bit rusty](..//a-history-of-web-development). And, although an enforced absence from work enabled me to sharpen up some areas of note, the technology team of which I am a part subsequently moved towards Hilton's corporate stack, and away from the more ~~YOLO~~ flexible solutions we were previously able to provide.
+As previously mentioned, [my web development skills are a _wee_ bit rusty](..//a-history-of-web-development). And, although an enforced absence from work enabled me to sharpen up some areas of note, the technology team of which I am a part subsequently moved towards the wider org's corporate stack, and away from the more ~~YOLO~~ flexible solutions we were previously able to provide.
 
-In short, we no longer build Wordpress themes for clients, but instead, we have a solution that is tightly integrated with [hilton.com](https://www.hilton.com), and is built on a JavaScript-centred stack (think: React, Next, Typescript, Tailwind etc.)
+In short, we no longer build Wordpress themes for clients, but instead, we have a solution that is tightly integrated with our organisational strategy, and is built on a JavaScript-centred stack (think: React, Next, Typescript, Tailwind etc.)
 
 This year, then, I need to engage in a focused period of learning that will get me up-to-speed in that area. Of course, there are work-related items that I will be involved in but, outside of work, I'd like to do some personal learning and **my aim is to build one or two sites that use some or all of the items listed above**.
 
@@ -45,9 +45,9 @@ At the very least, I'd like to do this for my own site. **My aim, therefore, is 
 
 ### Figures and faces
 
-Just before Covid hit, I was "commissioned" (more like "cajoled") into creating a piece of art for one of the meeting rooms in what was to become Hilton's new Glasgow office. I finished it, the piece was sent to the printers, and then I was furloughed for 6 months. On my return, I saw for the first time the illustrations I'd created, and I was very pleased with myself.
+Just before Covid hit, I was "commissioned" (more like "cajoled") into creating a piece of art for one of the meeting rooms in what was to become my company's new Glasgow office. I finished it, the piece was sent to the printers, and then I was furloughed for 6 months. On my return, I saw for the first time the illustrations I'd created, and I was very pleased with myself.
 
-![A photograph of the wall of a meeting room in the Hilton offices, Glasgow. On the wall, there are lots of small, illustrated robots, and one large robot. On the large robot, it says, 'The Art of the Possible'](/img/the-art-of-the-possible.jpg "Art of the Possible robots")
+![A photograph of the wall of a meeting room in the office. On the wall, there are lots of small, illustrated robots, and one large robot. On the large robot, it says, 'The Art of the Possible'](/img/the-art-of-the-possible.jpg "Art of the Possible robots")
 
 If you follow me on [Instagram](https://instagram.com/rnnbrwn), you might've noticed that I post the odd wee doodle. Nothing much, just wee figures and faces. Well, I'd like to do more like this. More and better.
 
