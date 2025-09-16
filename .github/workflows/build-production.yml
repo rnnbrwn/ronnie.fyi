@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Run every 15 minutes to update Spotify track
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   build:
@@ -16,8 +20,23 @@ jobs:
       - name: 📨 Install dependencies
         run: npm install
 
+      - name: 🎵 Update Spotify track
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+        run: npm run update-track
+
       - name: 1️⃣1️⃣ Eleventy Build
         run: npx @11ty/eleventy
+
+      - name: 💾 Commit Spotify updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add _data/currentTrack.json
+          git diff --staged --quiet || git commit -m "Update Spotify track [skip ci]"
+          git push
 
       - name: 🧑🏻‍💻 Deploy
         uses: AbleLincoln/push-to-sftp@v2.1
