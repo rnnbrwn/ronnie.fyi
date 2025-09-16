@@ -12,3 +12,15 @@ eleventyNavigation:
 {% include "postslist.njk" %}
 
 <p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
+
+{% if currentTrack.song and currentTrack.artist %}
+<p class="current-listening">
+  I'm currently listening to 
+  {% if currentTrack.url and not currentTrack.error %}
+    <a href="{{ currentTrack.url }}" target="_blank" rel="noopener noreferrer">{{ currentTrack.song }}</a>
+  {% else %}
+    {{ currentTrack.song }}
+  {% endif %}
+  by {{ currentTrack.artist }}.
+</p>
+{% endif %}

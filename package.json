@@ -8,7 +8,8 @@
         "serve": "eleventy --serve & npm run watch:sass",
         "start": "eleventy --serve",
         "debug": "DEBUG=* eleventy",
-        "watch:sass": "npx sass sass:_site/css --watch"
+        "watch:sass": "npx sass sass:_site/css --watch",
+        "update-track": "node scripts/spotify-current-track.js"
     },
     "repository": {
         "type": "git",
@@ -35,6 +36,7 @@
         "modern-css-reset": "^1.4.0"
     },
     "dependencies": {
+        "dotenv": "^17.2.2",
         "sass": "^1.47.0"
     }
 }

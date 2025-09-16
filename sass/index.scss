@@ -253,3 +253,21 @@ a[href].direct-link:focus:visited,
 :hover > a[href].direct-link:visited {
   color: #aaa;
 }
+
+/* Current Listening */
+.current-listening {
+  font-style: italic;
+  color: var(--darkgray);
+  margin-top: 1em;
+  padding: 0.5em;
+  background-color: var(--lightyellow);
+  border-left: 3px solid var(--blue);
+  border-radius: 0.25em;
+}
+.current-listening a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.current-listening a:hover {
+  text-decoration: underline;
+}
