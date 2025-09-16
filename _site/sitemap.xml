@@ -2,102 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ronnie.fyi/posts/slight-return/</loc>
-    <lastmod>2022-01-01</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/about-this-site/</loc>
-    <lastmod>2022-01-01</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/a-history-of-web-development/</loc>
-    <lastmod>2022-01-02</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/continuous-integration/</loc>
-    <lastmod>2022-01-08</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/new-year-resolutions/</loc>
-    <lastmod>2022-01-09</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/digital-comic-art/</loc>
-    <lastmod>2022-01-18</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/branding/</loc>
-    <lastmod>2022-03-11</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/sk8er-boi/</loc>
-    <lastmod>2022-03-12</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/who-dis/</loc>
-    <lastmod>2023-03-15</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/spotify-dj/</loc>
-    <lastmod>2023-08-13</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/annual-do-better-post/</loc>
-    <lastmod>2024-01-04</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/posts/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/page-list/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/tags/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/tags/web-development/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/tags/personal/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/tags/design/</loc>
-    <lastmod>2024-11-21</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ronnie.fyi/tags/art/</loc>
-    <lastmod>2024-11-21</lastmod>
+    <loc>https://ronnie.fyi/posts/make-computing-personal-again/</loc>
+    <lastmod>2025-01-22</lastmod>
   </url>
   
   <url>
     <loc>https://ronnie.fyi/about/</loc>
-    <lastmod>2024-11-21</lastmod>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/posts/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/page-list/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/tags/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/tags/personal/</loc>
+    <lastmod>2025-09-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ronnie.fyi/SPOTIFY_SETUP/</loc>
+    <lastmod>2025-09-16</lastmod>
   </url>
 </urlset>

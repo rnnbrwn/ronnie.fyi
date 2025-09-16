@@ -73,39 +73,19 @@ You can set up a cron job or GitHub Actions to automatically update your current
 */30 * * * * cd /path/to/your/site && npm run update-track
 ```
 
-**GitHub Actions example:**
-```yaml
-name: Update Spotify Track
-on:
-  schedule:
-    - cron: '*/30 * * * *'  # Every 30 minutes
-  workflow_dispatch:
+**GitHub Actions (Recommended):**
+The workflow file has been created at `.github/workflows/update-spotify-track.yml`. Here's how to set it up:
 
-jobs:
-  update-track:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - name: Install dependencies
-        run: npm install
-      - name: Update track
-        env:
-          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
-        run: npm run update-track
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add _data/current-track.json
-          git diff --staged --quiet || git commit -m "Update current track"
-          git push
-```
+1. **Push your code to GitHub** (including the workflow file)
+2. **Go to your repository settings** → Secrets and variables → Actions
+3. **Add these secrets:**
+   - `SPOTIFY_CLIENT_ID`: Your Spotify Client ID
+   - `SPOTIFY_CLIENT_SECRET`: Your Spotify Client Secret  
+   - `SPOTIFY_REFRESH_TOKEN`: Your Spotify Refresh Token
+4. **Enable GitHub Actions** in your repository settings
+5. **The workflow will run every 10 minutes** automatically
+
+**Manual trigger:** You can also run it manually from the Actions tab in your GitHub repository.
 
 ## Troubleshooting
 

@@ -168,15 +168,7 @@ code {
   counter-increment: start-from -1;
   line-height: 1.8;
 }
-.postlist-item:before {
-  display: inline-block;
-  pointer-events: none;
-  content: "" counter(start-from, decimal-leading-zero) ". ";
-  line-height: 100%;
-  text-align: right;
-}
-.postlist-date,
-.postlist-item:before {
+.postlist-date {
   font-size: 0.8125em; /* 13px /16 */
   color: var(--darkgray);
 }
@@ -184,7 +176,7 @@ code {
   word-spacing: -0.5px;
 }
 .postlist-link {
-  padding-left: 0.25em;
+  /* padding-left: 0.25em; */
   padding-right: 0.25em;
   text-underline-position: from-font;
   text-underline-offset: 0;

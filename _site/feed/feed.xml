@@ -5,7 +5,7 @@
 	
 	<link href="https://ronnie.fyi/feed/feed.xml" rel="self"/>
 	<link href="https://ronnie.fyi/"/>
-	<updated>2024-01-04T12:00:00Z</updated>
+	<updated>2025-01-22T00:00:00Z</updated>
 	<id>https://ronnie.fyi/</id>
 	<author>
 		<name>Ronnie Brown</name>
@@ -13,221 +13,16 @@
 	</author>
 	
 	<entry>
-		<title>My Annual &quot;Do Better&quot; Post</title>
-		<link href="https://ronnie.fyi/posts/annual-do-better-post/"/>
-		<updated>2024-01-04T12:00:00Z</updated>
-		<id>https://ronnie.fyi/posts/annual-do-better-post/</id>
-		<content type="html">&lt;p&gt;I post to here so infrequently that I&#39;ve forgotten how to do it. This is essentially a test of the system. In case it works, I might as well write something:&lt;/p&gt;
-&lt;p&gt;In some downtime over the festive period - I haven&#39;t had much, as you can imagine - I&#39;ve been playing around with &lt;a href=&quot;https://astro.build/&quot;&gt;Astro&lt;/a&gt;, &lt;a href=&quot;https://www.storyblok.com/&quot;&gt;Storyblok&lt;/a&gt; and (separately), dipping into some &lt;a href=&quot;https://developer.wordpress.org/&quot;&gt;WordPress theme development&lt;/a&gt; for the first time in ages. More of the same this year, is the plan.&lt;/p&gt;
-&lt;p&gt;I&#39;ve been asked to build a couple of sites and I&#39;m trying to figure out which is the best for all parties. That is, what&#39;s easiest to update for the client, and for me to build. Right now, that&#39;s probably WordPress but I&#39;ll see how I get on.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Spotify DJ</title>
-		<link href="https://ronnie.fyi/posts/spotify-dj/"/>
-		<updated>2023-08-13T00:00:00Z</updated>
-		<id>https://ronnie.fyi/posts/spotify-dj/</id>
-		<content type="html">&lt;p&gt;Spotify&#39;s new AI DJ is awful.&lt;/p&gt;
-&lt;p&gt;That is all.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Who dis?</title>
-		<link href="https://ronnie.fyi/posts/who-dis/"/>
-		<updated>2023-03-15T00:22:28Z</updated>
-		<id>https://ronnie.fyi/posts/who-dis/</id>
-		<content type="html">&lt;p&gt;It must be something about the month of March. Last time I posted was 368 days ago.&lt;/p&gt;
-&lt;p&gt;It&#39;s been a busy year. Work mainly, but life gets in the way, too.&lt;/p&gt;
-&lt;p&gt;I&#39;m back at the keyboard doing some development hings. Updated this site to React the other day: &lt;a href=&quot;https://howmanytitleshaverangerswon.co.uk/&quot;&gt;How Many Titles Have Rangers Won?&lt;/a&gt; and set it up with Netlify. For no other reason than, because.&lt;/p&gt;
-&lt;p&gt;Anyway, more to come. Hopefully. And on this site, too. It needs some pzazz.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Sk8er Boi</title>
-		<link href="https://ronnie.fyi/posts/sk8er-boi/"/>
-		<updated>2022-03-12T00:07:00Z</updated>
-		<id>https://ronnie.fyi/posts/sk8er-boi/</id>
-		<content type="html">&lt;p&gt;While I was away, it was my daughter&#39;s 9th birthday. In the run up to the big day, she made it clear that she wanted a skateboard but - and I didn&#39;t need much convincing - I had to get one, too. She&#39;s obviously heard about my amazing skating skills.&lt;/p&gt;
-&lt;p&gt;For some reason, she has it in her head that I can teach her. Well, a few YouTube videos later (mainly, &lt;a href=&quot;https://www.youtube.com/playlist?list=PL34F060CE1BA3E968&quot;&gt;Braille Skateboarding&#39;s Learn to Skateboard&lt;/a&gt; videos) I think I can at least show her how to ride it.&lt;/p&gt;
-&lt;p&gt;I skated a bit as a teenager, but nothing more than being relatively comfortable on the board, and being able to do a passable ollie. But now I&#39;m a 45-year-old sk8er boi and I&#39;m here for it.&lt;/p&gt;
-&lt;p&gt;Here&#39;s what I bought myself.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/birdhouse.jpg&quot; alt=&quot;My new Birdhouse skateboard&quot; title=&quot;A picture of a Birdhouse-branded skateboard&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;I&#39;ve already swapped out the bearings and replaced the wheels with something a bit bigger and softer to deal with the crappy pavements around my way.&lt;/p&gt;
-&lt;p&gt;I&#39;ll be sure to let you know when I make my first trip to casualty with a broken collar bone.&lt;/p&gt;
-&lt;p&gt;In the meantime, here&#39;s some Avril Lavigne.&lt;/p&gt;
-&lt;iframe width=&quot;600&quot; height=&quot;450&quot; src=&quot;https://www.youtube.com/embed/TIy3n2b7V9k&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Branding</title>
-		<link href="https://ronnie.fyi/posts/branding/"/>
-		<updated>2022-03-11T21:54:00Z</updated>
-		<id>https://ronnie.fyi/posts/branding/</id>
-		<content type="html">&lt;p&gt;I&#39;ve been away for a bit. Sorry about that. In the meantime, here&#39;s some site branding I&#39;ve been working on. Any thoughts, send them to me on Twitter &lt;a href=&quot;https://twitter.com/rnnbrwn&quot;&gt;@rnnbrwn&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/branding-work-in-progress.png&quot; alt=&quot;Site branding concepts for ronnie.fyi&quot; title=&quot;Three coloured &amp;quot;r&amp;quot; logos for ronnie.fyi&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;I played around with some pinks and yellows before settling on a blue that I liked for a full colour variant. Below that are a more minimal light-on-dark and and dark-on-light variant.&lt;/p&gt;
-&lt;p&gt;Next thing to do is to start building out v1 of this site, with colours and branding. Future Ronnie says he&#39;ll do that.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Digital Comic Art — An Introduction</title>
-		<link href="https://ronnie.fyi/posts/digital-comic-art/"/>
-		<updated>2022-01-18T22:50:00Z</updated>
-		<id>https://ronnie.fyi/posts/digital-comic-art/</id>
-		<content type="html">&lt;p&gt;Late last year, I found an art class I was interested in attending, being held at the &lt;a href=&quot;https://www.cityofglasgowcollege.ac.uk/&quot;&gt;City of Glasgow College&lt;/a&gt;. It was to be taught by &lt;a href=&quot;https://www.instagram.com/macewan_/&quot;&gt;Russell MacEwan&lt;/a&gt;, so I gave him a quick Google to find out more, and became an immediate fan of his work.&lt;/p&gt;
-&lt;p&gt;Unfortunately, due to Covid, the class was moved from in-person to online, meaning a weekly Zoom call with Russell and my fellow students. Tonight was the first class, an introduction to the following six weeks. During the three hours, we discussed drawing lines, mass, and form; we were encouraged to spend time learning the human figure, to study comics, and to draw from life; and we spent some time drawing thumbnail sketches of some comic book panels we had to hand.&lt;/p&gt;
-&lt;p&gt;I have a few sketches from the evening, but two of my favourites are these thumbnail sketches, both of which were done within a couple of minutes, and were inspired by (1) IDP: 2043; and (2) &lt;a href=&quot;https://en.wikipedia.org/wiki/Superman:_Red_Son&quot;&gt;Superman: Red Son&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/idp-2043-thumbnail.jpg&quot; alt=&quot;An image showing a panel from a comic book, and my attempt to replicate it&quot; title=&quot;IDP: 2043, original artwork by Dan McDaid&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/superman-red-son-thumbnail-1.jpg&quot; alt=&quot;An image showing a sketch of two figures facing away from each other&quot; title=&quot;Superman: Red Son, thumbnail sketch by me&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/superman-red-son-thumbnail-2.jpg&quot; alt=&quot;An image showing a panel from a comic book, and my attempt to replicate it&quot; title=&quot;Superman: Red Son, original artwork by Johnson/Plunkett/Robinson/Wong&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;I was worried that I&#39;d be both the oldest student, and the least talented artist. To be fair, I was probably right, but it was a good mix of ages and skill levels, and it felt like a judgement-free zone.&lt;/p&gt;
-&lt;p&gt;I&#39;ve another 5 weeks of this, and I&#39;m looking forward to (hopefully) seeing some improvement. If there&#39;s any to be seen, I&#39;ll post it on here!&lt;/p&gt;
-&lt;p&gt;All in all, it&#39;s not a bad way to spend a Tuesday evening.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>New Year Resolutions</title>
-		<link href="https://ronnie.fyi/posts/new-year-resolutions/"/>
-		<updated>2022-01-09T19:15:00Z</updated>
-		<id>https://ronnie.fyi/posts/new-year-resolutions/</id>
-		<content type="html">&lt;p&gt;New year resolutions are not usually something in which I invest too much time. Of course, there are the annual &lt;em&gt;lose weight&lt;/em&gt; and &lt;em&gt;do more exercise&lt;/em&gt; promises that we all make, but other than that, I don&#39;t often make it a ritual.&lt;/p&gt;
-&lt;p&gt;This year, for a few reasons, I am documenting some things I&#39;d like to achieve, and using this site to mark (hopeful) progress.&lt;/p&gt;
-&lt;p&gt;So, without further ado, here we go.&lt;/p&gt;
-&lt;h2 id=&quot;bruidhinn-barrachd-gaidhlig&quot; tabindex=&quot;-1&quot;&gt;Bruidhinn barrachd Gàidhlig &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#bruidhinn-barrachd-gaidhlig&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Or, &lt;em&gt;speak more Gaelic&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Living in Glasgow, I&#39;m fortunate enough to be able to send my daughter to a bilingual school. &lt;a href=&quot;https://education.gov.scot/parentzone/my-school/choosing-a-school/gaelic-medium-education/gaelic-medium-education-foghlam-tro-mheadhan-na-gaidhlig/&quot;&gt;Like many others in Scotland&lt;/a&gt;, she&#39;s being taught in Scots Gaelic, and learning English as a foreign language (although English is our first language in the home). Neither my wife Claire nor I are native Gaelic speakers, so the more I learn, the more integrated within the school community I can be, and the more I can understand my daughter&#39;s homework.&lt;/p&gt;
-&lt;p&gt;Right now, I&#39;m on a &lt;s&gt;90-day&lt;/s&gt; 94-day learning streak on &lt;a href=&quot;https://www.duolingo.com/enroll/gd/en/Learn-Scottish-Gaelic&quot;&gt;Gaelic Duolingo&lt;/a&gt;. Previously, I&#39;d attended some local classes, but Covid put an end to that, so it&#39;s Duolingo for now.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;My aim is to achieve a 200-day streak this year&lt;/strong&gt;, and to reevaluate if I do so. The 200-day mark is &lt;s&gt;29 April&lt;/s&gt; 3 May 2022, so let&#39;s check-in then and see how I&#39;m doing. If I fail, there are enough days in the year to re-attempt, at the very least.&lt;/p&gt;
-&lt;h2 id=&quot;build-more-web-sites-(and-learn-more-technologies)&quot; tabindex=&quot;-1&quot;&gt;Build more web-sites (and learn more technologies) &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#build-more-web-sites-(and-learn-more-technologies)&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;As previously mentioned, &lt;a href=&quot;https://ronnie.fyi/posts//a-history-of-web-development&quot;&gt;my web development skills are a &lt;em&gt;wee&lt;/em&gt; bit rusty&lt;/a&gt;. And, although an enforced absence from work enabled me to sharpen up some areas of note, the technology team of which I am a part subsequently moved towards Hilton&#39;s corporate stack, and away from the more &lt;s&gt;YOLO&lt;/s&gt; flexible solutions we were previously able to provide.&lt;/p&gt;
-&lt;p&gt;In short, we no longer build Wordpress themes for clients, but instead, we have a solution that is tightly integrated with &lt;a href=&quot;https://www.hilton.com/&quot;&gt;hilton.com&lt;/a&gt;, and is built on a JavaScript-centred stack (think: React, Next, Typescript, Tailwind etc.)&lt;/p&gt;
-&lt;p&gt;This year, then, I need to engage in a focused period of learning that will get me up-to-speed in that area. Of course, there are work-related items that I will be involved in but, outside of work, I&#39;d like to do some personal learning and &lt;strong&gt;my aim is to build one or two sites that use some or all of the items listed above&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;do-more-art&quot; tabindex=&quot;-1&quot;&gt;Do more art &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#do-more-art&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;h3 id=&quot;logo-and-illustration-work&quot; tabindex=&quot;-1&quot;&gt;Logo and illustration work &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#logo-and-illustration-work&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;While on furlough, I bought myself &lt;a href=&quot;https://affinity.serif.com/en-gb/designer/&quot;&gt;Serif Affinity Designer&lt;/a&gt;. I find it much easier to use than &lt;a href=&quot;https://www.adobe.com/uk/products/illustrator.html&quot;&gt;Adobe Illustrator&lt;/a&gt; (plus it&#39;s &lt;em&gt;much&lt;/em&gt; less expensive) and I picked up the basics in no time.&lt;/p&gt;
-&lt;p&gt;One of the first projects I worked on was to create the logo and branding for &lt;a href=&quot;https://www.hayfacilities.co.uk/&quot;&gt;Hay Facilities&lt;/a&gt;. &lt;em&gt;Note to self: create a projects area to showcase work like this.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/hay-facilities-logo.png&quot; alt=&quot;Hay Facilities logo&quot; title=&quot;Hay Facilities&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;At the very least, I&#39;d like to do this for my own site. &lt;strong&gt;My aim, therefore, is to work on at least one more set of logo/brand identities this year, and publish the workings on here.&lt;/strong&gt;&lt;/p&gt;
-&lt;h3 id=&quot;figures-and-faces&quot; tabindex=&quot;-1&quot;&gt;Figures and faces &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#figures-and-faces&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;Just before Covid hit, I was &amp;quot;commissioned&amp;quot; (more like &amp;quot;cajoled&amp;quot;) into creating a piece of art for one of the meeting rooms in what was to become Hilton&#39;s new Glasgow office. I finished it, the piece was sent to the printers, and then I was furloughed for 6 months. On my return, I saw for the first time the illustrations I&#39;d created, and I was very pleased with myself.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ronnie.fyi/img/the-art-of-the-possible.jpg&quot; alt=&quot;A photograph of the wall of a meeting room in the Hilton offices, Glasgow. On the wall, there are lots of small, illustrated robots, and one large robot. On the large robot, it says, &#39;The Art of the Possible&#39;&quot; title=&quot;Art of the Possible robots&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;If you follow me on &lt;a href=&quot;https://instagram.com/rnnbrwn&quot;&gt;Instagram&lt;/a&gt;, you might&#39;ve noticed that I post the odd wee doodle. Nothing much, just wee figures and faces. Well, I&#39;d like to do more like this. More and better.&lt;/p&gt;
-&lt;p&gt;I&#39;ve signed up to a digital illustration course, treated myself to some art supplies over Christmas and we&#39;ll see how it goes. I have pretty low expectations, but &lt;strong&gt;my aim is to produce two or three pieces &lt;em&gt;of something&lt;/em&gt; that I&#39;m happy with&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;drink-less&quot; tabindex=&quot;-1&quot;&gt;Drink less &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#drink-less&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Alcohol, that is. Water&#39;s fine. I&#39;m sure you&#39;ve heard.&lt;/p&gt;
-&lt;p&gt;Hogmanay 2020, peak-Covid (at the time). People gather around laptops to drink alcohol and implant their faces into the homes of their friends.&lt;/p&gt;
-&lt;p&gt;At one point during the evening (it was very close to midnight, I remember that much) a friend announced to us all that he was stopping drinking alcohol for the whole of 2021.&lt;/p&gt;
-&lt;p&gt;&amp;quot;Aye, right. So you are&amp;quot;, was the unanimous response from his so-called pals. But, to be fair to him, he made it through an entire, pandemic-filled year, without any booze passing his lips.&lt;/p&gt;
-&lt;p&gt;Never one to shirk a challenge, even if it is only in my head, I began to think about this a couple of months ago, and I was reminded of &lt;a href=&quot;https://www.bbc.co.uk/programmes/b0bhkc8b&quot;&gt;Adrian Chiles&#39; BBC documentary &amp;quot;Drinkers Like Me&amp;quot;&lt;/a&gt; (available on YouTube, below) in which he described his (and Britain&#39;s) attitude to alcohol. In it, he describes himself, not as an alcoholic, but as someone who has an alcohol dependence. This dependence manifested itself in a regular &lt;em&gt;couple of pints after work&lt;/em&gt; and then &lt;em&gt;a few cans of beer&lt;/em&gt; once he got home, that kind of thing.&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/RX2opvj7WE8&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;p&gt;Through furlough - and beyond, to be honest - I&#39;ve found it far too easy to reach for a beer or two at the end of the day. My fridge is &lt;em&gt;right next to&lt;/em&gt; the dining table that has become a makeshift desk for the past couple of years, which doesn&#39;t help. I feel like it&#39;s time for that to stop.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;My aim is the same as my friend&#39;s: go through a calendar year without drinking any alcohol&lt;/strong&gt;. So far so good. As I write this, it&#39;s Sunday 9 January 2022, and I&#39;ve been &lt;em&gt;aff it&lt;/em&gt; since 31 December 2021.&lt;/p&gt;
-&lt;p&gt;Coming soon: my favourite non-alcoholic beers!&lt;/p&gt;
-&lt;h2 id=&quot;diy-stuff&quot; tabindex=&quot;-1&quot;&gt;DIY stuff &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#diy-stuff&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;There&#39;s not much to go into here, but over the course of 2022, I plan to&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;finish decorating my daughter&#39;s bedroom&lt;/li&gt;
-&lt;li&gt;make a start on a garden office project&lt;/li&gt;
-&lt;li&gt;clear the garage and configure it such that it&#39;s an actual, usable space&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;why-am-i-doing-this&quot; tabindex=&quot;-1&quot;&gt;Why am I doing this? &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/new-year-resolutions/#why-am-i-doing-this&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Everything I&#39;ve written above is for me. It&#39;s to keep me focused and to remind me that at the start of the year, there were things that I hoped to achieve. I might check in on them periodically, and I might document progress, challenges etc., but that&#39;s all for another time.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Also, lose weight and do more exercise.&lt;/em&gt;&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Continuous Integration</title>
-		<link href="https://ronnie.fyi/posts/continuous-integration/"/>
-		<updated>2022-01-08T20:17:00Z</updated>
-		<id>https://ronnie.fyi/posts/continuous-integration/</id>
-		<content type="html">&lt;p&gt;Three posts in and I&#39;ve already taken a week off from the site!&lt;/p&gt;
-&lt;p&gt;Well, that&#39;s not strictly true. I&#39;ve been working (time permitting) on trying to get the site to automatically deploy to my hosting server, from the Github repo in which the code resides. I think I&#39;ve got it now, so we&#39;re cooking with gas from here on out.&lt;/p&gt;
-&lt;p&gt;I referenced a few resources when trying to come up with a solution.&lt;/p&gt;
-&lt;h2 id=&quot;watch-and-learn&quot; tabindex=&quot;-1&quot;&gt;Watch and Learn &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/continuous-integration/#watch-and-learn&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Deploy To Shared Hosting With Github Actions&lt;/strong&gt; from the &lt;strong&gt;Watch and Learn&lt;/strong&gt; YouTube channel was my starting point, and from this, I managed (eventually, I had a few problems with Github&#39;s secrets) to move code from one place to another.&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/UNWIXYSZfZY&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;h2 id=&quot;tartanllama-and-mfyz&quot; tabindex=&quot;-1&quot;&gt;TartanLlama and mfyz &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/continuous-integration/#tartanllama-and-mfyz&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The goto Github Action for building Eleventy seems to be TartanLlama&#39;s &lt;a href=&quot;https://github.com/TartanLlama/actions-eleventy&quot;&gt;action-eleventy&lt;/a&gt;, however, I had some problems with its optional inputs, and ended up using a fork of this, by &lt;a href=&quot;https://github.com/mfyz/actions-eleventy&quot;&gt;mfyz&lt;/a&gt;. I&#39;ll probably revisit this (as I will with the whole process) because there&#39;s no reason TartanLlama&#39;s shouldn&#39;t work.&lt;/p&gt;
-&lt;p&gt;And that&#39;s that.&lt;/p&gt;
-&lt;p&gt;My &lt;code&gt;yaml&lt;/code&gt; file runs whenever anything&#39;s pushed to the main branch of the repo, takes a copy of the latest code, builds it using &lt;code&gt;actions-eleventy&lt;/code&gt;, and then copies it over to my web host. Decent.&lt;/p&gt;
-&lt;p&gt;What I might do is setup a staging repo and sub-domain, in case I want to work on any major changes but, for now, that&#39;s good enough for a Saturday night.&lt;/p&gt;
-&lt;p&gt;NB I appreciate that there&#39;s more to Continuous Integration than just this, calm doon.&lt;/p&gt;
-&lt;h2 id=&quot;update&quot; tabindex=&quot;-1&quot;&gt;Update &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/continuous-integration/#update&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;Immediately after I posted this, the build/deployment process stopped working. For about an hour I tried a few different things, and then I headed over to the 11ty Discord channel.&lt;/p&gt;
-&lt;p&gt;On a Saturday night, a user called &lt;strong&gt;Aankhen&lt;/strong&gt; took me through the issue I was having, jumped into my repo and flagged any &lt;code&gt;yaml&lt;/code&gt; syntax issues (there were a few!) and basically held my hand as I fixed the problem. What a hero. Here&#39;s to you, Aankhen! 🍺&lt;/p&gt;
-&lt;h3 id=&quot;change-to-the-build-process&quot; tabindex=&quot;-1&quot;&gt;Change to the build process &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/continuous-integration/#change-to-the-build-process&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h3&gt;
-&lt;p&gt;As a result of Aankhen&#39;s help, I&#39;m no longer using the Action I mentioned above - and I never really needed to - so the process is even simpler now.&lt;/p&gt;
-&lt;h2 id=&quot;resources&quot; tabindex=&quot;-1&quot;&gt;Resources &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/continuous-integration/#resources&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/rnnbrwn/project_ronnie.fyi/blob/main/.github/workflows/build-production.yml&quot;&gt;My build-production.yml&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=UNWIXYSZfZY&quot;&gt;Deploy to Shared Hosting Using Github Actions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/TartanLlama&quot;&gt;TartanLlama&#39;s repo&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/mfyz&quot;&gt;mfyz&#39;s repo&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://discord.gg/GBkBy9u&quot;&gt;11ty Discord&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>A History of Web Development</title>
-		<link href="https://ronnie.fyi/posts/a-history-of-web-development/"/>
-		<updated>2022-01-02T21:41:00Z</updated>
-		<id>https://ronnie.fyi/posts/a-history-of-web-development/</id>
-		<content type="html">&lt;p&gt;My second job out of university was at the long-forgotten, &lt;a href=&quot;https://en.wikipedia.org/wiki/Compaq&quot;&gt;Compaq&lt;/a&gt;. I learned web development on-the-job (pretty much, although my interview did require me to build and present a static landing page for the company), having dabbled in it towards the end of my studies, when the web was still in its infancy. While at Compaq I helped with the creation of the online e-commerce functionality (at a very basic level) and left them to do more creative work.&lt;/p&gt;
-&lt;p&gt;My creative juices flowed at several Glasgow-based design agencies, building websites, intranets and focusing on all things digital design. However, Glasgow&#39;s creative industry in the early 2000s was pretty unstable and after a couple of years, I headed back into the corporate world.&lt;/p&gt;
-&lt;p&gt;I worked for &lt;a href=&quot;https://www.jpmorgan.com/global&quot;&gt;J.P.Morgan&lt;/a&gt; for a couple of years, before their massive expansion in Glasgow, and then took up some more senior roles in local Government. It was here that I gradually began to slip away from the day-to-day workload of creating code and building sites, as I started to manage people and projects.&lt;/p&gt;
-&lt;p&gt;In 2015, I took a role at &lt;a href=&quot;https://www.hilton.com/&quot;&gt;Hilton&lt;/a&gt; (after a depressing year commuting to Edinburgh) and continued a trajectory away from writing as much code as I had previously done. It wasn&#39;t something I grudged; I was doing a good job, and I enjoyed it. But my web development skills were, by now, seriously eroded.&lt;/p&gt;
-&lt;h2 id=&quot;covid-19&quot; tabindex=&quot;-1&quot;&gt;COVID-19 &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/a-history-of-web-development/#covid-19&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;In March 2019, I was furloughed from work for an initial period of 3 months (later extended to 6). Between March and September, although I was still employed, I did find myself with some more spare time. So, I focused on regaining some practical, development skills. I built a few sites and made an effort to ensure that when (or if) I returned to Hilton, I did so prepped for what I assumed would be a slightly different work environment.&lt;/p&gt;
-&lt;p&gt;Two things about that:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;I wish I&#39;d done more reskilling&lt;/li&gt;
-&lt;li&gt;I was fortunate enough to return, and my job has since required me to be more operational, i.e. actually building websites. Here&#39;s one I built after my return: &lt;a href=&quot;https://www.hotelwestminster.co.uk/&quot;&gt;Hotel Westminster&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;So, here we are. It&#39;s been tough year, doing a job that I was once pretty good at, but for which I&#39;m now very rusty. But I&#39;ve enjoyed building, creating, and being a different member of the team. I&#39;ve still got lots to learn, though, especially since the team&#39;s tech stack is changing (and in some ways has already changed) to a more modern, React-based stack.&lt;/p&gt;
-&lt;p&gt;The learning curve is steep, but at least I&#39;m walking uphill.&lt;/p&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>About (this site)</title>
-		<link href="https://ronnie.fyi/posts/about-this-site/"/>
-		<updated>2022-01-01T21:00:00Z</updated>
-		<id>https://ronnie.fyi/posts/about-this-site/</id>
-		<content type="html">&lt;p&gt;&amp;quot;Perfection is the enemy of progress&amp;quot; was said (I think) by Winston Churchill. I think about this &lt;em&gt;a lot&lt;/em&gt;. In the case of this site, I&#39;d been sitting on the domain for a while, and trying to determine the best way to build something. To prevent further procrastination, I headed to the &lt;a href=&quot;https://www.11ty.dev/docs/starter/&quot;&gt;11ty site&lt;/a&gt; and forked one of the starter builds, specifically, the &lt;a href=&quot;https://eleventy-base-blog.netlify.app/&quot;&gt;eleventy base blog&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I&#39;ve scratched around with Eleventy a little bit before, and worked on Andy Bell&#39;s &lt;strong&gt;Learn Eleventy from Scratch&lt;/strong&gt; course (which I really would recommend). It seems like a good, lightweight way of getting a site off the ground, and I was keen to do something different.&lt;/p&gt;
-&lt;p&gt;The site&#39;s hosted by Dreamhost, and I&#39;m still working in a fairly old-school way of writing a blog post (for example) locally, and punting the output up onto a web server via SFTP. I&#39;ll get some keys setup soon enough, so I can do it from the command line - although I&#39;m not as proficient at that as I once was.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://learneleventyfromscratch.com/&quot;&gt;Learn Eleventy from Scratch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://learneleventyfromscratch.ronnie.fyi/&quot;&gt;The results of the course&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-	</entry>
-	
-	<entry>
-		<title>Slight Return</title>
-		<link href="https://ronnie.fyi/posts/slight-return/"/>
-		<updated>2022-01-01T12:00:00Z</updated>
-		<id>https://ronnie.fyi/posts/slight-return/</id>
-		<content type="html">&lt;p&gt;One hundred years ago, I built my first personal website and started blogging. I&#39;m not sure why, but I kinda fell away from it all and focused more on work, than on personal sites and projects.&lt;/p&gt;
-&lt;p&gt;But I&#39;m back, with lots of stuff lined up - more on that in another post.&lt;/p&gt;
-&lt;h2 id=&quot;ronnie.fyi&quot; tabindex=&quot;-1&quot;&gt;ronnie.fyi &lt;a class=&quot;direct-link&quot; href=&quot;https://ronnie.fyi/posts/slight-return/#ronnie.fyi&quot; aria-hidden=&quot;true&quot;&gt;#&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;I bought this domain a while back and it&#39;s been sitting in cold storage ever since. I&#39;ll go into a bit more detail in another post but, over the last year, I&#39;ve been far more involved in &lt;em&gt;hands-on&lt;/em&gt; web development, than I had been for the previous several years. I&#39;ve even built some sites.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://mostly.consulting/&quot;&gt;Mostly Consulting&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.hayfacilities.co.uk/&quot;&gt;Hay Facilities&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://samandlaura.wedding/&quot;&gt;Sam &amp;amp; Laura&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.hotelwestminster.co.uk/&quot;&gt;Hotel Westminster&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;On top of that, I&#39;ve started drawing a bit more, too. All of which brings me back to this site. I&#39;m not 100% sure what it&#39;ll contain, but I&#39;ve got a lot of stuff I want to put online, and I don&#39;t want to be handing over content to Facebook, Insta, Twitter etc. I&#39;ve finally come to the conclusion that it&#39;s better to host it myself. So here we are.&lt;/p&gt;
-&lt;p&gt;&amp;quot;Slight Return&amp;quot; by Bluetones: &lt;a href=&quot;https://www.youtube.com/watch?v=YeyP2N6glW0&quot;&gt;https://www.youtube.com/watch?v=YeyP2N6glW0&lt;/a&gt;&lt;/p&gt;
+		<title>Make Computing Personal Again</title>
+		<link href="https://ronnie.fyi/posts/make-computing-personal-again/"/>
+		<updated>2025-01-22T00:00:00Z</updated>
+		<id>https://ronnie.fyi/posts/make-computing-personal-again/</id>
+		<content type="html">&lt;blockquote&gt;
+&lt;p&gt;For a while—in the ’80s, ’90s, and early 2000s—it felt like nerds were making the world a better place. Now, it feels like the most successful tech companies are making it worse.&lt;br /&gt;
+&lt;a href=&quot;https://www.vintagecomputing.com/index.php/archives/3292/the-pc-is-dead-its-time-to-make-computing-personal-again&quot;&gt;The PC is Dead: It’s Time to Make Computing Personal Again, Benj Edwards&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Preach!&lt;/p&gt;
+&lt;p&gt;I was one of those nerds. I still am.&lt;/p&gt;
 </content>
 	</entry>
 </feed>
