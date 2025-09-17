@@ -34,6 +34,8 @@ async function postToBluesky() {
       return;
     }
 
+    const successfullyPosted = [];
+
     // Post each new blog post to Bluesky
     for (const post of newPosts) {
       const postData = createBlueskyPost(post);
@@ -42,9 +44,16 @@ async function postToBluesky() {
         await agent.post(postData);
         
         console.log(`✅ Posted to Bluesky: "${post.title}"`);
+        successfullyPosted.push(post.filename);
       } catch (error) {
         console.error(`❌ Failed to post "${post.title}" to Bluesky:`, error.message);
       }
+    }
+
+    // Update the list of posted files
+    if (successfullyPosted.length > 0) {
+      await markAsPosted(successfullyPosted);
+      console.log(`📝 Marked ${successfullyPosted.length} post(s) as posted to prevent duplicates`);
     }
 
   } catch (error) {
@@ -55,32 +64,38 @@ async function postToBluesky() {
 
 async function detectNewPosts() {
   const postsDir = path.join(__dirname, '../posts');
-  const lastRunFile = path.join(__dirname, '../.last-bluesky-run');
+  const postedFile = path.join(__dirname, '../.bluesky-posted.json');
   
-  let lastRunTime = 0;
+  let alreadyPosted = [];
   
-  // Read last run timestamp
-  if (fs.existsSync(lastRunFile)) {
+  // Read list of already posted files
+  if (fs.existsSync(postedFile)) {
     try {
-      lastRunTime = parseInt(fs.readFileSync(lastRunFile, 'utf8'));
+      alreadyPosted = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
     } catch (e) {
-      console.log('⚠️ Could not read last run file, checking all posts');
+      console.log('⚠️ Could not read posted files list, checking all posts');
+      alreadyPosted = [];
     }
   }
 
   // Get all markdown files in posts directory
+  if (!fs.existsSync(postsDir)) {
+    console.log('❌ Posts directory not found');
+    return [];
+  }
+
   const postFiles = fs.readdirSync(postsDir)
     .filter(file => file.endsWith('.md'))
+    .filter(file => !alreadyPosted.includes(file)) // Only process files not already posted
     .map(file => {
       const filePath = path.join(postsDir, file);
-      const stats = fs.statSync(filePath);
       return {
         file,
-        path: filePath,
-        modifiedTime: stats.mtime.getTime()
+        path: filePath
       };
-    })
-    .filter(post => post.modifiedTime > lastRunTime);
+    });
+
+  console.log(`📋 Found ${postFiles.length} new post(s) to process`);
 
   // Parse posts to extract metadata
   const newPosts = [];
@@ -96,10 +111,33 @@ async function detectNewPosts() {
     }
   }
 
-  // Update last run timestamp
-  fs.writeFileSync(lastRunFile, Date.now().toString());
-
   return newPosts;
+}
+
+async function markAsPosted(filenames) {
+  const postedFile = path.join(__dirname, '../.bluesky-posted.json');
+  
+  let alreadyPosted = [];
+  
+  // Read existing posted files list
+  if (fs.existsSync(postedFile)) {
+    try {
+      alreadyPosted = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
+    } catch (e) {
+      console.log('⚠️ Could not read existing posted files, starting fresh');
+      alreadyPosted = [];
+    }
+  }
+
+  // Add new filenames to the list (avoid duplicates)
+  for (const filename of filenames) {
+    if (!alreadyPosted.includes(filename)) {
+      alreadyPosted.push(filename);
+    }
+  }
+
+  // Write updated list back to file
+  fs.writeFileSync(postedFile, JSON.stringify(alreadyPosted, null, 2));
 }
 
 function parsePostMetadata(content, filename) {
