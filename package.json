@@ -5,7 +5,7 @@
     "scripts": {
         "build": "eleventy && npx sass sass:_site/css",
         "watch": "eleventy --watch",
-        "serve": "npm run build && eleventy --serve & npm run watch:sass",
+        "serve": "npx sass sass:_site/css && eleventy --serve & npm run watch:sass",
         "start": "eleventy --serve",
         "debug": "DEBUG=* eleventy",
         "watch:sass": "npx sass sass:_site/css --watch",
