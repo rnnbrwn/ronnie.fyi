@@ -1,6 +1,47 @@
 {
-  "song": "Sicily",
-  "artist": "Queens of the Stone Age",
-  "url": "https://open.spotify.com/track/1nFQ1uPlxDUiJsiPSjZFkn",
-  "timestamp": "2025-09-17T22:17:10.906Z"
+  "current": {
+    "song": "What's Happening Brother",
+    "artist": "Marvin Gaye",
+    "url": "https://open.spotify.com/track/4ihykcy9d9SSC5qxHIhPcf",
+    "album": "What's Going On",
+    "playedAt": "2025-09-17T22:29:28.840Z"
+  },
+  "recent": [
+    {
+      "song": "Emotion Sickness",
+      "artist": "Queens of the Stone Age",
+      "url": "https://open.spotify.com/track/5a8V2ZeVLj8ktvodCa1m80",
+      "album": "In Times New Roman...",
+      "playedAt": "2025-09-17T22:20:36.194Z"
+    },
+    {
+      "song": "Sicily",
+      "artist": "Queens of the Stone Age",
+      "url": "https://open.spotify.com/track/1nFQ1uPlxDUiJsiPSjZFkn",
+      "album": "In Times New Roman...",
+      "playedAt": "2025-09-17T22:16:05.149Z"
+    },
+    {
+      "song": "What The Peephole Say",
+      "artist": "Queens of the Stone Age",
+      "url": "https://open.spotify.com/track/5AVdUQpRpz4EC6b7BwEKtn",
+      "album": "In Times New Roman...",
+      "playedAt": "2025-09-17T22:11:24.166Z"
+    },
+    {
+      "song": "Carnavoyeur",
+      "artist": "Queens of the Stone Age",
+      "url": "https://open.spotify.com/track/3XaQQKhU2pumYcya8Xypro",
+      "album": "In Times New Roman...",
+      "playedAt": "2025-09-17T21:48:31.683Z"
+    },
+    {
+      "song": "Made to Parade",
+      "artist": "Queens of the Stone Age",
+      "url": "https://open.spotify.com/track/6MDDZHn6rkbrziCNlcPQFT",
+      "album": "In Times New Roman...",
+      "playedAt": "2025-09-17T21:44:34.998Z"
+    }
+  ],
+  "timestamp": "2025-09-17T22:41:39.858Z"
 }
