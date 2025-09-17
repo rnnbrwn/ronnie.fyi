@@ -48,8 +48,13 @@ main {
 main :first-child {
   margin-top: 0;
 }
-header {
+/* Full-width header container with border */
+.header-container {
   border-bottom: 1px dashed var(--lightgray);
+  width: 100%; /* Full width of the page */
+}
+
+header {
   max-width: 1200px; /* Wider than main for navigation growth */
   margin: 0 auto; /* Center the header */
   padding: 0 1rem; /* Add some padding for mobile */
