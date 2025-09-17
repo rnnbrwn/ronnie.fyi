@@ -42,12 +42,17 @@ a[href]:visited {
 }
 main {
   padding: 1rem;
+  max-width: 65ch; /* ~750px - optimal reading width */
+  margin: 0 auto; /* Center the main content */
 }
 main :first-child {
   margin-top: 0;
 }
 header {
   border-bottom: 1px dashed var(--lightgray);
+  max-width: 1200px; /* Wider than main for navigation growth */
+  margin: 0 auto; /* Center the header */
+  padding: 0 1rem; /* Add some padding for mobile */
 }
 header:after {
   content: "";
@@ -127,9 +132,15 @@ code {
 }
 
 /* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .home {
-  padding: 0 1rem;
-  float: left;
   margin: 1rem 0; /* 16px /16 */
   font-size: 1em; /* 16px /16 */
 }
@@ -141,12 +152,13 @@ code {
 .nav {
   padding: 0;
   list-style: none;
-  float: left;
-  margin-left: 1em;
+  display: flex;
+  gap: 1em;
+  margin: 0;
+  margin-left: auto; /* Push navigation to the right */
 }
 .nav-item {
-  display: inline-block;
-  margin-right: 1em;
+  display: block;
 }
 .nav-item a[href]:not(:hover) {
   text-decoration: none;
