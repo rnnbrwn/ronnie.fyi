@@ -36,13 +36,10 @@ async function postToBluesky() {
 
     // Post each new blog post to Bluesky
     for (const post of newPosts) {
-      const postText = createBlueskyPost(post);
+      const postData = createBlueskyPost(post);
       
       try {
-        await agent.post({
-          text: postText,
-          createdAt: new Date().toISOString()
-        });
+        await agent.post(postData);
         
         console.log(`✅ Posted to Bluesky: "${post.title}"`);
       } catch (error) {
@@ -144,16 +141,52 @@ function createBlueskyPost(post) {
     postText += `\n\n${post.description}`;
   }
   
-  // Add the link
-  postText += `\n\n🔗 ${post.url}`;
+  // Add the link indicator  
+  postText += `\n\n🔗 `;
+  
+  // Calculate where the URL starts in the text
+  const urlStart = postText.length;
+  postText += post.url;
+  const urlEnd = postText.length;
   
   // Truncate if too long
   if (postText.length > MAX_POST_LENGTH) {
     const availableLength = MAX_POST_LENGTH - post.url.length - 10; // Space for "\n\n🔗 " and "..."
     postText = postText.substring(0, availableLength) + '...\n\n🔗 ' + post.url;
+    // Recalculate URL position after truncation
+    const newUrlStart = postText.lastIndexOf(post.url);
+    const newUrlEnd = newUrlStart + post.url.length;
+    
+    return {
+      text: postText,
+      createdAt: new Date().toISOString(),
+      facets: [{
+        index: {
+          byteStart: Buffer.from(postText.substring(0, newUrlStart)).length,
+          byteEnd: Buffer.from(postText.substring(0, newUrlEnd)).length
+        },
+        features: [{
+          $type: 'app.bsky.richtext.facet#link',
+          uri: post.url
+        }]
+      }]
+    };
   }
 
-  return postText;
+  return {
+    text: postText,
+    createdAt: new Date().toISOString(),
+    facets: [{
+      index: {
+        byteStart: Buffer.from(postText.substring(0, urlStart)).length,
+        byteEnd: Buffer.from(postText.substring(0, urlEnd)).length
+      },
+      features: [{
+        $type: 'app.bsky.richtext.facet#link',
+        uri: post.url
+      }]
+    }]
+  };
 }
 
 // Run the script
