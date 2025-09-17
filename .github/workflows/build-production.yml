@@ -30,18 +30,12 @@ jobs:
       - name: 1️⃣1️⃣ Build Site with CSS
         run: npm run build
 
-      - name: 🦋 Post new content to Bluesky
-        env:
-          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
-          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
-        run: npm run post-to-bluesky
-
-      - name: 💾 Commit Spotify updates
+      - name: 💾 Commit Spotify updates (pre-deploy)
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add _data/currentTrack.json .bluesky-posted.json
-          git diff --staged --quiet || git commit -m "Update Spotify track and Bluesky posted files [skip ci]"
+          git add _data/currentTrack.json
+          git diff --staged --quiet || git commit -m "Update Spotify track [skip ci]"
           git push
 
       - name: 🧑🏻‍💻 Deploy
@@ -53,3 +47,20 @@ jobs:
           password: ${{ secrets.password }}
           sourceDir: ./_site/
           targetDir: ./ronnie.fyi/
+
+      - name: ⏱️ Wait for deployment to propagate
+        run: sleep 30
+
+      - name: 🦋 Post new content to Bluesky (after successful deploy)
+        env:
+          BLUESKY_USERNAME: ${{ secrets.BLUESKY_USERNAME }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+        run: npm run post-to-bluesky
+
+      - name: 💾 Commit Bluesky tracking file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .bluesky-posted.json
+          git diff --staged --quiet || git commit -m "Update Bluesky posted files [skip ci]"
+          git push
