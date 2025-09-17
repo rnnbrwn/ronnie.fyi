@@ -52,6 +52,7 @@ main :first-child {
 .header-container {
   border-bottom: 1px dashed var(--lightgray);
   width: 100%; /* Full width of the page */
+  background-color: #f8f8f8; /* Subtle dark background */
 }
 
 header {
