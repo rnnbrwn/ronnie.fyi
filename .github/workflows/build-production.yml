@@ -40,8 +40,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add _data/currentTrack.json .last-bluesky-run
-          git diff --staged --quiet || git commit -m "Update Spotify track and Bluesky sync [skip ci]"
+          git add _data/currentTrack.json .bluesky-posted.json
+          git diff --staged --quiet || git commit -m "Update Spotify track and Bluesky posted files [skip ci]"
           git push
 
       - name: 🧑🏻‍💻 Deploy
