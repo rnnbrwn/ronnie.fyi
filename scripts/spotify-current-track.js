@@ -73,7 +73,7 @@ async function getCurrentTrack() {
     const options = {
       hostname: 'api.spotify.com',
       port: 443,
-      path: '/v1/me/player/recently-played?limit=1',
+      path: '/v1/me/player/recently-played?limit=10', // Get 10 recent tracks
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -87,41 +87,52 @@ async function getCurrentTrack() {
     }
     
     if (response.data.items && response.data.items.length > 0) {
-      const track = response.data.items[0].track;
+      const tracks = response.data.items.map(item => ({
+        song: item.track.name,
+        artist: item.track.artists.map(artist => artist.name).join(', '),
+        url: item.track.external_urls.spotify,
+        album: item.track.album.name,
+        playedAt: item.played_at
+      }));
+
+      // Return structured data with current track and recent tracks
       return {
-        song: track.name,
-        artist: track.artists.map(artist => artist.name).join(', '),
-        url: track.external_urls.spotify,
+        current: tracks[0], // Most recent track
+        recent: tracks.slice(1, 6), // Next 5 tracks for "recently played"
         timestamp: new Date().toISOString()
       };
     }
     
     return null;
   } catch (error) {
-    console.error('Error fetching current track:', error);
+    console.error('Error fetching tracks:', error);
     return null;
   }
 }
 
 async function updateCurrentTrack() {
-  const currentTrack = await getCurrentTrack();
+  const trackData = await getCurrentTrack();
   
   const dataPath = path.join(__dirname, '..', '_data', 'currentTrack.json');
   
-  if (currentTrack) {
-    fs.writeFileSync(dataPath, JSON.stringify(currentTrack, null, 2));
-    console.log(`Updated current track: ${currentTrack.song} by ${currentTrack.artist}`);
+  if (trackData && trackData.current) {
+    fs.writeFileSync(dataPath, JSON.stringify(trackData, null, 2));
+    console.log(`Updated current track: ${trackData.current.song} by ${trackData.current.artist}`);
+    console.log(`Also fetched ${trackData.recent.length} recently played tracks`);
   } else {
     // Fallback data if API fails
     const fallbackData = {
-      song: "Unknown",
-      artist: "Unknown Artist",
-      url: "https://open.spotify.com",
+      current: {
+        song: "Unknown",
+        artist: "Unknown Artist",
+        url: "https://open.spotify.com"
+      },
+      recent: [],
       timestamp: new Date().toISOString(),
       error: true
     };
     fs.writeFileSync(dataPath, JSON.stringify(fallbackData, null, 2));
-    console.log('Failed to fetch current track, using fallback');
+    console.log('Failed to fetch tracks, using fallback');
   }
 }
 
