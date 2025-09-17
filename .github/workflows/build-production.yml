@@ -27,8 +27,8 @@ jobs:
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
         run: npm run update-track
 
-      - name: 1️⃣1️⃣ Eleventy Build
-        run: npx @11ty/eleventy
+      - name: 1️⃣1️⃣ Build Site with CSS
+        run: npm run build
 
       - name: 💾 Commit Spotify updates
         run: |
