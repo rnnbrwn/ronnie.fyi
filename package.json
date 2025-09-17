@@ -8,7 +8,9 @@
         "serve": "eleventy --serve & npm run watch:sass",
         "start": "eleventy --serve",
         "debug": "DEBUG=* eleventy",
-        "watch:sass": "npx sass sass:_site/css --watch"
+        "watch:sass": "npx sass sass:_site/css --watch",
+        "update-track": "node scripts/spotify-current-track.js",
+        "post-to-bluesky": "node scripts/bluesky-post.js"
     },
     "repository": {
         "type": "git",
