@@ -22,6 +22,23 @@ module.exports = function (eleventyConfig) {
         return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
     });
 
+    // Format timestamp for "last updated" displays
+    eleventyConfig.addFilter("relativeTime", dateStr => {
+        const date = DateTime.fromISO(dateStr);
+        const now = DateTime.now();
+        const diff = now.diff(date, ['hours', 'minutes']).toObject();
+        
+        if (diff.hours >= 24) {
+            return date.toFormat("dd LLL");
+        } else if (diff.hours >= 1) {
+            return `${Math.floor(diff.hours)}h ago`;
+        } else if (diff.minutes >= 1) {
+            return `${Math.floor(diff.minutes)}m ago`;
+        } else {
+            return 'just now';
+        }
+    });
+
     // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
     eleventyConfig.addFilter('htmlDateString', (dateObj) => {
         return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
@@ -63,6 +80,7 @@ module.exports = function (eleventyConfig) {
     // Copy the `img` and `css` folders to the output
     eleventyConfig.addPassthroughCopy("img");
     eleventyConfig.addPassthroughCopy("css");
+    eleventyConfig.addPassthroughCopy("js");
     eleventyConfig.addPassthroughCopy(".well-known");
 
     // Customize Markdown library and settings:

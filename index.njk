@@ -13,14 +13,28 @@ eleventyNavigation:
 
 <p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
 
-{% if currentTrack.song and currentTrack.artist %}
+{% if currentTrack.current and currentTrack.current.song and currentTrack.current.artist %}
 <p class="current-listening">
   I'm currently listening to 
-  {% if currentTrack.url and not currentTrack.error %}
-    <a href="{{ currentTrack.url }}" target="_blank" rel="noopener noreferrer">{{ currentTrack.song }}</a>
+  {% if currentTrack.current.url and not currentTrack.error %}
+    <a href="{{ currentTrack.current.url }}" target="_blank" rel="noopener noreferrer">{{ currentTrack.current.song }}</a>
   {% else %}
-    {{ currentTrack.song }}
+    {{ currentTrack.current.song }}
   {% endif %}
-  by <strong>{{ currentTrack.artist }}</strong>.
+  by <strong>{{ currentTrack.current.artist }}</strong>{% if currentTrack.current.playedAt %} <small>(<span class="relative-time" data-played-at="{{ currentTrack.current.playedAt }}">{{ currentTrack.current.playedAt | relativeTime }}</span>)</small>{% endif %}.
 </p>
+
+{% if currentTrack.recent and currentTrack.recent.length > 0 %}
+<details class="recently-played">
+  <summary>Recently played tracks</summary>
+  <ul class="track-list">
+    {% for track in currentTrack.recent %}
+    <li class="track-item">
+      <a href="{{ track.url }}" target="_blank" rel="noopener noreferrer">{{ track.song }}</a>
+      by {{ track.artist }}
+    </li>
+    {% endfor %}
+  </ul>
+</details>
+{% endif %}
 {% endif %}
