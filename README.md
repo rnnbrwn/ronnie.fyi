@@ -1,78 +1,179 @@
-# eleventy-base-blog
+# ronnie.fyi
 
-A starter repository showing how to build a blog with the [Eleventy](https://github.com/11ty/eleventy) static site generator.
+Personal website and blog built with Eleventy, featuring a clean responsive design and Spotify integration.
 
-[![Build Status](https://travis-ci.org/11ty/eleventy-base-blog.svg?branch=master)](https://travis-ci.org/11ty/eleventy-base-blog)
+🌐 **Live Site**: [ronnie.fyi](https://ronnie.fyi)
 
-## Demos
+## ✨ Features
 
-* [Netlify](https://eleventy-base-blog.netlify.com/)
-* [GitHub Pages](https://11ty.github.io/eleventy-base-blog/)
-* [Remix on Glitch](https://glitch.com/~11ty-eleventy-base-blog)
+- **Static Site Generation**: Built with [Eleventy](https://www.11ty.dev/) for fast, secure sites
+- **Modern CSS**: Sass compilation with responsive design and centered layouts
+- **Spotify Integration**: Live display of currently playing tracks via Spotify API
+- **Automated Deployment**: GitHub Actions workflow for continuous deployment
+- **Clean Typography**: Optimized reading experience with proper content max-widths
+- **Mobile Responsive**: Full-width header with centered content areas
 
-## Deploy this to your own site
+## 🛠 Technology Stack
 
-These builders are amazing—try them out to get your own Eleventy site in a few clicks!
+- **Static Site Generator**: [Eleventy v0.12.1](https://www.11ty.dev/)
+- **CSS Preprocessor**: [Sass](https://sass-lang.com/) with automatic compilation
+- **Templating**: Nunjucks templates with layouts and includes
+- **Development Server**: BrowserSync with live reload
+- **Build Tools**: Node.js and npm scripts
+- **Deployment**: GitHub Actions + SFTP to web host
+- **Music Integration**: Spotify Web API for current track display
 
-* [Get your own Eleventy web site on Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/11ty/eleventy-base-blog)
-* [Get your own Eleventy web site on Vercel](https://vercel.com/import/project?template=11ty%2Feleventy-base-blog)
+## 🚀 Getting Started
 
-## Getting Started
+### Prerequisites
 
-### 1. Clone this Repository
+- [Node.js](https://nodejs.org/) (version 20 or higher)
+- npm (comes with Node.js)
+- Git
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/rnnbrwn/ronnie-fyi.git
+   cd ronnie-fyi
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run serve
+   ```
+   
+   This starts both Eleventy with live reload and Sass compilation watching for changes.
+   Site will be available at `http://localhost:8081`
+
+### Build Commands
+
+- **Development server**: `npm run serve` - Eleventy + Sass with live reload
+- **Production build**: `npm run build` - Builds site with compiled CSS
+- **Watch mode**: `npm run watch` - Eleventy only, no Sass compilation
+- **Start server**: `npm start` - Eleventy server only
+- **Update Spotify**: `npm run update-track` - Fetches current Spotify track
+
+## 📁 Project Structure
 
 ```
-git clone https://github.com/11ty/eleventy-base-blog.git my-blog-name
+├── _data/                    # Global data files
+│   ├── metadata.json        # Site metadata and configuration
+│   └── currentTrack.json    # Current Spotify track data
+├── _includes/               # Templates and layouts
+│   └── layouts/
+│       ├── base.njk         # Main HTML structure
+│       ├── home.njk         # Homepage template
+│       └── post.njk         # Blog post template
+├── posts/                   # Blog posts (Markdown)
+├── sass/                    # Sass stylesheets
+│   └── index.scss          # Main stylesheet
+├── scripts/                 # Build and utility scripts
+├── _site/                   # Generated site (ignored by git)
+├── .eleventy.js            # Eleventy configuration
+├── package.json            # Dependencies and scripts
+└── README.md              # This file
 ```
 
+## 🎨 Design Features
 
-### 2. Navigate to the directory
+### Layout System
+- **Full-width header**: Spans entire viewport width with subtle background
+- **Centered content**: Main content area with optimal reading width (65ch)
+- **Flexible navigation**: Header accommodates growing navigation items
+- **Responsive design**: Mobile-first approach with proper breakpoints
 
+### CSS Architecture
+- **Sass preprocessing**: Organized stylesheets with variables and nesting
+- **Custom properties**: CSS variables for consistent theming
+- **Typography**: Optimized font stacks and reading experience
+- **Component-based**: Modular CSS for posts, navigation, and page elements
+
+## 🎵 Spotify Integration
+
+The site displays currently playing tracks using the Spotify Web API:
+
+- **Automatic updates**: GitHub Actions updates track data hourly
+- **API integration**: Secure token refresh and track fetching
+- **Fallback handling**: Graceful display when no track is playing
+- **Privacy respecting**: Only displays publicly available track information
+
+### Environment Variables
+
+For Spotify integration, set these secrets in GitHub Actions:
+- `SPOTIFY_CLIENT_ID`
+- `SPOTIFY_CLIENT_SECRET`  
+- `SPOTIFY_REFRESH_TOKEN`
+
+## 🚀 Deployment
+
+The site uses GitHub Actions for automated deployment:
+
+1. **Trigger**: Push to `main` branch or hourly cron job
+2. **Build**: Eleventy generates static site with Sass compilation
+3. **Spotify**: Fetches current track and updates data
+4. **Deploy**: SFTP upload to web host
+5. **Commit**: Updates Spotify data back to repository
+
+### Deployment Configuration
+
+See `.github/workflows/build-production.yml` for the complete workflow.
+
+## 🛠 Development Notes
+
+### Build Process
+The production build ensures CSS is properly compiled:
+```bash
+# Build order: Eleventy first, then Sass
+eleventy && npx sass sass:_site/css
 ```
-cd my-blog-name
-```
 
-Specifically have a look at `.eleventy.js` to see if you want to configure any Eleventy options differently.
+### Git Configuration
+- `_site/` directory is gitignored (generated content)
+- Spotify track data is committed automatically
+- Feature branches for organized development
 
-### 3. Install dependencies
+### Browser Support
+- Modern browsers with CSS Grid and Flexbox support
+- Progressive enhancement for older browsers
+- Mobile-first responsive design
 
-```
-npm install
-```
+## 📝 Content Management
 
-### 4. Edit _data/metadata.json
+### Adding Blog Posts
+1. Create new `.md` file in `posts/` directory
+2. Add frontmatter with title, date, and tags
+3. Write content in Markdown
+4. Run development server to preview
 
-### 5. Run Eleventy
+### Updating Site Data
+Edit `_data/metadata.json` for:
+- Site title and description
+- Navigation items
+- Social links and metadata
 
-```
-npx eleventy
-```
+## 🤝 Contributing
 
-Or build and host locally for local development
-```
-npx eleventy --serve
-```
+This is a personal website, but if you notice any issues or have suggestions:
 
-Or build automatically when a template changes:
-```
-npx eleventy --watch
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-Or in debug mode:
-```
-DEBUG=* npx eleventy
-```
+## 📄 License
 
-### Implementation Notes
+This project is open source and available under the [MIT License](LICENSE).
 
-* `about/index.md` shows how to add a content page.
-* `posts/` has the blog posts but really they can live in any directory. They need only the `post` tag to be added to this collection.
-* Add the `nav` tag to add a template to the top level site navigation. For example, this is in use on `index.njk` and `about/index.md`.
-* Content can be any template format (blog posts needn’t be markdown, for example). Configure your supported templates in `.eleventy.js` -> `templateFormats`.
-	* Because `css` and `png` are listed in `templateFormats` but are not supported template types, any files with these extensions will be copied without modification to the output (while keeping the same directory structure).
-* The blog post feed template is in `feed/feed.njk`. This is also a good example of using a global data files in that it uses `_data/metadata.json`.
-* This example uses three layouts:
-  * `_includes/layouts/base.njk`: the top level HTML structure
-  * `_includes/layouts/home.njk`: the home page template (wrapped into `base.njk`)
-  * `_includes/layouts/post.njk`: the blog post template (wrapped into `base.njk`)
-* `_includes/postlist.njk` is a Nunjucks include and is a reusable component used to display a list of all the posts. `index.njk` has an example of how to use it.
+## 🔗 Links
+
+- **Live Site**: [ronnie.fyi](https://ronnie.fyi)
+- **Repository**: [github.com/rnnbrwn/ronnie-fyi](https://github.com/rnnbrwn/ronnie-fyi)
+- **Eleventy**: [11ty.dev](https://www.11ty.dev/)
+- **Contact**: [Bluesky @ronnie.fyi](https://bsky.app/profile/ronnie.fyi)
