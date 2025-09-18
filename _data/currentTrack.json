@@ -1,12 +1,26 @@
 {
   "current": {
-    "song": "Cry Wet Smile Dry",
-    "artist": "Cardiacs",
-    "url": "https://open.spotify.com/track/3IzS5MMMHUGu1CjUexuCGS",
-    "album": "Guns",
-    "playedAt": "2025-09-18T15:17:39.698Z"
+    "song": "I Should Have Let You Be",
+    "artist": "Lee Fields",
+    "url": "https://open.spotify.com/track/7xiP5Y5KPBU05bWZq82YAb",
+    "album": "Sentimental Fool",
+    "playedAt": "2025-09-18T15:25:01.554Z"
   },
   "recent": [
+    {
+      "song": "Forever",
+      "artist": "Lee Fields",
+      "url": "https://open.spotify.com/track/0MrbySeqMbj7dcTFnlEDvE",
+      "album": "Sentimental Fool",
+      "playedAt": "2025-09-18T15:22:03.633Z"
+    },
+    {
+      "song": "Cry Wet Smile Dry",
+      "artist": "Cardiacs",
+      "url": "https://open.spotify.com/track/3IzS5MMMHUGu1CjUexuCGS",
+      "album": "Guns",
+      "playedAt": "2025-09-18T15:17:39.698Z"
+    },
     {
       "song": "Wind And Rains Is Cold",
       "artist": "Cardiacs, Sarah Smith",
@@ -27,21 +41,7 @@
       "url": "https://open.spotify.com/track/0HpcUHDDNQEoK8NG9NzxQb",
       "album": "Guns",
       "playedAt": "2025-09-18T15:08:33.443Z"
-    },
-    {
-      "song": "Volob",
-      "artist": "Cardiacs",
-      "url": "https://open.spotify.com/track/41Qm77cvdLznVY49ZiVAIy",
-      "album": "Volob",
-      "playedAt": "2025-09-18T15:04:52.047Z"
-    },
-    {
-      "song": "Downup",
-      "artist": "Cardiacs",
-      "url": "https://open.spotify.com/track/05hmgCx8fGQXEKyDxKbtyQ",
-      "album": "Downup",
-      "playedAt": "2025-09-18T15:00:38.078Z"
     }
   ],
-  "timestamp": "2025-09-18T15:18:02.236Z"
+  "timestamp": "2025-09-18T16:21:02.580Z"
 }
