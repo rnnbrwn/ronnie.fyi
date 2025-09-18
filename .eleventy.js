@@ -91,9 +91,8 @@ module.exports = function (eleventyConfig) {
         });
     });
 
-    // Copy the `img` and `css` folders to the output
+    // Copy the `img` and `js` folders to the output (CSS handled by Sass)
     eleventyConfig.addPassthroughCopy("img");
-    eleventyConfig.addPassthroughCopy("css");
     eleventyConfig.addPassthroughCopy("js");
     eleventyConfig.addPassthroughCopy(".well-known");
 
