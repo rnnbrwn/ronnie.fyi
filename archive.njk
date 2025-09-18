@@ -8,5 +8,30 @@ eleventyNavigation:
 
 <h1>Archive</h1>
 
-{% set postslist = collections.posts %}
+{# Combine markdown posts with Contentful posts #}
+{% set markdownPosts = collections.post %}
+{% set contentfulPostsData = contentfulPosts or [] %}
+{% set allPosts = [] %}
+
+{# Add markdown posts to allPosts array #}
+{% for post in markdownPosts %}
+  {% set allPosts = (allPosts.push(post), allPosts) %}
+{% endfor %}
+
+{# Add Contentful posts to allPosts array #}
+{% for post in contentfulPostsData %}
+  {% set contentfulPost = {
+    url: "/contentful-posts/" + post.slug + "/",
+    data: {
+      title: post.title,
+      date: post.date
+    },
+    date: post.date,
+    title: post.title
+  } %}
+  {% set allPosts = (allPosts.push(contentfulPost), allPosts) %}
+{% endfor %}
+
+{# Sort all posts by date (newest first) #}
+{% set postslist = allPosts | sort(false, false, 'date') %}
 {% include "postslist.njk" %}

@@ -4,11 +4,38 @@ eleventyNavigation:
   key: Home
   order: 1
 ---
-{% set maxPosts = collections.posts.length | min(6) %}
+{# Combine markdown posts with Contentful posts #}
+{% set markdownPosts = collections.post %}
+{% set contentfulPostsData = contentfulPosts or [] %}
+{% set allPosts = [] %}
+
+{# Add markdown posts to allPosts array #}
+{% for post in markdownPosts %}
+  {% set allPosts = (allPosts.push(post), allPosts) %}
+{% endfor %}
+
+{# Add Contentful posts to allPosts array #}
+{% for post in contentfulPostsData %}
+  {% set contentfulPost = {
+    url: "/contentful-posts/" + post.slug + "/",
+    data: {
+      title: post.title,
+      date: post.date
+    },
+    date: post.date,
+    title: post.title
+  } %}
+  {% set allPosts = (allPosts.push(contentfulPost), allPosts) %}
+{% endfor %}
+
+{# Sort all posts by date (newest first) #}
+{% set sortedPosts = allPosts | sort(false, false, 'date') %}
+
+{% set maxPosts = (sortedPosts | length) | min(6) %}
 <h1>Latest {% if maxPosts == 1 %}Post{% else %}{{ maxPosts }} Posts{% endif %}</h1>
 
-{% set postslist = collections.posts | head(-6) %}
-{% set postslistCounter = collections.posts | length %}
+{% set postslist = sortedPosts | head(6) %}
+{% set postslistCounter = sortedPosts | length %}
 {% include "postslist.njk" %}
 
 <p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
