@@ -1,6 +1,12 @@
-[
-  "testing-bluesky-integration.md",
-  "make-computing-personal-again.md",
-  "testing-duplicate-prevention-system.md",
-  "world-war-2-is-my-roman-empire.md"
-]
+{
+  "markdown": [
+    "testing-bluesky-integration.md",
+    "make-computing-personal-again.md",
+    "testing-duplicate-prevention-system.md",
+    "world-war-2-is-my-roman-empire.md"
+  ],
+  "contentful": [
+    "contentful-603F4bYbBT3A1DymPZ05BO",
+    "contentful-3zVrQa9A5ggRJ8hLAkrTaw"
+  ]
+}
