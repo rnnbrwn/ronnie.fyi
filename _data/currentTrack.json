@@ -1,12 +1,26 @@
 {
   "current": {
-    "song": "What's Happening Brother",
-    "artist": "Marvin Gaye",
-    "url": "https://open.spotify.com/track/4ihykcy9d9SSC5qxHIhPcf",
-    "album": "What's Going On",
-    "playedAt": "2025-09-17T22:29:28.840Z"
+    "song": "Unbroken, Unshaven",
+    "artist": "The Budos Band",
+    "url": "https://open.spotify.com/track/6PoIEPvLMkVzYS8wFSohkh",
+    "album": "The Budos Band III",
+    "playedAt": "2025-09-18T10:16:41.087Z"
   },
   "recent": [
+    {
+      "song": "Higher Ground",
+      "artist": "Stevie Wonder",
+      "url": "https://open.spotify.com/track/0dMd4rilfd6gPbXaLpNYhu",
+      "album": "Innervisions",
+      "playedAt": "2025-09-18T10:13:42.310Z"
+    },
+    {
+      "song": "What's Happening Brother",
+      "artist": "Marvin Gaye",
+      "url": "https://open.spotify.com/track/4ihykcy9d9SSC5qxHIhPcf",
+      "album": "What's Going On",
+      "playedAt": "2025-09-17T22:29:28.840Z"
+    },
     {
       "song": "Emotion Sickness",
       "artist": "Queens of the Stone Age",
@@ -27,21 +41,7 @@
       "url": "https://open.spotify.com/track/5AVdUQpRpz4EC6b7BwEKtn",
       "album": "In Times New Roman...",
       "playedAt": "2025-09-17T22:11:24.166Z"
-    },
-    {
-      "song": "Carnavoyeur",
-      "artist": "Queens of the Stone Age",
-      "url": "https://open.spotify.com/track/3XaQQKhU2pumYcya8Xypro",
-      "album": "In Times New Roman...",
-      "playedAt": "2025-09-17T21:48:31.683Z"
-    },
-    {
-      "song": "Made to Parade",
-      "artist": "Queens of the Stone Age",
-      "url": "https://open.spotify.com/track/6MDDZHn6rkbrziCNlcPQFT",
-      "album": "In Times New Roman...",
-      "playedAt": "2025-09-17T21:44:34.998Z"
     }
   ],
-  "timestamp": "2025-09-18T09:18:25.245Z"
+  "timestamp": "2025-09-18T10:17:31.582Z"
 }
