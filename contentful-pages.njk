@@ -1,0 +1,26 @@
+------
+
+layout: layouts/post.njklayout: layouts/base.njk
+
+pagination:pagination:
+
+  data: contentfulPages  data: contentfulPages
+
+  size: 1  size: 1
+
+  alias: page  alias: page
+
+permalink: "/{{ page.slug }}/"permalink: "/{{ page.slug }}/"
+
+eleventyComputed:eleventyComputed:
+
+  title: "{{ page.title }}"  title: "{{ page.title }}"
+
+  description: "{{ page.description }}"  description: "{{ page.description }}"
+
+------
+
+
+
+{{ page.content | safe }}<h1>{{ page.title }}</h1>
+{{ page.content | safe }}
