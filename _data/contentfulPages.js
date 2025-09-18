@@ -2,6 +2,15 @@ require('dotenv').config();
 const contentful = require('contentful');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
+// Check for required environment variables
+if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+  console.log('⚠️ Contentful credentials not found - returning empty pages array');
+  module.exports = async function() {
+    return [];
+  };
+  return;
+}
+
 const client = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
