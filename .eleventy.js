@@ -91,47 +91,47 @@ module.exports = function (eleventyConfig) {
         });
     });
 
-      // Add properly sorted posts collection 
-  eleventyConfig.addCollection("sortedPosts", function(collectionApi) {
-    const posts = collectionApi.getFilteredByTag("post").sort((a, b) => {
-      return new Date(b.data.date) - new Date(a.data.date); // Newest first
+// Add properly sorted posts collection 
+    eleventyConfig.addCollection("sortedPosts", function(collectionApi) {
+        const posts = collectionApi.getFilteredByTag("post").sort((a, b) => {
+            return new Date(b.data.date) - new Date(a.data.date); // Newest first
+        });
+        console.log(`📝 sortedPosts collection has ${posts.length} posts:`);
+        posts.forEach(post => {
+            console.log(`  - ${post.data.title} (${post.data.date})`);
+        });
+        return posts;
     });
-    console.log(`📝 sortedPosts collection has ${posts.length} posts:`);
-    posts.forEach(post => {
-      console.log(`  - ${post.data.title} (${post.data.date})`);
+
+    // TEMPORARILY DISABLED - Add Contentful posts collection
+    /*
+    eleventyConfig.addCollection("contentfulPosts", function(collectionApi) {
+        // Access global data through collections
+        const allTemplates = collectionApi.getAll();
+        if (allTemplates.length > 0 && allTemplates[0].data) {
+            const posts = allTemplates[0].data.contentfulPosts || [];
+            return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        return [];
     });
-    return posts;
-  });
+    */
 
-  // TEMPORARILY DISABLED - Add Contentful posts collection
-  /*
-  eleventyConfig.addCollection("contentfulPosts", function(collectionApi) {
-    // Access global data through collections
-    const allTemplates = collectionApi.getAll();
-    if (allTemplates.length > 0 && allTemplates[0].data) {
-      const posts = allTemplates[0].data.contentfulPosts || [];
-      return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-    return [];
-  });
-  */
-
-  // TEMPORARILY DISABLED - Add combined posts collection (markdown + contentful)
-  /*
-  eleventyConfig.addCollection("allPosts", function(collectionApi) {
-    const markdownPosts = collectionApi.getFilteredByTag("post");
-    
-    // For now, just return markdown posts while we debug Contentful integration
-    console.log(`📝 allPosts collection has ${markdownPosts.length} markdown posts`);
-    return markdownPosts.sort((a, b) => {
-      const dateA = new Date(a.data?.date || 0);
-      const dateB = new Date(b.data?.date || 0);
-      return dateB - dateA; // Newest first
+    // TEMPORARILY DISABLED - Add combined posts collection (markdown + contentful)
+    /*
+    eleventyConfig.addCollection("allPosts", function(collectionApi) {
+        const markdownPosts = collectionApi.getFilteredByTag("post");
+        
+        // For now, just return markdown posts while we debug Contentful integration
+        console.log(`📝 allPosts collection has ${markdownPosts.length} markdown posts`);
+        return markdownPosts.sort((a, b) => {
+            const dateA = new Date(a.data?.date || 0);
+            const dateB = new Date(b.data?.date || 0);
+            return dateB - dateA; // Newest first
+        });
     });
-  });
-  */
+    */
 
-    // Copy the `img` and `js` folders to the output (CSS handled by Sass)
+    // Copy the `img` and `js` folders to the output (CSS is handled by Sass compilation)
     eleventyConfig.addPassthroughCopy("img");
     eleventyConfig.addPassthroughCopy("js");
     eleventyConfig.addPassthroughCopy(".well-known");
