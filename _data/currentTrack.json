@@ -1,12 +1,19 @@
 {
   "current": {
-    "song": "I Should Have Let You Be",
-    "artist": "Lee Fields",
-    "url": "https://open.spotify.com/track/7xiP5Y5KPBU05bWZq82YAb",
-    "album": "Sentimental Fool",
-    "playedAt": "2025-09-18T15:25:01.554Z"
+    "song": "Eternal Love",
+    "artist": "The Avett Brothers, Mike Patton, AVTT/PTTN",
+    "url": "https://open.spotify.com/track/0v3fQw8zMD6J91aBfMMSDi",
+    "album": "Eternal Love",
+    "playedAt": "2025-09-18T20:22:03.478Z"
   },
   "recent": [
+    {
+      "song": "I Should Have Let You Be",
+      "artist": "Lee Fields",
+      "url": "https://open.spotify.com/track/7xiP5Y5KPBU05bWZq82YAb",
+      "album": "Sentimental Fool",
+      "playedAt": "2025-09-18T15:25:01.554Z"
+    },
     {
       "song": "Forever",
       "artist": "Lee Fields",
@@ -34,14 +41,7 @@
       "url": "https://open.spotify.com/track/1wA3xTkrTqaVQBfrcEUCU7",
       "album": "Guns",
       "playedAt": "2025-09-18T15:10:50.989Z"
-    },
-    {
-      "song": "Spell with a Shell",
-      "artist": "Cardiacs, Sarah Smith, Sharron Saddington",
-      "url": "https://open.spotify.com/track/0HpcUHDDNQEoK8NG9NzxQb",
-      "album": "Guns",
-      "playedAt": "2025-09-18T15:08:33.443Z"
     }
   ],
-  "timestamp": "2025-09-18T20:18:40.570Z"
+  "timestamp": "2025-09-18T20:25:30.844Z"
 }
