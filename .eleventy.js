@@ -91,7 +91,7 @@ module.exports = function (eleventyConfig) {
         });
     });
 
-// Add properly sorted posts collection 
+    // Add properly sorted posts collection 
     eleventyConfig.addCollection("sortedPosts", function(collectionApi) {
         const posts = collectionApi.getFilteredByTag("post").sort((a, b) => {
             return new Date(b.data.date) - new Date(a.data.date); // Newest first
