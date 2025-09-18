@@ -67,5 +67,8 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .bluesky-posted.json
-          git diff --staged --quiet || git commit -m "Update Bluesky posted files [skip ci]"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "Update Bluesky posted files [skip ci]"
+            git pull --rebase origin main
+            git push origin main
+          fi
