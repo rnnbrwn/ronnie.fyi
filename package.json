@@ -26,6 +26,9 @@
         "url": "https://github.com/11ty/eleventy-base-blog/issues"
     },
     "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+    "engines": {
+        "node": ">=18"
+    },
     "devDependencies": {
         "@11ty/eleventy": "^0.12.1",
         "@11ty/eleventy-navigation": "^0.3.2",
