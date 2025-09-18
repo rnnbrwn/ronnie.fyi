@@ -155,7 +155,9 @@ async function detectNewContentfulPosts() {
         const postedData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
         // Handle both old format (array of filenames) and new format (object with markdown and contentful)
         if (Array.isArray(postedData)) {
+          // Migration: If we have the old format, check if any Contentful posts match existing markdown files
           alreadyPosted = [];
+          console.log('🔄 Migrating old tracking format - checking for matching posts...');
         } else {
           alreadyPosted = postedData.contentful || [];
         }
@@ -169,22 +171,53 @@ async function detectNewContentfulPosts() {
     const newContentfulPosts = [];
     for (const item of entries.items) {
       const postId = `contentful-${item.sys.id}`;
+      const slug = item.fields.slug;
       
-      if (!alreadyPosted.includes(postId)) {
-        const post = {
-          id: item.sys.id,
-          title: item.fields.title,
-          slug: item.fields.slug,
-          description: item.fields.description || '',
-          url: `${SITE_URL}/posts/${item.fields.slug}/`,
-          filename: postId,
-          source: 'contentful'
-        };
-        newContentfulPosts.push(post);
+      // Check if already posted as Contentful
+      if (alreadyPosted.includes(postId)) {
+        continue;
       }
+      
+      // MIGRATION: Check if this post was already posted as a markdown file
+      // by comparing the slug with existing markdown filenames
+      const postedData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
+      if (Array.isArray(postedData)) {
+        const matchingMarkdownFile = `${slug}.md`;
+        if (postedData.includes(matchingMarkdownFile)) {
+          console.log(`🔄 Migration: Skipping Contentful post "${item.fields.title}" - already posted as ${matchingMarkdownFile}`);
+          // Add to contentful tracking to prevent future duplicates
+          alreadyPosted.push(postId);
+          continue;
+        }
+      }
+      
+      const post = {
+        id: item.sys.id,
+        title: item.fields.title,
+        slug: item.fields.slug,
+        description: item.fields.description || '',
+        url: `${SITE_URL}/posts/${item.fields.slug}/`,
+        filename: postId,
+        source: 'contentful'
+      };
+      newContentfulPosts.push(post);
     }
 
     console.log(`📝 Found ${newContentfulPosts.length} new Contentful post(s) to post`);
+    
+    // If we did migration checks and found some posts to skip, save the updated tracking
+    if (alreadyPosted.length > 0) {
+      const existingData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
+      if (Array.isArray(existingData)) {
+        const migratedData = {
+          markdown: existingData,
+          contentful: alreadyPosted
+        };
+        fs.writeFileSync(postedFile, JSON.stringify(migratedData, null, 2));
+        console.log(`🔄 Migration complete: Updated tracking file with ${alreadyPosted.length} migrated Contentful posts`);
+      }
+    }
+    
     return newContentfulPosts;
 
   } catch (error) {
