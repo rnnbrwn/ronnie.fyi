@@ -2,10 +2,39 @@ const { BskyAgent } = require('@atproto/api');
 const fs = require('fs');
 const path = require('path');
 const contentful = require('contentful');
+const https = require('https');
+const http = require('http');
 
 // Configuration
 const SITE_URL = 'https://ronnie.fyi';
 const MAX_POST_LENGTH = 300; // Bluesky's character limit
+
+// Helper function to validate that a URL is accessible
+async function validatePostURL(url) {
+  return new Promise((resolve) => {
+    const urlObj = new URL(url);
+    const client = urlObj.protocol === 'https:' ? https : http;
+    
+    const req = client.get(url, (res) => {
+      // Consider 2xx status codes as success
+      const isSuccess = res.statusCode >= 200 && res.statusCode < 300;
+      console.log(`🔍 Checking ${url}: ${res.statusCode} (${isSuccess ? '✅' : '❌'})`);
+      resolve(isSuccess);
+    });
+    
+    req.on('error', (error) => {
+      console.log(`❌ Failed to check ${url}: ${error.message}`);
+      resolve(false);
+    });
+    
+    // Set timeout to prevent hanging
+    req.setTimeout(10000, () => {
+      console.log(`⏰ Timeout checking ${url}`);
+      req.destroy();
+      resolve(false);
+    });
+  });
+}
 
 async function postToBluesky() {
   try {
@@ -27,22 +56,29 @@ async function postToBluesky() {
 
     console.log('✅ Successfully logged into Bluesky');
 
-    // Check for new posts from both markdown files and Contentful
-    const markdownPosts = await detectNewPosts();
+    // Check for new posts from Contentful
     const contentfulPosts = await detectNewContentfulPosts();
-    const newPosts = [...markdownPosts, ...contentfulPosts];
     
-    if (newPosts.length === 0) {
-      console.log('ℹ️ No new posts detected from any source');
+    if (contentfulPosts.length === 0) {
+      console.log('ℹ️ No new posts detected from Contentful');
       return;
     }
 
-    console.log(`🚀 Processing ${newPosts.length} new post(s): ${markdownPosts.length} markdown + ${contentfulPosts.length} Contentful`);
+    console.log(`🚀 Processing ${contentfulPosts.length} new Contentful post(s)`);
 
     const successfullyPosted = [];
 
     // Post each new blog post to Bluesky
-    for (const post of newPosts) {
+    for (const post of contentfulPosts) {
+      // Validate that the post URL is accessible before posting
+      console.log(`🔍 Validating URL for "${post.title}": ${post.url}`);
+      const isUrlValid = await validatePostURL(post.url);
+      
+      if (!isUrlValid) {
+        console.log(`⚠️ Skipping post "${post.title}" - URL not accessible yet: ${post.url}`);
+        continue;
+      }
+      
       const postData = createBlueskyPost(post);
       
       try {
@@ -65,64 +101,6 @@ async function postToBluesky() {
     console.error('❌ Error with Bluesky integration:', error.message);
     process.exit(1);
   }
-}
-
-async function detectNewPosts() {
-  const postsDir = path.join(__dirname, '../posts');
-  const postedFile = path.join(__dirname, '../.bluesky-posted.json');
-  
-  let alreadyPosted = [];
-  
-  // Read list of already posted files
-  if (fs.existsSync(postedFile)) {
-    try {
-      const postedData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
-      // Handle both old format (array of filenames) and new format (object with markdown and contentful)
-      if (Array.isArray(postedData)) {
-        alreadyPosted = postedData;
-      } else {
-        alreadyPosted = postedData.markdown || [];
-      }
-    } catch (e) {
-      console.log('⚠️ Could not read posted files list, checking all posts');
-      alreadyPosted = [];
-    }
-  }
-
-  // Get all markdown files in posts directory
-  if (!fs.existsSync(postsDir)) {
-    console.log('❌ Posts directory not found');
-    return [];
-  }
-
-  const postFiles = fs.readdirSync(postsDir)
-    .filter(file => file.endsWith('.md'))
-    .filter(file => !alreadyPosted.includes(file)) // Only process files not already posted
-    .map(file => {
-      const filePath = path.join(postsDir, file);
-      return {
-        file,
-        path: filePath
-      };
-    });
-
-  console.log(`📋 Found ${postFiles.length} new post(s) to process`);
-
-  // Parse posts to extract metadata
-  const newPosts = [];
-  for (const postFile of postFiles) {
-    try {
-      const content = fs.readFileSync(postFile.path, 'utf8');
-      const post = parsePostMetadata(content, postFile.file);
-      if (post) {
-        newPosts.push(post);
-      }
-    } catch (error) {
-      console.error(`⚠️ Could not parse post ${postFile.file}:`, error.message);
-    }
-  }
-
-  return newPosts;
 }
 
 async function detectNewContentfulPosts() {
@@ -153,11 +131,10 @@ async function detectNewContentfulPosts() {
     if (fs.existsSync(postedFile)) {
       try {
         const postedData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
-        // Handle both old format (array of filenames) and new format (object with markdown and contentful)
+        // Handle migration from old tracking format
         if (Array.isArray(postedData)) {
-          // Migration: If we have the old format, check if any Contentful posts match existing markdown files
+          console.log('🔄 Migrating from old tracking format - starting fresh for Contentful posts');
           alreadyPosted = [];
-          console.log('🔄 Migrating old tracking format - checking for matching posts...');
         } else {
           alreadyPosted = postedData.contentful || [];
         }
@@ -173,22 +150,9 @@ async function detectNewContentfulPosts() {
       const postId = `contentful-${item.sys.id}`;
       const slug = item.fields.slug;
       
-      // Check if already posted as Contentful
+      // Check if already posted
       if (alreadyPosted.includes(postId)) {
         continue;
-      }
-      
-      // MIGRATION: Check if this post was already posted as a markdown file
-      // by comparing the slug with existing markdown filenames
-      const postedData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
-      if (Array.isArray(postedData)) {
-        const matchingMarkdownFile = `${slug}.md`;
-        if (postedData.includes(matchingMarkdownFile)) {
-          console.log(`🔄 Migration: Skipping Contentful post "${item.fields.title}" - already posted as ${matchingMarkdownFile}`);
-          // Add to contentful tracking to prevent future duplicates
-          alreadyPosted.push(postId);
-          continue;
-        }
       }
       
       const post = {
@@ -196,7 +160,7 @@ async function detectNewContentfulPosts() {
         title: item.fields.title,
         slug: item.fields.slug,
         description: item.fields.description || '',
-        url: `${SITE_URL}/posts/${item.fields.slug}/`,
+        url: `${SITE_URL}/contentful-posts/${item.fields.slug}/`,
         filename: postId,
         source: 'contentful'
       };
@@ -204,19 +168,6 @@ async function detectNewContentfulPosts() {
     }
 
     console.log(`📝 Found ${newContentfulPosts.length} new Contentful post(s) to post`);
-    
-    // If we did migration checks and found some posts to skip, save the updated tracking
-    if (alreadyPosted.length > 0) {
-      const existingData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
-      if (Array.isArray(existingData)) {
-        const migratedData = {
-          markdown: existingData,
-          contentful: alreadyPosted
-        };
-        fs.writeFileSync(postedFile, JSON.stringify(migratedData, null, 2));
-        console.log(`🔄 Migration complete: Updated tracking file with ${alreadyPosted.length} migrated Contentful posts`);
-      }
-    }
     
     return newContentfulPosts;
 
@@ -229,21 +180,19 @@ async function detectNewContentfulPosts() {
 async function markAsPosted(filenames) {
   const postedFile = path.join(__dirname, '../.bluesky-posted.json');
   
-  let postedData = { markdown: [], contentful: [] };
+  let postedData = { contentful: [] };
   
   // Read existing posted files list
   if (fs.existsSync(postedFile)) {
     try {
       const existingData = JSON.parse(fs.readFileSync(postedFile, 'utf8'));
       
-      // Handle migration from old format (array) to new format (object)
+      // Handle migration from old format (array) or old object format to simplified format
       if (Array.isArray(existingData)) {
-        console.log('🔄 Migrating tracking file to new format...');
-        postedData.markdown = existingData;
+        console.log('🔄 Migrating tracking file to new simplified format...');
         postedData.contentful = [];
       } else {
         postedData = {
-          markdown: existingData.markdown || [],
           contentful: existingData.contentful || []
         };
       }
@@ -252,52 +201,15 @@ async function markAsPosted(filenames) {
     }
   }
 
-  // Add new filenames to the appropriate list (avoid duplicates)
+  // Add new filenames to the contentful list (avoid duplicates)
   for (const filename of filenames) {
-    if (filename.startsWith('contentful-')) {
-      if (!postedData.contentful.includes(filename)) {
-        postedData.contentful.push(filename);
-      }
-    } else {
-      if (!postedData.markdown.includes(filename)) {
-        postedData.markdown.push(filename);
-      }
+    if (!postedData.contentful.includes(filename)) {
+      postedData.contentful.push(filename);
     }
   }
 
   // Write updated list back to file
   fs.writeFileSync(postedFile, JSON.stringify(postedData, null, 2));
-}
-
-function parsePostMetadata(content, filename) {
-  // Extract frontmatter
-  const frontmatterMatch = content.match(/^---\n(.*?)\n---/s);
-  if (!frontmatterMatch) {
-    console.log(`⚠️ No frontmatter found in ${filename}`);
-    return null;
-  }
-
-  const frontmatter = frontmatterMatch[1];
-  
-  // Extract title
-  const titleMatch = frontmatter.match(/title:\s*(.+)/);
-  const title = titleMatch ? titleMatch[1].replace(/['"]/g, '').trim() : filename.replace('.md', '');
-  
-  // Extract description if available
-  const descMatch = frontmatter.match(/description:\s*(.+)/);
-  const description = descMatch ? descMatch[1].replace(/['"]/g, '').trim() : '';
-  
-  // Create URL slug from filename
-  const slug = filename.replace('.md', '');
-  const url = `${SITE_URL}/posts/${slug}/`;
-
-  return {
-    title,
-    description,
-    url,
-    filename,
-    source: 'markdown'
-  };
 }
 
 function createBlueskyPost(post) {
