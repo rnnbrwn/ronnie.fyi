@@ -160,7 +160,7 @@ async function detectNewContentfulPosts() {
         title: item.fields.title,
         slug: item.fields.slug,
         description: item.fields.description || '',
-        url: `${SITE_URL}/contentful-posts/${item.fields.slug}/`,
+        url: `${SITE_URL}/posts/${item.fields.slug}/`,
         filename: postId,
         source: 'contentful'
       };

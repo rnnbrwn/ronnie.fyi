@@ -21,7 +21,7 @@ eleventyNavigation:
 {# Add Contentful posts to allPosts array #}
 {% for post in contentfulPostsData %}
   {% set contentfulPost = {
-    url: "/contentful-posts/" + post.slug + "/",
+    url: "/posts/" + post.slug + "/",
     data: {
       title: post.title,
       date: post.date
