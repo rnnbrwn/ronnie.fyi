@@ -28,7 +28,7 @@ module.exports = async function() {
     const posts = response.items.map(post => {
       const fields = post.fields;
       
-      // Convert rich text to HTML
+      // Convert rich text to HTML for individual post pages
       const content = documentToHtmlString(fields.content);
       
       return {
