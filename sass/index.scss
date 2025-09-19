@@ -242,14 +242,9 @@ header {
   align-items: baseline;
   line-height: 1.8;
 }
-.postlist-item:before {
-  display: none;
-}
 .postlist-date {
   font-size: 0.8125em; /* 13px /16 */
   color: var(--darkgray);
-}
-.postlist-date {
   word-spacing: -0.5px;
 }
 .postlist-link {
