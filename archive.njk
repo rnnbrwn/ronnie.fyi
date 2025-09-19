@@ -24,14 +24,88 @@ eleventyNavigation:
     url: "/posts/" + post.slug + "/",
     data: {
       title: post.title,
-      date: post.date
+      date: post.date,
+      description: post.description
     },
     date: post.date,
-    title: post.title
+    title: post.title,
+    description: post.description,
+    featured: post.featured
   } %}
   {% set allPosts = (allPosts.push(contentfulPost), allPosts) %}
 {% endfor %}
 
 {# Sort all posts by date (newest first) #}
-{% set postslist = allPosts | sort(false, false, 'date') %}
-{% include "postslist.njk" %}
+{% set sortedPosts = allPosts | sort(false, false, 'date') %}
+
+{# Display posts grouped by year and month #}
+{% set displayedYearMonth = [] %}
+{% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+
+{# First pass: collect all unique year-month combinations #}
+{% set yearMonthCombos = [] %}
+{% for post in sortedPosts %}
+  {% set postDate = post.date or post.data.date %}
+  {% set year = postDate.getFullYear() %}
+  {% set month = postDate.getMonth() %}
+  {% set combo = year * 100 + month %}
+  
+  {% set found = false %}
+  {% for existingCombo in yearMonthCombos %}
+    {% if existingCombo == combo %}
+      {% set found = true %}
+    {% endif %}
+  {% endfor %}
+  
+  {% if not found %}
+    {% set yearMonthCombos = (yearMonthCombos.push(combo), yearMonthCombos) %}
+  {% endif %}
+{% endfor %}
+
+{# Sort combinations in descending order (newest first) #}
+{% set sortedCombos = yearMonthCombos | sort | reverse %}
+
+{# Display each year-month combination #}
+{% set currentDisplayYear = null %}
+{% for combo in sortedCombos %}
+  {% set year = (combo / 100) | round(0, "floor") %}
+  {% set month = combo % 100 %}
+  {% set monthName = monthNames[month] %}
+  
+  {# Show year header if this is a new year #}
+  {% if year != currentDisplayYear %}
+    <h2 class="archive-year">{{ year }}</h2>
+    {% set currentDisplayYear = year %}
+  {% endif %}
+  
+  {# Show month header #}
+  <h3 class="archive-month">{{ monthName }}</h3>
+  <ul class="archive-posts">
+    
+    {# Collect all posts for this year-month combination #}
+    {% set monthPosts = [] %}
+    {% for post in sortedPosts %}
+      {% set postDate = post.date or post.data.date %}
+      {% set postYear = postDate.getFullYear() %}
+      {% set postMonth = postDate.getMonth() %}
+      
+      {% if postYear == year and postMonth == month %}
+        {% set monthPosts = (monthPosts.push(post), monthPosts) %}
+      {% endif %}
+    {% endfor %}
+    
+    {# Sort this month's posts by date (newest first) and display them #}
+    {% for post in (monthPosts | sort(false, false, 'date') | reverse) %}
+      {% set postDate = post.date or post.data.date %}
+      <li class="archive-post-item">
+        <a href="{{ post.url | url }}" class="archive-post-link">
+          {% if post.title %}{{ post.title }}{% elif post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+        </a>
+        <time class="archive-post-date" datetime="{{ postDate | htmlDateString }}">
+          {{ postDate | readableDate }}
+        </time>
+      </li>
+    {% endfor %}
+    
+  </ul>
+{% endfor %}

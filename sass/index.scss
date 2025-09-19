@@ -391,3 +391,62 @@ a[href].direct-link:focus:visited,
   border-left-color: #B8956A; /* Warm tan accent */
   color: #F0E4D2; /* Sand/cream text */
 }
+
+/* Archive Page Styles */
+.archive-year {
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--blue);
+  margin: 2em 0 1em 0;
+  border-bottom: 2px solid var(--lightgray);
+  padding-bottom: 0.5em;
+}
+
+.archive-year:first-of-type {
+  margin-top: 1em;
+}
+
+.archive-month {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: var(--darkgray);
+  margin: 1.5em 0 0.8em 0;
+  padding-left: 1em;
+}
+
+.archive-posts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2em 2em;
+}
+
+.archive-post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.archive-post-item:last-child {
+  border-bottom: none;
+}
+
+.archive-post-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  flex-grow: 1;
+}
+
+.archive-post-link:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.archive-post-date {
+  font-size: 0.9em;
+  color: var(--darkgray);
+  margin-left: 1em;
+  white-space: nowrap;
+}
