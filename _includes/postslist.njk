@@ -8,7 +8,7 @@
     
     {% if post.featured and post.description %}
       <div class="postlist-content">
-        <p>{{ post.description }}</p>
+        <p>{{ post.description | safe }}</p>
         <p><a href="{{ post.url | url }}" class="read-more">Read more →</a></p>
       </div>
     {% endif %}
