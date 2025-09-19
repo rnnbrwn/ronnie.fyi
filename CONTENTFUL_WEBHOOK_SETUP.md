@@ -30,31 +30,28 @@ When you publish a blog post in Contentful, it will automatically trigger a GitH
 
 #### Basic Settings:
 - **Name**: `GitHub Auto Build`
-- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches`
+- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/actions/workflows/build-production.yml/dispatches`
 - **Method**: `POST`
 
 #### Headers:
 ```
 Authorization: Bearer YOUR_GITHUB_TOKEN_HERE
-Accept: application/vnd.github.v3+json
+Accept: application/vnd.github+json
 Content-Type: application/json
 User-Agent: Contentful-Webhook
 ```
 *Replace `YOUR_GITHUB_TOKEN_HERE` with the token you created in Step 1*
 
-#### Request Body (JSON):
+#### Request Body:
 ```json
 {
-  "event_type": "contentful_publish",
-  "client_payload": {
-    "entry_id": "{/payload/sys/id}",
-    "content_type": "{/payload/sys/contentType/sys/id}",
-    "action": "{/payload/sys/type}",
-    "space_id": "{/payload/sys/space/sys/id}",
-    "entry_title": "{/payload/fields/title/en-US}"
-  }
+  "ref": "main"
 }
 ```
+
+**Alternative**: If your Contentful interface looks different, you can also try:
+- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches` 
+- **Body**: `{"event_type": "contentful_publish"}`
 
 #### Triggers:
 Select these events:
