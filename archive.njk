@@ -46,7 +46,6 @@ eleventyNavigation:
 {# Simple grouped display using array approach #}
 {% set currentYear = null %}
 {% set currentMonth = null %}
-{% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
 
 {% for post in sortedPosts %}
   {% set postDate = post.date or post.data.date %}
