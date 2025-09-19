@@ -1,12 +1,19 @@
 {
   "current": {
-    "song": "Gen",
+    "song": "Woodeneye",
     "artist": "Cardiacs",
-    "url": "https://open.spotify.com/track/2vFRs6lPxII00HWpdNLswT",
+    "url": "https://open.spotify.com/track/1iSxe3ko8Az1vACfCcEkdR",
     "album": "LSD",
-    "playedAt": "2025-09-19T17:09:45.582Z"
+    "playedAt": "2025-09-19T17:30:24.997Z"
   },
   "recent": [
+    {
+      "song": "Gen",
+      "artist": "Cardiacs",
+      "url": "https://open.spotify.com/track/2vFRs6lPxII00HWpdNLswT",
+      "album": "LSD",
+      "playedAt": "2025-09-19T17:09:45.582Z"
+    },
     {
       "song": "The May",
       "artist": "Cardiacs",
@@ -34,14 +41,7 @@
       "url": "https://open.spotify.com/track/2lCJJDcd8HMSpeK4EKXBTd",
       "album": "LSD",
       "playedAt": "2025-09-19T16:59:27.664Z"
-    },
-    {
-      "song": "SHHH!",
-      "artist": "Tomahawk",
-      "url": "https://open.spotify.com/track/2nBBP4JF8Of8PX3LmOnWGj",
-      "album": "Tonic Immobility",
-      "playedAt": "2025-09-19T00:21:15.209Z"
     }
   ],
-  "timestamp": "2025-09-19T17:14:20.030Z"
+  "timestamp": "2025-09-19T17:53:20.481Z"
 }
