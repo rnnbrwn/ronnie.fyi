@@ -52,7 +52,22 @@ jobs:
           targetDir: ./ronnie.fyi/
 
       - name: ⏱️ Wait for deployment to propagate
-        run: sleep 30
+        run: sleep 60
+
+      - name: 🔍 Verify site is live
+        run: |
+          echo "Checking if site is accessible..."
+          if curl -f -s -o /dev/null "https://ronnie.fyi/"; then
+            echo "✅ Site is accessible"
+          else
+            echo "❌ Site is not accessible yet, waiting more..."
+            sleep 30
+            if curl -f -s -o /dev/null "https://ronnie.fyi/"; then
+              echo "✅ Site is now accessible"
+            else
+              echo "⚠️ Site still not accessible, but continuing with Bluesky posting (URL validation will handle this)"
+            fi
+          fi
 
       - name: 🦋 Post new content to Bluesky (after successful deploy)
         env:
