@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: 🚚 Get Latest Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📨 Install dependencies
         run: npm install
@@ -37,9 +40,13 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git fetch origin main
+          git reset --hard origin/main
           git add _data/currentTrack.json
-          git diff --staged --quiet || git commit -m "Update Spotify track [skip ci]"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "Update Spotify track [skip ci]"
+            git push origin main
+          fi
 
       - name: 🧑🏻‍💻 Deploy
         uses: AbleLincoln/push-to-sftp@v2.1
