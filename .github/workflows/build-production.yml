@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: � Log trigger information
+      - name: 📝 Log trigger information
         run: |
           echo "🔍 Workflow triggered by: ${{ github.event_name }}"
           if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
@@ -30,7 +30,7 @@ jobs:
             echo "📦 Client payload: ${{ toJson(github.event.client_payload) }}"
           fi
 
-      - name: �🚚 Get Latest Code
+      - name: 🚚 Get Latest Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
