@@ -38,8 +38,12 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add _data/currentTrack.json
-          git diff --staged --quiet || git commit -m "Update Spotify track [skip ci]"
-          git push
+          if ! git diff --staged --quiet; then
+            git commit -m "Update Spotify track [skip ci]"
+            git fetch origin main
+            git rebase origin/main
+            git push origin main
+          fi
 
       - name: 🧑🏻‍💻 Deploy
         uses: AbleLincoln/push-to-sftp@v2.1
