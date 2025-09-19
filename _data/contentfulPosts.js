@@ -39,9 +39,9 @@ module.exports = async function() {
         tags: fields.tags || [],
         content: content,
         featured: fields.featured || false,
-        // Eleventy expects these for compatibility - using different URL pattern to avoid conflicts
-        url: `/contentful-posts/${fields.slug}/`,
-        inputPath: `./contentful-posts/${fields.slug}.md`, // Virtual path for compatibility
+        // Eleventy expects these for compatibility - using /posts/ URL pattern
+        url: `/posts/${fields.slug}/`,
+        inputPath: `./posts/${fields.slug}.md`, // Virtual path for compatibility
         data: {
           title: fields.title,
           description: fields.description,
