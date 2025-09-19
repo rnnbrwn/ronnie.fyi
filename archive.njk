@@ -55,7 +55,6 @@ eleventyNavigation:
     
     {# Check if we need a new year header #}
     {% if year != currentYear %}
-      {% if currentYear != null %}</ul>{% endif %}
       <h2 class="archive-year">{{ year }}</h2>
       {% set currentYear = year %}
       {% set currentMonth = null %}
