@@ -25,7 +25,9 @@ module.exports = async function() {
       order: 'fields.navigationOrder' // Order by navigation order
     });
     
-    const pages = response.items.map(page => {
+    const pages = response.items
+      .filter(page => page.fields.slug !== 'about') // Exclude about page - handled separately
+      .map(page => {
       const fields = page.fields;
       
       // Convert rich text to HTML
@@ -38,16 +40,23 @@ module.exports = async function() {
         content: content,
         showInNavigation: fields.showInNavigation || false,
         navigationOrder: fields.navigationOrder || 999,
+        date: new Date(), // Add a default date for Eleventy compatibility
+        // Add eleventyNavigation directly to the page object
+        eleventyNavigation: fields.showInNavigation ? {
+          key: fields.title,
+          order: fields.navigationOrder || 999
+        } : false,
         // Eleventy expects these for compatibility
         url: `/${fields.slug}/`,
         inputPath: `./${fields.slug}.md`, // Virtual path for compatibility
         data: {
           title: fields.title,
           description: fields.description || '',
+          date: new Date(), // Add date to data as well
           eleventyNavigation: fields.showInNavigation ? {
             key: fields.title,
             order: fields.navigationOrder || 999
-          } : null
+          } : false
         }
       };
     });

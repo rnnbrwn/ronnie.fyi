@@ -1,0 +1,12 @@
+---
+layout: layouts/post.njk
+permalink: "/about/"
+eleventyNavigation:
+  key: About Me
+  order: 2
+eleventyComputed:
+  title: "{{ aboutPage.title }}"
+  description: "{{ aboutPage.description }}"
+---
+
+{{ aboutPage.content | safe }}
