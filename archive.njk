@@ -38,64 +38,51 @@ eleventyNavigation:
 {# Sort all posts by date (newest first) #}
 {% set sortedPosts = allPosts | sort(false, false, 'date') %}
 
-{# Display posts grouped by year and month #}
-{% set displayedYearMonth = [] %}
+{# Group posts by year-month combination in a single pass #}
+{% set groupedPosts = [] %}
 {% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+{% set lastCombo = null %}
 
-{# First pass: collect all unique year-month combinations #}
-{% set yearMonthCombos = [] %}
 {% for post in sortedPosts %}
   {% set postDate = post.date or post.data.date %}
   {% set year = postDate.getFullYear() %}
   {% set month = postDate.getMonth() %}
   {% set combo = year * 100 + month %}
+  {% set monthName = monthNames[month] %}
   
-  {% set found = false %}
-  {% for existingCombo in yearMonthCombos %}
-    {% if existingCombo == combo %}
-      {% set found = true %}
-    {% endif %}
-  {% endfor %}
-  
-  {% if not found %}
-    {% set yearMonthCombos = (yearMonthCombos.push(combo), yearMonthCombos) %}
+  {# Check if this is a new year-month combination #}
+  {% if combo != lastCombo %}
+    {# Create new group for this combination #}
+    {% set newGroup = {
+      combo: combo,
+      year: year,
+      month: month,
+      monthName: monthName,
+      posts: [post]
+    } %}
+    {% set groupedPosts = (groupedPosts.push(newGroup), groupedPosts) %}
+    {% set lastCombo = combo %}
+  {% else %}
+    {# Add to existing group (the last one in the array) #}
+    {% set currentGroup = groupedPosts[groupedPosts.length - 1] %}
+    {% set currentGroup.posts = (currentGroup.posts.push(post), currentGroup.posts) %}
   {% endif %}
 {% endfor %}
 
-{# Sort combinations in descending order (newest first) #}
-{% set sortedCombos = yearMonthCombos | sort | reverse %}
-
-{# Display each year-month combination #}
+{# Display each group (already in newest-first order) #}
 {% set currentDisplayYear = null %}
-{% for combo in sortedCombos %}
-  {% set year = (combo / 100) | round(0, "floor") %}
-  {% set month = combo % 100 %}
-  {% set monthName = monthNames[month] %}
-  
+{% for group in groupedPosts %}
   {# Show year header if this is a new year #}
-  {% if year != currentDisplayYear %}
-    <h2 class="archive-year">{{ year }}</h2>
-    {% set currentDisplayYear = year %}
+  {% if group.year != currentDisplayYear %}
+    <h2 class="archive-year">{{ group.year }}</h2>
+    {% set currentDisplayYear = group.year %}
   {% endif %}
   
-  {# Show month header #}
-  <h3 class="archive-month">{{ monthName }}</h3>
+  {# Show month header and posts #}
+  <h3 class="archive-month">{{ group.monthName }}</h3>
   <ul class="archive-posts">
-    
-    {# Collect all posts for this year-month combination #}
-    {% set monthPosts = [] %}
-    {% for post in sortedPosts %}
-      {% set postDate = post.date or post.data.date %}
-      {% set postYear = postDate.getFullYear() %}
-      {% set postMonth = postDate.getMonth() %}
-      
-      {% if postYear == year and postMonth == month %}
-        {% set monthPosts = (monthPosts.push(post), monthPosts) %}
-      {% endif %}
-    {% endfor %}
-    
-    {# Sort this month's posts by date (newest first) and display them #}
-    {% for post in (monthPosts | sort(false, false, 'date') | reverse) %}
+    {# Display the month's posts (already in newest-first order) #}
+    {% for post in group.posts %}
       {% set postDate = post.date or post.data.date %}
       <li class="archive-post-item">
         <a href="{{ post.url | url }}" class="archive-post-link">
@@ -106,6 +93,5 @@ eleventyNavigation:
         </time>
       </li>
     {% endfor %}
-    
   </ul>
 {% endfor %}
