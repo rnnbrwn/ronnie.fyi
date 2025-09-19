@@ -42,19 +42,17 @@ User-Agent: Contentful-Webhook
 ```
 *Replace `YOUR_GITHUB_TOKEN_HERE` with the token you created in Step 1*
 
-#### Request Body (JSON):
+#### Request Body:
 ```json
 {
-  "event_type": "contentful_publish",
-  "client_payload": {
-    "entry_id": "{/payload/sys/id}",
-    "content_type": "{/payload/sys/contentType/sys/id}",
-    "action": "{/payload/sys/type}",
-    "space_id": "{/payload/sys/space/sys/id}",
-    "entry_title": "{/payload/fields/title/en-US}"
-  }
+  "event_type": "contentful_publish"
 }
 ```
+
+**Alternative**: If that doesn't work, you can also try the workflow dispatch approach:
+- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/actions/workflows/build-production.yml/dispatches` 
+- **Body**: `{"ref": "main"}`
+- **Headers**: Same as above but change Accept to `application/vnd.github+json`
 
 #### Triggers:
 Select these events:
@@ -86,6 +84,7 @@ For additional security, you can:
 - Check the webhook URL is exactly: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches`
 - Verify your GitHub token has the correct permissions
 - Check Contentful's webhook delivery logs for errors
+- Ensure the request body contains `{"event_type": "contentful_publish"}`
 
 ### Build Fails After Webhook
 - Check GitHub Actions logs for specific error messages

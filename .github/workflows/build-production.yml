@@ -12,6 +12,11 @@ on:
     types: [contentful_publish, contentful_unpublish]
   workflow_dispatch: # Allow manual triggering
 
+# Prevent duplicate social media posts by cancelling superseded builds
+concurrency:
+  group: build-and-deploy
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
