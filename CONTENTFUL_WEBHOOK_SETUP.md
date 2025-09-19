@@ -30,13 +30,13 @@ When you publish a blog post in Contentful, it will automatically trigger a GitH
 
 #### Basic Settings:
 - **Name**: `GitHub Auto Build`
-- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/actions/workflows/build-production.yml/dispatches`
+- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches`
 - **Method**: `POST`
 
 #### Headers:
 ```
 Authorization: Bearer YOUR_GITHUB_TOKEN_HERE
-Accept: application/vnd.github+json
+Accept: application/vnd.github.v3+json
 Content-Type: application/json
 User-Agent: Contentful-Webhook
 ```
@@ -45,13 +45,14 @@ User-Agent: Contentful-Webhook
 #### Request Body:
 ```json
 {
-  "ref": "main"
+  "event_type": "contentful_publish"
 }
 ```
 
-**Alternative**: If your Contentful interface looks different, you can also try:
-- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches` 
-- **Body**: `{"event_type": "contentful_publish"}`
+**Alternative**: If that doesn't work, you can also try the workflow dispatch approach:
+- **URL**: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/actions/workflows/build-production.yml/dispatches` 
+- **Body**: `{"ref": "main"}`
+- **Headers**: Same as above but change Accept to `application/vnd.github+json`
 
 #### Triggers:
 Select these events:
@@ -83,6 +84,7 @@ For additional security, you can:
 - Check the webhook URL is exactly: `https://api.github.com/repos/rnnbrwn/ronnie-fyi/dispatches`
 - Verify your GitHub token has the correct permissions
 - Check Contentful's webhook delivery logs for errors
+- Ensure the request body contains `{"event_type": "contentful_publish"}`
 
 ### Build Fails After Webhook
 - Check GitHub Actions logs for specific error messages
