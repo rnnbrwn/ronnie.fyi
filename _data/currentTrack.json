@@ -1,12 +1,19 @@
 {
   "current": {
-    "song": "Eternal Love",
-    "artist": "The Avett Brothers, Mike Patton, AVTT/PTTN",
-    "url": "https://open.spotify.com/track/0v3fQw8zMD6J91aBfMMSDi",
-    "album": "Eternal Love",
-    "playedAt": "2025-09-18T20:22:03.478Z"
+    "song": "SHHH!",
+    "artist": "Tomahawk",
+    "url": "https://open.spotify.com/track/2nBBP4JF8Of8PX3LmOnWGj",
+    "album": "Tonic Immobility",
+    "playedAt": "2025-09-19T00:21:15.209Z"
   },
   "recent": [
+    {
+      "song": "Eternal Love",
+      "artist": "The Avett Brothers, Mike Patton, AVTT/PTTN",
+      "url": "https://open.spotify.com/track/0v3fQw8zMD6J91aBfMMSDi",
+      "album": "Eternal Love",
+      "playedAt": "2025-09-18T20:22:03.478Z"
+    },
     {
       "song": "I Should Have Let You Be",
       "artist": "Lee Fields",
@@ -34,14 +41,7 @@
       "url": "https://open.spotify.com/track/2BwetrPAhGCsBRi9Oa4Zdy",
       "album": "Guns",
       "playedAt": "2025-09-18T15:14:11.768Z"
-    },
-    {
-      "song": "There's Good Cud",
-      "artist": "Cardiacs",
-      "url": "https://open.spotify.com/track/1wA3xTkrTqaVQBfrcEUCU7",
-      "album": "Guns",
-      "playedAt": "2025-09-18T15:10:50.989Z"
     }
   ],
-  "timestamp": "2025-09-19T00:03:38.860Z"
+  "timestamp": "2025-09-19T01:17:07.256Z"
 }
