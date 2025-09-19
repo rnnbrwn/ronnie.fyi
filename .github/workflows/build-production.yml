@@ -12,10 +12,10 @@ on:
     types: [contentful_publish, contentful_unpublish]
   workflow_dispatch: # Allow manual triggering
 
-# Prevent concurrent builds that could cause duplicate social media posts
+# Prevent duplicate social media posts by cancelling superseded builds
 concurrency:
   group: build-and-deploy
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
