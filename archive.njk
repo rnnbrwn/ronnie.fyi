@@ -64,8 +64,8 @@ eleventyNavigation:
     {% if month != currentMonth %}
       {% if currentMonth != null %}</ul>{% endif %}
       <h3 class="archive-month">{{ monthNames[month] }}</h3>
-      <ul class="archive-posts">
       {% set currentMonth = month %}
+      <ul class="archive-posts">
     {% endif %}
     
     {# Display the post using the same pattern as postslist.njk #}
