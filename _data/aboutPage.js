@@ -1,6 +1,7 @@
 require('dotenv').config();
 const contentful = require('contentful');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
+const { BLOCKS } = require('@contentful/rich-text-types');
 
 // Check for required environment variables
 if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
@@ -30,7 +31,19 @@ module.exports = async function() {
       const fields = page.fields;
       
       // Convert rich text to HTML
-      const content = documentToHtmlString(fields.content);
+      //const content = documentToHtmlString(fields.content);
+
+      const content = documentToHtmlString(fields.content, {
+        renderNode: {
+            [BLOCKS.EMBEDDED_ASSET]: (node) => {
+                const url = node.data.target.fields.file.url;
+                const alt = node.data.target.fields.title || '';
+                // Add protocol if missing
+                const fullUrl = url.startsWith('//') ? 'https:' + url : url;
+                return `<img src="${fullUrl}" alt="${alt}" />`;
+            }
+        }
+});
       
       console.log(`✅ Fetched about page from Contentful`);
       return {

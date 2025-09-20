@@ -1,5 +1,5 @@
 ---
-layout: layouts/post.njk
+layout: layouts/base.njk
 permalink: "/about/"
 eleventyNavigation:
   key: About
@@ -8,5 +8,7 @@ eleventyComputed:
   title: "{{ aboutPage.title }}"
   description: "{{ aboutPage.description }}"
 ---
+
+<h1>About</h1>
 
 {{ aboutPage.content | safe }}
