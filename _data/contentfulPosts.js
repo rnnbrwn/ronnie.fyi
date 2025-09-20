@@ -30,18 +30,20 @@ module.exports = async function() {
     const posts = response.items.map(post => {
       const fields = post.fields;
       
-      // Convert rich text to HTML for individual post pages
-      const content = documentToHtmlString(fields.content, {
-        renderNode: {
-            [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const url = node.data.target.fields.file.url;
-                const alt = node.data.target.fields.title || '';
-                // Add protocol if missing
-                const fullUrl = url.startsWith('//') ? 'https:' + url : url;
-                return `<img src="${fullUrl}" alt="${alt}" />`;
-            }
-        }
-});
+const content = documentToHtmlString(fields.content);
+
+//       // Convert rich text to HTML for individual post pages
+//       const content = documentToHtmlString(fields.content, {
+//         renderNode: {
+//             [BLOCKS.EMBEDDED_ASSET]: (node) => {
+//                 const url = node.data.target.fields.file.url;
+//                 const alt = node.data.target.fields.title || '';
+//                 // Add protocol if missing
+//                 const fullUrl = url.startsWith('//') ? 'https:' + url : url;
+//                 return `<img src="${fullUrl}" alt="${alt}" />`;
+//             }
+//         }
+// });
       
       return {
         title: fields.title,

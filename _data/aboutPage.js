@@ -33,17 +33,17 @@ module.exports = async function() {
       // Convert rich text to HTML
       //const content = documentToHtmlString(fields.content);
 
-      const content = documentToHtmlString(fields.content, {
-        renderNode: {
-            [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const url = node.data.target.fields.file.url;
-                const alt = node.data.target.fields.title || '';
-                // Add protocol if missing
-                const fullUrl = url.startsWith('//') ? 'https:' + url : url;
-                return `<img src="${fullUrl}" alt="${alt}" />`;
-            }
-        }
-});
+    //   const content = documentToHtmlString(fields.content, {
+    //     renderNode: {
+    //         [BLOCKS.EMBEDDED_ASSET]: (node) => {
+    //             const url = node.data.target.fields.file.url;
+    //             const alt = node.data.target.fields.title || '';
+    //             // Add protocol if missing
+    //             const fullUrl = url.startsWith('//') ? 'https:' + url : url;
+    //             return `<img src="${fullUrl}" alt="${alt}" />`;
+    //         }
+    //     }
+    // });
       
       console.log(`✅ Fetched about page from Contentful`);
       return {
