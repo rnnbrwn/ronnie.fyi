@@ -29,19 +29,18 @@ module.exports = async function() {
     
     const posts = response.items.map(post => {
       const fields = post.fields;
-      
-      // Convert rich text to HTML for individual post pages
+      // Convert rich text to HTML for individual post pages, safely using Contentful asset URLs
       const content = documentToHtmlString(fields.content, {
         renderNode: {
-            [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                const url = node.data.target.fields.file.url;
-                const alt = node.data.target.fields.title || '';
-                // Add protocol if missing
-                const fullUrl = url.startsWith('//') ? 'https:' + url : url;
-                return `<img src="${fullUrl}" alt="${alt}" />`;
-            }
+          [BLOCKS.EMBEDDED_ASSET]: (node) => {
+            const url = node.data.target.fields.file.url;
+            const alt = node.data.target.fields.title || '';
+            // Add protocol if missing
+            const fullUrl = url.startsWith('//') ? 'https:' + url : url;
+            return `<img src="${fullUrl}" alt="${alt}" />`;
+          }
         }
-});
+      });
       
       return {
         title: fields.title,
