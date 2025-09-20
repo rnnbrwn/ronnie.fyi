@@ -38,7 +38,7 @@ eleventyNavigation:
 {% endfor %}
 
 {# Sort all posts by date (newest first) #}
-{% set sortedPosts = allPosts | sort(false, false, 'date') %}
+{% set sortedPosts = allPosts | sort(true, false, 'date') %}
 
 {# Month names array - make sure we have 12 elements (index 0-11) #}
 {% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
