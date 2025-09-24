@@ -7,7 +7,7 @@ function normalizeTags(raw) {
         if (typeof t === "string") return t.trim();
         if (t?.fields?.slug) return String(t.fields.slug).trim();
         if (t?.fields?.title) return String(t.fields.title).trim();
-        if (t?.sys?.id) return String(t.sys.id).trim(); // metadata tag id fallback
+        if (t?.sys?.id) return String(t.sys.id).trim();
         return null;
       })
       .filter(Boolean);
@@ -36,7 +36,7 @@ module.exports = class {
       eleventyComputed: {
         title: ({ post }) => post.title,
         date: ({ post }) => post.date,
-        // user-visible tags + the hidden "post" tag
+        // visible tags + the hidden "post" tag for rendering
         tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
         description: ({ post }) => post.description || "",
       },
