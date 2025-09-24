@@ -158,8 +158,10 @@ module.exports = function (eleventyConfig) {
             "md",
             "njk",
             "html",
-            "liquid"
-        ],
+            "liquid",
+            "11ty.js"
+],
+
 
         // -----------------------------------------------------------------
         // If your site deploys to a subdirectory, change `pathPrefix`.
