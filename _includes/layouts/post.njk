@@ -4,7 +4,11 @@ templateClass: tmpl-post
 ---
 <h1>{{ title }}</h1>
 
-<time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+<h1>{{ title }}</h1>
+
+{# Use the date from data cascade (set by the generator) #}
+<time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time>
+
 {%- for tag in tags | filterTagList -%}
   {%- set tagUrl %}/tags/{{ tag | slug }}/{% endset -%}
   <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
@@ -12,8 +16,8 @@ templateClass: tmpl-post
 
 {{ content | safe }}
 
-{# Prefer the built-in tag collection 'post' #}
-{%- set coll = collections['post'] or collections.posts -%}
+{# Prefer our sorted 'posts' collection; fallback to tag collection #}
+{%- set coll = collections.posts or collections['post'] -%}
 {%- if coll and (coll | length) > 0 -%}
   {%- set nextPost = coll | getNextCollectionItem(page) -%}
   {%- set previousPost = coll | getPreviousCollectionItem(page) -%}
@@ -26,10 +30,3 @@ templateClass: tmpl-post
   {%- endif -%}
 {%- endif -%}
 
-<hr>
-<p style="font-size:.85em;opacity:.6">
-  DEBUG — coll['post']={{ (collections['post'] or []) | length }},
-  coll.posts={{ (collections.posts or []) | length }},
-  page.url={{ page.url }},
-  tags=[{{ (tags or []) | join(', ') }}]
-</p>

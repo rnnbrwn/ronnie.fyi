@@ -25,7 +25,8 @@ eleventyNavigation:
   {% set currentMonth = -1 %}
 
   {% for item in sortedPosts %}
-    {% set postDate = item.date %}
+    {# USE CONTENTFUL DATE #}
+    {% set postDate = item.data.date %}
     {% if postDate %}
       {% set year = postDate.getFullYear() %}
       {% set month = postDate.getMonth() %}

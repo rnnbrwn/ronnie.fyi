@@ -69,16 +69,25 @@ module.exports = function (eleventyConfig) {
 
 
 
-    // Use tag-based collections so generated pages (tagged "post") are included
+// Use the Contentful-provided date stored in each page's data.date
 eleventyConfig.addCollection("posts", (collectionApi) => {
-  // Oldest → newest (required for getNext/getPrevious helpers to behave)
-  return collectionApi.getFilteredByTag("post").sort((a, b) => a.date - b.date);
+  // Ascending (oldest → newest) for next/prev helpers
+  return collectionApi.getFilteredByTag("post").sort((a, b) => {
+    const da = new Date(a.data.date);
+    const db = new Date(b.data.date);
+    return da - db;
+  });
 });
 
 eleventyConfig.addCollection("sortedPosts", (collectionApi) => {
-  // Newest → oldest (use this for listings)
-  return collectionApi.getFilteredByTag("post").sort((a, b) => b.date - a.date);
+  // Descending (newest → oldest) for listings
+  return collectionApi.getFilteredByTag("post").sort((a, b) => {
+    const da = new Date(a.data.date);
+    const db = new Date(b.data.date);
+    return db - da;
+  });
 });
+
 
 
     // Copy the `img` and `js` folders to the output (CSS is handled by Sass compilation)
