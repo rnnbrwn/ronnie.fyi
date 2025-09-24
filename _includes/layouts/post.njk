@@ -6,51 +6,36 @@ templateClass: tmpl-post
 
 <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
 {%- for tag in tags | filterTagList -%}
-{%- set tagUrl %}/tags/{{ tag | slug }}/{% endset -%}
-<a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
+  {%- set tagUrl %}/tags/{{ tag | slug }}/{% endset -%}
+  <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
 {%- endfor %}
 
 {{ content | safe }}
 
 {%- if collections.posts %}
-{%- set nextPost = collections.posts | getNextCollectionItem(page) %}
-{%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
-{%- if nextPost or previousPost %}
-<hr>
-<ul>
-  {%- if nextPost %}<li>Next: <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a></li>{% endif %}
-  {%- if previousPost %}<li>Previous: <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a></li>{% endif %}
-</ul>
+  {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
+  {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
+  {%- if nextPost or previousPost %}
+    <hr>
+    <ul>
+      {%- if nextPost %}<li>Next: <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a></li>{% endif %}
+      {%- if previousPost %}<li>Previous: <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a></li>{% endif %}
+    </ul>
+  {%- endif %}
 {%- endif %}
-{%- endif %}
 
+{# --- PREVIEW DEBUG (safe for Nunjucks) --- #}
 {% if process.env.USE_PREVIEW %}
-<hr>
-{% set onCollection = false %}
-{% for p in collections.posts %}
-  {% if p.url == page.url %}{% set onCollection = true %}{% break %}{% endif %}
-{% endfor %}
-<p style="font-size:.9em;opacity:.7">
-  DEBUG — collections.posts: {{ collections.posts | length }}, on-collection: {{ onCollection }}, tags: {{ (tags or []) | join(', ') }}
-</p>
-{% endif %}
-
-
-{% if process.env.USE_PREVIEW %}
-<hr>
-<p style="font-size:0.9em;opacity:.7">
-  DEBUG — collections.posts: {{ collections.posts | length }}, page.url: {{ page.url }},
-  tags: {{ (tags or []) | join(', ') }}
-</p>
-{% endif %}
-
-{% if process.env.USE_PREVIEW %}
-<hr>
-<p style="font-size:.9em;opacity:.7">
-  DEBUG — collections.posts: {{ collections.posts | length }},
-  on-collection: {{
-    collections.posts | some(p => p.url == page.url) | default(false)
-  }},
-  tags: {{ (tags or []) | join(', ') }}
-</p>
+  <hr>
+  {% set onCollection = false %}
+  {% for p in collections.posts %}
+    {% if p.url == page.url %}
+      {% set onCollection = true %}
+    {% endif %}
+  {% endfor %}
+  <p style="font-size:.9em;opacity:.7">
+    DEBUG — collections.posts: {{ collections.posts | length }},
+    on-collection: {{ onCollection }},
+    tags: {{ (tags or []) | join(', ') }}
+  </p>
 {% endif %}
