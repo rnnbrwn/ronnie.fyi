@@ -1,13 +1,20 @@
+// Colour scheme
+:root {
+    
+}
+
 /* Colors */
 :root {
   --lightgray: #D4C4B0; /* Warm light brown */
   --gray: #B8A082; /* Medium warm brown */
-  --darkgray: #3D2F1F; /* Rich dark brown text */
+  --darkgray: #2B2118; /* Rich dark brown text */
   --navy: #6B3410; /* Darker saddle brown for visited links */
   --blue: #8B4513; /* Darker sienna brown for links */
-  --white: #FDFCF8; /* Much lighter warm cream background, closer to white */
+  --white: #FFFDF9; /* Much lighter warm cream background, closer to white */
   --lightyellow: #F5EFE7; /* Light warm beige for code blocks */
 }
+
+
 
 /* Dark mode colors */
 [data-theme="dark"] {

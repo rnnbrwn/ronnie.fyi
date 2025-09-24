@@ -1,71 +1,48 @@
-require('dotenv').config();
-const contentful = require('contentful');
+const client = require('../lib/contentfulClient');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
-// Check for required environment variables
-if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
-  console.log('⚠️ Contentful credentials not found - returning empty pages array');
-  module.exports = async function() {
-    return [];
-  };
-  return;
-}
+module.exports = async () => {
+  const res = await client.getEntries({
+    content_type: 'page',
+    order: 'fields.navigationOrder',
+    include: 2,
+    limit: 1000
+  });
 
-const client = contentful.createClient({
-  space: process.env.CONTENTFUL_SPACE_ID,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-});
+  const pages = res.items
+    .filter(item => item.fields?.slug && item.fields.slug !== 'about')
+    .map(item => {
+      const f = item.fields;
+      const date = new Date(item.sys.updatedAt); // stable, defined
 
-module.exports = async function() {
-  try {
-    console.log('📡 Fetching pages from Contentful...');
-    
-    const response = await client.getEntries({
-      content_type: 'page',
-      order: 'fields.navigationOrder' // Order by navigation order
-    });
-    
-    const pages = response.items
-      .filter(page => page.fields.slug !== 'about') // Exclude about page - handled separately
-      .map(page => {
-      const fields = page.fields;
-      
-      // Convert rich text to HTML
-      const content = documentToHtmlString(fields.content);
-      
+      const content = f.content ? documentToHtmlString(f.content) : '';
+
+      const nav =
+        f.showInNavigation
+          ? { key: f.title, order: f.navigationOrder || 999 }
+          : false;
+
       return {
-        title: fields.title,
-        slug: fields.slug,
-        description: fields.description || '',
-        content: content,
-        showInNavigation: fields.showInNavigation || false,
-        navigationOrder: fields.navigationOrder || 999,
-        date: new Date(), // Add a default date for Eleventy compatibility
-        // Add eleventyNavigation directly to the page object
-        eleventyNavigation: fields.showInNavigation ? {
-          key: fields.title,
-          order: fields.navigationOrder || 999
-        } : false,
-        // Eleventy expects these for compatibility
-        url: `/${fields.slug}/`,
-        inputPath: `./${fields.slug}.md`, // Virtual path for compatibility
+        title: f.title,
+        slug: f.slug,
+        description: f.description || '',
+        content,
+        showInNavigation: Boolean(f.showInNavigation),
+        navigationOrder: f.navigationOrder || 999,
+
+        // Eleventy expectations
+        date,
+        url: `/${f.slug}/`,
+        inputPath: `./${f.slug}.md`,
         data: {
-          title: fields.title,
-          description: fields.description || '',
-          date: new Date(), // Add date to data as well
-          eleventyNavigation: fields.showInNavigation ? {
-            key: fields.title,
-            order: fields.navigationOrder || 999
-          } : false
-        }
+          title: f.title,
+          description: f.description || '',
+          date,
+          eleventyNavigation: nav
+        },
+        eleventyNavigation: nav
       };
     });
-    
-    console.log(`✅ Fetched ${pages.length} pages from Contentful`);
-    return pages;
-    
-  } catch (error) {
-    console.error('❌ Error fetching pages from Contentful:', error.message);
-    return [];
-  }
+
+  return pages; // ARRAY, not { pages: ... }
 };
