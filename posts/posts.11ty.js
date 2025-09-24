@@ -23,20 +23,20 @@ module.exports = class {
   data() {
     return {
       pagination: {
-        data: "contentfulPosts",   // array from _data/contentfulPosts.js
+        data: "contentfulPosts", // array from _data/contentfulPosts.js
         size: 1,
         alias: "post",
       },
       permalink: ({ post }) => `/posts/${post.slug}/`,
       layout: "layouts/post.njk",
 
-      // IMPORTANT: tag each generated page statically so it joins collections during build
+      // CRUCIAL: static tag so Eleventy includes each page in tag collections
       tags: ["post"],
 
       eleventyComputed: {
         title: ({ post }) => post.title,
         date: ({ post }) => post.date,
-        // Merge user tags with the static "post" tag for rendering
+        // user-visible tags + the hidden "post" tag
         tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
         description: ({ post }) => post.description || "",
       },
