@@ -23,3 +23,12 @@ templateClass: tmpl-post
 </ul>
 {%- endif %}
 {%- endif %}
+
+
+{% if process.env.USE_PREVIEW %}
+<hr>
+<p style="font-size:0.9em;opacity:.7">
+  DEBUG — collections.posts: {{ collections.posts | length }}, page.url: {{ page.url }},
+  tags: {{ (tags or []) | join(', ') }}
+</p>
+{% endif %}

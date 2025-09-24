@@ -4,18 +4,18 @@ function normalizeTags(raw) {
   if (Array.isArray(raw)) {
     return raw
       .map(t => {
-        if (typeof t === "string") return t;                 // string tag
-        if (t?.fields?.slug) return t.fields.slug;           // linked entry with slug
-        if (t?.fields?.title) return t.fields.title;         // linked entry with title
-        if (t?.sys?.id) return t.sys.id;                     // worst-case fallback
+        if (typeof t === "string") return t.trim();
+        if (t?.fields?.slug) return String(t.fields.slug).trim();
+        if (t?.fields?.title) return String(t.fields.title).trim();
+        if (t?.sys?.id) return String(t.sys.id).trim(); // metadata tag id fallback
         return null;
       })
       .filter(Boolean);
   }
-  // single value fallback
-  if (typeof raw === "string") return [raw];
-  if (raw?.fields?.slug) return [raw.fields.slug];
-  if (raw?.fields?.title) return [raw.fields.title];
+  if (typeof raw === "string") return [raw.trim()];
+  if (raw?.fields?.slug) return [String(raw.fields.slug).trim()];
+  if (raw?.fields?.title) return [String(raw.fields.title).trim()];
+  if (raw?.sys?.id) return [String(raw.sys.id).trim()];
   return [];
 }
 
@@ -23,7 +23,7 @@ module.exports = class {
   data() {
     return {
       pagination: {
-        data: "contentfulPosts",
+        data: "contentfulPosts",   // _data/contentfulPosts.js returns an array
         size: 1,
         alias: "post",
       },
@@ -32,7 +32,7 @@ module.exports = class {
       eleventyComputed: {
         title: ({ post }) => post.title,
         date: ({ post }) => post.date,
-        // IMPORTANT: add the visible user tags + the hidden "post" tag for collections
+        // Ensure page joins collections.posts AND exposes visible tags
         tags: ({ post }) => {
           const userTags = normalizeTags(post.tags);
           return ["post", ...userTags];
@@ -42,6 +42,15 @@ module.exports = class {
     };
   }
   render({ post }) {
+    // Debug to build logs (preview only)
+    if (process.env.USE_PREVIEW === "true") {
+      const dbg = {
+        slug: post.slug,
+        rawTags: post.tags,
+        normalized: normalizeTags(post.tags)
+      };
+      console.log("[11ty][preview] generated post page:", JSON.stringify(dbg));
+    }
     return post.content || "";
   }
 };
