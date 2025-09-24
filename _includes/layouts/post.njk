@@ -12,31 +12,24 @@ templateClass: tmpl-post
 
 {{ content | safe }}
 
-{%- if collections.posts %}
-  {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
-  {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
-  {%- if nextPost or previousPost %}
+{# Prefer the built-in tag collection 'post' #}
+{%- set coll = collections['post'] or collections.posts -%}
+{%- if coll and (coll | length) > 0 -%}
+  {%- set nextPost = coll | getNextCollectionItem(page) -%}
+  {%- set previousPost = coll | getPreviousCollectionItem(page) -%}
+  {%- if nextPost or previousPost -%}
     <hr>
     <ul>
       {%- if nextPost %}<li>Next: <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a></li>{% endif %}
       {%- if previousPost %}<li>Previous: <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a></li>{% endif %}
     </ul>
-  {%- endif %}
-{%- endif %}
+  {%- endif -%}
+{%- endif -%}
 
-{# --- PREVIEW DEBUG (safe for Nunjucks) --- #}
-{% if env.USE_PREVIEW %}
 <hr>
-{% set onCollection = false %}
-{% for p in collections.posts %}
-  {% if p.url == page.url %}
-    {% set onCollection = true %}
-  {% endif %}
-{% endfor %}
-<p style="font-size:.9em;opacity:.7">
-  DEBUG — collections.posts: {{ collections.posts | length }},
-  on-collection: {{ onCollection }},
-  tags: {{ (tags or []) | join(', ') }}
+<p style="font-size:.85em;opacity:.6">
+  DEBUG — coll['post']={{ (collections['post'] or []) | length }},
+  coll.posts={{ (collections.posts or []) | length }},
+  page.url={{ page.url }},
+  tags=[{{ (tags or []) | join(', ') }}]
 </p>
-{% endif %}
-
