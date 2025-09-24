@@ -23,20 +23,21 @@ module.exports = class {
   data() {
     return {
       pagination: {
-        data: "contentfulPosts", // array from _data/contentfulPosts.js
+        data: "contentfulPosts",     // array from _data/contentfulPosts.js
         size: 1,
         alias: "post",
+        addAllPagesToCollections: true, // ← critical: include every generated page in tag collections
       },
       permalink: ({ post }) => `/posts/${post.slug}/`,
       layout: "layouts/post.njk",
 
-      // CRUCIAL: static tag so Eleventy includes each page in tag collections
+      // static tag so Eleventy includes this template in tag collections at build time
       tags: ["post"],
 
       eleventyComputed: {
         title: ({ post }) => post.title,
         date: ({ post }) => post.date,
-        // visible tags + the hidden "post" tag for rendering
+        // visible user tags + hidden "post" tag
         tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
         description: ({ post }) => post.description || "",
       },
