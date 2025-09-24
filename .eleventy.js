@@ -67,29 +67,7 @@ module.exports = function (eleventyConfig) {
 
     eleventyConfig.addFilter("filterTagList", filterTagList)
 
-    // Create an array of all tags
-    eleventyConfig.addCollection("tagList", function (collection) {
-        let tagSet = new Set();
-        collection.getAll().forEach(item => {
-            (item.data.tags || []).forEach(tag => tagSet.add(tag));
-        });
 
-        return filterTagList([...tagSet]);
-    });
-
-    // Create posts collection sorted by file creation time
-    eleventyConfig.addCollection("posts", function (collection) {
-        const fs = require("fs");
-        return collection.getFilteredByTag("posts").sort(function (a, b) {
-            // Get file creation times (birthtime) or fall back to modification time
-            const aTime = fs.statSync(a.inputPath).birthtime || fs.statSync(a.inputPath).mtime;
-            const bTime = fs.statSync(b.inputPath).birthtime || fs.statSync(b.inputPath).mtime;
-            
-            // Sort by creation time (oldest first, so newest end up at the end)
-            // This works with head(-6) and | reverse to show newest first
-            return aTime - bTime;
-        });
-    });
 
     // Add properly sorted posts collection 
     eleventyConfig.addCollection("sortedPosts", function(collectionApi) {
