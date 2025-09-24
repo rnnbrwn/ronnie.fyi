@@ -69,24 +69,14 @@ module.exports = function (eleventyConfig) {
 
 
 
-// Use the Contentful-provided date stored in each page's data.date
-eleventyConfig.addCollection("posts", (collectionApi) => {
-  // Ascending (oldest → newest) for next/prev helpers
-  return collectionApi.getFilteredByTag("post").sort((a, b) => {
-    const da = new Date(a.data.date);
-    const db = new Date(b.data.date);
-    return da - db;
-  });
-});
+eleventyConfig.addCollection("posts", (c) =>
+  c.getFilteredByTag("post").sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
+);
 
-eleventyConfig.addCollection("sortedPosts", (collectionApi) => {
-  // Descending (newest → oldest) for listings
-  return collectionApi.getFilteredByTag("post").sort((a, b) => {
-    const da = new Date(a.data.date);
-    const db = new Date(b.data.date);
-    return db - da;
-  });
-});
+eleventyConfig.addCollection("sortedPosts", (c) =>
+  c.getFilteredByTag("post").sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+);
+
 
 
 

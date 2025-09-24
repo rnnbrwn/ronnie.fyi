@@ -8,20 +8,15 @@ eleventyNavigation:
 {# Canonical posts source: generated pages tagged "post" #}
 {% set coll = collections['post'] or collections.posts or collections.sortedPosts %}
 
-{# Newest first #}
-{% set sortedPosts = coll | reverse %}
+{# Canonical posts source: already sorted (newest → oldest) #}
+{% set sortedPosts = collections.sortedPosts %}
 
 {% set maxPosts = (sortedPosts | length) | min(20) %}
 <h1>Latest {% if maxPosts == 1 %}Post{% else %}{{ maxPosts }} Posts{% endif %}</h1>
 
-<ul>
-{%- for item in sortedPosts | head(20) -%}
-  <li>
-    <a href="{{ item.url | url }}">{{ item.data.title }}</a>
-    <small> — <time datetime="{{ item.data.date | htmlDateString }}">{{ item.data.date | readableDate }}</time></small>
-  </li>
-{%- endfor -%}
-</ul>
+{% set postslist = sortedPosts | head(20) %}
+{% set postslistCounter = sortedPosts | length %}
+{% include "postslist.njk" %}
 
 <p>More posts can be found in <a href="{{ '/posts/' | url }}">the archive</a>.</p>
 

@@ -8,30 +8,20 @@ eleventyNavigation:
 
 <h1>Archive</h1>
 
-{# Canonical posts source: generated pages tagged "post" #}
-{% set coll = collections['post'] or collections.posts or collections.sortedPosts %}
-
-{% if not coll or (coll | length) == 0 %}
+{% set sortedPosts = collections.sortedPosts %}
+{% if not sortedPosts or (sortedPosts | length) == 0 %}
   <p>No posts yet.</p>
 {% else %}
-  {# Newest first #}
-  {% set sortedPosts = coll | reverse %}
-
-  {# Month names #}
   {% set monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"] %}
-
-  {# Group by year/month #}
   {% set currentYear = -1 %}
   {% set currentMonth = -1 %}
 
   {% for item in sortedPosts %}
-    {# USE CONTENTFUL DATE #}
     {% set postDate = item.data.date %}
     {% if postDate %}
       {% set year = postDate.getFullYear() %}
       {% set month = postDate.getMonth() %}
 
-      {# New year header #}
       {% if year != currentYear %}
         {% if currentMonth != -1 %}</ul>{% endif %}
         <h2 class="archive-year">{{ year }}</h2>
@@ -39,7 +29,6 @@ eleventyNavigation:
         {% set currentMonth = -1 %}
       {% endif %}
 
-      {# New month header #}
       {% if month != currentMonth %}
         {% if currentMonth != -1 %}</ul>{% endif %}
         <h3 class="archive-month">{{ monthNames[month] }}</h3>
@@ -48,15 +37,10 @@ eleventyNavigation:
       {% endif %}
 
       <li class="archive-post-item">
-        <a href="{{ item.url | url }}" class="archive-post-link">
-          {{ item.data.title }}
-        </a>
-        <time class="archive-post-date" datetime="{{ postDate | htmlDateString }}">
-          {{ postDate | readableDate }}
-        </time>
+        <a href="{{ item.url | url }}" class="archive-post-link">{{ item.data.title }}</a>
+        <time class="archive-post-date" datetime="{{ postDate | htmlDateString }}">{{ postDate | readableDate }}</time>
       </li>
     {% endif %}
   {% endfor %}
-
   {% if currentMonth != -1 %}</ul>{% endif %}
 {% endif %}
