@@ -4,36 +4,12 @@ eleventyNavigation:
   key: Home
   order: 1
 ---
-{# Combine markdown posts with Contentful posts #}
-{% set markdownPosts = collections.post %}
-{% set contentfulPostsData = contentfulPosts or [] %}
-{% set allPosts = [] %}
 
-{# Add markdown posts to allPosts array #}
-{% for post in markdownPosts %}
-  {% set allPosts = (allPosts.push(post), allPosts) %}
-{% endfor %}
+{# Canonical posts source: generated pages tagged "post" #}
+{% set coll = collections['post'] or collections.posts or collections.sortedPosts %}
 
-{# Add Contentful posts to allPosts array #}
-{% for post in contentfulPostsData %}
-  {% set contentfulPost = {
-    url: "/posts/" + post.slug + "/",
-    data: {
-      title: post.title,
-      date: post.date,
-      description: post.description
-    },
-    date: post.date,
-    title: post.title,
-    content: post.content,
-    description: post.description,
-    featured: post.featured
-  } %}
-  {% set allPosts = (allPosts.push(contentfulPost), allPosts) %}
-{% endfor %}
-
-{# Sort all posts by date (newest first) #}
-{% set sortedPosts = allPosts | sort(false, false, 'date') %}
+{# Newest first #}
+{% set sortedPosts = coll | reverse %}
 
 {% set maxPosts = (sortedPosts | length) | min(20) %}
 <h1>Latest {% if maxPosts == 1 %}Post{% else %}{{ maxPosts }} Posts{% endif %}</h1>
