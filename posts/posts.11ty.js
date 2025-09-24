@@ -23,34 +23,27 @@ module.exports = class {
   data() {
     return {
       pagination: {
-        data: "contentfulPosts",   // _data/contentfulPosts.js returns an array
+        data: "contentfulPosts",   // array from _data/contentfulPosts.js
         size: 1,
         alias: "post",
       },
       permalink: ({ post }) => `/posts/${post.slug}/`,
       layout: "layouts/post.njk",
+
+      // IMPORTANT: tag each generated page statically so it joins collections during build
+      tags: ["post"],
+
       eleventyComputed: {
         title: ({ post }) => post.title,
         date: ({ post }) => post.date,
-        // Ensure page joins collections.posts AND exposes visible tags
-        tags: ({ post }) => {
-          const userTags = normalizeTags(post.tags);
-          return ["post", ...userTags];
-        },
-        description: ({ post }) => post.description || ""
+        // Merge user tags with the static "post" tag for rendering
+        tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
+        description: ({ post }) => post.description || "",
       },
     };
   }
+
   render({ post }) {
-    // Debug to build logs (preview only)
-    if (process.env.USE_PREVIEW === "true") {
-      const dbg = {
-        slug: post.slug,
-        rawTags: post.tags,
-        normalized: normalizeTags(post.tags)
-      };
-      console.log("[11ty][preview] generated post page:", JSON.stringify(dbg));
-    }
     return post.content || "";
   }
 };
