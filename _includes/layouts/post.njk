@@ -12,7 +12,7 @@ templateClass: tmpl-post
   <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
 {%- endfor %}
 
-{{ post.fields.body | richtext | safe }}
+{{ content | safe }}
 
 {# Prefer our sorted 'posts' collection; fallback to tag collection #}
 {%- set coll = collections.posts or collections['post'] -%}
