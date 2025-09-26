@@ -2,6 +2,7 @@
 const client = require('../lib/contentfulClient');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
+
 function asDate(v) {
   if (!v) return null;
   const d = new Date(v);
@@ -51,7 +52,7 @@ module.exports = async () => {
         description: f.description || '',
         tags,
         featured: Boolean(f.featured),
-        content: f.content ? documentToHtmlString(f.content) : '',
+        content: f.content || null,
         date,
         url: `/posts/${f.slug}/`,
         inputPath: `./posts/${f.slug}.md`,
