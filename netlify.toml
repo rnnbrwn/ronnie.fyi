@@ -1,6 +1,6 @@
 [build]
   publish = "_site"
-  # Skip builds for PRs, and for branch deploys that aren't contentful-preview.
+  # This skips builds for PRs, and for branch deploys that aren't contentful-preview.
   # Netlify skips the build when this command exits 0; exit 1 means "go ahead".
   ignore = "bash -lc 'if [ \"$CONTEXT\" = \"deploy-preview\" ]; then echo skip && exit 0; fi; if [ \"$CONTEXT\" = \"branch-deploy\" ] && [ \"$BRANCH\" != \"contentful-preview\" ]; then echo skip && exit 0; fi; exit 1'"
 
