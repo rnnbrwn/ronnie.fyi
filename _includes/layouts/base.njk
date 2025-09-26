@@ -32,6 +32,11 @@
 
   </head>
   <body>
+    {% if env and env.USE_PREVIEW %}
+        {% include "preview-banner.njk" %}
+    {% endif %}
+
+  
     <div class="header-container">
       <header>
         <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
