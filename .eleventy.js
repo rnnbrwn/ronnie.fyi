@@ -65,24 +65,29 @@ module.exports = function (eleventyConfig) {
         return Math.min.apply(null, numbers);
     });
 
+    const EXCLUDED_TAGS = new Set(["all", "nav", "post", "posts"]);
     function filterTagList(tags) {
-        return (tags || []).filter(tag => ["all", "nav", "post", "posts"].indexOf(tag) === -1);
+        // For templates: take an array, return a filtered array
+        return (Array.isArray(tags) ? tags : []).filter(t => !EXCLUDED_TAGS.has(t));
+    }
+    function isRealTag(tag) {
+        // For Array.filter on strings: return true/false
+        return typeof tag === "string" && !EXCLUDED_TAGS.has(tag);
     }
 
 
 
 
-    eleventyConfig.addFilter("filterTagList", filterTagList)
+eleventyConfig.addFilter("filterTagList", filterTagList);
 
-        // Build a unique, filtered list of tags for pagination/templates
+// Build a unique, filtered list of tags for pagination/templates
 eleventyConfig.addCollection("tagList", (collectionApi) => {
   const tagSet = new Set();
   collectionApi.getAll().forEach((item) => {
     (item.data.tags || []).forEach((t) => tagSet.add(t));
   });
-  // Reuse your existing filter to drop "all/nav/post/posts"
   return Array.from(tagSet)
-    .filter(eleventyConfig.getFilter("filterTagList"))
+    .filter(isRealTag)
     .sort((a, b) => a.localeCompare(b));
 });
 
