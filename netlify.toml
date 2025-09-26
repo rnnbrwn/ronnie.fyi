@@ -1,20 +1,21 @@
 [build]
   publish = "_site"
-  # no default command here
+  # Skip builds for PRs, and for branch deploys that aren't contentful-preview.
+  # Netlify skips the build when this command exits 0; exit 1 means "go ahead".
+  ignore = "bash -lc 'if [ \"$CONTEXT\" = \"deploy-preview\" ]; then echo skip && exit 0; fi; if [ \"$CONTEXT\" = \"branch-deploy\" ] && [ \"$BRANCH\" != \"contentful-preview\" ]; then echo skip && exit 0; fi; exit 1'"
 
 [build.environment]
   NODE_VERSION = "20"
 
-# Production context: decide at runtime based on BRANCH
+# Production context: use prod build on main, preview build otherwise
 [context.production]
-  # If BRANCH=main → prod build; else → preview build with USE_PREVIEW=true
   command = "bash -lc 'if [ \"$BRANCH\" = \"main\" ]; then npm run build; else USE_PREVIEW=true npm run build:preview; fi'"
   [context.production.environment]
     CONTENTFUL_ENVIRONMENT = "master"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# All non-main branch deploys
+# Branch deploys (non-main branches). Only contentful-preview actually builds (others skipped by ignore)
 [context.branch-deploy]
   command = "npm run build:preview"
   [context.branch-deploy.environment]
@@ -23,7 +24,7 @@
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# Pull-request builds
+# PR builds (Deploy Previews) — skipped by ignore above; block kept for clarity
 [context.deploy-preview]
   command = "npm run build:preview"
   [context.deploy-preview.environment]
