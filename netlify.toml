@@ -1,29 +1,29 @@
 [build]
   publish = "_site"
-  # Do NOT set a default build command here; contexts below decide.
+  # no default command here
 
 [build.environment]
   NODE_VERSION = "20"
 
-# ----- Production (main) -----
+# Production context: decide at runtime based on BRANCH
 [context.production]
-  command = "npm run build"
+  # If BRANCH=main → prod build; else → preview build with USE_PREVIEW=true
+  command = "bash -lc 'if [ \"$BRANCH\" = \"main\" ]; then npm run build; else USE_PREVIEW=true npm run build:preview; fi'"
   [context.production.environment]
     CONTENTFUL_ENVIRONMENT = "master"
-    # Space ID is embedded in Contentful image URLs; ignore it in scanner
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# ----- Branch deploys for the preview branch itself -----
-[context."branch:contentful-preview"]
+# All non-main branch deploys
+[context.branch-deploy]
   command = "npm run build:preview"
-  [context."branch:contentful-preview".environment]
+  [context.branch-deploy.environment]
     USE_PREVIEW = "true"
     CONTENTFUL_ENVIRONMENT = "master"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# ----- Pull request builds (Deploy Preview) -----
+# Pull-request builds
 [context.deploy-preview]
   command = "npm run build:preview"
   [context.deploy-preview.environment]
