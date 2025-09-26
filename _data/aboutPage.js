@@ -1,58 +1,31 @@
-require('dotenv').config();
-const contentful = require('contentful');
-const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
-const { BLOCKS } = require('@contentful/rich-text-types');
+// _data/aboutPage.js
+const client = require('../lib/contentfulClient');
+const renderRichText = require('../lib/renderRichText');
 
-// Check for required environment variables
-if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
-  console.log('⚠️ Contentful credentials not found - returning empty about page data');
-  module.exports = async function() {
-    return { title: "About Me", content: "<p>About page not available.</p>" };
-  };
-  return;
-}
-
-const client = contentful.createClient({
-  space: process.env.CONTENTFUL_SPACE_ID,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-});
-
-module.exports = async function() {
+module.exports = async function () {
   try {
-    console.log('📡 Fetching about page from Contentful...');
-    
-    const response = await client.getEntries({
-      content_type: 'page',
-      'fields.slug': 'about'
+    const res = await client.getEntries({
+      content_type: 'page',          // change if your type is named differently
+      'fields.slug': 'about',        // change if your slug differs
+      include: 2,
+      limit: 1,
     });
-    
-    if (response.items.length > 0) {
-      const page = response.items[0];
-      const fields = page.fields;
-      
-      // Convert rich text to HTML
-      const content = documentToHtmlString(fields.content)
-      
-      console.log(`✅ Fetched about page from Contentful`);
-      return {
-        title: fields.title,
-        slug: fields.slug,
-        description: fields.description || '',
-        content: content
-      };
-    } else {
-      console.log('⚠️ About page not found in Contentful');
-      return {
-        title: "About Me",
-        content: "<p>About page not found in Contentful.</p>"
-      };
+
+    if (!res.items || res.items.length === 0) {
+      return { title: 'About', content: '' };
     }
-    
-  } catch (error) {
-    console.error('❌ Error fetching about page from Contentful:', error.message);
+
+    const f = res.items[0].fields || {};
+    const doc = f.content || f.body || f.bodyRichText || null;
+
     return {
-      title: "About Me",
-      content: "<p>Error loading about page.</p>"
+      title: f.title || 'About',
+      slug: f.slug,
+      description: f.description || '',
+      content: doc ? renderRichText(doc) : '',
     };
+  } catch (err) {
+    console.warn('aboutPage: failed to fetch:', err.message);
+    return { title: 'About', content: '' };
   }
 };
