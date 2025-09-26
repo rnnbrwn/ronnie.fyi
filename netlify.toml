@@ -1,27 +1,32 @@
 [build]
   publish = "_site"
-  command = "npm run build" # default for prod
+  # Do NOT set a default build command here; contexts below decide.
 
 [build.environment]
   NODE_VERSION = "20"
 
-# Production
+# ----- Production (main) -----
 [context.production]
   command = "npm run build"
+  [context.production.environment]
+    CONTENTFUL_ENVIRONMENT = "master"
+    # Space ID is embedded in Contentful image URLs; ignore it in scanner
+    SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
+    SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# Pull-request builds (Deploy Previews) — THIS is what your logs show
-[context.deploy-preview]
+# ----- Branch deploys for the preview branch itself -----
+[context."branch:contentful-preview"]
   command = "npm run build:preview"
-  [context.deploy-preview.environment]
+  [context."branch:contentful-preview".environment]
     USE_PREVIEW = "true"
     CONTENTFUL_ENVIRONMENT = "master"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# Direct branch deploys of contentful-preview
-[context."branch:contentful-preview"]
+# ----- Pull request builds (Deploy Preview) -----
+[context.deploy-preview]
   command = "npm run build:preview"
-  [context."branch:contentful-preview".environment]
+  [context.deploy-preview.environment]
     USE_PREVIEW = "true"
     CONTENTFUL_ENVIRONMENT = "master"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
