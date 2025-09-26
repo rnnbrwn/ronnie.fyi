@@ -4,3 +4,8 @@ publish = "_site"
 [build.environment]
 NODE_VERSION = "20"
 
+[context."branch:contentful-preview".environment]
+  USE_PREVIEW = "true"
+  NODE_VERSION = "20"
+  CONTENTFUL_ENVIRONMENT = "master"
+  SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
