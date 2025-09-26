@@ -69,6 +69,19 @@ module.exports = function (eleventyConfig) {
         return (tags || []).filter(tag => ["all", "nav", "post", "posts"].indexOf(tag) === -1);
     }
 
+    // Build a unique, filtered list of tags for pagination/templates
+eleventyConfig.addCollection("tagList", (collectionApi) => {
+  const tagSet = new Set();
+  collectionApi.getAll().forEach((item) => {
+    (item.data.tags || []).forEach((t) => tagSet.add(t));
+  });
+  // Reuse your existing filter to drop "all/nav/post/posts"
+  return Array.from(tagSet)
+    .filter(eleventyConfig.getFilter("filterTagList"))
+    .sort((a, b) => a.localeCompare(b));
+});
+
+
     eleventyConfig.addFilter("filterTagList", filterTagList)
 
 
