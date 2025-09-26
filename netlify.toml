@@ -7,40 +7,28 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# ---------------------------
-# Production context (used when a site treats a branch as its "production branch")
-# If BRANCH=main → prod build; otherwise (e.g., contentful-preview) → preview build
-# ---------------------------
+# Production context: use prod build on main, preview build otherwise
 [context.production]
   command = "bash -lc 'if [ \"$BRANCH\" = \"main\" ]; then npm run build; else USE_PREVIEW=true npm run build:preview; fi'"
   [context.production.environment]
     CONTENTFUL_ENVIRONMENT = "master"
-    CONTENTFUL_SPACE_ID = "YOUR_SPACE_ID_HERE"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# ---------------------------
-# Branch deploys (non-main branches)
-# Only contentful-preview actually builds (others are skipped by the ignore rule)
-# ---------------------------
+# Branch deploys (non-main branches). Only contentful-preview actually builds (others skipped by ignore)
 [context.branch-deploy]
   command = "npm run build:preview"
   [context.branch-deploy.environment]
     USE_PREVIEW = "true"
     CONTENTFUL_ENVIRONMENT = "master"
-    CONTENTFUL_SPACE_ID = "YOUR_SPACE_ID_HERE"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
 
-# ---------------------------
-# Pull request builds (Deploy Previews)
-# These are skipped by the ignore rule above, but we keep the block for clarity.
-# ---------------------------
+# PR builds (Deploy Previews) — skipped by ignore above; block kept for clarity
 [context.deploy-preview]
   command = "npm run build:preview"
   [context.deploy-preview.environment]
     USE_PREVIEW = "true"
     CONTENTFUL_ENVIRONMENT = "master"
-    CONTENTFUL_SPACE_ID = "YOUR_SPACE_ID_HERE"
     SECRETS_SCAN_OMIT_KEYS = "CONTENTFUL_SPACE_ID"
     SECRETS_SCAN_OMIT_PATHS = "_site/feed/*,_site/posts/*"
