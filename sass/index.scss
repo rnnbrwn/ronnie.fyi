@@ -45,8 +45,8 @@ p:last-child {
   margin-bottom: 0;
 }
 p,
-.tmpl-post li,
-img {
+.tmpl-post li
+{
   max-width: 37.5em; /* 600px /16 */
 }
 p,
@@ -457,3 +457,15 @@ a[href].direct-link:focus:visited,
   margin-left: 1em;
   white-space: nowrap;
 }
+
+/* Contentful embedded assets: keep intrinsic aspect ratio and fill content width */
+.cf-asset-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto !important; /* kill any inherited height */
+}
+
+/* Optional polish */
+.cf-figure { margin: 1rem 0; }
+.cf-figure > figcaption { font-size: 0.9rem; opacity: 0.8; margin-top: 0.25rem; }
