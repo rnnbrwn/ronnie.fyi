@@ -1,17 +1,10 @@
-<ul reversed class="postlist">
-{% for post in (postslist | reverse) %}
-  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}{% if post.featured %} postlist-item-featured{% endif %}">
-    <a href="{{ post.url | url }}" class="postlist-link">
-      {% if post.title %}{{ post.title }}{% elif post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
-    </a>
-    <time class="postlist-date" datetime="{{ (post.date or post.data.date) | htmlDateString }}">{{ (post.date or post.data.date) | readableDate }}</time>
-    
-    {% if post.featured and post.description %}
-      <div class="postlist-content">
-        <p>{{ post.description | safe }}</p>
-        <p><a href="{{ post.url | url }}" class="read-more">Read more →</a></p>
-      </div>
-    {% endif %}
+<ul class="postlist">
+{%- for post in postslist -%}
+  <li class="postlist-item">
+    <a href="{{ post.url | url }}" class="postlist-link">{{ post.data.title }}</a>
+    <time class="postlist-date" datetime="{{ post.data.date | htmlDateString }}">
+      {{ post.data.date | readableDate }}
+    </time>
   </li>
-{% endfor %}
+{%- endfor -%}
 </ul>

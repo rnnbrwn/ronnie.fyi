@@ -1,6 +1,6 @@
 // ./_data/contentfulPosts.js
 const client = require('../lib/contentfulClient');
-const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
+const renderRichText = require('../lib/renderRichText');
 
 function asDate(v) {
   if (!v) return null;
@@ -51,7 +51,7 @@ module.exports = async () => {
         description: f.description || '',
         tags,
         featured: Boolean(f.featured),
-        content: f.content ? documentToHtmlString(f.content) : '',
+        content: f.content ? renderRichText(f.content) : '',
         date,
         url: `/posts/${f.slug}/`,
         inputPath: `./posts/${f.slug}.md`,

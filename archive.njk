@@ -8,75 +8,39 @@ eleventyNavigation:
 
 <h1>Archive</h1>
 
-{# Combine markdown posts with Contentful posts #}
-{% set markdownPosts = collections.post %}
-{% set contentfulPostsData = contentfulPosts or [] %}
-{% set allPosts = [] %}
+{% set sortedPosts = collections.sortedPosts %}
+{% if not sortedPosts or (sortedPosts | length) == 0 %}
+  <p>No posts yet.</p>
+{% else %}
+  {% set monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"] %}
+  {% set currentYear = -1 %}
+  {% set currentMonth = -1 %}
 
-{# Add markdown posts to allPosts array #}
-{% for post in markdownPosts %}
-  {% set allPosts = (allPosts.push(post), allPosts) %}
-{% endfor %}
+  {% for item in sortedPosts %}
+    {% set postDate = item.data.date %}
+    {% if postDate %}
+      {% set year = postDate.getFullYear() %}
+      {% set month = postDate.getMonth() %}
 
-{# Add Contentful posts to allPosts array #}
-{% for post in contentfulPostsData %}
-  {% if post.slug %}
-    {% set contentfulPost = {
-      url: "/posts/" + post.slug + "/",
-      data: {
-        title: post.title,
-        date: post.date,
-        description: post.description
-      },
-      date: post.date,
-      title: post.title,
-      description: post.description,
-      featured: post.featured
-    } %}
-    {% set allPosts = (allPosts.push(contentfulPost), allPosts) %}
-  {% endif %}
-{% endfor %}
+      {% if year != currentYear %}
+        {% if currentMonth != -1 %}</ul>{% endif %}
+        <h2 class="archive-year">{{ year }}</h2>
+        {% set currentYear = year %}
+        {% set currentMonth = -1 %}
+      {% endif %}
 
-{# Sort all posts by date (newest first) #}
-{% set sortedPosts = allPosts | sort(true, false, 'date') %}
+      {% if month != currentMonth %}
+        {% if currentMonth != -1 %}</ul>{% endif %}
+        <h3 class="archive-month">{{ monthNames[month] }}</h3>
+        {% set currentMonth = month %}
+        <ul class="archive-posts">
+      {% endif %}
 
-{# Month names array - make sure we have 12 elements (index 0-11) #}
-{% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
-
-{# Simple grouped display using array approach #}
-{% set currentYear = null %}
-{% set currentMonth = null %}
-
-{% for post in sortedPosts %}
-  {% set postDate = post.date or post.data.date %}
-  {% if postDate %}
-    {% set year = postDate.getFullYear() %}
-    {% set month = postDate.getMonth() %}
-    
-    {# Check if we need a new year header #}
-    {% if year != currentYear %}
-      <h2 class="archive-year">{{ year }}</h2>
-      {% set currentYear = year %}
-      {% set currentMonth = null %}
+      <li class="archive-post-item">
+        <a href="{{ item.url | url }}" class="archive-post-link">{{ item.data.title }}</a>
+        <time class="archive-post-date" datetime="{{ postDate | htmlDateString }}">{{ postDate | readableDate }}</time>
+      </li>
     {% endif %}
-    
-    {# Check if we need a new month header #}
-    {% if month != currentMonth %}
-      {% if currentMonth != null %}</ul>{% endif %}
-      <h3 class="archive-month">{{ monthNames[month] }}</h3>
-      {% set currentMonth = month %}
-      <ul class="archive-posts">
-    {% endif %}
-    
-    {# Display the post using the same pattern as postslist.njk #}
-    <li class="archive-post-item">
-      <a href="{{ post.url | url }}" class="archive-post-link">
-        {% if post.title %}{{ post.title }}{% elif post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
-      </a>
-      <time class="archive-post-date" datetime="{{ postDate | htmlDateString }}">
-        {{ postDate | readableDate }}
-      </time>
-    </li>
-  {% endif %}
-{% endfor %}
-{% if currentMonth != null %}</ul>{% endif %}
+  {% endfor %}
+  {% if currentMonth != -1 %}</ul>{% endif %}
+{% endif %}

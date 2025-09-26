@@ -1,23 +1,23 @@
 ---
+layout: layouts/base.njk
 pagination:
-  data: collections
+  data: collections.tagList     # array of tag names from your tagList collection
   size: 1
   alias: tag
-  filter:
-    - all
-    - nav
-    - post
-    - posts
-    - tagList
-  addAllPagesToCollections: true
-layout: layouts/home.njk
+permalink: /tags/{{ tag | slug }}/
 eleventyComputed:
   title: Tagged “{{ tag }}”
-permalink: /tags/{{ tag | slug }}/
 ---
+
 <h1>Tagged “{{ tag }}”</h1>
 
-{% set postslist = collections[ tag ] %}
-{% include "postslist.njk" %}
+<ul>
+{%- for item in collections[tag] | reverse -%}
+  <li>
+    <a href="{{ item.url | url }}">{{ item.data.title }}</a>
+    <small> — <time datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time></small>
+  </li>
+{%- endfor -%}
+</ul>
 
-<p>See <a href="{{ '/tags/' | url }}">all tags</a>.</p>
+<p><a href="/tags/">All tags</a></p>
