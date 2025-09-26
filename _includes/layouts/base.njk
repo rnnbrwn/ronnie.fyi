@@ -12,9 +12,7 @@
     <link rel="icon" href="img/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
     <link rel="canonical" href="https://ronnie.fyi{{ page.url }}">
-    {% if env and env.USE_PREVIEW %}
-        <meta name="robots" content="noindex,nofollow">
-    {% endif %}
+    {% if env and env.USE_PREVIEW %}<meta name="robots" content="noindex,nofollow">{% endif %}
 
     <!-- Matomo -->
     <script>
@@ -34,6 +32,11 @@
 
   </head>
   <body>
+    {% if env and env.USE_PREVIEW %}
+        {% include "preview-banner.njk" %}
+    {% endif %}
+
+  
     <div class="header-container">
       <header>
         <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
