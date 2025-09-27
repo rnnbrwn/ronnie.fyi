@@ -57,6 +57,40 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("min", (...numbers) => Math.min.apply(null, numbers));
 
+  // normalize once
+function normTag(t) { return String(t || "").trim().toLowerCase(); }
+
+eleventyConfig.addFilter("byTag", (items, tag) => {
+  const key = normTag(tag);
+  return (items || []).filter(i =>
+    (i.data.tags || []).some(t => normTag(t) === key)
+  );
+});
+
+// Map: tag (lowercase) -> array of post items
+eleventyConfig.addCollection("postsByTag", (c) => {
+  const RESERVED = new Set(["all","nav","post","posts"]);
+  const norm = (t) => String(t || "").trim().toLowerCase();
+
+  const map = Object.create(null);
+  const items = c.getFilteredByTag("post"); // guaranteed only real post pages
+
+  for (const item of items) {
+    const tags = Array.isArray(item.data.tags) ? item.data.tags : [];
+    for (const t of tags.map(norm)) {
+      if (!t || RESERVED.has(t)) continue;
+      (map[t] ||= []).push(item);
+    }
+  }
+  // optional: sort each tag’s posts newest-first
+  for (const k of Object.keys(map)) {
+    map[k].sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+  }
+  return map;
+});
+
+
+
   // --------------------------
   // TAG NORMALIZATION & LISTS
   // --------------------------

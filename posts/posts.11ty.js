@@ -7,41 +7,32 @@ function normalizeTags(raw) {
     if (t?.sys?.id) return String(t.sys.id);
     return null;
   };
-
   const arr = Array.isArray(raw) ? raw : [raw];
-  return arr
-    .map(toVal)
-    .filter(Boolean)
-    .map((s) => s.trim().toLowerCase());
+  return arr.map(toVal).filter(Boolean).map((s) => s.trim().toLowerCase());
 }
 
 module.exports = class {
   data() {
     return {
-      // must be at the root for Eleventy to add every paginated page to collections
+      // Some Eleventy versions look here
       addAllPagesToCollections: true,
 
       pagination: {
         data: "contentfulPosts",
         size: 1,
         alias: "post",
+        // …and some only respect it here (set both)
+        addAllPagesToCollections: true,
       },
 
-      // defensive: ensure we always output a page even if slug is odd
       permalink: ({ post }) =>
         `/posts/${encodeURIComponent(post?.slug || "untitled")}/`,
-
       layout: "layouts/post.njk",
 
       eleventyComputed: {
         title: ({ post }) => post?.title || "",
-        // ensure Date object
-        date: ({ post }) =>
-          post?.date ? new Date(post.date) : undefined,
-
-        // include in 'post' collection + normalised contentful tags
-        tags: ({ post }) => ["post", ...normalizeTags(post?.tags)],
-
+        date:  ({ post }) => (post?.date ? new Date(post.date) : undefined),
+        tags:  ({ post }) => ["post", ...normalizeTags(post?.tags)],
         description: ({ post }) => post?.description || "",
       },
     };
