@@ -1,6 +1,8 @@
-// Colour scheme
+@use "./fonts";
+
 :root {
-    
+  --font-body: "Nebula Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans",
+               Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* Colors */
@@ -36,7 +38,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 24px;
   color: var(--darkgray);
   background-color: var(--white);
   min-height: 100vh; /* Ensure full viewport height */
@@ -356,7 +359,7 @@ a[href].post-tag:focus {
 
 /* Direct Links / Markdown Headers */
 .direct-link {
-  font-family: sans-serif;
+//   font-family: sans-serif;
   text-decoration: none;
   font-style: normal;
   margin-left: 0.1em;
