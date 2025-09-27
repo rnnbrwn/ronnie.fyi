@@ -13,186 +13,145 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const renderRichText = require('./lib/renderRichText');
 
-
 module.exports = function (eleventyConfig) {
-    // Add plugins
-    eleventyConfig.addFilter('richtext', renderRichText);
-    eleventyConfig.addNunjucksFilter('richtext', renderRichText);
-    eleventyConfig.addPlugin(pluginRss);
-    eleventyConfig.addPlugin(pluginSyntaxHighlight);
-    eleventyConfig.addPlugin(pluginNavigation);
+  // Plugins
+  eleventyConfig.addFilter('richtext', renderRichText);
+  eleventyConfig.addNunjucksFilter('richtext', renderRichText);
+  eleventyConfig.addPlugin(pluginRss);
+  eleventyConfig.addPlugin(pluginSyntaxHighlight);
+  eleventyConfig.addPlugin(pluginNavigation);
 
-    // https://www.11ty.dev/docs/data-deep-merge/
-    eleventyConfig.setDataDeepMerge(true);
+  eleventyConfig.setDataDeepMerge(true);
+  eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
 
-    // Alias `layout: post` to `layout: layouts/post.njk`
-    eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
-
-    eleventyConfig.addFilter("readableDate", dateObj => {
-        return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
-    });
-
-    // Format timestamp for "last updated" displays
-    eleventyConfig.addFilter("relativeTime", dateStr => {
-        const date = DateTime.fromISO(dateStr);
-        const now = DateTime.now();
-        const diff = now.diff(date, ['hours', 'minutes']).toObject();
-        
-        if (diff.hours >= 24) {
-            return date.toFormat("dd LLL");
-        } else if (diff.hours >= 1) {
-            return `${Math.floor(diff.hours)}h ago`;
-        } else if (diff.minutes >= 1) {
-            return `${Math.floor(diff.minutes)}m ago`;
-        } else {
-            return 'just now';
-        }
-    });
-
-    // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
-    eleventyConfig.addFilter('htmlDateString', (dateObj) => {
-        return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
-    });
-
-    // Get the first `n` elements of a collection.
-    eleventyConfig.addFilter("head", (array, n) => {
-        if (!Array.isArray(array) || array.length === 0) {
-            return [];
-        }
-        if (n < 0) {
-            return array.slice(n);
-        }
-
-        return array.slice(0, n);
-    });
-
-    // Return the smallest number argument
-    eleventyConfig.addFilter("min", (...numbers) => {
-        return Math.min.apply(null, numbers);
-    });
-
-    const EXCLUDED_TAGS = new Set(["all", "nav", "post", "posts"]);
-    function filterTagList(tags) {
-        // For templates: take an array, return a filtered array
-        return (Array.isArray(tags) ? tags : []).filter(t => !EXCLUDED_TAGS.has(t));
-    }
-    function isRealTag(tag) {
-        // For Array.filter on strings: return true/false
-        return typeof tag === "string" && !EXCLUDED_TAGS.has(tag);
-    }
-
-
-
-
-eleventyConfig.addFilter("filterTagList", filterTagList);
-
-// Build a unique, filtered list of tags for pagination/templates
-eleventyConfig.addCollection("tagList", (collectionApi) => {
-  const tagSet = new Set();
-  collectionApi.getAll().forEach((item) => {
-    (item.data.tags || []).forEach((t) => tagSet.add(t));
+  eleventyConfig.addFilter("readableDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
   });
-  return Array.from(tagSet)
-    .filter(isRealTag)
-    .sort((a, b) => a.localeCompare(b));
-});
 
+  // Relative time
+  eleventyConfig.addFilter("relativeTime", (dateStr) => {
+    const date = DateTime.fromISO(dateStr);
+    const now = DateTime.now();
+    const diff = now.diff(date, ['hours', 'minutes']).toObject();
 
+    if (diff.hours >= 24) {
+      return date.toFormat("dd LLL");
+    } else if (diff.hours >= 1) {
+      return `${Math.floor(diff.hours)}h ago`;
+    } else if (diff.minutes >= 1) {
+      return `${Math.floor(diff.minutes)}m ago`;
+    } else {
+      return 'just now';
+    }
+  });
 
-eleventyConfig.addCollection("posts", (c) =>
-  c.getFilteredByTag("post").sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
-);
+  eleventyConfig.addFilter('htmlDateString', (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
+  });
 
-eleventyConfig.addCollection("sortedPosts", (c) =>
-  c.getFilteredByTag("post").sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
-);
+  eleventyConfig.addFilter("head", (array, n) => {
+    if (!Array.isArray(array) || array.length === 0) return [];
+    if (n < 0) return array.slice(n);
+    return array.slice(0, n);
+  });
 
+  eleventyConfig.addFilter("min", (...numbers) => Math.min.apply(null, numbers));
 
+  // --------------------------
+  // TAG NORMALIZATION & LISTS
+  // --------------------------
+  const RESERVED = new Set(["all", "nav", "post", "posts"]);
 
+  function normTag(t) {
+    return String(t || "").trim().toLowerCase();
+  }
 
-    // Copy the `img` and `js` folders to the output (CSS is handled by Sass compilation)
-    eleventyConfig.addPassthroughCopy("img");
-    eleventyConfig.addPassthroughCopy("js");
-    eleventyConfig.addPassthroughCopy(".well-known");
+  function isRealTag(tag) {
+    const k = normTag(tag);
+    return k && !RESERVED.has(k);
+  }
 
-    // Customize Markdown library and settings:
-    let markdownLibrary = markdownIt({
-        html: true,
-        breaks: true,
-        linkify: true
-    }).use(markdownItAnchor, {
-        permalink: markdownItAnchor.permalink.ariaHidden({
-            placement: "after",
-            class: "direct-link",
-            symbol: "#",
-            level: [1, 2, 3, 4],
-        }),
-        slugify: eleventyConfig.getFilter("slug")
+  function filterTagList(tags) {
+    return (Array.isArray(tags) ? tags : [])
+      .map(normTag)
+      .filter(isRealTag);
+  }
+
+  eleventyConfig.addFilter("filterTagList", filterTagList);
+
+  // Unique, filtered, lowercase tag list for pagination/templates
+  eleventyConfig.addCollection("tagList", (collectionApi) => {
+    const tagSet = new Set();
+    collectionApi.getAll().forEach((item) => {
+      const tags = Array.isArray(item.data.tags) ? item.data.tags : [];
+      tags.forEach((t) => {
+        const k = normTag(t);
+        if (isRealTag(k)) tagSet.add(k);
+      });
     });
-    eleventyConfig.setLibrary("md", markdownLibrary);
+    return Array.from(tagSet).sort((a, b) => a.localeCompare(b));
+  });
 
-    // Override Browsersync defaults (used only with --serve)
-    eleventyConfig.setBrowserSyncConfig({
-        files: './_site/css/**/*.css',
-        host: "127.0.0.1",
-        port: 8080,
-        callbacks: {
-            ready: function (err, browserSync) {
-                const content_404 = fs.readFileSync('_site/404.html');
+  // Posts collections (sorted)
+  eleventyConfig.addCollection("posts", (c) =>
+    c.getFilteredByTag("post").sort((a, b) => new Date(a.data.date) - new Date(b.data.date))
+  );
 
-                browserSync.addMiddleware("*", (req, res) => {
-                    // Provides the 404 content without redirect.
-                    res.writeHead(404, { "Content-Type": "text/html; charset=UTF-8" });
-                    res.write(content_404);
-                    res.end();
-                });
-            },
-        },
-        ui: false,
-        ghostMode: false
-    });
+  eleventyConfig.addCollection("sortedPosts", (c) =>
+    c.getFilteredByTag("post").sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+  );
 
-    return {
-        // Control which files Eleventy will process
-        // e.g.: *.md, *.njk, *.html, *.liquid
-        templateFormats: [
-            "md",
-            "njk",
-            "html",
-            "liquid",
-            "11ty.js"
-],
+  // Static assets passthrough
+  eleventyConfig.addPassthroughCopy("img");
+  eleventyConfig.addPassthroughCopy("js");
+  eleventyConfig.addPassthroughCopy(".well-known");
 
+  // Markdown config
+  let markdownLibrary = markdownIt({
+    html: true,
+    breaks: true,
+    linkify: true
+  }).use(markdownItAnchor, {
+    permalink: markdownItAnchor.permalink.ariaHidden({
+      placement: "after",
+      class: "direct-link",
+      symbol: "#",
+      level: [1, 2, 3, 4],
+    }),
+    slugify: eleventyConfig.getFilter("slug")
+  });
+  eleventyConfig.setLibrary("md", markdownLibrary);
 
-        // -----------------------------------------------------------------
-        // If your site deploys to a subdirectory, change `pathPrefix`.
-        // Don’t worry about leading and trailing slashes, we normalize these.
+  // Browsersync
+  eleventyConfig.setBrowserSyncConfig({
+    files: './_site/css/**/*.css',
+    host: "127.0.0.1",
+    port: 8080,
+    callbacks: {
+      ready: function (err, browserSync) {
+        const content_404 = fs.readFileSync('_site/404.html');
+        browserSync.addMiddleware("*", (req, res) => {
+          res.writeHead(404, { "Content-Type": "text/html; charset=UTF-8" });
+          res.write(content_404);
+          res.end();
+        });
+      },
+    },
+    ui: false,
+    ghostMode: false
+  });
 
-        // If you don’t have a subdirectory, use "" or "/" (they do the same thing)
-        // This is only used for link URLs (it does not affect your file structure)
-        // Best paired with the `url` filter: https://www.11ty.dev/docs/filters/url/
-
-        // You can also pass this in on the command line using `--pathprefix`
-
-        // Optional (default is shown)
-        pathPrefix: "/",
-        // -----------------------------------------------------------------
-
-        // Pre-process *.md files with: (default: `liquid`)
-        markdownTemplateEngine: "njk",
-
-        // Pre-process *.html files with: (default: `liquid`)
-        htmlTemplateEngine: "njk",
-
-        // Opt-out of pre-processing global data JSON files: (default: `liquid`)
-        dataTemplateEngine: false,
-
-        // These are all optional (defaults are shown):
-        dir: {
-            input: ".",
-            includes: "_includes",
-            data: "_data",
-            output: "_site"
-        }
-    };
+  return {
+    templateFormats: ["md", "njk", "html", "liquid", "11ty.js"],
+    pathPrefix: "/",
+    markdownTemplateEngine: "njk",
+    htmlTemplateEngine: "njk",
+    dataTemplateEngine: false,
+    dir: {
+      input: ".",
+      includes: "_includes",
+      data: "_data",
+      output: "_site",
+    },
+  };
 };

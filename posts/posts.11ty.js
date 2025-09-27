@@ -12,38 +12,42 @@ function normalizeTags(raw) {
   return arr
     .map(toVal)
     .filter(Boolean)
-    .map(s => s.trim().toLowerCase());
+    .map((s) => s.trim().toLowerCase());
 }
 
 module.exports = class {
   data() {
     return {
-      // IMPORTANT: this must be on the root, not inside `pagination`
+      // must be at the root for Eleventy to add every paginated page to collections
       addAllPagesToCollections: true,
 
       pagination: {
-        data: "contentfulPosts", // array from _data/contentfulPosts.js
+        data: "contentfulPosts",
         size: 1,
         alias: "post",
       },
 
-      permalink: ({ post }) => `/posts/${post.slug}/`,
+      // defensive: ensure we always output a page even if slug is odd
+      permalink: ({ post }) =>
+        `/posts/${encodeURIComponent(post?.slug || "untitled")}/`,
+
       layout: "layouts/post.njk",
 
       eleventyComputed: {
-        title: ({ post }) => post.title,
-        // Ensure Eleventy treats this as a date object if your mapper passed a string
-        date: ({ post }) => (post.date ? new Date(post.date) : undefined),
+        title: ({ post }) => post?.title || "",
+        // ensure Date object
+        date: ({ post }) =>
+          post?.date ? new Date(post.date) : undefined,
 
-        // Put every page into the 'post' collection, plus its Contentful tags (normalised)
-        tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
+        // include in 'post' collection + normalised contentful tags
+        tags: ({ post }) => ["post", ...normalizeTags(post?.tags)],
 
-        description: ({ post }) => post.description || "",
+        description: ({ post }) => post?.description || "",
       },
     };
   }
 
   render({ post }) {
-    return post.content || "";
+    return post?.content || "";
   }
 };
