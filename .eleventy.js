@@ -139,6 +139,10 @@ eleventyConfig.addCollection("postsByTag", (c) => {
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy(".well-known");
+  // copy fonts and watch for changes
+eleventyConfig.addPassthroughCopy({ "fonts": "fonts" });
+eleventyConfig.addWatchTarget("fonts");
+
 
   // Markdown config
   let markdownLibrary = markdownIt({
