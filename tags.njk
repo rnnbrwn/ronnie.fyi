@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 pagination:
-  data: collections.tagList     # array of tag names from your tagList collection
+  data: collections.tagList        # array of tag names (already filtered to real tags)
   size: 1
   alias: tag
 permalink: /tags/{{ tag | slug }}/
@@ -9,15 +9,21 @@ eleventyComputed:
   title: Tagged “{{ tag }}”
 ---
 
+{% set tagged = collections[tag] or [] %}
+
 <h1>Tagged “{{ tag }}”</h1>
 
-<ul>
-{%- for item in collections[tag] | reverse -%}
-  <li>
-    <a href="{{ item.url | url }}">{{ item.data.title }}</a>
-    <small> — <time datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time></small>
-  </li>
-{%- endfor -%}
-</ul>
+{% if tagged.length %}
+  <ul class="postlist">
+  {%- for item in tagged | reverse -%}
+    <li class="postlist-item">
+      <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
+      <a class="postlist-link" href="{{ item.url | url }}">{{ item.data.title }}</a>
+    </li>
+  {%- endfor -%}
+  </ul>
+{% else %}
+  <p>No posts found for this tag.</p>
+{% endif %}
 
 <p><a href="/tags/">All tags</a></p>
