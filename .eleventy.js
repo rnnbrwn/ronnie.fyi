@@ -1,3 +1,9 @@
+// Load .env locally; Netlify provides env vars in CI so skip there
+if (!process.env.NETLIFY) {
+  try { require('dotenv').config(); } catch {}
+}
+
+
 const { DateTime } = require("luxon");
 const fs = require("fs");
 const pluginRss = require("@11ty/eleventy-plugin-rss");
