@@ -1,16 +1,18 @@
----
+--- 
 layout: layouts/base.njk
-title: Tags
+title: All tags
 permalink: /tags/
 ---
 
-<h1>Tags</h1>
+{% set map = collections.postsByTag or {} %}
 
-<ul>
-{%- for tag in collections.tagList -%}
+<h1>All tags</h1>
+
+<ul class="taglist">
+{% for t in collections.tagList %}
+  {% set count = (map[t] or []).length %}
   <li>
-    <a href="/tags/{{ tag | slug }}/">{{ tag }}</a>
-    <small>({{ collections[tag] | length }})</small>
+    <a href="/tags/{{ t | slug }}/">{{ t }}</a> ({{ count }})
   </li>
-{%- endfor -%}
+{% endfor %}
 </ul>
