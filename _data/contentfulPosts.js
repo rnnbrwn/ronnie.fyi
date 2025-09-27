@@ -5,22 +5,36 @@ const renderRichText = require('../lib/renderRichText');
 function asDate(v) {
   if (!v) return null;
   const d = new Date(v);
-  return isNaN(d) ? null : d;
+  return Number.isNaN(d.getTime()) ? null : d;
 }
 
+// Accepts strings OR Contentful refs (fields.slug/title or sys.id)
 function normalizeFieldTags(raw) {
   if (!raw) return [];
-  if (Array.isArray(raw)) return raw.filter(t => typeof t === 'string' && t.trim());
-  if (typeof raw === 'string') return [raw];
-  return [];
+  const arr = Array.isArray(raw) ? raw : [raw];
+
+  const pick = (t) => {
+    if (typeof t === 'string') return t;
+    if (t?.fields?.slug)  return String(t.fields.slug);
+    if (t?.fields?.title) return String(t.fields.title);
+    if (t?.sys?.id)       return String(t.sys.id);
+    return null;
+  };
+
+  return arr
+    .map(pick)
+    .filter(Boolean)
+    .map((s) => s.trim().toLowerCase())
+    .filter((s) => s.length > 0);
 }
 
+// Contentful “Tags” (UI feature): item.metadata.tags = [{ sys: { id } }, ...]
 function getMetadataTags(item) {
-  // Contentful "Tags" feature → item.metadata.tags = [{ sys: { id: 'tag-id' } }, ...]
   if (!item?.metadata?.tags) return [];
   return item.metadata.tags
-    .map(t => t?.sys?.id)
-    .filter(Boolean);
+    .map((t) => t?.sys?.id)
+    .filter(Boolean)
+    .map((s) => String(s).trim().toLowerCase());
 }
 
 module.exports = async () => {
@@ -28,41 +42,35 @@ module.exports = async () => {
     content_type: 'blogPost',
     order: '-fields.publishDate',
     include: 2,
-    limit: 1000
+    limit: 1000,
   });
 
-  const posts = res.items
-    .filter(item => item?.fields?.slug)
-    .map(item => {
+  return (res.items || [])
+    .filter((item) => item?.fields?.slug)
+    .map((item) => {
       const f = item.fields;
 
-      const fieldTags = normalizeFieldTags(f.tags);
-      const metaTags = getMetadataTags(item);
-      const tags = Array.from(new Set([...fieldTags, ...metaTags]));
+      // Merge & dedupe field-level tags and metadata tags
+      const tags = Array.from(new Set([
+        ...normalizeFieldTags(f.tags),
+        ...getMetadataTags(item),
+      ]));
 
+      // Prefer explicit publishDate, then sys.updatedAt, then now
       const date =
         asDate(f.publishDate) ||
         asDate(item.sys?.updatedAt) ||
         new Date();
 
       return {
-        title: f.title,
+        title: f.title || '',
         slug: f.slug,
         description: f.description || '',
-        tags,
-        featured: Boolean(f.featured),
+        tags,                       // lower-cased, trimmed
+        featured: !!f.featured,
         content: f.content ? renderRichText(f.content) : '',
-        date,
-        url: `/posts/${f.slug}/`,
-        inputPath: `./posts/${f.slug}.md`,
-        data: {
-          title: f.title,
-          description: f.description || '',
-          date,
-          tags
-        }
+        date,                       // Date object
+        // no `url`, `inputPath`, or nested `data` — avoid cascade conflicts
       };
     });
-
-  return posts;
 };

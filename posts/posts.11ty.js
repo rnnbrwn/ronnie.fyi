@@ -1,50 +1,44 @@
 // posts/posts.11ty.js
 function normalizeTags(raw) {
-  if (!raw) return [];
-  if (Array.isArray(raw)) {
-    return raw
-      .map(t => {
-        if (typeof t === "string") return t.trim();
-        if (t?.fields?.slug) return String(t.fields.slug).trim();
-        if (t?.fields?.title) return String(t.fields.title).trim();
-        if (t?.sys?.id) return String(t.sys.id).trim();
-        return null;
-      })
-      .filter(Boolean);
-  }
-  if (typeof raw === "string") return [raw.trim()];
-  if (raw?.fields?.slug) return [String(raw.fields.slug).trim()];
-  if (raw?.fields?.title) return [String(raw.fields.title).trim()];
-  if (raw?.sys?.id) return [String(raw.sys.id).trim()];
-  return [];
+  const toVal = (t) => {
+    if (typeof t === "string") return t;
+    if (t?.fields?.slug) return String(t.fields.slug);
+    if (t?.fields?.title) return String(t.fields.title);
+    if (t?.sys?.id) return String(t.sys.id);
+    return null;
+  };
+  const arr = Array.isArray(raw) ? raw : [raw];
+  return arr.map(toVal).filter(Boolean).map((s) => s.trim().toLowerCase());
 }
 
 module.exports = class {
   data() {
     return {
+      // Some Eleventy versions look here
+      addAllPagesToCollections: true,
+
       pagination: {
-        data: "contentfulPosts",     // array from _data/contentfulPosts.js
+        data: "contentfulPosts",
         size: 1,
         alias: "post",
-        addAllPagesToCollections: true, // ← critical: include every generated page in tag collections
+        // …and some only respect it here (set both)
+        addAllPagesToCollections: true,
       },
-      permalink: ({ post }) => `/posts/${post.slug}/`,
+
+      permalink: ({ post }) =>
+        `/posts/${encodeURIComponent(post?.slug || "untitled")}/`,
       layout: "layouts/post.njk",
 
-      // static tag so Eleventy includes this template in tag collections at build time
-      tags: ["post"],
-
       eleventyComputed: {
-        title: ({ post }) => post.title,
-        date: ({ post }) => post.date,
-        // visible user tags + hidden "post" tag
-        tags: ({ post }) => ["post", ...normalizeTags(post.tags)],
-        description: ({ post }) => post.description || "",
+        title: ({ post }) => post?.title || "",
+        date:  ({ post }) => (post?.date ? new Date(post.date) : undefined),
+        tags:  ({ post }) => ["post", ...normalizeTags(post?.tags)],
+        description: ({ post }) => post?.description || "",
       },
     };
   }
 
   render({ post }) {
-    return post.content || "";
+    return post?.content || "";
   }
 };
