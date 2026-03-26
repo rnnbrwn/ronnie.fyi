@@ -29,6 +29,8 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.DREAMHOST_HOST }} >> ~/.ssh/known_hosts
           rsync -avz --delete \
+            --exclude='.ssh' \
+            --exclude='logs' \
             -e "ssh -i ~/.ssh/deploy_key" \
             dist/ \
             ${{ secrets.DREAMHOST_USER }}@${{ secrets.DREAMHOST_HOST }}:${{ secrets.DREAMHOST_PATH }}/
