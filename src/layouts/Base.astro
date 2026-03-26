@@ -1,0 +1,28 @@
+---
+import Head from '../components/Head.astro';
+import Navigation from '../components/Navigation.astro';
+import 'modern-css-reset/dist/reset.min.css';
+---
+
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<Head />
+	</head>
+	<body>
+		<Navigation />
+		<slot />
+	</body>
+</html>
+
+<style lang="scss">
+	@use '../styles/abstracts/colors';
+
+	body {
+		max-width: 1440px;
+		margin-inline: auto;
+		font-family: 'Open Sans', sans-serif;
+		background-color: colors.$ivory;
+	}
+</style>

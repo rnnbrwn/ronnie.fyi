@@ -1,0 +1,13 @@
+// ==========================================================================
+// Main stylesheet — import order matters
+// ==========================================================================
+// 1. Abstracts first (no CSS output — just variables, mixins, functions)
+// 2. Base element styles
+// 3. Layout patterns
+// 4. Components
+// 5. Utilities last (highest specificity overrides)
+
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'utilities';

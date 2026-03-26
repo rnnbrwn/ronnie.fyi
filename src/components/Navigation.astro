@@ -1,0 +1,30 @@
+<nav>
+	<h1>ronnie.fyi</h1>
+	<ul>
+		<li><a href='/'>Home</a></li>
+		<li><a href='/about'>About</a></li>
+		<li><a href='/contact'>Contact</a></li>
+	</ul>
+</nav>
+
+<style lang='scss'>
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/spacing';
+	nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-block: spacing.$space-4;
+		h1 {
+			font-family: 'Chiron Hei HK', sans-serif;
+			color: colors.$charcoal;
+		}
+		ul {
+			display: none;
+			gap: 1rem;
+			li {
+				list-style: none;
+			}
+		}
+	}
+</style>

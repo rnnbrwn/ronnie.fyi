@@ -1,0 +1,65 @@
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+// Font stacks
+$font-heading: 'Chiron Hei HK', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-body: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+
+// Font weights
+$weight-light: 300;
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+$weight-extrabold: 800;
+
+// Type scale — minor third (1.2)
+$font-size-xs: 0.694rem;   // ~11px
+$font-size-sm: 0.833rem;   // ~13px
+$font-size-md: 1rem;       // 16px
+$font-size-lg: 1.2rem;     // ~19px
+$font-size-xl: 1.44rem;    // ~23px
+$font-size-2xl: 1.728rem;  // ~28px
+$font-size-3xl: 2.074rem;  // ~33px
+$font-size-4xl: 2.488rem;  // ~40px
+$font-size-5xl: 2.986rem;  // ~48px
+
+// Line heights
+$leading-none: 1;
+$leading-tight: 1.2;
+$leading-snug: 1.375;
+$leading-normal: 1.5;
+$leading-relaxed: 1.625;
+$leading-loose: 1.8;
+
+// Letter spacing
+$tracking-tight: -0.025em;
+$tracking-normal: 0;
+$tracking-wide: 0.025em;
+$tracking-wider: 0.05em;
+$tracking-widest: 0.1em;
+
+// Heading defaults
+@mixin heading-base {
+	font-family: $font-heading;
+	font-weight: $weight-bold;
+	line-height: $leading-tight;
+	letter-spacing: $tracking-tight;
+}
+
+// Body text defaults
+@mixin body-text {
+	font-family: $font-body;
+	font-weight: $weight-regular;
+	line-height: $leading-normal;
+	letter-spacing: $tracking-normal;
+}
+
+// Small / caption text
+@mixin caption-text {
+	font-size: $font-size-sm;
+	line-height: $leading-normal;
+	letter-spacing: $tracking-wide;
+}
