@@ -1,6 +1,7 @@
 ---
 import Head from '../components/Head.astro';
 import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
 import 'modern-css-reset/dist/reset.min.css';
 ---
 
@@ -13,6 +14,7 @@ import 'modern-css-reset/dist/reset.min.css';
 	<body>
 		<Navigation />
 		<slot />
+		<Footer />
 	</body>
 </html>
 
@@ -24,11 +26,28 @@ import 'modern-css-reset/dist/reset.min.css';
 		margin-inline: auto;
 		font-family: 'Open Sans', sans-serif;
 		background-color: colors.$ivory;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
 
-<style is:global>
+<style is:global lang="scss">
+	@use '../styles/abstracts/colors';
+
 	a {
+		color: colors.$teal;
+	}
+
+	a:visited {
+		color: colors.$petrol;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	nav a {
 		text-decoration: none;
 	}
 </style>

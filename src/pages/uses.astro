@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base>
+	<main>
+		<h2>Uses</h2>
+
+		<section>
+			<h3>Hardware</h3>
+			<ul>
+				<li><a href="https://support.apple.com/en-gb/111947">MacBook Pro, 15-inch, 2017</a></li>
+				<li>Dell monitor of some kind</li>
+				<li>Some kind of old Apple keyboard</li>
+				<li><a href="https://www.logitech.com/en-gb/products/mice/mx-master-3s.html">Logitech MX Master 3</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Editor &amp; Terminal</h3>
+			<ul>
+				<li><a href="https://www.warp.dev/">Warp</a></li>
+				<li><a href="https://code.visualstudio.com/">VS Code</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Hosting &amp; Services</h3>
+			<ul>
+				<li><a href="https://github.com/rnnbrwn">GitHub</a></li>
+				<li><a href="https://www.dreamhost.com/">Dreamhost</a></li>
+			</ul>
+		</section>
+	</main>
+</Base>
+
+<style lang='scss'>
+	@use '../styles/abstracts/spacing';
+
+	main {
+		padding-block: spacing.$space-8;
+	}
+
+	h2 {
+		margin-bottom: spacing.$space-4;
+	}
+
+	section {
+		margin-bottom: spacing.$space-8;
+	}
+
+	h3 {
+		margin-bottom: spacing.$space-2;
+	}
+</style>
