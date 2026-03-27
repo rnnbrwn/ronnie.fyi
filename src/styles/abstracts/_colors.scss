@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use 'sass:map';
+
 // Base colors from palette
 $ivory: #fef8f0;
 $cream: #fdf0db;
@@ -10,24 +13,23 @@ $charcoal: #3a3a3c;
 $graphite: #444444;
 $amber: #ffd677;
 
-// Tone generator: creates lighter and darker variants
-// Usage: map-get($cream-tones, 'light-2') or map-get($red-tones, 'dark-3')
-@function generate-tones($color, $steps: 5, $amount: 8%) {
-	$tones: (
-		'base': $color,
-	);
+// Tone generator: creates opacity variants
+// Usage: map-get($cream-tones, 'tone-2') or map-get($red-tones, 'tone-5')
+@function generate-tones($color, $steps: 5, $amount: 0.15) {
+  $tones: (
+    'base': $color,
+  );
 
-	@for $i from 1 through $steps {
-		$tones: map-merge(
-			$tones,
-			(
-				'light-#{$i}': lighten($color, $amount * $i),
-				'dark-#{$i}': darken($color, $amount * $i),
-			)
-		);
-	}
+  @for $i from 1 through $steps {
+    $tones: map.merge(
+      $tones,
+      (
+        'tone-#{$i}': color.adjust($color, $alpha: -$amount * $i),
+      )
+    );
+  }
 
-	@return $tones;
+  @return $tones;
 }
 
 // Generated tone maps
@@ -39,3 +41,4 @@ $yellow-tones: generate-tones($yellow);
 $teal-tones: generate-tones($teal);
 $petrol-tones: generate-tones($petrol);
 $charcoal-tones: generate-tones($charcoal);
+$amber-tones: generate-tones($amber);

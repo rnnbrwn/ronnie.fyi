@@ -11,43 +11,51 @@ import 'modern-css-reset/dist/reset.min.css';
 		<meta charset='UTF-8' />
 		<Head />
 	</head>
-	<body>
-		<Navigation />
-		<slot />
-		<Footer />
+	<body class='stack'>
+		<aside>
+			<Navigation />
+			<Footer />
+		</aside>
+		<main>
+			<slot />
+		</main>
+
+		<style lang='scss'>
+			@use '../styles/abstracts/colors';
+			@use '../styles/abstracts/typography';
+
+			body {
+				font-family: typography.$font-body;
+				min-height: 100vh;
+				display: flex;
+
+				aside {
+					width: 348px;
+					background-color: colors.$graphite;
+					display: flex;
+					flex-direction: column;
+				}
+			}
+		</style>
+
+		<style is:global lang='scss'>
+			@use '../styles/abstracts/colors';
+
+			a {
+				color: colors.$teal;
+			}
+
+			a:visited {
+				color: colors.$petrol;
+			}
+
+			a:hover {
+				text-decoration: none;
+			}
+
+			nav a {
+				text-decoration: none;
+			}
+		</style>
 	</body>
 </html>
-
-<style lang="scss">
-	@use '../styles/abstracts/colors';
-
-	body {
-		max-width: 1440px;
-		margin-inline: auto;
-		font-family: 'Open Sans', sans-serif;
-		background-color: colors.$ivory;
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
-</style>
-
-<style is:global lang="scss">
-	@use '../styles/abstracts/colors';
-
-	a {
-		color: colors.$teal;
-	}
-
-	a:visited {
-		color: colors.$petrol;
-	}
-
-	a:hover {
-		text-decoration: none;
-	}
-
-	nav a {
-		text-decoration: none;
-	}
-</style>

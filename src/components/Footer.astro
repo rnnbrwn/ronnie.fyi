@@ -1,12 +1,35 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
 <footer>
-	<p>Online since 1996 | <a href='/uses/'>/uses</a></p>
+	<p><a href='https://ronnie.fyi'>ronnie.fyi</a> | Online from 1997 - {currentYear} in some guise or other.</p>
 </footer>
 
 <style lang='scss'>
+	@use 'sass:map';
 	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/typography';
 
 	footer {
-		padding-block: spacing.$space-4;
+		padding: spacing.$space-8;
 		margin-top: auto;
+
+		p {
+			font-family: typography.$font-body;
+			color: map.get(colors.$ivory-tones, 'tone-3');
+			text-decoration: none;
+			font-weight: typography.$weight-regular;
+			font-size: typography.$font-size-sm;
+			a {
+				color: map.get(colors.$ivory-tones, 'tone-1');
+				text-decoration: underline;
+				&:hover {
+					color: colors.$amber;
+					text-decoration: none;
+				}
+			}
+		}
 	}
 </style>
