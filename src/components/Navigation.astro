@@ -1,8 +1,8 @@
 ---
-import Footer from './Footer.astro';
+
 ---
 
-<nav>
+<nav aria-label='Primary Navigation'>
 	<!-- <h1>
 		<a href='/'>ronnie.fyi</a>
 	</h1> -->
@@ -13,8 +13,6 @@ import Footer from './Footer.astro';
 		<li><a href='/art'>Art</a></li>
 		<li><a href='/music'>Music</a></li> -->
 	</ul>
-
-	<Footer />
 </nav>
 
 <style lang='scss'>
@@ -63,6 +61,11 @@ import Footer from './Footer.astro';
 			text-transform: uppercase;
 			&:hover {
 				color: colors.$amber;
+			}
+			&:focus-visible {
+				color: colors.$amber;
+				outline: 2px solid colors.$amber;
+				outline-offset: 2px;
 			}
 		}
 	}

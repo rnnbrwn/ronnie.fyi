@@ -12,11 +12,11 @@ import 'modern-css-reset/dist/reset.min.css';
 		<Head />
 	</head>
 	<body class='stack'>
-		<aside>
-			<Navigation />
-			<Footer />
-		</aside>
-		<main>
+		<a href='#main-content' class='skip-link'>Skip to main content</a>
+		<!-- TODO: Figure out how to hide this for sighted users -->
+		<Navigation />
+		<Footer />
+		<main id='main-content'>
 			<slot />
 		</main>
 
@@ -51,6 +51,11 @@ import 'modern-css-reset/dist/reset.min.css';
 
 			a:hover {
 				text-decoration: none;
+			}
+
+			a:focus-visible {
+				outline: 2px solid colors.$amber;
+				outline-offset: 2px;
 			}
 
 			nav a {
