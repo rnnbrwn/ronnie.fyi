@@ -1,5 +1,5 @@
 ---
-
+import Footer from './Footer.astro';
 ---
 
 <nav>
@@ -13,6 +13,8 @@
 		<li><a href='/art'>Art</a></li>
 		<li><a href='/music'>Music</a></li> -->
 	</ul>
+
+	<Footer />
 </nav>
 
 <style lang='scss'>
@@ -24,6 +26,11 @@
 		// border: 3px solid hotpink;
 	}
 	nav {
+		width: 348px;
+		background-color: colors.$graphite;
+		display: flex;
+		flex-direction: column;
+
 		display: flex;
 		flex-direction: column;
 		// justify-content: space-between;
