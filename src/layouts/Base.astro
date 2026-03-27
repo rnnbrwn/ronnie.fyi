@@ -13,12 +13,11 @@ import 'modern-css-reset/dist/reset.min.css';
 	</head>
 	<body class='stack'>
 		<a href='#main-content' class='skip-link'>Skip to main content</a>
-		<!-- TODO: Figure out how to hide this for sighted users -->
 		<Navigation />
-		<Footer />
 		<main id='main-content'>
 			<slot />
 		</main>
+		<Footer />
 
 		<style lang='scss'>
 			@use '../styles/abstracts/colors';
@@ -40,9 +39,11 @@ import 'modern-css-reset/dist/reset.min.css';
 
 		<style is:global lang='scss'>
 			@use '../styles/abstracts/colors';
+			@use '../styles/abstracts/spacing';
+			@use '../styles/abstracts/typography';
 
 			a {
-				color: colors.$teal;
+				color: colors.$petrol;
 			}
 
 			a:visited {
@@ -54,13 +55,21 @@ import 'modern-css-reset/dist/reset.min.css';
 			}
 
 			a:focus-visible {
-				outline: 2px solid colors.$amber;
+				outline: 2px solid colors.$charcoal;
 				outline-offset: 2px;
+				box-shadow: 0 0 0 4px colors.$amber;
 			}
 
 			nav a {
 				text-decoration: none;
 			}
+
+			nav a:focus-visible {
+				outline: 2px solid colors.$amber;
+				outline-offset: 2px;
+				box-shadow: none;
+			}
+
 			.skip-link {
 				position: absolute;
 				top: -9999px;
@@ -70,6 +79,11 @@ import 'modern-css-reset/dist/reset.min.css';
 			.skip-link:focus {
 				top: 0;
 				left: 0;
+				background: colors.$charcoal;
+				color: colors.$ivory;
+				padding: spacing.$space-2 spacing.$space-4;
+				font-family: typography.$font-body;
+				z-index: 9999;
 			}
 		</style>
 	</body>

@@ -14,18 +14,19 @@ const currentYear = new Date().getFullYear();
 
 	footer {
 		margin-top: auto;
+		padding: spacing.$space-6;
 
 		p {
 			font-family: typography.$font-body;
-			color: map.get(colors.$ivory-tones, 'tone-3');
+			color: colors.$graphite;
 			text-decoration: none;
 			font-weight: typography.$weight-regular;
 			font-size: typography.$font-size-sm;
 			a {
-				color: map.get(colors.$ivory-tones, 'tone-1');
+				color: colors.$graphite;
 				text-decoration: underline;
 				&:hover {
-					color: colors.$amber;
+					color: colors.$petrol;
 					text-decoration: none;
 				}
 			}
