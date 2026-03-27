@@ -61,6 +61,16 @@ import 'modern-css-reset/dist/reset.min.css';
 			nav a {
 				text-decoration: none;
 			}
+			.skip-link {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+
+			.skip-link:focus {
+				top: 0;
+				left: 0;
+			}
 		</style>
 	</body>
 </html>
