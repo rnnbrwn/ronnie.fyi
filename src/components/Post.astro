@@ -28,13 +28,9 @@ const { title, description, pubDate } = Astro.props;
 		font-weight: typography.$weight-extrabold;
 		font-size: typography.$font-size-5xl;
 		color: colors.$graphite;
-		line-height: typography.$leading-tight;
+		margin-top: 0;
 		margin-bottom: spacing.$space-8;
 		text-wrap: balance;
-	}
-
-	.post-body :global(h3) {
-		color: colors.$petrol;
 	}
 
 	.post {
@@ -63,22 +59,9 @@ const { title, description, pubDate } = Astro.props;
 			color: colors.$charcoal;
 		}
 
-		// Prose headings
-		:global(h2),
-		:global(h3),
-		:global(h4) {
-			font-weight: typography.$weight-bold;
-			line-height: typography.$leading-tight;
-			margin-top: spacing.$space-10;
-			margin-bottom: spacing.$space-4;
-		}
-
+		// Prose headings — size overrides only, base styles come from globals
 		:global(h2) {
 			font-size: typography.$font-size-2xl;
-		}
-
-		:global(h3) {
-			font-size: typography.$font-size-xl;
 		}
 
 		// Lists

@@ -97,6 +97,32 @@ const { title, description } = Astro.props;
 				z-index: 9999;
 			}
 
+			h1 {
+				font-weight: typography.$weight-extrabold;
+				font-size: typography.$font-size-5xl;
+				color: colors.$graphite;
+				line-height: typography.$leading-tight;
+				margin-bottom: spacing.$space-8;
+				text-wrap: balance;
+			}
+
+			h2 {
+				font-weight: typography.$weight-bold;
+				font-size: typography.$font-size-xl;
+				line-height: typography.$leading-tight;
+				color: colors.$petrol;
+				margin-top: spacing.$space-10;
+				margin-bottom: spacing.$space-4;
+			}
+
+			h3 {
+				font-weight: typography.$weight-bold;
+				font-size: typography.$font-size-lg;
+				line-height: typography.$leading-tight;
+				margin-top: spacing.$space-10;
+				margin-bottom: spacing.$space-4;
+			}
+
 			.visually-hidden {
 				position: absolute;
 				width: 1px;

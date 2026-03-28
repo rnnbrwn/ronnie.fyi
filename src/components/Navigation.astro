@@ -4,18 +4,22 @@ const pathname = Astro.url.pathname;
 const links = [
 	{ href: '/', label: 'Home' },
 	{ href: '/blog', label: 'Blog' },
+	// { href: '/about', label: 'About' },
+	// { href: '/uses', label: 'Uses' },
 ];
 ---
 
 <nav aria-label='Primary Navigation'>
 	<ul>
-		{links.map(({ href, label }) => (
-			<li>
-				<a href={href} aria-current={pathname === href || pathname === `${href}/` ? 'page' : undefined}>
-					{label}
-				</a>
-			</li>
-		))}
+		{
+			links.map(({ href, label }) => (
+				<li>
+					<a href={href} aria-current={pathname === href || pathname === `${href}/` ? 'page' : undefined}>
+						{label}
+					</a>
+				</li>
+			))
+		}
 	</ul>
 </nav>
 
