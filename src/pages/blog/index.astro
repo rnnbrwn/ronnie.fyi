@@ -6,14 +6,18 @@ const posts = await getSortedPosts();
 ---
 
 <Base title='Blog'>
-	<h1>All Blog Posts</h1>
+	<h1>All Posts</h1>
 	<ul>
 		{
 			posts.map((post) => (
 				<li>
 					<a href={`/posts/${post.id}`}>{post.data.title}</a>
 					<time datetime={post.data.pubDate.toISOString()}>
-						{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+						{post.data.pubDate.toLocaleDateString('en-GB', {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						})}
 					</time>
 					<p>{post.data.description}</p>
 				</li>
