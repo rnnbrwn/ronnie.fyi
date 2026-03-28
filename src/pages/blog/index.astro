@@ -1,5 +1,36 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getSortedPosts } from '../../utils/getSortedPosts';
+
+const posts = await getSortedPosts();
 ---
 
-<Base />
+<Base title='Blog'>
+	<h1>All Blog Posts</h1>
+	<ul>
+		{
+			posts.map((post) => (
+				<li>
+					<a href={`/posts/${post.id}`}>{post.data.title}</a>
+				</li>
+			))
+		}
+	</ul>
+</Base>
+
+<style lang='scss'>
+	@use '../../styles/abstracts/spacing';
+
+	main {
+		padding-block: spacing.$space-8;
+	}
+
+	ul {
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		margin-block-end: spacing.$space-4;
+	}
+</style>

@@ -1,0 +1,33 @@
+---
+import { render } from 'astro:content';
+import Post from './Post.astro';
+import { getSortedPosts } from '../utils/getSortedPosts';
+
+interface Props {
+	limit?: number;
+}
+
+const { limit } = Astro.props;
+
+const allPosts = await getSortedPosts();
+const posts = limit ? allPosts.slice(0, limit) : allPosts;
+
+const renderedPosts = await Promise.all(
+	posts.map(async (post) => ({
+		post,
+		Content: (await render(post)).Content,
+	})),
+);
+---
+
+{
+	renderedPosts.map(({ post, Content }) => (
+		<Post
+			title={post.data.title}
+			description={post.data.description}
+			pubDate={post.data.pubDate}
+		>
+			<Content />
+		</Post>
+	))
+}

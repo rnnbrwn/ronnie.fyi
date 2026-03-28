@@ -1,0 +1,116 @@
+---
+import { timeAgo } from '../utils/timeAgo';
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+}
+
+const { title, description, pubDate } = Astro.props;
+---
+
+<section class='post'>
+	<h2>{title}</h2>
+	<div class='post-body'>
+		<p>{description}</p>
+		<slot />
+		<p class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time></p>
+	</div>
+</section>
+
+<style lang='scss'>
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+	@use '../styles/abstracts/colors';
+
+	h2 {
+		font-weight: typography.$weight-extrabold;
+		font-size: typography.$font-size-5xl;
+		color: colors.$graphite;
+		line-height: typography.$leading-tight;
+		margin-bottom: spacing.$space-8;
+		text-wrap: balance;
+	}
+
+	.post-body :global(h3) {
+		color: colors.$petrol;
+	}
+
+	.post {
+		margin-bottom: spacing.$space-24;
+	}
+
+	.published-date {
+		@include typography.caption-text;
+		margin-top: spacing.$space-10;
+	}
+
+	.post-body {
+		max-width: 65ch;
+		border-bottom: 1px solid colors.$amber;
+		padding-bottom: spacing.$space-24;
+		font-size: typography.$font-size-lg;
+		line-height: typography.$leading-relaxed;
+
+		// Vertical rhythm between block elements
+		:global(p),
+		:global(ul),
+		:global(ol),
+		:global(blockquote),
+		:global(pre) {
+			margin-bottom: spacing.$space-6;
+			color: colors.$charcoal;
+		}
+
+		// Prose headings
+		:global(h2),
+		:global(h3),
+		:global(h4) {
+			font-weight: typography.$weight-bold;
+			line-height: typography.$leading-tight;
+			margin-top: spacing.$space-10;
+			margin-bottom: spacing.$space-4;
+		}
+
+		:global(h2) {
+			font-size: typography.$font-size-2xl;
+		}
+
+		:global(h3) {
+			font-size: typography.$font-size-xl;
+		}
+
+		// Lists
+		:global(ul),
+		:global(ol) {
+			padding-left: spacing.$space-6;
+		}
+
+		:global(li) {
+			margin-bottom: spacing.$space-2;
+		}
+
+		// Blockquotes
+		:global(blockquote) {
+			padding-left: spacing.$space-6;
+			border-left: 3px solid colors.$graphite;
+			font-style: italic;
+		}
+
+		// Inline code
+		:global(code) {
+			font-family: typography.$font-mono;
+			font-size: typography.$font-size-md;
+		}
+
+		// Code blocks
+		:global(pre) {
+			padding: spacing.$space-4;
+			overflow-x: auto;
+			font-size: typography.$font-size-md;
+			line-height: typography.$leading-normal;
+			border-radius: spacing.$space-2;
+		}
+	}
+</style>

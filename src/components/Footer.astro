@@ -3,18 +3,17 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer>
-	<p><a href='https://ronnie.fyi'>ronnie.fyi</a> | Online from 1997 - {currentYear} in some guise or other.</p>
+	<p><a href='/'>ronnie.fyi</a> | Online from 2001 - {currentYear} in some guise or other.</p>
 </footer>
 
 <style lang='scss'>
-	@use 'sass:map';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/typography';
 
 	footer {
 		margin-top: auto;
-		padding: spacing.$space-6;
+		padding: spacing.$space-6 spacing.$space-24;
 
 		p {
 			font-family: typography.$font-body;

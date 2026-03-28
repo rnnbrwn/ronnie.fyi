@@ -1,4 +1,5 @@
 // Layout — structural patterns (container, grid, header, footer, sidebar)
+@use '../abstracts/spacing';
 
 .stack > * + * {
   margin-block-start: spacing.$space-6;
