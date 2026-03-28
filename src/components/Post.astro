@@ -3,17 +3,18 @@ import { timeAgo } from '../utils/timeAgo';
 import TagPills from './TagPills.astro';
 
 interface Props {
+	id: string;
 	title: string;
 	description?: string;
 	pubDate: Date;
 	tags: string[];
 }
 
-const { title, description, pubDate, tags } = Astro.props;
+const { id, title, description, pubDate, tags } = Astro.props;
 ---
 
 <section class='post'>
-	<h2>{title}</h2>
+	<h2><a href={`/posts/${id}`}>{title}</a></h2>
 	<div class='post-body'>
 		<p>{description}</p>
 		<slot />
@@ -34,6 +35,29 @@ const { title, description, pubDate, tags } = Astro.props;
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
 		text-wrap: balance;
+		position: relative;
+
+		&::before {
+			content: '#';
+			position: absolute;
+			right: calc(100% + spacing.$space-3);
+			color: colors.$amber;
+			font-weight: typography.$weight-regular;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+			font-weight: inherit;
+
+			&:visited {
+				color: inherit;
+			}
+
+			&:hover {
+				color: colors.$petrol;
+			}
+		}
 	}
 
 	.post {
