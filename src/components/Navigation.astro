@@ -5,7 +5,7 @@ const pathname = Astro.url.pathname;
 
 const links = [
 	{ href: '/', label: 'Home' },
-	{ href: '/blog', label: 'Blog' },
+	{ href: '/blog', label: 'Posts' },
 	// { href: '/about', label: 'About' },
 	// { href: '/uses', label: 'Uses' },
 ];
@@ -23,7 +23,7 @@ const links = [
 			))
 		}
 	</ul>
-	<div class='nav-logo'><Logo /></div>
+	<div class='nav-logo'><Logo aria-hidden='true' /></div>
 </nav>
 
 <style lang='scss'>
@@ -97,7 +97,7 @@ const links = [
 		.nav-logo {
 			display: block;
 			margin-top: auto;
-			color: map.get(colors.$charcoal-tones, 'tone-1');
+			color: map.get(colors.$ivory-tones, 'tone-3');
 		}
 	}
 </style>
