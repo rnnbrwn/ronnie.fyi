@@ -20,14 +20,15 @@ const { title, description, pubDate } = Astro.props;
 </section>
 
 <style lang='scss'>
+	@use 'sass:map';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use '../styles/abstracts/colors';
 
 	h2 {
-		font-weight: typography.$weight-extrabold;
-		font-size: typography.$font-size-5xl;
-		color: colors.$graphite;
+		font-weight: typography.$weight-bold;
+		font-size: typography.$font-size-4xl;
+		color: map.get(colors.$charcoal-tones, 'tone-2');
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
 		text-wrap: balance;
@@ -37,14 +38,9 @@ const { title, description, pubDate } = Astro.props;
 		margin-bottom: spacing.$space-24;
 	}
 
-	.published-date {
-		@include typography.caption-text;
-		margin-top: spacing.$space-10;
-	}
-
 	.post-body {
 		max-width: 65ch;
-		border-bottom: 1px solid colors.$amber;
+		border-bottom: 1px solid colors.$charcoal;
 		padding-bottom: spacing.$space-24;
 		font-size: typography.$font-size-lg;
 		line-height: typography.$leading-relaxed;
@@ -87,6 +83,14 @@ const { title, description, pubDate } = Astro.props;
 			font-size: typography.$font-size-md;
 		}
 
+		:global(a) {
+			color: colors.$teal;
+
+			&:hover {
+				color: colors.$petrol;
+			}
+		}
+
 		// Code blocks
 		:global(pre) {
 			padding: spacing.$space-4;
@@ -94,6 +98,13 @@ const { title, description, pubDate } = Astro.props;
 			font-size: typography.$font-size-md;
 			line-height: typography.$leading-normal;
 			border-radius: spacing.$space-2;
+		}
+
+		.published-date {
+			@include typography.caption-text;
+			// margin-top: spacing.$space-10;
+			font-weight: typography.$weight-bold;
+			color: map.get(colors.$charcoal-tones, 'tone-4');
 		}
 	}
 </style>

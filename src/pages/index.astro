@@ -1,10 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
 import AllPosts from '../components/AllPosts.astro';
+import Logo from '../components/Logo.astro';
 ---
 
 <Base>
-	<h1 class='visually-hidden'>Latest posts</h1>
+	<h1><a href='/'><Logo class='logo' /></a></h1>
 	<AllPosts limit={6} />
 	<a href='/blog'>View all blog posts</a>
+
+	<style lang='scss'>
+		@use '../styles/abstracts/colors';
+
+		h1 :global(.logo) {
+			width: 250px;
+			height: auto;
+			color: colors.$charcoal;
+
+			&:hover {
+				color: colors.$petrol;
+			}
+		}
+	</style>
 </Base>

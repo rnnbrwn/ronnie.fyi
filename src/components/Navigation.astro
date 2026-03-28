@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 const pathname = Astro.url.pathname;
 
 const links = [
@@ -9,7 +11,7 @@ const links = [
 ];
 ---
 
-<nav aria-label='Primary Navigation' style="display:flex;background:#2b2b2b">
+<nav aria-label='Primary Navigation'>
 	<ul>
 		{
 			links.map(({ href, label }) => (
@@ -21,9 +23,11 @@ const links = [
 			))
 		}
 	</ul>
+	<div class='nav-logo'><Logo /></div>
 </nav>
 
 <style lang='scss'>
+	@use 'sass:map';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
@@ -66,6 +70,10 @@ const links = [
 		}
 	}
 
+	.nav-logo {
+		display: none;
+	}
+
 	@media (min-width: 768px) {
 		nav {
 			width: 348px;
@@ -84,6 +92,12 @@ const links = [
 			li a {
 				font-size: typography.$font-size-5xl;
 			}
+		}
+
+		.nav-logo {
+			display: block;
+			margin-top: auto;
+			color: map.get(colors.$charcoal-tones, 'tone-1');
 		}
 	}
 </style>

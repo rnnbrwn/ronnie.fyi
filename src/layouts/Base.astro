@@ -29,12 +29,14 @@ const { title, description } = Astro.props;
 		</div>
 
 		<style lang='scss'>
+			@use 'sass:map';
 			@use '../styles/abstracts/colors';
 			@use '../styles/abstracts/typography';
 			@use '../styles/abstracts/spacing';
 
 			body {
 				font-family: typography.$font-body;
+				background-color: map.get(colors.$ivory-tones, 'tone-5');
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
@@ -61,12 +63,14 @@ const { title, description } = Astro.props;
 		</style>
 
 		<style is:global lang='scss'>
+			@use 'sass:map';
 			@use '../styles/abstracts/colors';
 			@use '../styles/abstracts/spacing';
 			@use '../styles/abstracts/typography';
 
 			a {
 				color: colors.$petrol;
+				font-weight: typography.$weight-semibold;
 			}
 
 			a:visited {
@@ -75,6 +79,7 @@ const { title, description } = Astro.props;
 
 			a:hover {
 				text-decoration: none;
+				color: colors.$petrol;
 			}
 
 			a:focus-visible {
@@ -134,20 +139,9 @@ const { title, description } = Astro.props;
 				font-weight: typography.$weight-bold;
 				font-size: typography.$font-size-lg;
 				line-height: typography.$leading-tight;
+				color: colors.$graphite;
 				margin-top: spacing.$space-10;
 				margin-bottom: spacing.$space-4;
-			}
-
-			.visually-hidden {
-				position: absolute;
-				width: 1px;
-				height: 1px;
-				padding: 0;
-				margin: -1px;
-				overflow: hidden;
-				clip: rect(0, 0, 0, 0);
-				white-space: nowrap;
-				border: 0;
 			}
 		</style>
 	</body>
