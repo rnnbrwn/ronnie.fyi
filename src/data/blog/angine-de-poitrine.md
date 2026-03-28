@@ -3,7 +3,7 @@ title: 'Angine de Poitrine and more'
 pubDate: 2026-03-27 23:33
 description: "Some music I've been enjoying lately"
 author: 'Ronnie'
-tags: ['media']
+tags: ['media', 'angine de poitrine', 'the bug club', 'getdown services', 'kexp']
 ---
 
 ### Angine de Poitrine

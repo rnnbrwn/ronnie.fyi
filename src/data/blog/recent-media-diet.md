@@ -3,7 +3,7 @@ title: 'Recent media diet'
 pubDate: 2025-09-29
 description: "A round-up of some TV shows, Movies, Books and Music that I've watched, read, listened to recently"
 author: 'Ronnie'
-tags: ['media']
+tags: ['media', 'taskmaster', 'cardiacs', 'rangers']
 ---
 
 Some media I've consumed recently:

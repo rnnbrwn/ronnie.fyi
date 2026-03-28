@@ -11,11 +11,13 @@ import Logo from '../components/Logo.astro';
 
 	<style lang='scss'>
 		@use '../styles/abstracts/colors';
+		@use '../styles/abstracts/spacing';
 
 		h1 :global(.logo) {
 			width: 250px;
 			height: auto;
-			color: colors.$graphite;
+			color: colors.$petrol;
+			margin-bottom: spacing.$space-16;
 		}
 	</style>
 </Base>

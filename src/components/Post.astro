@@ -1,13 +1,15 @@
 ---
 import { timeAgo } from '../utils/timeAgo';
+import TagPills from './TagPills.astro';
 
 interface Props {
 	title: string;
-	description: string;
+	description?: string;
 	pubDate: Date;
+	tags: string[];
 }
 
-const { title, description, pubDate } = Astro.props;
+const { title, description, pubDate, tags } = Astro.props;
 ---
 
 <section class='post'>
@@ -15,7 +17,7 @@ const { title, description, pubDate } = Astro.props;
 	<div class='post-body'>
 		<p>{description}</p>
 		<slot />
-		<p class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time></p>
+		<div class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time> in <TagPills tags={tags} /></div>
 	</div>
 </section>
 
@@ -50,7 +52,8 @@ const { title, description, pubDate } = Astro.props;
 		:global(ul),
 		:global(ol),
 		:global(blockquote),
-		:global(pre) {
+		:global(pre),
+		:global(.youtube-embed) {
 			margin-bottom: spacing.$space-6;
 			color: colors.$charcoal;
 		}
@@ -83,7 +86,7 @@ const { title, description, pubDate } = Astro.props;
 			font-size: typography.$font-size-md;
 		}
 
-		:global(a) {
+		:global(a:not(.tag-pill)) {
 			color: colors.$teal;
 
 			&:hover {

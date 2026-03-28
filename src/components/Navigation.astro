@@ -1,6 +1,4 @@
 ---
-import Logo from './Logo.astro';
-
 const pathname = Astro.url.pathname;
 
 const links = [
@@ -23,11 +21,9 @@ const links = [
 			))
 		}
 	</ul>
-	<div class='nav-logo'><Logo aria-hidden='true' /></div>
 </nav>
 
 <style lang='scss'>
-	@use 'sass:map';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
@@ -71,10 +67,6 @@ const links = [
 		}
 	}
 
-	.nav-logo {
-		display: none;
-	}
-
 	@media (min-width: 768px) {
 		nav {
 			width: layout.$nav-sidebar-width;
@@ -93,12 +85,6 @@ const links = [
 			li a {
 				font-size: typography.$font-size-5xl;
 			}
-		}
-
-		.nav-logo {
-			display: block;
-			margin-top: auto;
-			color: map.get(colors.$ivory-tones, 'tone-3');
 		}
 	}
 </style>

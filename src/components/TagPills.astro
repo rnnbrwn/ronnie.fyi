@@ -1,0 +1,42 @@
+---
+interface Props {
+	tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<span class='tag-pills'>
+	{tags.map((tag, i) => (
+		<><a class='tag-pill' href={`/tags/${tag}`}>{tag}</a>{i < tags.length - 1 ? ', ' : ''}</>
+	))}
+</span>
+
+<style lang='scss'>
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+
+	.tag-pills,
+	.tag-pill {
+		display: inline;
+	}
+
+	.tag-pill {
+		@include typography.caption-text;
+		font-family: typography.$font-body;
+		font-weight: typography.$weight-bold;
+		text-transform: uppercase;
+		color: colors.$charcoal;
+		text-decoration: underline;
+
+		&:visited {
+			color: colors.$charcoal;
+		}
+
+		&:hover,
+		&:visited:hover {
+			color: colors.$petrol;
+		}
+	}
+</style>

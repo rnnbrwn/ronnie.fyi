@@ -22,7 +22,7 @@ const renderedPosts = await Promise.all(
 
 {
 	renderedPosts.map(({ post, Content }) => (
-		<Post title={post.data.title} pubDate={post.data.pubDate}>
+		<Post title={post.data.title} pubDate={post.data.pubDate} tags={post.data.tags}>
 			<Content />
 		</Post>
 	))

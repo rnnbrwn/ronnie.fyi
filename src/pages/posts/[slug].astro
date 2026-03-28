@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import TagPills from '../../components/TagPills.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -17,6 +18,7 @@ const { Content } = await render(post);
 <Base title={post.data.title} description={post.data.description}>
 	<article>
 		<h1>{post.data.title}</h1>
+		<TagPills tags={post.data.tags} />
 		<Content />
 	</article>
 </Base>
