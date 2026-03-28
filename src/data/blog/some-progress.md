@@ -4,8 +4,9 @@ pubDate: 2026-03-28 00:30
 description: "I've been working on the site"
 author: 'Ronnie'
 image:
-  url: 'robots-are-coming.webp'
+  url: '/robots-are-coming.webp'
   alt: 'The Astro logo on a dark background with a pink glow.'
+  source: 'https://www.frankandmarci.com/blog/2024-how-to-thrive-when-ai-is-coming-for-your-job/'
 tags: ['this website', 'web development']
 ---
 

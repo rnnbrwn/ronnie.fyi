@@ -8,14 +8,23 @@ interface Props {
 	description?: string;
 	pubDate: Date;
 	tags: string[];
+	image?: { url: string; alt: string; source?: string };
 }
 
-const { id, title, description, pubDate, tags } = Astro.props;
+const { id, title, description, pubDate, tags, image } = Astro.props;
 ---
 
 <section class='post' aria-labelledby={`post-title-${id}`}>
 	<h2 id={`post-title-${id}`}><a href={`/posts/${id}`}>{title}</a></h2>
 	<div class='post-body'>
+		{image && (
+			<figure class='post-image'>
+				<img src={image.url} alt={image.alt} />
+				{image.source && (
+					<figcaption>Image source: <a href={image.source}>{image.source}</a></figcaption>
+				)}
+			</figure>
+		)}
 		<p>{description}</p>
 		<slot />
 		<div class='post-meta'>
@@ -69,6 +78,26 @@ const { id, title, description, pubDate, tags } = Astro.props;
 
 	.post {
 		margin-bottom: spacing.$space-24;
+	}
+
+	.post-image {
+		margin: 0 0 spacing.$space-6;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		figcaption {
+			@include typography.caption-text;
+			color: map.get(colors.$graphite-tones, 'tone-2');
+			margin-top: spacing.$space-2;
+
+			a {
+				color: inherit;
+			}
+		}
 	}
 
 	.post-body {

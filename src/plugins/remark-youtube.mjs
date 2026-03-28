@@ -27,7 +27,7 @@ export default function remarkYouTube() {
 			// Use a div wrapper with data attribute so rehype preserves it
 			parent.children[index] = {
 				type: 'html',
-				value: `<div class="youtube-embed"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="aspect-ratio: 16/9; width: 100%; height: auto;"></iframe></div>`,
+				value: `<div class="youtube-embed"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="aspect-ratio: 16/9; width: 100%; height: auto;"></iframe></div>`,
 			};
 		});
 	};

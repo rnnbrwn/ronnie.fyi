@@ -20,6 +20,14 @@ const { Content } = await render(post);
 	<article aria-labelledby='post-title'>
 		<h1 id='post-title'>{post.data.title}</h1>
 		<div class='prose'>
+		{post.data.image && (
+			<figure class='post-image'>
+				<img src={post.data.image.url} alt={post.data.image.alt} />
+				{post.data.image.source && (
+					<figcaption>Image source: <a href={post.data.image.source}>{post.data.image.source}</a></figcaption>
+				)}
+			</figure>
+		)}
 			<Content />
 			<div class='post-meta'>
 				<div class='published-date'>Posted around <time datetime={post.data.pubDate.toISOString()}>{timeAgo(post.data.pubDate)}</time></div>
@@ -39,6 +47,26 @@ const { Content } = await render(post);
 	article {
 		margin: 0;
 		padding: 0;
+	}
+
+	.post-image {
+		margin: 0 0 spacing.$space-6;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		figcaption {
+			@include typography.caption-text;
+			color: map.get(colors.$graphite-tones, 'tone-2');
+			margin-top: spacing.$space-2;
+
+			a {
+				color: inherit;
+			}
+		}
 	}
 
 	.prose {
