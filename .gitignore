@@ -23,5 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# prettier
+.prettierrc
+
 # claude agents
 .claude/
