@@ -3,17 +3,14 @@
 
 // Base colors from palette
 $ivory: #fef8f0;
-$cream: #fdf0db;
 $red: #da2843;
-$marigold: #ffc34d;
-$yellow: #f5a623;
 $teal: #3b8ea5;
 $petrol: #2a5f70;
 $graphite: #444444;
 $amber: #ffd677;
 
 // Tone generator: creates opacity variants
-// Usage: map-get($cream-tones, 'tone-2') or map-get($red-tones, 'tone-5')
+// Usage: map-get($ivory-tones, 'tone-2') or map-get($red-tones, 'tone-5')
 @function generate-tones($color, $steps: 5, $amount: 0.15) {
   $tones: (
     'base': $color,
@@ -33,10 +30,7 @@ $amber: #ffd677;
 
 // Generated tone maps
 $ivory-tones: generate-tones($ivory);
-$cream-tones: generate-tones($cream);
 $red-tones: generate-tones($red);
-$marigold-tones: generate-tones($marigold);
-$yellow-tones: generate-tones($yellow);
 $teal-tones: generate-tones($teal);
 $petrol-tones: generate-tones($petrol);
 $graphite-tones: generate-tones($graphite);

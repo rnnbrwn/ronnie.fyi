@@ -17,8 +17,8 @@ const { Content } = await render(post);
 ---
 
 <Base title={post.data.title} description={post.data.description}>
-	<article>
-		<h1>{post.data.title}</h1>
+	<article aria-labelledby='post-title'>
+		<h1 id='post-title'>{post.data.title}</h1>
 		<div class='prose'>
 			<Content />
 			<div class='post-meta'>
@@ -103,7 +103,7 @@ const { Content } = await render(post);
 		.published-date {
 			@include typography.caption-text;
 			font-weight: typography.$weight-bold;
-			color: map.get(colors.$graphite-tones, 'tone-4');
+			color: colors.$graphite;
 			margin-bottom: spacing.$space-2;
 		}
 

@@ -13,8 +13,8 @@ interface Props {
 const { id, title, description, pubDate, tags } = Astro.props;
 ---
 
-<section class='post'>
-	<h2><a href={`/posts/${id}`}>{title}</a></h2>
+<section class='post' aria-labelledby={`post-title-${id}`}>
+	<h2 id={`post-title-${id}`}><a href={`/posts/${id}`}>{title}</a></h2>
 	<div class='post-body'>
 		<p>{description}</p>
 		<slot />
@@ -116,10 +116,10 @@ const { id, title, description, pubDate, tags } = Astro.props;
 		}
 
 		:global(a:not(.tag-pill)) {
-			color: colors.$teal;
+			color: colors.$petrol;
 
 			&:hover {
-				color: colors.$petrol;
+				text-decoration: none;
 			}
 		}
 
@@ -139,7 +139,7 @@ const { id, title, description, pubDate, tags } = Astro.props;
 		.published-date {
 			@include typography.caption-text;
 			font-weight: typography.$weight-bold;
-			color: map.get(colors.$graphite-tones, 'tone-4');
+			color: colors.$graphite;
 			margin-bottom: spacing.$space-2;
 		}
 	}

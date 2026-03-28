@@ -40,7 +40,7 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 	.post-count {
 		@include typography.caption-text;
 		font-weight: typography.$weight-bold;
-		color: map.get(colors.$graphite-tones, 'tone-4');
+		color: colors.$graphite;
 		margin-top: calc(-1 * spacing.$space-4);
 		margin-bottom: spacing.$space-8;
 	}
@@ -58,7 +58,7 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 		@include typography.caption-text;
 		display: block;
 		font-weight: typography.$weight-bold;
-		color: map.get(colors.$graphite-tones, 'tone-4');
+		color: colors.$graphite;
 		margin-bottom: spacing.$space-1;
 	}
 
