@@ -9,7 +9,7 @@ const links = [
 ];
 ---
 
-<nav aria-label='Primary Navigation'>
+<nav aria-label='Primary Navigation' style="display:flex;background:#2b2b2b">
 	<ul>
 		{
 			links.map(({ href, label }) => (
@@ -29,19 +29,16 @@ const links = [
 	@use '../styles/abstracts/typography';
 
 	nav {
-		width: 348px;
-		flex-shrink: 0;
-		position: sticky;
-		top: 0;
-		height: 100vh;
-		overflow-y: auto;
 		background-color: colors.$graphite;
 		display: flex;
-		flex-direction: column;
-		padding: spacing.$space-8;
+		flex-direction: row;
+		align-items: center;
+		padding: spacing.$space-4 spacing.$space-6;
 		ul {
 			padding: 0;
 			margin: 0;
+			display: flex;
+			gap: spacing.$space-6;
 			li {
 				list-style: none;
 			}
@@ -52,7 +49,7 @@ const links = [
 			color: colors.$ivory;
 			text-decoration: none;
 			font-weight: typography.$weight-extrabold;
-			font-size: typography.$font-size-5xl;
+			font-size: typography.$font-size-xl;
 			line-height: typography.$leading-tight;
 			text-transform: uppercase;
 			&[aria-current='page'] {
@@ -65,6 +62,27 @@ const links = [
 				color: colors.$amber;
 				outline: 2px solid colors.$amber;
 				outline-offset: 2px;
+			}
+		}
+	}
+
+	@media (min-width: 768px) {
+		nav {
+			width: 348px;
+			flex-shrink: 0;
+			position: sticky;
+			top: 0;
+			height: 100vh;
+			overflow-y: auto;
+			flex-direction: column;
+			align-items: stretch;
+			padding: spacing.$space-8;
+			ul {
+				flex-direction: column;
+				gap: 0;
+			}
+			li a {
+				font-size: typography.$font-size-5xl;
 			}
 		}
 	}

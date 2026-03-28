@@ -37,6 +37,7 @@ const { title, description } = Astro.props;
 				font-family: typography.$font-body;
 				min-height: 100vh;
 				display: flex;
+				flex-direction: column;
 			}
 			.content {
 				display: flex;
@@ -46,8 +47,16 @@ const { title, description } = Astro.props;
 			}
 			main {
 				flex: 1;
-				padding: spacing.$space-8 spacing.$space-24;
+				padding: spacing.$space-6 spacing.$space-4;
 				overflow-x: hidden;
+			}
+			@media (min-width: 768px) {
+				body {
+					flex-direction: row;
+				}
+				main {
+					padding: spacing.$space-8 spacing.$space-24;
+				}
 			}
 		</style>
 
@@ -99,11 +108,17 @@ const { title, description } = Astro.props;
 
 			h1 {
 				font-weight: typography.$weight-extrabold;
-				font-size: typography.$font-size-5xl;
+				font-size: typography.$font-size-3xl;
 				color: colors.$graphite;
 				line-height: typography.$leading-tight;
-				margin-bottom: spacing.$space-8;
+				margin-bottom: spacing.$space-6;
 				text-wrap: balance;
+			}
+			@media (min-width: 768px) {
+				h1 {
+					font-size: typography.$font-size-5xl;
+					margin-bottom: spacing.$space-8;
+				}
 			}
 
 			h2 {
