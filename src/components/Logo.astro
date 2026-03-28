@@ -6,7 +6,7 @@ const { class: className, 'aria-hidden': ariaHidden } = Astro.props;
 <svg
 	class={className}
 	aria-hidden={ariaHidden}
-	focusable={ariaHidden === 'true' ? 'false' : undefined}
+	focusable={ariaHidden === 'true' || ariaHidden === true ? 'false' : undefined}
 	width='100%'
 	height='100%'
 	viewBox='0 0 380 120'

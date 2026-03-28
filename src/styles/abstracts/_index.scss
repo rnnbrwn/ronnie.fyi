@@ -1,5 +1,6 @@
 // Abstracts — variables, mixins, functions, placeholders
 // Nothing here outputs CSS directly
 @forward 'colors';
+@forward 'layout';
 @forward 'spacing';
 @forward 'typography';

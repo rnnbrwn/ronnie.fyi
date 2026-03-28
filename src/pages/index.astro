@@ -5,7 +5,7 @@ import Logo from '../components/Logo.astro';
 ---
 
 <Base>
-	<h1><a href='/' aria-label='ronnie.fyi — home'><Logo class='logo' aria-hidden='true' /></a></h1>
+	<h1 aria-label='ronnie.fyi'><Logo class='logo' aria-hidden='true' /></h1>
 	<AllPosts limit={6} />
 	<a href='/blog'>View all blog posts</a>
 
@@ -15,11 +15,7 @@ import Logo from '../components/Logo.astro';
 		h1 :global(.logo) {
 			width: 250px;
 			height: auto;
-			color: colors.$charcoal;
-
-			&:hover {
-				color: colors.$petrol;
-			}
+			color: colors.$graphite;
 		}
 	</style>
 </Base>

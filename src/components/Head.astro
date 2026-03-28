@@ -11,16 +11,15 @@ const { title = 'ronnie.fyi', description } = Astro.props;
 <link rel='preconnect' href='https://fonts.googleapis.com' />
 <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 <link
-	rel='preload'
-	href='https://fonts.gstatic.com/s/opensans/v40/memSYaGs76AUhp-DW6Kn7FQkpr5.woff2'
-	as='font'
-	type='font/woff2'
-	crossorigin
-/>
-<link
 	href='https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'
 	rel='stylesheet'
-/><link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+/>
+<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+<link rel='canonical' href={new URL(Astro.url.pathname, Astro.site).href} />
 <meta name='generator' content={Astro.generator} />
 {description && <meta name='description' content={description} />}
+<meta property='og:title' content={title} />
+{description && <meta property='og:description' content={description} />}
+<meta property='og:url' content={new URL(Astro.url.pathname, Astro.site).href} />
+<meta property='og:type' content='website' />
 <title>{title}</title>

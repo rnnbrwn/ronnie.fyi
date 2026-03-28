@@ -29,6 +29,7 @@ const links = [
 <style lang='scss'>
 	@use 'sass:map';
 	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 
@@ -76,7 +77,7 @@ const links = [
 
 	@media (min-width: 768px) {
 		nav {
-			width: 348px;
+			width: layout.$nav-sidebar-width;
 			flex-shrink: 0;
 			position: sticky;
 			top: 0;
