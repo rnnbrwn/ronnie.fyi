@@ -15,7 +15,3 @@ Some media I've consumed recently:
 - [Shredded: Inside RBS, the Bank that Broke Britain](https://www.amazon.co.uk/Shredded-Inside-Bank-Broke-Britain/dp/1780274564) by Ian Fraser
 - [The Devil in the White City](https://en.wikipedia.org/wiki/The_Devil_in_the_White_City) by Erik Larson
 - Watching [Rangers](https://en.wikipedia.org/wiki/Rangers_F.C.) has been the choriest of chores this season (and beyond, tbqfhwy) but on we go
-
-Recommendations from this?
-
-Enjoyed any of these? [Let me know](mailto:ronnie@ronnie.fyi).
