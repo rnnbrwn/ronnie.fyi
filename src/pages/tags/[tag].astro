@@ -15,11 +15,16 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
+	<p class='post-count'>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
 	<ul>
 		{
 			posts.map((post) => (
 				<li>
 					<a href={`/posts/${post.id}`}>{post.data.title}</a>
+					<time datetime={post.data.pubDate.toISOString()}>
+						{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+					</time>
+					<p>{post.data.description}</p>
 				</li>
 			))
 		}
@@ -27,7 +32,18 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 </Base>
 
 <style lang='scss'>
+	@use 'sass:map';
+	@use '../../styles/abstracts/colors';
 	@use '../../styles/abstracts/spacing';
+	@use '../../styles/abstracts/typography';
+
+	.post-count {
+		@include typography.caption-text;
+		font-weight: typography.$weight-bold;
+		color: map.get(colors.$graphite-tones, 'tone-4');
+		margin-top: calc(-1 * spacing.$space-4);
+		margin-bottom: spacing.$space-8;
+	}
 
 	ul {
 		padding: 0;
@@ -35,6 +51,38 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 	}
 
 	li {
-		margin-block-end: spacing.$space-4;
+		margin-block-end: spacing.$space-8;
+	}
+
+	time {
+		@include typography.caption-text;
+		display: block;
+		font-weight: typography.$weight-bold;
+		color: map.get(colors.$graphite-tones, 'tone-4');
+		margin-bottom: spacing.$space-1;
+	}
+
+	a {
+		display: block;
+		font-size: typography.$font-size-xl;
+		font-weight: typography.$weight-bold;
+		color: colors.$graphite;
+		text-decoration: none;
+		margin-bottom: spacing.$space-1;
+
+		&:visited {
+			color: colors.$graphite;
+		}
+
+		&:hover {
+			color: colors.$petrol;
+		}
+	}
+
+	p {
+		font-size: typography.$font-size-md;
+		color: map.get(colors.$graphite-tones, 'tone-2');
+		margin: 0;
+		line-height: typography.$leading-normal;
 	}
 </style>

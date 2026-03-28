@@ -82,7 +82,7 @@ const { title, description } = Astro.props;
 			}
 
 			a:focus-visible {
-				outline: 2px solid colors.$charcoal;
+				outline: 2px solid colors.$graphite;
 				outline-offset: 2px;
 				box-shadow: 0 0 0 4px colors.$amber;
 			}
@@ -106,7 +106,7 @@ const { title, description } = Astro.props;
 				position: fixed;
 				top: 0;
 				left: 0;
-				background: colors.$charcoal;
+				background: colors.$graphite;
 				color: colors.$ivory;
 				padding: spacing.$space-2 spacing.$space-4;
 				font-family: typography.$font-body;
@@ -115,15 +115,16 @@ const { title, description } = Astro.props;
 
 			h1 {
 				font-weight: typography.$weight-extrabold;
-				font-size: typography.$font-size-3xl;
+				font-size: typography.$font-size-xl;
 				color: colors.$graphite;
 				line-height: typography.$leading-tight;
 				margin-bottom: spacing.$space-6;
+				text-transform: uppercase;
 				text-wrap: balance;
 			}
 			@media (min-width: 768px) {
 				h1 {
-					font-size: typography.$font-size-5xl;
+					font-size: typography.$font-size-4xl;
 					margin-bottom: spacing.$space-8;
 				}
 			}

@@ -1,7 +1,7 @@
 ---
 title: 'What kind of Irish is your grandad?'
 pubDate: 2026-03-28 00:25
-description: 'SNL UK was good'
+description: "Thoughts on SNL UK? Better than I expected, I'll admit"
 author: 'Ronnie'
 tags: ['media', 'snl', 'snl uk', 'george fouracres']
 ---

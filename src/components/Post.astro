@@ -18,7 +18,10 @@ const { id, title, description, pubDate, tags } = Astro.props;
 	<div class='post-body'>
 		<p>{description}</p>
 		<slot />
-		<div class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time> in <TagPills tags={tags} /></div>
+		<div class='post-meta'>
+			<div class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time></div>
+			<TagPills tags={tags} />
+		</div>
 	</div>
 </section>
 
@@ -30,8 +33,12 @@ const { id, title, description, pubDate, tags } = Astro.props;
 
 	h2 {
 		font-weight: typography.$weight-bold;
-		font-size: typography.$font-size-4xl;
-		color: map.get(colors.$charcoal-tones, 'tone-2');
+		font-size: typography.$font-size-2xl;
+
+		@media (min-width: 768px) {
+			font-size: typography.$font-size-4xl;
+		}
+		color: colors.$graphite;
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
 		text-wrap: balance;
@@ -66,7 +73,7 @@ const { id, title, description, pubDate, tags } = Astro.props;
 
 	.post-body {
 		@include typography.prose;
-		border-bottom: 1px solid colors.$charcoal;
+		border-bottom: 1px solid colors.$graphite;
 		padding-bottom: spacing.$space-24;
 
 		// Vertical rhythm between block elements
@@ -77,7 +84,7 @@ const { id, title, description, pubDate, tags } = Astro.props;
 		:global(pre),
 		:global(.youtube-embed) {
 			margin-bottom: spacing.$space-6;
-			color: colors.$charcoal;
+			color: colors.$graphite;
 		}
 
 		// Prose headings — size overrides only, base styles come from globals
@@ -125,11 +132,15 @@ const { id, title, description, pubDate, tags } = Astro.props;
 			border-radius: spacing.$space-2;
 		}
 
+		.post-meta {
+			margin-top: spacing.$space-8;
+		}
+
 		.published-date {
 			@include typography.caption-text;
-			// margin-top: spacing.$space-10;
 			font-weight: typography.$weight-bold;
-			color: map.get(colors.$charcoal-tones, 'tone-4');
+			color: map.get(colors.$graphite-tones, 'tone-4');
+			margin-bottom: spacing.$space-2;
 		}
 	}
 </style>

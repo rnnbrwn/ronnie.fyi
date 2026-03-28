@@ -15,16 +15,16 @@ $weight-semibold: 600;
 $weight-bold: 700;
 $weight-extrabold: 800;
 
-// Type scale — minor third (1.2)
-$font-size-xs: 0.694rem;   // ~11px
-$font-size-sm: 0.833rem;   // ~13px
+// Type scale — perfect fourth (1.333)
+$font-size-xs: 0.694rem;   // ~11px — fixed UI size, outside scale
+$font-size-sm: 0.750rem;   // ~12px
 $font-size-md: 1rem;       // 16px
-$font-size-lg: 1.2rem;     // ~19px
-$font-size-xl: 1.44rem;    // ~23px
-$font-size-2xl: 1.728rem;  // ~28px
-$font-size-3xl: 2.074rem;  // ~33px
-$font-size-4xl: 2.488rem;  // ~40px
-$font-size-5xl: 2.986rem;  // ~48px
+$font-size-lg: 1.333rem;   // ~21px
+$font-size-xl: 1.777rem;   // ~28px
+$font-size-2xl: 2.369rem;  // ~38px
+$font-size-3xl: 3.157rem;  // ~51px
+$font-size-4xl: 4.209rem;  // ~67px
+$font-size-5xl: 5.610rem;  // ~90px
 
 // Line heights
 $leading-none: 1;

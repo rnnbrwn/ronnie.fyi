@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 const pathname = Astro.url.pathname;
 
 const links = [
@@ -14,16 +16,30 @@ const links = [
 		{
 			links.map(({ href, label }) => (
 				<li>
-					<a href={href} aria-current={pathname === href || pathname === `${href}/` ? 'page' : undefined}>
+					<a
+						href={href}
+						aria-current={
+							pathname === href ||
+							pathname === `${href}/` ||
+							(href === '/blog' && pathname.startsWith('/posts/'))
+								? 'page'
+								: undefined
+						}
+					>
 						{label}
 					</a>
 				</li>
 			))
 		}
 	</ul>
+	<div class='site-identity'>
+		<Logo aria-hidden='true' class='site-logo' />
+		<p class='site-description'>Writing about music, technology, and whatever else.</p>
+	</div>
 </nav>
 
 <style lang='scss'>
+	@use 'sass:map';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
@@ -35,6 +51,7 @@ const links = [
 		flex-direction: row;
 		align-items: center;
 		padding: spacing.$space-4 spacing.$space-6;
+
 		ul {
 			padding: 0;
 			margin: 0;
@@ -65,10 +82,31 @@ const links = [
 				outline-offset: 2px;
 			}
 		}
-	}
 
-	@media (min-width: 768px) {
-		nav {
+		.site-identity {
+			display: none;
+		}
+
+		:global(.site-logo) {
+			display: block;
+			width: 100%;
+			height: auto;
+			color: map.get(colors.$amber-tones, 'tone-1');
+			// color: colors.$amber;
+			margin-bottom: spacing.$space-3;
+		}
+
+		.site-description {
+			font-family: typography.$font-body;
+			font-size: typography.$font-size-sm;
+			font-weight: typography.$weight-regular;
+			color: map.get(colors.$ivory-tones, 'tone-3');
+			margin: 0;
+			line-height: typography.$leading-normal;
+			text-wrap: balance;
+		}
+
+		@media (min-width: 768px) {
 			width: layout.$nav-sidebar-width;
 			flex-shrink: 0;
 			position: sticky;
@@ -78,12 +116,20 @@ const links = [
 			flex-direction: column;
 			align-items: stretch;
 			padding: spacing.$space-8;
+
 			ul {
 				flex-direction: column;
 				gap: 0;
 			}
+
 			li a {
-				font-size: typography.$font-size-5xl;
+				font-size: typography.$font-size-4xl;
+			}
+
+			.site-identity {
+				display: block;
+				margin-top: auto;
+				padding-top: spacing.$space-8;
 			}
 		}
 	}
