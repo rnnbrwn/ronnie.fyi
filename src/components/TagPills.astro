@@ -17,9 +17,12 @@ const { tags } = Astro.props;
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 
-	.tag-pills,
-	.tag-pill {
+	.tag-pills {
 		display: inline;
+	}
+
+	.tag-pill {
+		display: inline-block;
 	}
 
 	.tag-pill {

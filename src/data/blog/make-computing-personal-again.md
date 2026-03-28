@@ -6,7 +6,7 @@ author: 'Ronnie'
 image:
   url: 'https://docs.astro.build/assets/rose.webp'
   alt: 'The Astro logo on a dark background with a pink glow.'
-tags: ['astro', 'blogging', 'learning in public']
+tags: ['astro', 'blogging', 'web development']
 ---
 
 > For a while—in the ’80s, ’90s, and early 2000s—it felt like nerds were making the world a better place. Now, it feels like the most successful tech companies are making it worse.
