@@ -65,11 +65,9 @@ const { id, title, description, pubDate, tags } = Astro.props;
 	}
 
 	.post-body {
-		max-width: 65ch;
+		@include typography.prose;
 		border-bottom: 1px solid colors.$charcoal;
 		padding-bottom: spacing.$space-24;
-		font-size: typography.$font-size-lg;
-		line-height: typography.$leading-relaxed;
 
 		// Vertical rhythm between block elements
 		:global(p),

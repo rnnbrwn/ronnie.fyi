@@ -63,3 +63,10 @@ $tracking-widest: 0.1em;
 	line-height: $leading-normal;
 	letter-spacing: $tracking-wide;
 }
+
+// Prose body styles — apply to any container rendering markdown content
+@mixin prose {
+	max-width: 65ch;
+	font-size: $font-size-lg;
+	line-height: $leading-relaxed;
+}
