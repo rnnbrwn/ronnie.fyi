@@ -28,7 +28,7 @@ export async function GET(context) {
 				link: `/posts/${post.id}/`,
 				content: imageHtml + html,
 				customData: imageUrl
-					? `<media:content url="${imageUrl}" medium="image" />`
+					? `<media:content url="${imageUrl}" medium="image" /><media:thumbnail url="${imageUrl}" />`
 					: '',
 			};
 		})
