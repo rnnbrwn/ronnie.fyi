@@ -1,6 +1,7 @@
 ---
 import { timeAgo } from '../utils/timeAgo';
 import TagPills from './TagPills.astro';
+import IconPin from './IconPin.astro';
 
 interface Props {
 	id: string;
@@ -9,27 +10,38 @@ interface Props {
 	pubDate: Date;
 	tags: string[];
 	image?: { url: string; alt: string; source?: string };
+	pinned?: boolean;
 }
 
-const { id, title, description, pubDate, tags, image } = Astro.props;
+const { id, title, description, pubDate, tags, image, pinned = false } = Astro.props;
 ---
 
 <section class='post' aria-labelledby={`post-title-${id}`}>
-	<h2 id={`post-title-${id}`}><a href={`/posts/${id}`}>{title}</a></h2>
+	<h2 id={`post-title-${id}`}>
+		<a href={`/posts/${id}`}>{title}</a>
+		{pinned && <IconPin class='pin-icon' size={48} />}
+	</h2>
 	<div class='post-body'>
-		{image && (
-			<figure class='post-image'>
-				<img src={image.url} alt={image.alt} />
-				{image.source && (
-					<figcaption>Image source: <a href={image.source}>{image.source}</a></figcaption>
-				)}
-			</figure>
-		)}
+		{
+			image && (
+				<figure class='post-image'>
+					<img src={image.url} alt={image.alt} />
+					{image.source && (
+						<figcaption>
+							Image source: <a href={image.source}>{image.source}</a>
+						</figcaption>
+					)}
+				</figure>
+			)
+		}
 		<p>{description}</p>
 		<slot />
 		<div class='post-meta'>
-			<div class='published-date'>Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time></div>
+			<div class='published-date'>
+				Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time>
+			</div>
 			<TagPills tags={tags} />
+			{pinned && <p class='featured-label'>featured post</p>}
 		</div>
 	</div>
 </section>
@@ -73,6 +85,14 @@ const { id, title, description, pubDate, tags, image } = Astro.props;
 			&:hover {
 				color: colors.$petrol;
 			}
+		}
+
+		:global(.pin-icon) {
+			display: inline-block;
+			vertical-align: middle;
+			color: colors.$red;
+			margin-left: spacing.$space-2;
+			transform: rotate(45deg) translateY(-10px);
 		}
 	}
 
@@ -163,6 +183,18 @@ const { id, title, description, pubDate, tags, image } = Astro.props;
 
 		.post-meta {
 			margin-top: spacing.$space-8;
+		}
+
+		.featured-label {
+			display: block;
+			width: fit-content;
+			margin-top: spacing.$space-2;
+			font-size: typography.$font-size-sm;
+			font-weight: typography.$weight-semibold;
+			text-transform: uppercase;
+			background-color: colors.$red;
+			color: colors.$ivory;
+			padding: spacing.$space-1 spacing.$space-3;
 		}
 
 		.published-date {

@@ -5,11 +5,20 @@ import { getSortedPosts } from '../utils/getSortedPosts';
 
 interface Props {
 	limit?: number;
+	pinFirst?: boolean;
 }
 
-const { limit } = Astro.props;
+const { limit, pinFirst = false } = Astro.props;
 
-const allPosts = await getSortedPosts();
+let allPosts = await getSortedPosts();
+
+if (pinFirst) {
+	allPosts = [
+		...allPosts.filter((p) => p.data.pinned),
+		...allPosts.filter((p) => !p.data.pinned),
+	];
+}
+
 const posts = limit ? allPosts.slice(0, limit) : allPosts;
 
 const renderedPosts = await Promise.all(
@@ -22,7 +31,7 @@ const renderedPosts = await Promise.all(
 
 {
 	renderedPosts.map(({ post, Content }) => (
-		<Post id={post.id} title={post.data.title} pubDate={post.data.pubDate} tags={post.data.tags} image={post.data.image}>
+		<Post id={post.id} title={post.data.title} pubDate={post.data.pubDate} tags={post.data.tags} image={post.data.image} pinned={post.data.pinned}>
 			<Content />
 		</Post>
 	))

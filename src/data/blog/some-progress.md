@@ -8,8 +8,11 @@ image:
   alt: 'The Astro logo on a dark background with a pink glow.'
   source: 'https://www.frankandmarci.com/blog/2024-how-to-thrive-when-ai-is-coming-for-your-job/'
 tags: ['this website', 'web development']
+pinned: true
 ---
 
-More to come.
+I spent some time figuring out what I'd like <a href="https://ronnie.fyi">ronnie.fyi</a> to look like and, ultimately, went back to a <a href="https://www.figma.com">Figma</a> layout I'd come up with about a year ago. It's simple, but I like it. Until I don't.
 
-Don't look too closely or it'll all start to fall apart.
+I'll keep this post pinned to the top for a while and make a note of anything new I add.
+
+For example, I've just added an <a href="/rss">RSS feed</a>. Go add it to ~~Google Reader~~ an RSS reader of your choice.
