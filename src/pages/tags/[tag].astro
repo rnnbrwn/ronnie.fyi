@@ -15,7 +15,8 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
-	<p class='post-count'>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+	<a href='/tags' class='all-tags-link'>All tags</a>
+	<p class='post-count'>{posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged <span class='tag-name'>#{tag}</span></p>
 	<ul>
 		{
 			posts.map((post) => (
@@ -37,12 +38,30 @@ const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(
 	@use '../../styles/abstracts/spacing';
 	@use '../../styles/abstracts/typography';
 
+	.all-tags-link {
+		font-size: typography.$font-size-md;
+		font-weight: typography.$weight-bold;
+		color: colors.$petrol;
+		text-decoration: underline;
+		display: block;
+		margin-bottom: spacing.$space-8;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 	.post-count {
 		@include typography.caption-text;
 		font-weight: typography.$weight-bold;
 		color: colors.$graphite;
 		margin-top: calc(-1 * spacing.$space-4);
 		margin-bottom: spacing.$space-8;
+
+		.tag-name {
+			color: colors.$red;
+			font-weight: typography.$weight-bold;
+		}
 	}
 
 	ul {
