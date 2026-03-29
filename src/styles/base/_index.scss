@@ -1,6 +1,7 @@
 // Base — reset overrides, element-level defaults (html, body, a, img, etc.)
 
 @use '../abstracts/typography' as *;
+@use '../abstracts/spacing';
 
 @font-face {
 	font-family: 'Geomanist';
@@ -12,4 +13,8 @@
 
 h1, h2, h3, h4, h5, h6 {
 	@include heading-base;
+}
+
+p {
+	margin-bottom: spacing.$space-6;
 }

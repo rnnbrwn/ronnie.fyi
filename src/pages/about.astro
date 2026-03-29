@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import IconBlueSky from '../components/IconBlueSky.astro';
+import IconGitHub from '../components/IconGitHub.astro';
 
 const pageTitle = 'About';
 ---
@@ -9,6 +11,36 @@ const pageTitle = 'About';
 	<h2>I will put something here when I figure out what to say.</h2>
 
 	<p>
-		In the meantime, here is my <a href='/uses/'>uses</a> page.
+		In the meantime, here are <a href='/uses/'>things I use</a>.
 	</p>
+
+	<p>Or, find me elsewhere and say Hi.</p>
+
+	<div class='social-links'>
+		<a href='https://bsky.app/profile/ronnie.fyi' class='social-link' aria-label='Ronnie on Bluesky'>
+			<IconBlueSky size={40} />
+		</a>
+		<a href='https://github.com/rnnbrwn/' class='social-link' aria-label='Ronnie on GitHub'>
+			<IconGitHub size={40} />
+		</a>
+	</div>
 </Base>
+
+<style lang='scss'>
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/spacing';
+
+	.social-links {
+		display: flex;
+		gap: spacing.$space-4;
+		align-items: center;
+	}
+
+	.social-link {
+		display: block;
+		color: colors.$graphite;
+		&:hover {
+			color: colors.$petrol;
+		}
+	}
+</style>
