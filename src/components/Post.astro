@@ -2,7 +2,6 @@
 import { timeAgo } from '../utils/timeAgo';
 import TagPills from './TagPills.astro';
 import IconPin from './IconPin.astro';
-
 interface Props {
 	id: string;
 	title: string;
@@ -86,6 +85,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 				color: colors.$petrol;
 			}
 		}
+
 
 		:global(.pin-icon) {
 			display: inline-block;

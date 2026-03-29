@@ -4,6 +4,7 @@ pubDate: 2025-09-20
 description: "No, I don't like the term either."
 author: 'Ronnie'
 tags: ['ai', 'web development']
+stale: true
 ---
 
 Vibe coding is an emerging software development practice that uses artificial intelligence (AI) to generate functional code from natural language prompts, accelerating development, and making app building more accessible, especially for those with limited programming experience.

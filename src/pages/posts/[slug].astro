@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TagPills from '../../components/TagPills.astro';
 import { timeAgo } from '../../utils/timeAgo';
+import IconClock from '../../components/IconClock.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -19,6 +20,7 @@ const { Content } = await render(post);
 <Base title={post.data.title} description={post.data.description}>
 	<article aria-labelledby='post-title'>
 		<h1 id='post-title'>{post.data.title}</h1>
+		{post.data.stale && <p class='stale-warning'><IconClock size={20} /> This post is now outdated, don't believe a word of it.</p>}
 		<div class='prose'>
 		{post.data.image && (
 			<figure class='post-image'>
@@ -67,6 +69,15 @@ const { Content } = await render(post);
 				color: inherit;
 			}
 		}
+	}
+
+	.stale-warning {
+		display: flex;
+		align-items: center;
+		gap: spacing.$space-2;
+		color: colors.$red;
+		font-weight: typography.$weight-semibold;
+		margin-bottom: spacing.$space-6;
 	}
 
 	.prose {

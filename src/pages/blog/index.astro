@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getSortedPosts } from '../../utils/getSortedPosts';
+import IconClock from '../../components/IconClock.astro';
 
 const posts = await getSortedPosts();
 ---
@@ -11,7 +12,10 @@ const posts = await getSortedPosts();
 		{
 			posts.map((post) => (
 				<li>
-					<a href={`/posts/${post.id}`}>{post.data.title}</a>
+					<a href={`/posts/${post.id}`}>
+						{post.data.title}
+						{post.data.stale && <IconClock class='stale-icon' size={28} />}
+					</a>
 					<time datetime={post.data.pubDate.toISOString()}>
 						{post.data.pubDate.toLocaleDateString('en-GB', {
 							day: 'numeric',
@@ -47,6 +51,14 @@ const posts = await getSortedPosts();
 		font-weight: typography.$weight-bold;
 		color: colors.$graphite;
 		margin-bottom: spacing.$space-1;
+	}
+
+	:global(.stale-icon) {
+		display: inline-block !important;
+		vertical-align: middle;
+		color: colors.$graphite;
+		opacity: 0.5;
+		margin-left: spacing.$space-2;
 	}
 
 	a {
