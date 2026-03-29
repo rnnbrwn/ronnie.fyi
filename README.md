@@ -1,46 +1,56 @@
-# Astro Starter Kit: Basics
+# ronnie.fyi
 
-```sh
-npm create astro@latest -- --template basics
-```
+Personal site at [ronnie.fyi](https://ronnie.fyi). Writing about music, technology, and whatever else. Online in some guise or other since 2001.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Built with [Astro](https://astro.build), styled with Sass, deployed to Dreamhost via GitHub Actions.
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Project structure
 
 ```text
 /
 ├── public/
+│   ├── fonts/              # Self-hosted fonts (Geomanist)
 │   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+├── src/
+│   ├── components/         # Astro components (Navigation, Post, Footer, icons, etc.)
+│   ├── data/
+│   │   └── blog/           # Markdown blog posts
+│   ├── layouts/
+│   │   └── Base.astro      # Main page layout
+│   ├── pages/              # File-based routes (index, about, uses, blog, rss, etc.)
+│   ├── plugins/            # Remark plugins (YouTube embed)
+│   ├── styles/             # Sass architecture (abstracts, base, components, layout, utilities)
+│   ├── utils/              # Shared utilities (getSortedPosts, timeAgo)
+│   └── content.config.ts   # Content collection schema
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Blog posts
 
-## 🧞 Commands
+Posts live in `src/data/blog/` as Markdown files. Files prefixed with `_` are drafts and excluded from the collection.
 
-All commands are run from the root of the project, from a terminal:
+Frontmatter fields:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```yaml
+title: 'Post title'
+pubDate: 2026-01-01
+description: 'Short description'
+author: 'Ronnie'
+tags: ['tag-one', 'tag-two']
+pinned: false         # Set to true to pin to the top of the homepage feed
+image:                # Optional
+  url: '/image.webp'
+  alt: 'Alt text'
+  source: 'https://example.com'  # Optional image credit URL
+```
 
-## 👀 Want to learn more?
+## Commands
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+All commands are run from the root of the project:
+
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Start local dev server at `localhost:4321`   |
+| `npm run build`   | Build production site to `./dist/`           |
+| `npm run preview` | Preview production build locally             |
