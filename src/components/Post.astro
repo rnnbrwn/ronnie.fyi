@@ -38,7 +38,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		<slot />
 		<div class='post-meta'>
 			<div class='published-date'>
-				Posted around <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time>
+				Posted <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time>
 			</div>
 			<TagPills tags={tags} />
 			{pinned && <p class='featured-label'>featured post</p>}
@@ -92,7 +92,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 			vertical-align: middle;
 			color: colors.$red;
 			margin-left: spacing.$space-2;
-			transform: rotate(45deg) translateY(-10px);
+			transform: rotate(35deg) translateY(-10px);
 		}
 	}
 
