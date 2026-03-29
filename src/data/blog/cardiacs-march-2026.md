@@ -10,6 +10,4 @@ After a little bit of scrambling about this morning, I managed to get 2x tickets
 
 Also got tickets for me and the family to see [The Last Dinner Party](https://en.wikipedia.org/wiki/The_Last_Dinner_Party) at [Edinburgh Corn Exchange](https://www.edinburghcornexchange.com/), next month. That'll be my daughter's first real gig, so we're all looking forward to that.
 
-Anyway, back to Cardiacs. This is the first video of theirs I saw and it had me hooked from the start.
-
-https://www.youtube.com/watch?v=NVjSycDJatc
+Anyway, back to Cardiacs. This is the first video of theirs I saw and it had me hooked from the start: [Cardiacs - Tarred and Feathered](https://www.youtube.com/watch?v=dodxYkBEyV8).
