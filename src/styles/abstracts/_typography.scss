@@ -3,8 +3,20 @@
 // ==========================================================================
 
 // Font stacks
-$font-heading: 'Chiron Hei HK', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-$font-body: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-heading:
+  'Geomanist',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$font-body:
+  'Open Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
 $font-mono: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
 
 // Font weights
@@ -16,15 +28,15 @@ $weight-bold: 700;
 $weight-extrabold: 800;
 
 // Type scale — perfect fourth (1.333)
-$font-size-xs: 0.694rem;   // ~11px — fixed UI size, outside scale
-$font-size-sm: 0.875rem;   // ~14px
-$font-size-md: 1rem;       // 16px
-$font-size-lg: 1.333rem;   // ~21px
-$font-size-xl: 1.777rem;   // ~28px
-$font-size-2xl: 2.369rem;  // ~38px
-$font-size-3xl: 3.157rem;  // ~51px
-$font-size-4xl: 4.209rem;  // ~67px
-$font-size-5xl: 5.610rem;  // ~90px
+$font-size-xs: 0.694rem; // ~11px — fixed UI size, outside scale
+$font-size-sm: 0.875rem; // ~14px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.333rem; // ~21px
+$font-size-xl: 1.777rem; // ~28px
+$font-size-2xl: 2.369rem; // ~38px
+$font-size-3xl: 3.157rem; // ~51px
+$font-size-4xl: 4.209rem; // ~67px
+$font-size-5xl: 5.61rem; // ~90px
 
 // Line heights
 $leading-none: 1;
@@ -43,30 +55,30 @@ $tracking-widest: 0.1em;
 
 // Heading defaults
 @mixin heading-base {
-	font-family: $font-heading;
-	font-weight: $weight-bold;
-	line-height: $leading-tight;
-	letter-spacing: $tracking-tight;
+  font-family: $font-heading;
+  font-weight: $weight-bold;
+  line-height: $leading-tight;
+  letter-spacing: $tracking-tight;
 }
 
 // Body text defaults
 @mixin body-text {
-	font-family: $font-body;
-	font-weight: $weight-regular;
-	line-height: $leading-normal;
-	letter-spacing: $tracking-normal;
+  font-family: $font-body;
+  font-weight: $weight-regular;
+  line-height: $leading-normal;
+  letter-spacing: $tracking-normal;
 }
 
 // Small / caption text
 @mixin caption-text {
-	font-size: $font-size-sm;
-	line-height: $leading-normal;
-	letter-spacing: $tracking-wide;
+  font-size: $font-size-sm;
+  line-height: $leading-normal;
+  letter-spacing: $tracking-wide;
 }
 
 // Prose body styles — apply to any container rendering markdown content
 @mixin prose {
-	max-width: 65ch;
-	font-size: $font-size-lg;
-	line-height: $leading-relaxed;
+  max-width: 65ch;
+  font-size: $font-size-lg;
+  line-height: $leading-relaxed;
 }

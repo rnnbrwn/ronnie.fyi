@@ -114,7 +114,8 @@ const { title, description } = Astro.props;
 			}
 
 			h1 {
-				font-weight: typography.$weight-extrabold;
+				font-family: typography.$font-heading;
+				font-weight: typography.$weight-bold;
 				font-size: typography.$font-size-xl;
 				color: colors.$graphite;
 				line-height: typography.$leading-tight;
@@ -130,6 +131,7 @@ const { title, description } = Astro.props;
 			}
 
 			h2 {
+				font-family: typography.$font-heading;
 				font-weight: typography.$weight-bold;
 				font-size: typography.$font-size-xl;
 				line-height: typography.$leading-tight;
@@ -139,6 +141,7 @@ const { title, description } = Astro.props;
 			}
 
 			h3 {
+				font-family: typography.$font-heading;
 				font-weight: typography.$weight-bold;
 				font-size: typography.$font-size-lg;
 				line-height: typography.$leading-tight;
