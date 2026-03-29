@@ -13,6 +13,6 @@ pinned: true
 
 I spent some time figuring out what I'd like <a href="https://ronnie.fyi">ronnie.fyi</a> to look like and, ultimately, went back to a <a href="https://www.figma.com">Figma</a> layout I'd come up with about a year ago. It's simple, but I like it. Until I don't.
 
-I'll keep this post pinned to the top for a while and make a note of anything new I add.
+I'll keep this post pinned to the top of the homepage for a while and make a note of anything new I add.
 
 For example, I've just added an <a href="/rss">RSS feed</a>. Go add it to ~~Google Reader~~ an RSS reader of your choice.
