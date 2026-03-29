@@ -1,5 +1,8 @@
 ---
-import Logo from './Logo.astro';
+import SpotifyNowPlaying from './SpotifyNowPlaying.astro';
+import IconBlueSky from './IconBlueSky.astro';
+import IconGitHub from './IconGitHub.astro';
+import IconRSS from './IconRSS.astro';
 
 const pathname = Astro.url.pathname;
 
@@ -32,14 +35,23 @@ const links = [
 			))
 		}
 	</ul>
-	<div class='site-identity'>
-		<Logo aria-hidden='true' class='site-logo' />
-		<p class='site-description'>Writing about music, technology, and whatever else.</p>
+	<div class='nav-bottom'>
+		<SpotifyNowPlaying />
+		<div class='social-links'>
+			<a href='https://bsky.app/profile/ronnie.fyi' class='social-link' aria-label='Ronnie on Bluesky'>
+				<IconBlueSky size={32} />
+			</a>
+			<a href='https://github.com/rnnbrwn/' class='social-link' aria-label='Ronnie on GitHub'>
+				<IconGitHub size={32} />
+			</a>
+			<a href='/rss' class='social-link' aria-label='RSS feed'>
+				<IconRSS size={38} />
+			</a>
+		</div>
 	</div>
 </nav>
 
 <style lang='scss'>
-	@use 'sass:map';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
@@ -83,27 +95,22 @@ const links = [
 			}
 		}
 
-		.site-identity {
+		.nav-bottom {
 			display: none;
 		}
 
-		:global(.site-logo) {
-			display: block;
-			width: 100%;
-			height: auto;
-			color: map.get(colors.$amber-tones, 'tone-1');
-			// color: colors.$amber;
-			margin-bottom: spacing.$space-3;
+		.social-links {
+			display: flex;
+			gap: spacing.$space-4;
+			align-items: center;
 		}
 
-		.site-description {
-			font-family: typography.$font-body;
-			font-size: typography.$font-size-sm;
-			font-weight: typography.$weight-regular;
-			color: map.get(colors.$ivory-tones, 'tone-3');
-			margin: 0;
-			line-height: typography.$leading-normal;
-			text-wrap: balance;
+		.social-link {
+			display: block;
+			color: colors.$ivory;
+			&:hover {
+				color: colors.$amber;
+			}
 		}
 
 		@media (min-width: 768px) {
@@ -126,7 +133,7 @@ const links = [
 				font-size: typography.$font-size-4xl;
 			}
 
-			.site-identity {
+			.nav-bottom {
 				display: block;
 				margin-top: auto;
 				padding-top: spacing.$space-8;
