@@ -20,19 +20,31 @@ const { Content } = await render(post);
 <Base title={post.data.title} description={post.data.description}>
 	<article aria-labelledby='post-title'>
 		<h1 id='post-title'>{post.data.title}</h1>
-		{post.data.stale && <p class='stale-warning'><IconClock size={20} /> This post is now outdated, don't believe a word of it.</p>}
+		{
+			post.data.stale && (
+				<p class='stale-warning'>
+					<IconClock size={20} /> This post is now outdated, don't believe a word of it.
+				</p>
+			)
+		}
 		<div class='prose'>
-		{post.data.image && (
-			<figure class='post-image'>
-				<img src={post.data.image.url} alt={post.data.image.alt} />
-				{post.data.image.source && (
-					<figcaption>Image source: <a href={post.data.image.source}>{post.data.image.source}</a></figcaption>
-				)}
-			</figure>
-		)}
+			{
+				post.data.image && (
+					<figure class='post-image'>
+						<img src={`/images${post.data.image.url}`} alt={post.data.image.alt} />
+						{post.data.image.source && (
+							<figcaption>
+								Image source: <a href={post.data.image.source}>{post.data.image.source}</a>
+							</figcaption>
+						)}
+					</figure>
+				)
+			}
 			<Content />
 			<div class='post-meta'>
-				<div class='published-date'>Posted around <time datetime={post.data.pubDate.toISOString()}>{timeAgo(post.data.pubDate)}</time></div>
+				<div class='published-date'>
+					Posted around <time datetime={post.data.pubDate.toISOString()}>{timeAgo(post.data.pubDate)}</time>
+				</div>
 				<TagPills tags={post.data.tags} />
 			</div>
 			<a href='/blog' class='back-link'>← All posts</a>

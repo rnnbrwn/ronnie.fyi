@@ -24,7 +24,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		{
 			image && (
 				<figure class='post-image'>
-					<img src={image.url} alt={image.alt} />
+					<img src={`images/${image.url}`} alt={image.alt} />
 					{image.source && (
 						<figcaption>
 							Image source: <a href={image.source}>{image.source}</a>
@@ -85,7 +85,6 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 				color: colors.$petrol;
 			}
 		}
-
 
 		:global(.pin-icon) {
 			display: inline-block;

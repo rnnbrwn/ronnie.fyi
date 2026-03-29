@@ -4,6 +4,10 @@ pubDate: 2026-03-27 23:33
 description: "Some music I've been enjoying lately"
 author: 'Ronnie'
 tags: ['media', 'angine de poitrine', 'the bug club', 'getdown services', 'kexp']
+image:
+  url: '/1280px-Angine_de_poitrine_(20).jpg'
+  alt: 'The band Angine de Poitrine onstage with audience members visible in the foreground'
+  source: 'https://en.wikipedia.org/wiki/Angine_de_Poitrine'
 ---
 
 ### Angine de Poitrine

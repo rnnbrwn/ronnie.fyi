@@ -6,7 +6,7 @@ author: 'Ronnie'
 tags: ['media']
 ---
 
-### World War 2 is my Roman Empire
+## World War 2 is my Roman Empire
 
 > "Women have no idea how often the men in their lives think about the Roman Empire"
 
@@ -14,7 +14,7 @@ Or, so the meme goes.
 
 I watched a couple of World War 2 movies recently and fell into a bit of a rabbit hole. I assume it's my age.
 
-### Recent media diet
+## Recent media diet
 
 - [Ghosts](<https://en.wikipedia.org/wiki/Ghosts_(2019_TV_series)>) ⭐⭐⭐⭐
 - [Slow Horses](https://en.wikipedia.org/wiki/Slow_Horses) ⭐⭐⭐⭐
