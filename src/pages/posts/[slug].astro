@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TagPills from '../../components/TagPills.astro';
-import { timeAgo } from '../../utils/timeAgo';
 import IconClock from '../../components/IconClock.astro';
 
 export async function getStaticPaths() {
@@ -43,7 +42,7 @@ const { Content } = await render(post);
 			<Content />
 			<div class='post-meta'>
 				<div class='published-date'>
-					Posted around <time datetime={post.data.pubDate.toISOString()}>{timeAgo(post.data.pubDate)}</time>
+					Posted <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
 				</div>
 				<TagPills tags={post.data.tags} />
 			</div>

@@ -1,5 +1,4 @@
 ---
-import { timeAgo } from '../utils/timeAgo';
 import TagPills from './TagPills.astro';
 import IconPin from './IconPin.astro';
 interface Props {
@@ -37,7 +36,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		<slot />
 		<div class='post-meta'>
 			<div class='published-date'>
-				Posted <time datetime={pubDate.toISOString()}>{timeAgo(pubDate)}</time>
+				Posted <time datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
 			</div>
 			<TagPills tags={tags} />
 			{pinned && <p class='featured-label'>featured post</p>}
