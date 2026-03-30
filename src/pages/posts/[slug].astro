@@ -70,6 +70,7 @@ const { Content } = await render(post);
 			display: block;
 			width: 100%;
 			height: auto;
+			border-bottom: spacing.$space-2 solid colors.$amber;
 		}
 
 		figcaption {
@@ -105,6 +106,13 @@ const { Content } = await render(post);
 		:global(.youtube-embed) {
 			margin-bottom: spacing.$space-6;
 			color: colors.$graphite;
+		}
+
+:global(img) {
+			display: block;
+			width: 100%;
+			height: auto;
+			border-bottom: spacing.$space-2 solid colors.$amber;
 		}
 
 		:global(h2) {

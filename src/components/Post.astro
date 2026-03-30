@@ -18,7 +18,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 <section class='post' aria-labelledby={`post-title-${id}`}>
 	<h2 id={`post-title-${id}`}>
 		<a href={`/posts/${id}`}>{title}</a>
-		{pinned && <IconPin class='pin-icon' size={48} />}
+		{pinned && <IconPin class='pin-icon' size={32} />}
 	</h2>
 	<div class='post-body'>
 		{
@@ -91,7 +91,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 			vertical-align: middle;
 			color: colors.$red;
 			margin-left: spacing.$space-2;
-			transform: rotate(35deg) translateY(-10px);
+			transform: rotate(25deg) translateY(-14px);
 		}
 	}
 
@@ -134,6 +134,13 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		:global(.youtube-embed) {
 			margin-bottom: spacing.$space-6;
 			color: colors.$graphite;
+		}
+
+:global(img) {
+			display: block;
+			width: 100%;
+			height: auto;
+			border-bottom: spacing.$space-2 solid colors.$amber;
 		}
 
 		// Prose headings — size overrides only, base styles come from globals

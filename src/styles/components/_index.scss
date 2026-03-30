@@ -1,1 +1,13 @@
 // Components — reusable UI blocks (buttons, cards, nav, tags, etc.)
+@use '../abstracts/spacing';
+@use '../abstracts/colors';
+
+.youtube-embed {
+  background-color: colors.$amber;
+  padding-bottom: spacing.$space-2;
+  line-height: 0;
+
+  iframe {
+    display: block;
+  }
+}
