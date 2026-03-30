@@ -19,3 +19,5 @@ https://www.youtube.com/watch?v=GpaNijzRaJI
 [Taylor's have their own YouTube channel](https://www.youtube.com/@johntaylorsbellfoundry), focusing on their work and providing a wealth of information on the history of the company. They've even got a short "behind the scenes" video of Tom's visit.
 
 https://www.youtube.com/watch?v=39tFNsHjEWI
+
+Check out more of Tom's work at [tomscott.com](https://www.tomscott.com/).
