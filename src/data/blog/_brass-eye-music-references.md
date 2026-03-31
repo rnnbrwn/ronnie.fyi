@@ -2,7 +2,6 @@
 title: 'The Chris Morris Playlist'
 pubDate: 2026-03-28 11:59
 description: 'Books, TV shows etc.'
-author: 'Ronnie'
 tags: ['media']
 ---
 

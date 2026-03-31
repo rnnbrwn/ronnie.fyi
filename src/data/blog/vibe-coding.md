@@ -2,7 +2,6 @@
 title: 'Vibe Coding'
 pubDate: 2025-09-20
 description: "No, I don't like the term either."
-author: 'Ronnie'
 tags: ['ai', 'web development']
 stale: true
 ---

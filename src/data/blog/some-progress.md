@@ -2,7 +2,6 @@
 title: 'Some progress'
 pubDate: 2026-03-28 00:30
 description: "I've been working on the site"
-author: 'Ronnie'
 image:
   url: '/robots-are-coming.webp'
   alt: 'A retro-looking picture of some robots chasing a woman'

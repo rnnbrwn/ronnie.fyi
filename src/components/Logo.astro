@@ -1,4 +1,9 @@
 ---
+interface Props {
+	class?: string;
+	'aria-hidden'?: boolean | 'true' | 'false';
+}
+
 const { class: className, 'aria-hidden': ariaHidden } = Astro.props;
 ---
 

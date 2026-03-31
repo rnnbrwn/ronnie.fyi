@@ -2,7 +2,6 @@
 title: 'Recent media diet'
 pubDate: 2026-03-28 01:36
 description: 'Books, TV shows etc.'
-author: 'Ronnie'
 tags: ['media']
 ---
 

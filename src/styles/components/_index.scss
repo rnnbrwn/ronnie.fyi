@@ -1,6 +1,69 @@
 // Components — reusable UI blocks (buttons, cards, nav, tags, etc.)
 @use '../abstracts/spacing';
 @use '../abstracts/colors';
+@use '../abstracts/typography';
+
+// Prose — shared styles for any container rendering markdown content
+// Applied via .prose class; pairs with @mixin typography.prose for container styles
+.prose {
+  // Vertical rhythm
+  p,
+  ul,
+  ol,
+  blockquote,
+  pre,
+  .youtube-embed {
+    margin-bottom: spacing.$space-6;
+    color: colors.$graphite;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: spacing.$space-2 solid colors.$amber;
+  }
+
+  h2 {
+    font-size: typography.$font-size-2xl;
+  }
+
+  ul,
+  ol {
+    padding-left: spacing.$space-6;
+  }
+
+  li {
+    margin-bottom: spacing.$space-2;
+  }
+
+  blockquote {
+    padding-left: spacing.$space-6;
+    border-left: 3px solid colors.$graphite;
+    font-style: italic;
+  }
+
+  code {
+    font-family: typography.$font-mono;
+    font-size: typography.$font-size-md;
+  }
+
+  a:not(.tag-pill) {
+    color: colors.$petrol;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  pre {
+    padding: spacing.$space-4;
+    overflow-x: auto;
+    font-size: typography.$font-size-md;
+    line-height: typography.$leading-normal;
+    border-radius: spacing.$space-2;
+  }
+}
 
 .youtube-embed {
   background-color: colors.$amber;

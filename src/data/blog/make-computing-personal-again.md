@@ -2,7 +2,6 @@
 title: 'Make Computing Personal Again'
 pubDate: 2022-07-01
 description: 'Link to an article from vintagecomputing.com'
-author: 'Ronnie'
 tags: ['astro', 'blogging', 'web development']
 ---
 

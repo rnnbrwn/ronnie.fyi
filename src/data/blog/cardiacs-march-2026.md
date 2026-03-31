@@ -2,7 +2,6 @@
 title: 'Cardiacs, March 2026'
 pubDate: 2025-09-27
 description: 'By hook or by crook, I managed to get myself a Cardiacs ticket to see them play in Glasgow next year.'
-author: 'Ronnie'
 tags: ['cardiacs', 'glasgow', 'edinburgh', 'the last dinner party']
 ---
 

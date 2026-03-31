@@ -2,7 +2,6 @@
 title: 'The World War 2 Universe'
 pubDate: 2025-09-17
 description: 'You must just reach an age where you start deep-diving into WW2 movies'
-author: 'Ronnie'
 tags: ['media']
 ---
 

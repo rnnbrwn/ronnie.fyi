@@ -2,7 +2,6 @@
 title: 'Two Decades in the Making'
 pubDate: 2025-09-19
 description: "Cardiacs' new album, released today, has been in the pipeline since the early 2000s"
-author: 'Ronnie'
 tags: ['media', 'music', 'cardiacs', 'tim smith', 'mike vennart']
 ---
 

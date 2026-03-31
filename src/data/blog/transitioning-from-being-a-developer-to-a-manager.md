@@ -2,7 +2,6 @@
 title: 'Transitioning From Being a Developer to a Manager'
 pubDate: 2025-09-23
 description: 'I like this, from Liam Egan. I found myself in the same situation, although 20 years ago now!'
-author: 'Ronnie'
 tags: ['career', 'web development']
 ---
 

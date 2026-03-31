@@ -2,7 +2,6 @@
 title: 'John Taylor & Co. Bell Founders'
 pubDate: 2026-03-30 23:11
 description: 'Tom Scott is back making videos on YouTube. His first in this new series is about the last bell foundry in the UK.'
-author: 'Ronnie'
 tags: ['tom scott', 'england', 'john taylor & co. bell founders']
 image:
   url: '/tomscott.webp'

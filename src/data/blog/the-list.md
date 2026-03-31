@@ -2,7 +2,6 @@
 title: 'The List magazine archive'
 pubDate: 2026-03-29 12:53
 description: 'The List magazine has an online archive going back to its first issue in 1985'
-author: 'Ronnie'
 tags: ['media', 'glasgow', 'edinburgh', 'scotland', 'the list']
 image:
   url: '/the-list.png'

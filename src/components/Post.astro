@@ -19,7 +19,7 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		<a href={`/posts/${id}`}>{title}</a>
 		{pinned && <IconPin class='pin-icon' size={32} />}
 	</h2>
-	<div class='post-body'>
+	<div class='post-body prose'>
 		{
 			image && (
 				<figure class='post-image'>
@@ -123,69 +123,6 @@ const { id, title, description, pubDate, tags, image, pinned = false } = Astro.p
 		@include typography.prose;
 		border-bottom: 1px solid colors.$graphite;
 		padding-bottom: spacing.$space-24;
-
-		// Vertical rhythm between block elements
-		:global(p),
-		:global(ul),
-		:global(ol),
-		:global(blockquote),
-		:global(pre),
-		:global(.youtube-embed) {
-			margin-bottom: spacing.$space-6;
-			color: colors.$graphite;
-		}
-
-:global(img) {
-			display: block;
-			width: 100%;
-			height: auto;
-			border-bottom: spacing.$space-2 solid colors.$amber;
-		}
-
-		// Prose headings — size overrides only, base styles come from globals
-		:global(h2) {
-			font-size: typography.$font-size-2xl;
-		}
-
-		// Lists
-		:global(ul),
-		:global(ol) {
-			padding-left: spacing.$space-6;
-		}
-
-		:global(li) {
-			margin-bottom: spacing.$space-2;
-		}
-
-		// Blockquotes
-		:global(blockquote) {
-			padding-left: spacing.$space-6;
-			border-left: 3px solid colors.$graphite;
-			font-style: italic;
-		}
-
-		// Inline code
-		:global(code) {
-			font-family: typography.$font-mono;
-			font-size: typography.$font-size-md;
-		}
-
-		:global(a:not(.tag-pill)) {
-			color: colors.$petrol;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-
-		// Code blocks
-		:global(pre) {
-			padding: spacing.$space-4;
-			overflow-x: auto;
-			font-size: typography.$font-size-md;
-			line-height: typography.$leading-normal;
-			border-radius: spacing.$space-2;
-		}
 
 		.post-meta {
 			margin-top: spacing.$space-8;

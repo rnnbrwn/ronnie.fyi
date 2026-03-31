@@ -2,7 +2,6 @@
 title: 'Old Music'
 pubDate: 2026-03-28 02:31
 description: 'Nibushi Shang Hong, Digerati'
-author: 'Ronnie'
 tags: ['media']
 ---
 

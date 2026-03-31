@@ -2,7 +2,6 @@
 title: 'The George Washington Sketch'
 pubDate: 2025-10-03
 description: 'Nate Bargatze and the SNL writers deep-dive into the creation of the George Washington sketch.'
-author: 'Ronnie'
 tags: ['snl', 'nate bargatze', 'mikey day', 'streeter seidell', 'jesse david fox']
 ---
 

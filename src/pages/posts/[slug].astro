@@ -96,64 +96,6 @@ const { Content } = await render(post);
 		@include typography.prose;
 		margin-top: spacing.$space-6;
 
-		// Vertical rhythm
-		:global(p),
-		:global(ul),
-		:global(ol),
-		:global(blockquote),
-		:global(pre),
-		:global(.youtube-embed) {
-			margin-bottom: spacing.$space-6;
-			color: colors.$graphite;
-		}
-
-:global(img) {
-			display: block;
-			width: 100%;
-			height: auto;
-			border-bottom: spacing.$space-2 solid colors.$amber;
-		}
-
-		:global(h2) {
-			font-size: typography.$font-size-2xl;
-		}
-
-		:global(ul),
-		:global(ol) {
-			padding-left: spacing.$space-6;
-		}
-
-		:global(li) {
-			margin-bottom: spacing.$space-2;
-		}
-
-		:global(blockquote) {
-			padding-left: spacing.$space-6;
-			border-left: 3px solid colors.$graphite;
-			font-style: italic;
-		}
-
-		:global(code) {
-			font-family: typography.$font-mono;
-			font-size: typography.$font-size-md;
-		}
-
-		:global(a:not(.tag-pill)) {
-			color: colors.$petrol;
-
-			&:hover {
-				color: colors.$petrol;
-			}
-		}
-
-		:global(pre) {
-			padding: spacing.$space-4;
-			overflow-x: auto;
-			font-size: typography.$font-size-md;
-			line-height: typography.$leading-normal;
-			border-radius: spacing.$space-2;
-		}
-
 		.post-meta {
 			margin-top: spacing.$space-6;
 		}
