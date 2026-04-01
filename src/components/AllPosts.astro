@@ -13,26 +13,43 @@ const { limit, pinFirst = false } = Astro.props;
 let allPosts = await getSortedPosts();
 
 if (pinFirst) {
-	allPosts = [
-		...allPosts.filter((p) => p.data.pinned),
-		...allPosts.filter((p) => !p.data.pinned),
-	];
+	const pinned = allPosts.filter((p) => p.collection === 'blog' && p.entry.data.pinned);
+	const rest = allPosts.filter((p) => !(p.collection === 'blog' && p.entry.data.pinned));
+	allPosts = [...pinned, ...rest];
 }
 
 const posts = limit ? allPosts.slice(0, limit) : allPosts;
 
 const renderedPosts = await Promise.all(
-	posts.map(async (post) => ({
-		post,
-		Content: (await render(post)).Content,
-	})),
+	posts.map(async (p) => ({
+		post: p,
+		Content: (await render(p.entry)).Content,
+	}))
 );
 ---
 
 {
-	renderedPosts.map(({ post, Content }) => (
-		<Post id={post.id} title={post.data.title} pubDate={post.data.pubDate} tags={post.data.tags} image={post.data.image} pinned={post.data.pinned}>
-			<Content />
-		</Post>
-	))
+	renderedPosts.map(({ post, Content }) => {
+		const isDigest = post.collection === 'notes';
+		const entry = post.entry;
+		const tags = post.collection === 'blog' ? entry.data.tags : [];
+		const image = post.collection === 'blog' ? entry.data.image : undefined;
+		const pinned = post.collection === 'blog' ? entry.data.pinned : false;
+		const href = isDigest ? `/notes/${entry.id}` : `/posts/${entry.id}`;
+
+		return (
+			<Post
+				id={entry.id}
+				title={entry.data.title}
+				pubDate={entry.data.pubDate}
+				tags={tags}
+				image={image}
+				pinned={pinned}
+				isDigest={isDigest}
+				href={href}
+			>
+				<Content />
+			</Post>
+		);
+	})
 }

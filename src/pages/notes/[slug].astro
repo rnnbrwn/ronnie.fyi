@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+	const notes = await getCollection('notes');
+	return notes.map((note) => ({
+		params: { slug: note.id },
+		props: { note },
+	}));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+---
+
+<Base title={note.data.title} description={note.data.description}>
+	<article aria-labelledby='post-title'>
+		<h1 id='post-title'>{note.data.title}</h1>
+		<div class='prose'>
+			<Content />
+			<div class='post-meta'>
+				<div class='published-date'>
+					Posted <time datetime={note.data.pubDate.toISOString()}>{note.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+				</div>
+			</div>
+			<a href='/' class='back-link'>← Home</a>
+		</div>
+	</article>
+</Base>
+
+<style lang='scss'>
+	@use 'sass:map';
+	@use '../../styles/abstracts/spacing';
+	@use '../../styles/abstracts/typography';
+	@use '../../styles/abstracts/colors';
+
+	article {
+		margin: 0;
+		padding: 0;
+	}
+
+	.prose {
+		@include typography.prose;
+		margin-top: spacing.$space-6;
+
+		.post-meta {
+			margin-top: spacing.$space-6;
+		}
+
+		.published-date {
+			@include typography.caption-text;
+			font-weight: typography.$weight-regular;
+			text-transform: uppercase;
+			color: map.get(colors.$graphite-tones, 'tone-2');
+			margin-bottom: spacing.$space-2;
+		}
+
+		.back-link {
+			@include typography.caption-text;
+			display: inline-block;
+			font-weight: typography.$weight-bold;
+			color: colors.$petrol;
+			text-decoration: none;
+			margin-top: spacing.$space-4;
+			padding-block: spacing.$space-2;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+</style>

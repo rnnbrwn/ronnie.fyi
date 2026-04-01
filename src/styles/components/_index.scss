@@ -28,6 +28,12 @@
     font-size: typography.$font-size-2xl;
   }
 
+  h3 {
+    font-family: typography.$font-body;
+    font-size: typography.$font-size-lg;
+    font-weight: typography.$weight-medium;
+  }
+
   ul,
   ol {
     padding-left: spacing.$space-6;
@@ -62,6 +68,12 @@
     font-size: typography.$font-size-md;
     line-height: typography.$leading-normal;
     border-radius: spacing.$space-2;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid colors.$graphite;
+    margin-block: spacing.$space-12;
   }
 }
 

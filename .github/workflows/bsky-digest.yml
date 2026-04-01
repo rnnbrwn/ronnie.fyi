@@ -1,0 +1,35 @@
+name: Generate Bluesky digest
+
+on:
+  schedule:
+    - cron: '0 8 * * 5'   # Friday 08:00 UTC (08:00 GMT / 09:00 BST)
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - run: node scripts/generate-bsky-digest.mjs
+
+      - name: Commit and push if digest was created
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/notes/
+          if git diff --cached --quiet; then
+            echo "No new digest, nothing to commit."
+          else
+            git commit -m "chore: add Bluesky digest $(date -u +%Y-%m-%d)"
+            git push
+          fi
