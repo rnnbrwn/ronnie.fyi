@@ -15,3 +15,13 @@ I spent some time figuring out what I'd like <a href="https://ronnie.fyi">ronnie
 I'll keep this post pinned to the top of the homepage for a while and make a note of anything new I add.
 
 For example, I've just added an <a href="/rss">RSS feed</a>. Go add it to ~~Google Reader~~ an RSS reader of your choice.
+
+## New things
+
+### Bluesky integration
+
+I've added some Bluesky integration to the homepage. In theory, it should regenerate every few days and land in the middle of the regular posts.
+
+### Changelog
+
+For my own benefit, I'll try and keep a note of what I'm up to in a [changelog](/changelog).

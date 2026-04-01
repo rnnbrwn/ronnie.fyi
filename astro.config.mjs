@@ -6,6 +6,7 @@ import rehypeRaw from 'rehype-raw';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ronnie.fyi',
+  trailingSlash: 'never',
   markdown: {
       remarkPlugins: [remarkYouTube],
       rehypePlugins: [rehypeRaw],
