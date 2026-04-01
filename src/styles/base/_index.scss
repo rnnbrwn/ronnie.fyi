@@ -8,7 +8,7 @@
 	src: url('/fonts/Geomanist-Bold.otf') format('opentype');
 	font-weight: 700;
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 }
 
 @font-face {
@@ -16,7 +16,7 @@
 	src: url('/fonts/Geomanist-Medium.otf') format('opentype');
 	font-weight: 500;
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 }
 
 h1, h2, h3, h4, h5, h6 {
