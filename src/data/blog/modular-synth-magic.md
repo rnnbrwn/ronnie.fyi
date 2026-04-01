@@ -1,6 +1,6 @@
 ---
 title: 'Modular synth magic'
-pubDate: 2026-04-01 22:54
+pubDate: 2026-04-01 21:54
 description: 'Seriously, how do you do this?'
 tags: ['media', 'angine de poitrine']
 ---
