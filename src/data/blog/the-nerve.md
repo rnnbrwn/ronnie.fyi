@@ -25,6 +25,6 @@ The Nerve is new to me. Seems like it might only have arrived this year. It's a 
 
 > We are the team behind the 2018 Cambridge Analytica investigation that shifted the world’s understanding of Silicon Valley.
 
-I first heard [Stewart Lee](https://en.wikipedia.org/wiki/Stewart_Lee) talking about it his role as a contributor on [Nish Kumar](https://en.wikipedia.org/wiki/Nish_Kumar) and [Coco Khan](https://en.wikipedia.org/wiki/Coco_Khan)'s podcast, [Pod Save the UK](https://crooked.com/podcast-series/pod-save-the-uk/). [The Nerve team](https://www.thenerve.news/our-team) as a whole looks pretty strong.
+I first heard [Stewart Lee](https://en.wikipedia.org/wiki/Stewart_Lee) talking about his role as a contributor on [Nish Kumar](https://en.wikipedia.org/wiki/Nish_Kumar) and [Coco Khan](https://en.wikipedia.org/wiki/Coco_Khan)'s podcast, [Pod Save the UK](https://crooked.com/podcast-series/pod-save-the-uk/). [The Nerve team](https://www.thenerve.news/our-team) as a whole looks pretty strong.
 
 Pretty strong design aesthetic they've gone for. Maybe they're trying to carve a more zine-like niche, away from the other independent news outlets, like [Byline Times](https://bylinetimes.com/)?
