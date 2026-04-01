@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getSortedPosts } from '../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -10,7 +9,9 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
-const posts = (await getSortedPosts()).filter((post) => post.data.tags.includes(tag));
+const posts = (await getCollection('blog'))
+	.filter((post) => post.data.tags.includes(tag))
+	.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
 ---
 
 <Base title={`Posts tagged "${tag}"`}>
