@@ -1,6 +1,6 @@
 ---
 title: 'personalsit.es'
-pubDate: 2026-04-02 19:07
+pubDate: 2026-04-02 18:07
 description: 'A collection of hand-crafted personal sites'
 tags: ['web development', 'andy bell']
 ---
