@@ -19,4 +19,4 @@ I submitted [ronnie.fyi](https://ronnie.fyi) a couple of days ago and it's up th
 - [coryd.dev](https://www.coryd.dev/)
 - [chriskirknielsen.com](https://chriskirknielsen.com/)
 
-These are all _super_ maximalist styles, not a bootstrap framework in site. And they're fun to nose around in.
+These are all _super_ maximalist styles, not a bootstrap framework in site. Love to see it.
