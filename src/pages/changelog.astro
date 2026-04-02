@@ -1,5 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' UTC';
+const buildSha = import.meta.env.GITHUB_RUN_ID ?? 'local';
 ---
 
 <Base title='Changelog' description='A log of notable updates and changes to ronnie.fyi.'>
@@ -12,4 +15,6 @@ import Base from '../layouts/Base.astro';
 	<ul>
 		<li>Redesign</li>
 	</ul>
+	<hr />
+	<pre>last build: {buildDate} ({buildSha})</pre>
 </Base>
