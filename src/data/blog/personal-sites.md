@@ -2,10 +2,8 @@
 title: 'personalsit.es'
 pubDate: 2026-04-02 18:07
 description: 'A collection of hand-crafted personal sites'
-tags: ['web development', 'andy bell']
+tags: ['web development', 'andy bell', 'this website']
 ---
-
-## Personal Sites
 
 [personalsit.es](https://personalsit.es)
 
