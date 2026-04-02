@@ -14,7 +14,17 @@ interface Props {
 	href?: string;
 }
 
-const { id, title, description, pubDate, tags, image, pinned = false, isDigest = false, href = `/posts/${id}` } = Astro.props;
+const {
+	id,
+	title,
+	description,
+	pubDate,
+	tags,
+	image,
+	pinned = false,
+	isDigest = false,
+	href = `/posts/${id}`,
+} = Astro.props;
 ---
 
 <section class={`post${isDigest ? ' post--digest' : ''}`} aria-labelledby={`post-title-${id}`}>
@@ -38,13 +48,20 @@ const { id, title, description, pubDate, tags, image, pinned = false, isDigest =
 		}
 		<p>{description}</p>
 		<slot />
-		{!isDigest && <div class='post-meta'>
-			<div class='published-date'>
-				Posted <time datetime={pubDate.toISOString()}>{pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
-			</div>
-			<TagPills tags={tags} />
-			{pinned && <p class='featured-label'>featured post</p>}
-		</div>}
+		{
+			!isDigest && (
+				<div class='post-meta'>
+					<div class='published-date'>
+						Posted{' '}
+						<time datetime={pubDate.toISOString()}>
+							{pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+						</time>
+					</div>
+					<TagPills tags={tags} />
+					{pinned && <p class='featured-label'>featured post</p>}
+				</div>
+			)
+		}
 	</div>
 </section>
 
@@ -92,9 +109,8 @@ const { id, title, description, pubDate, tags, image, pinned = false, isDigest =
 		:global(.bsky-icon) {
 			position: absolute;
 			right: calc(100% + spacing.$space-3);
-			top: 0.15em;
-			width: 28px;
-			height: 28px;
+			width: spacing.$space-8;
+			height: spacing.$space-8;
 			color: colors.$teal;
 		}
 
@@ -149,8 +165,8 @@ const { id, title, description, pubDate, tags, image, pinned = false, isDigest =
 
 				:global(.skeet-author-avatar) {
 					display: block;
-					width: 48px;
-					height: 48px;
+					width: spacing.$space-12;
+					height: spacing.$space-12;
 					border-radius: 50%;
 					overflow: hidden;
 
@@ -372,7 +388,7 @@ const { id, title, description, pubDate, tags, image, pinned = false, isDigest =
 
 	.post-body {
 		@include typography.prose;
-		border-bottom: 1px solid colors.$graphite;
+		border-bottom: calc(spacing.$space-2 / 2) solid map.get(colors.$graphite-tones, 'tone-5');
 		padding-bottom: spacing.$space-24;
 
 		.post-meta {

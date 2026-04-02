@@ -7,9 +7,16 @@ const { tags } = Astro.props;
 ---
 
 <span class='tag-pills'>
-	{tags.map((tag, i) => (
-		<><a class='tag-pill' href={`/tags/${tag}`}>{tag}</a>{i < tags.length - 1 ? ', ' : ''}</>
-	))}
+	{
+		tags.map((tag, i) => (
+			<>
+				<a class='tag-pill' href={`/tags/${tag}`}>
+					{tag}
+				</a>
+				{i < tags.length - 1 ? ' ' : ''}
+			</>
+		))
+	}
 </span>
 
 <style lang='scss'>

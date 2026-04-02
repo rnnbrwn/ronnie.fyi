@@ -32,15 +32,15 @@ $weight-bold: 700;
 $weight-extrabold: 800;
 
 // Type scale — perfect fourth (1.333)
-$font-size-xs: 0.694rem; // ~11px — fixed UI size, outside scale
-$font-size-sm: 0.694rem; // ~11px
-$font-size-md: 0.875rem; // ~14px
-$font-size-lg: 1rem; // 16px
-$font-size-xl: 1.333rem; // ~21px
-$font-size-2xl: 1.777rem; // ~28px
-$font-size-3xl: 2.369rem; // ~38px
-$font-size-4xl: 3.157rem; // ~51px
-$font-size-5xl: 4.209rem; // ~67px
+$font-size-sm: 0.563rem;
+$font-size-md: 0.75rem;
+$font-size-lg: 1rem;
+$font-size-xl: 1.333rem;
+$font-size-2xl: 1.777rem;
+$font-size-3xl: 2.369rem;
+$font-size-4xl: 3.157rem;
+$font-size-5xl: 4.209rem;
+$font-size-6xl: 5.61rem;
 
 // Line heights
 $leading-none: 1;
@@ -75,7 +75,7 @@ $tracking-widest: 0.1em;
 
 // Small / caption text
 @mixin caption-text {
-  font-size: $font-size-sm;
+  font-size: $font-size-md;
   line-height: $leading-normal;
   letter-spacing: $tracking-wide;
 }
