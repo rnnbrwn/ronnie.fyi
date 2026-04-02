@@ -2,6 +2,10 @@
 // Typography
 // ==========================================================================
 
+html {
+  font-size: 18px; // Base font size for rem calculations
+}
+
 // Font stacks
 $font-heading:
   'Geomanist',
