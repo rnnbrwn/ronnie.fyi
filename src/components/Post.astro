@@ -17,6 +17,7 @@ interface Props {
 	pinned?: boolean;
 	isDigest?: boolean;
 	href?: string;
+	html?: string;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
 	pinned = false,
 	isDigest = false,
 	href = `/posts/${id}`,
+	html,
 } = Astro.props;
 ---
 
@@ -52,7 +54,7 @@ const {
 			)
 		}
 		<p>{description}</p>
-		<slot />
+		{html ? <Fragment set:html={html} /> : <slot />}
 		{
 			!isDigest && (
 				<div class='post-meta'>

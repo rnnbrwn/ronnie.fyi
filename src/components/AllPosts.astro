@@ -1,7 +1,17 @@
 ---
-import { render } from 'astro:content';
 import Post from './Post.astro';
 import { getSortedPosts } from '../utils/getSortedPosts';
+
+// Shift all heading levels in an HTML string up by one (capped at h6).
+// Used so that in-post headings (written as h2+ for the single post page where
+// the title is h1) remain structurally subordinate to the h2 post card title
+// on listing pages.
+function shiftHeadings(html: string): string {
+	return html.replace(/<(\/?)h([1-6])(\b)/g, (_, slash, level) => {
+		const newLevel = Math.min(6, parseInt(level) + 1);
+		return `<${slash}h${newLevel}`;
+	});
+}
 
 interface Props {
 	limit?: number;
@@ -19,23 +29,17 @@ if (pinFirst) {
 }
 
 const posts = limit ? allPosts.slice(0, limit) : allPosts;
-
-const renderedPosts = await Promise.all(
-	posts.map(async (p) => ({
-		post: p,
-		Content: (await render(p.entry)).Content,
-	}))
-);
 ---
 
 {
-	renderedPosts.map(({ post, Content }) => {
+	posts.map((post) => {
 		const isDigest = post.collection === 'notes';
 		const entry = post.entry;
 		const tags = post.collection === 'blog' ? entry.data.tags : [];
 		const image = post.collection === 'blog' ? entry.data.image : undefined;
 		const pinned = post.collection === 'blog' ? entry.data.pinned : false;
 		const href = isDigest ? `/notes/${entry.id}` : `/posts/${entry.id}`;
+		const html = shiftHeadings(entry.rendered?.html ?? '');
 
 		return (
 			<Post
@@ -47,9 +51,8 @@ const renderedPosts = await Promise.all(
 				pinned={pinned}
 				isDigest={isDigest}
 				href={href}
-			>
-				<Content />
-			</Post>
+				html={html}
+			/>
 		);
 	})
 }

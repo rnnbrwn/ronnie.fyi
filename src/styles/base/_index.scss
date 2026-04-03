@@ -9,7 +9,7 @@
 	src: url('/fonts/Geomanist-Bold.otf') format('opentype');
 	font-weight: 700;
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 }
 
 @font-face {
@@ -17,42 +17,56 @@
 	src: url('/fonts/Geomanist-Medium.otf') format('opentype');
 	font-weight: 500;
 	font-style: normal;
-	font-display: swap;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	@include heading-base;
+	font-display: block;
 }
 
 h1 {
-	font-size: $font-size-xl;
+	@include h1;
 	color: colors.$graphite;
 	margin-bottom: spacing.$space-6;
-	text-transform: uppercase;
 	text-wrap: balance;
 
 	@media (min-width: 768px) {
-		font-size: $font-size-4xl;
 		margin-bottom: spacing.$space-8;
 	}
 }
 
 h2 {
-	font-weight: $weight-semibold;
-	font-size: $font-size-xl;
+	@include h2;
 	color: colors.$graphite;
 	margin-top: spacing.$space-10;
 	margin-bottom: spacing.$space-4;
 }
 
 h3 {
-	font-weight: $weight-semibold;
-	font-size: $font-size-lg;
+	@include h3;
 	color: colors.$graphite;
 	margin-top: spacing.$space-4;
 	margin-bottom: spacing.$space-4;
 }
 
+h4 {
+	@include h4;
+	color: colors.$graphite;
+	margin-top: spacing.$space-4;
+	margin-bottom: spacing.$space-2;
+}
+
+h5 {
+	@include h5;
+	color: colors.$graphite;
+	margin-top: spacing.$space-3;
+	margin-bottom: spacing.$space-2;
+}
+
+h6 {
+	@include h6;
+	color: colors.$graphite;
+	margin-top: spacing.$space-3;
+	margin-bottom: spacing.$space-2;
+}
+
 p {
+	@include p;
 	margin-bottom: spacing.$space-6;
 }

@@ -57,7 +57,10 @@ $tracking-wide: 0.025em;
 $tracking-wider: 0.05em;
 $tracking-widest: 0.1em;
 
-// Heading defaults
+// ==========================================================================
+// Base mixins — shared building blocks
+// ==========================================================================
+
 @mixin heading-base {
   font-family: $font-heading;
   font-weight: $weight-bold;
@@ -65,7 +68,6 @@ $tracking-widest: 0.1em;
   letter-spacing: $tracking-tight;
 }
 
-// Body text defaults
 @mixin body-text {
   font-family: $font-body;
   font-weight: $weight-regular;
@@ -73,16 +75,130 @@ $tracking-widest: 0.1em;
   letter-spacing: $tracking-normal;
 }
 
-// Small / caption text
 @mixin caption-text {
   font-size: $font-size-md;
   line-height: $leading-normal;
   letter-spacing: $tracking-wide;
 }
 
-// Prose body styles — apply to any container rendering markdown content
+// Prose container — apply to any element rendering markdown content
 @mixin prose {
   max-width: 65ch;
   font-size: $font-size-lg;
   line-height: $leading-relaxed;
+}
+
+// ==========================================================================
+// Page-context heading styles
+//
+// These are the base element styles applied site-wide via base/_index.scss.
+// They control headings used as page-level titles and section labels
+// (e.g. post card titles on the homepage, page headings on /posts, /uses etc.)
+//
+// HOMEPAGE NOTE: post body headings are shifted +1 level on the homepage so
+// that they sit correctly under the h2 post card title. That means:
+//   ## in a post  →  h3 on the post page,  h3→h4 shift = h4 on the homepage (see AllPosts.astro)
+//   ### in a post →  h3 on the post page,  h3→h4 shift = h4 on the homepage
+// In practice: if you're styling a heading as it appears on the homepage,
+// look one mixin level deeper than what's written in the markdown.
+// ==========================================================================
+
+@mixin h1 {
+  @include heading-base;
+  font-size: $font-size-xl;
+  text-transform: uppercase;
+
+  @media (min-width: 768px) {
+    font-size: $font-size-4xl;
+  }
+}
+
+// homepage: post card titles (overridden by Post.astro scoped styles — see that file)
+@mixin h2 {
+  @include heading-base;
+  font-weight: $weight-semibold;
+  font-size: $font-size-3xl;
+}
+
+// homepage: rendered by ## post headings (shifted from h2 via AllPosts.astro)
+// post page: not used — ## renders as prose-h2 inside .prose
+@mixin h3 {
+  @include heading-base;
+  font-weight: $weight-semibold;
+  font-size: $font-size-2xl;
+}
+
+// homepage: rendered by ### post headings (shifted from h3 via AllPosts.astro)
+// post page: not used — ### renders as prose-h3 inside .prose
+@mixin h4 {
+  @include heading-base;
+  font-weight: $weight-semibold;
+  font-size: $font-size-xl;
+}
+
+@mixin h5 {
+  @include heading-base;
+  font-weight: $weight-medium;
+  font-size: $font-size-lg; // floor at body size; weight + font-family distinguish it
+}
+
+@mixin h6 {
+  @include heading-base;
+  font-weight: $weight-medium;
+  font-size: $font-size-lg; // floor at body size; weight + font-family distinguish it
+}
+
+@mixin p {
+  @include body-text;
+  font-size: $font-size-lg;
+}
+
+// ==========================================================================
+// Prose-context heading styles
+//
+// Applied inside .prose (post body on the single post page /posts/[slug]).
+// Each level is one scale step smaller than its page-context equivalent,
+// because on the post page the post title is already an h1 and these headings
+// are article sub-headings rather than page-level titles.
+//
+// POST PAGE mapping (headings as written in markdown):
+//   ##    →  prose-h2  ($font-size-2xl)
+//   ###   →  prose-h3  ($font-size-xl)
+//   ####  →  prose-h4  ($font-size-lg — body size floor)
+// ==========================================================================
+
+// post page: ## headings
+@mixin prose-h2 {
+  @include heading-base;
+  font-weight: $weight-semibold;
+  font-size: $font-size-2xl;
+}
+
+// post page: ### headings
+@mixin prose-h3 {
+  @include heading-base;
+  font-weight: $weight-regular;
+  font-size: $font-size-xl;
+  letter-spacing: $tracking-normal;
+}
+
+// post page: #### headings
+// homepage: ### headings (shifted +1 by AllPosts.astro — this is the mixin that applies, not h4)
+@mixin prose-h4 {
+  @include heading-base;
+  font-weight: $weight-regular;
+  font-size: $font-size-lg; // body size floor; heading font + weight distinguish it
+  letter-spacing: $tracking-normal;
+}
+
+@mixin prose-h5 {
+  @include heading-base;
+  font-weight: $weight-medium;
+  font-size: $font-size-lg; // body size floor
+}
+
+@mixin prose-h6 {
+  @include heading-base;
+  font-weight: $weight-medium;
+  font-size: $font-size-lg; // body size floor
 }

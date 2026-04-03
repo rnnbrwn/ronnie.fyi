@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Sandbox</title>
+	</head>
+	<body>
+		<h2>components</h2>
+		<h3>spacing</h3>
+		<div id='spacing-1' class='spacing'></div>
+		<div id='spacing-2' class='spacing'></div>
+		<div id='spacing-3' class='spacing'></div>
+		<div id='spacing-4' class='spacing'></div>
+		<div id='spacing-5' class='spacing'></div>
+		<div id='spacing-6' class='spacing'>6</div>
+		<div id='spacing-8' class='spacing'>8</div>
+		<div id='spacing-10' class='spacing'>10</div>
+		<div id='spacing-12' class='spacing'>12</div>
+		<div id='spacing-14' class='spacing'>14</div>
+		<div id='spacing-16' class='spacing'>16</div>
+		<div id='spacing-20' class='spacing'>20</div>
+		<div id='spacing-24' class='spacing'>24</div>
+		<div id='spacing-32' class='spacing'>32</div>
+		<h3>colors</h3>
+		<div id='ivory' class='colours'></div>
+		<div id='red' class='colours'></div>
+		<div id='teal' class='colours'></div>
+		<div id='petrol' class='colours'></div>
+		<div id='graphite' class='colours'></div>
+		<div id='amber' class='colours'></div>
+		<h3>typography</h3>
+		<h4>headings</h4>
+		<div class='typography'>
+			<h1>Heading 1</h1>
+		</div>
+		<div class='typography'>
+			<h2>Heading 2</h2>
+		</div>
+		<div class='typography'>
+			<h3>Heading 3</h3>
+		</div>
+		<div class='typography'>
+			<h4>Heading 4</h4>
+		</div>
+		<div class='typography'>
+			<h5>Heading 5</h5>
+		</div>
+		<div class='typography'>
+			<h6>Heading 6</h6>
+		</div>
+		<h4>Prose</h4>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget mauris nunc. Duis vitae bibendum magna,
+			nec maximus nisi. Maecenas blandit urna a porta tristique. Donec in venenatis leo, in pellentesque nulla.
+			Aliquam consequat nisl mauris. Nam non elit at neque cursus tempor. Cras quis ex rhoncus, eleifend metus
+			eget, fermentum arcu. Ut fermentum efficitur lorem, vitae condimentum odio porta nec. Aliquam erat volutpat.
+			Quisque et risus arcu. Nam sed auctor mauris, ac convallis odio. Ut ut hendrerit sem. Suspendisse eu
+			convallis libero, non maximus nibh. Vestibulum vitae turpis porta, finibus urna sit amet, faucibus eros.
+			Nulla vulputate, tellus vitae egestas gravida, ante metus vestibulum.
+		</p>
+		<p>
+			Turpis, at accumsan nulla ipsum sed elit. Maecenas congue enim tellus, eu malesuada lorem rutrum eu.
+			Pellentesque dignissim
+		</p>
+	</body>
+
+	<style lang='scss'>
+		@use '../styles/abstracts/spacing';
+		@use '../styles/abstracts/colors';
+		@use '../styles/abstracts/typography';
+
+		html,
+		body,
+		p,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			padding: spacing.$space-4;
+		}
+
+		.spacing {
+			background-color: colors.$red;
+		}
+
+		#spacing-1 {
+			width: spacing.$space-1;
+			height: spacing.$space-1;
+		}
+		#spacing-2 {
+			width: spacing.$space-2;
+			height: spacing.$space-2;
+		}
+
+		#spacing-3 {
+			width: spacing.$space-3;
+			height: spacing.$space-3;
+			background-color: colors.$red;
+		}
+		#spacing-4 {
+			width: spacing.$space-4;
+			height: spacing.$space-4;
+		}
+		#spacing-5 {
+			width: spacing.$space-5;
+			height: spacing.$space-5;
+		}
+
+		#spacing-6 {
+			width: spacing.$space-6;
+			height: spacing.$space-6;
+		}
+
+		#spacing-8 {
+			width: spacing.$space-8;
+			height: spacing.$space-8;
+		}
+		#spacing-10 {
+			width: spacing.$space-10;
+			height: spacing.$space-10;
+		}
+		#spacing-12 {
+			width: spacing.$space-12;
+			height: spacing.$space-12;
+		}
+
+		#spacing-14 {
+			width: spacing.$space-14;
+			height: spacing.$space-14;
+		}
+
+		#spacing-16 {
+			width: spacing.$space-16;
+			height: spacing.$space-16;
+		}
+
+		#spacing-20 {
+			width: spacing.$space-20;
+			height: spacing.$space-20;
+		}
+
+		#spacing-24 {
+			width: spacing.$space-24;
+			height: spacing.$space-24;
+		}
+
+		#spacing-32 {
+			width: spacing.$space-32;
+			height: spacing.$space-32;
+		}
+
+		.colours {
+			width: spacing.$space-32;
+			height: spacing.$space-32;
+			display: inline-block;
+		}
+
+		#ivory {
+			background-color: colors.$ivory;
+		}
+		#red {
+			background-color: colors.$red;
+		}
+		#teal {
+			background-color: colors.$teal;
+		}
+		#petrol {
+			background-color: colors.$petrol;
+		}
+		#graphite {
+			background-color: colors.$graphite;
+		}
+		#amber {
+			background-color: colors.$amber;
+		}
+
+		.typography h1,
+		.typography h2,
+		.typography h3,
+		.typography h4,
+		.typography h5,
+		.typography h6 {
+			@include typography.heading-base;
+			color: colors.$graphite;
+			font-weight: typography.$weight-medium;
+			letter-spacing: typography.$tracking-normal;
+		}
+
+		.typography h1 {
+			font-size: typography.$font-size-6xl;
+		}
+		.typography h2 {
+			font-size: typography.$font-size-5xl;
+		}
+		.typography h3 {
+			font-size: typography.$font-size-4xl;
+		}
+		.typography h4 {
+			font-size: typography.$font-size-3xl;
+		}
+		.typography h5 {
+			font-size: typography.$font-size-2xl;
+		}
+		.typography h6 {
+			font-size: typography.$font-size-xl;
+		}
+		p {
+			@include typography.body-text;
+			@include typography.prose;
+		}
+	</style>
+</html>

@@ -47,13 +47,23 @@
   }
 
   h2 {
-    font-size: typography.$font-size-2xl;
+    @include typography.prose-h2;
   }
 
   h3 {
-    font-family: typography.$font-heading;
-    font-size: typography.$font-size-lg;
-    font-weight: typography.$weight-medium;
+    @include typography.prose-h3;
+  }
+
+  h4 {
+    @include typography.prose-h4;
+  }
+
+  h5 {
+    @include typography.prose-h5;
+  }
+
+  h6 {
+    @include typography.prose-h6;
   }
 
   ul,
