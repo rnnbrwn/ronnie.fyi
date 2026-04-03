@@ -4,7 +4,7 @@ pubDate: 2026-03-29 20:18
 description: 'Mad CSS riffs on March Madness to create a stressful CSS competition'
 tags: ['web development', 'css', 'syntax.fm']
 image:
-  url: '/madcss.jpg'
+  url: 'madcss.jpg'
   alt: 'An AI-generated picture of Wes Bos celebrating victory in an basketball scene.'
   source: 'https://www.madcss.com'
 ---

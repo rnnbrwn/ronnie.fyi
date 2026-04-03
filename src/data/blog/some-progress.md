@@ -3,7 +3,7 @@ title: 'Some progress'
 pubDate: 2026-03-28 00:30
 description: "I've been working on the site"
 image:
-  url: '/robots-are-coming.webp'
+  url: 'robots-are-coming.webp'
   alt: 'A retro-looking picture of some robots chasing a woman'
   source: 'https://www.frankandmarci.com/blog/2024-how-to-thrive-when-ai-is-coming-for-your-job/'
 tags: ['this website', 'web development']

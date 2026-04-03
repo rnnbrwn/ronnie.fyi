@@ -2,6 +2,11 @@
 import TagPills from './TagPills.astro';
 import IconPin from './IconPin.astro';
 import IconBlueSky from './IconBlueSky.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
+
 interface Props {
 	id: string;
 	title: string;
@@ -35,9 +40,9 @@ const {
 	</h2>
 	<div class='post-body prose'>
 		{
-			image && (
+			image && imageFiles[`/src/assets/images/${image.url}`] && (
 				<figure class='post-image'>
-					<img src={`images/${image.url}`} alt={image.alt} />
+					<Image src={imageFiles[`/src/assets/images/${image.url}`]!.default} alt={image.alt} />
 					{image.source && (
 						<figcaption>
 							Image source: <a href={image.source}>{image.source}</a>
@@ -149,245 +154,6 @@ const {
 					margin-top: 0;
 					padding-top: spacing.$space-10;
 				}
-
-				:global(.skeet) {
-					display: grid;
-					grid-template-columns: 48px 1fr;
-					column-gap: spacing.$space-3;
-					padding-block: spacing.$space-5;
-					border-bottom: 1px solid map.get(colors.$graphite-tones, 'tone-4');
-
-					&:last-of-type {
-						border-bottom: none;
-						padding-bottom: 0;
-					}
-				}
-
-				:global(.skeet-author-avatar) {
-					display: block;
-					width: spacing.$space-12;
-					height: spacing.$space-12;
-					border-radius: 50%;
-					overflow: hidden;
-
-					img {
-						display: block;
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-						object-position: 50% 50%;
-						border-bottom: none;
-					}
-				}
-
-				:global(.skeet-main) {
-					min-width: 0;
-				}
-
-				:global(.skeet-header) {
-					display: flex;
-					align-items: baseline;
-					gap: spacing.$space-2;
-					margin-bottom: spacing.$space-2;
-					flex-wrap: wrap;
-				}
-
-				:global(.skeet-display-name) {
-					font-weight: typography.$weight-bold;
-					color: colors.$graphite;
-					text-decoration: none;
-
-					&:hover {
-						color: colors.$teal;
-					}
-
-					&:visited {
-						color: colors.$graphite;
-					}
-				}
-
-				:global(.skeet-handle) {
-					color: map.get(colors.$graphite-tones, 'tone-2');
-					font-size: typography.$font-size-sm;
-				}
-
-				:global(.skeet-timestamp) {
-					margin-left: auto;
-					color: map.get(colors.$graphite-tones, 'tone-2');
-					font-size: typography.$font-size-sm;
-					text-decoration: none;
-					white-space: nowrap;
-
-					&:hover {
-						color: colors.$teal;
-					}
-				}
-
-				:global(.skeet-body) {
-					color: map.get(colors.$graphite-tones, 'tone-1');
-				}
-
-				:global(.skeet-body p) {
-					margin-block: spacing.$space-2;
-
-					&:first-child {
-						margin-top: 0;
-					}
-
-					&:last-child {
-						margin-bottom: 0;
-					}
-				}
-
-				:global(.skeet-quote) {
-					margin-top: spacing.$space-3;
-					border: 1px solid map.get(colors.$graphite-tones, 'tone-3');
-					border-radius: 8px;
-					padding: spacing.$space-4;
-				}
-
-				:global(.skeet-quote-header) {
-					display: flex;
-					align-items: center;
-					gap: spacing.$space-2;
-					margin-bottom: spacing.$space-2;
-				}
-
-				:global(.skeet-quote-avatar) {
-					display: block;
-					width: 20px;
-					height: 20px;
-					border-radius: 50%;
-					object-fit: cover;
-					object-position: 50% 50%;
-					flex-shrink: 0;
-					border-bottom: none;
-				}
-
-				:global(.skeet-quote-name) {
-					font-weight: typography.$weight-bold;
-					font-size: typography.$font-size-sm;
-					color: colors.$graphite;
-					text-decoration: none;
-
-					&:hover {
-						color: colors.$teal;
-					}
-				}
-
-				:global(.skeet-quote-handle) {
-					font-size: typography.$font-size-sm;
-					color: map.get(colors.$graphite-tones, 'tone-2');
-				}
-
-				:global(.skeet-quote-body) {
-					font-size: typography.$font-size-sm;
-					color: map.get(colors.$graphite-tones, 'tone-1');
-				}
-
-				:global(.skeet-quote-body p) {
-					margin-block: spacing.$space-1;
-
-					&:first-child {
-						margin-top: 0;
-					}
-
-					&:last-child {
-						margin-bottom: 0;
-					}
-				}
-
-				:global(.skeet-quote-link) {
-					display: flex;
-					flex-direction: column;
-					margin-top: spacing.$space-2;
-					padding: spacing.$space-3;
-					border: 1px solid map.get(colors.$graphite-tones, 'tone-4');
-					border-radius: 4px;
-					font-size: typography.$font-size-sm;
-
-					a {
-						font-weight: typography.$weight-semibold;
-						color: colors.$graphite;
-						text-decoration: none;
-
-						&:hover {
-							color: colors.$teal;
-						}
-					}
-				}
-
-				:global(.skeet-quote-link-desc) {
-					color: map.get(colors.$graphite-tones, 'tone-2');
-					font-size: typography.$font-size-sm;
-					margin-top: spacing.$space-1;
-				}
-
-				:global(.skeet-footer) {
-					margin-top: spacing.$space-3;
-				}
-
-				:global(.bsky-likes) {
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					gap: spacing.$space-2;
-					margin: 0;
-				}
-
-				:global(.bsky-avatar) {
-					display: inline-block;
-					position: relative;
-					width: 28px;
-					height: 28px;
-					border-radius: 50%;
-					overflow: hidden;
-					vertical-align: middle;
-					margin-left: -10px;
-					box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
-					transition: transform 0.15s ease;
-
-					&:hover {
-						transform: scale(1.25);
-						z-index: 1;
-					}
-
-					&:first-of-type {
-						margin-left: 0;
-					}
-
-					img {
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-						object-position: 50% 50%;
-						border-bottom: none;
-					}
-				}
-			}
-		}
-	}
-
-	.post-image {
-		margin: 0 0 spacing.$space-6;
-
-		img {
-			display: block;
-			width: 100%;
-			height: auto;
-			border-bottom: spacing.$space-2 solid colors.$amber;
-		}
-
-		figcaption {
-			@include typography.caption-text;
-			color: map.get(colors.$graphite-tones, 'tone-1');
-			margin-top: spacing.$space-2;
-
-			a {
-				color: inherit;
 			}
 		}
 	}

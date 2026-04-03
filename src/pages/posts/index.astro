@@ -1,11 +1,10 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
 import IconClock from '../../components/IconClock.astro';
+import { getSortedPosts } from '../../utils/getSortedPosts';
 
-const posts = (await getCollection('blog'))
-	.filter((p) => new Date(p.data.pubDate) <= new Date())
-	.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+const allPosts = await getSortedPosts();
+const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
 ---
 
 <Base title='Blog'>
