@@ -16,7 +16,7 @@ tags:
     'crooked media',
   ]
 image:
-  url: '/the-nerve.png'
+  url: 'the-nerve.png'
   alt: 'The Nerve logo. Lettering in cyan with a stylised, pink "i" forming the central stem of the final uppercase "E"'
   source: 'https://www.thenerve.news/'
 ---

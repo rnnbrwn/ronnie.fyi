@@ -4,7 +4,7 @@ pubDate: 2026-04-02 20:25
 description: 'Off-the-shelf microtonal bass for the low-end weirdo in your life.'
 tags: ['music', 'bass', 'angine de poitrine', 'eastwood guitars']
 image:
-  url: '/eastwood-microtonal-bass.jpg'
+  url: 'eastwood-microtonal-bass.jpg'
   alt: 'TBC.'
   source: 'https://eastwoodguitars.com/products/warren-ellis-microtonal-bass-guitar'
 ---

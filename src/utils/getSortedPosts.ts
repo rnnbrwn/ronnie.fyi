@@ -12,7 +12,7 @@ export async function getSortedPosts(): Promise<AnyPost[]> {
 		.filter((p) => new Date(p.data.pubDate) <= now)
 		.map((entry): BlogPost => ({ collection: 'blog', entry }));
 
-	const notePosts = (await getCollection('notes').catch(() => []))
+	const notePosts = (await getCollection('notes'))
 		.filter((p) => new Date(p.data.pubDate) <= now)
 		.map((entry): NotePost => ({ collection: 'notes', entry }));
 
