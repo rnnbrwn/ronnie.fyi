@@ -165,7 +165,7 @@ async function main() {
 			const likesData = await likesRes.json();
 			if (likesData.likes?.length) {
 				const avatars = likesData.likes
-					.map(({ actor }) => `<span class="bsky-avatar"><img src="${actor.avatar}" alt="${actor.displayName || actor.handle}" title="${actor.displayName || actor.handle}" /></span>`)
+					.map(({ actor }) => `<a class="bsky-avatar" href="https://bsky.app/profile/${actor.handle || actor.did}" target="_blank" rel="noopener noreferrer"><img src="${actor.avatar}" alt="${actor.displayName || actor.handle}" title="${actor.displayName || actor.handle}" /></a>`)
 					.join('');
 				footerHtml = `\n<div class="skeet-footer"><p class="bsky-likes">${avatars}</p></div>`;
 			}
