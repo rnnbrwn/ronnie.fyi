@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /sandbox
+Allow: /
+
+Sitemap: https://ronnie.fyi/sitemap-index.xml

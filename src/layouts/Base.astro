@@ -20,7 +20,9 @@ const { title, description } = Astro.props;
 		<link rel='preload' href='/fonts/Geomanist-Bold.otf' as='font' type='font/otf' crossorigin />
 		<link rel='preload' href='/fonts/Geomanist-Medium.otf' as='font' type='font/otf' crossorigin />
 		<Head title={title} description={description} />
+		<link rel='sitemap' href='/sitemap-index.xml' />
 	</head>
+
 	<body>
 		<a href='#main-content' class='skip-link'>Skip to main content</a>
 		<Navigation />
