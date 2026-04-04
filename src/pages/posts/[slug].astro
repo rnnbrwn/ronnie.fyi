@@ -30,27 +30,31 @@ const { Content } = await render(post);
 				</p>
 			)
 		}
-		<div class='prose'>
-			{
-				post.data.image && imageFiles[`/src/assets/images/${post.data.image.url}`] && (
-					<figure class='post-image'>
-						<Image src={imageFiles[`/src/assets/images/${post.data.image.url}`]!.default} alt={post.data.image.alt} />
-						{post.data.image.source && (
-							<figcaption>
-								Image source: <a href={post.data.image.source}>{post.data.image.source}</a>
-							</figcaption>
-						)}
-					</figure>
-				)
-			}
-			<Content />
-			<div class='post-meta'>
-				<div class='published-date'>
-					Posted <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
-				</div>
-				<TagPills tags={post.data.tags} />
+		{
+			post.data.image && imageFiles[`/src/assets/images/${post.data.image.url}`] && (
+				<figure class='post-image'>
+					<Image src={imageFiles[`/src/assets/images/${post.data.image.url}`]!.default} alt={post.data.image.alt} />
+					{post.data.image.source && (
+						<figcaption>
+							Image source: <a href={post.data.image.source}>{post.data.image.source}</a>
+						</figcaption>
+					)}
+				</figure>
+			)
+		}
+		<div class='post-body'>
+			<div class='prose'>
+				<Content />
 			</div>
-			<a href='/posts' class='back-link'>← All posts</a>
+			<aside class='post-aside'>
+				<div class='post-meta'>
+					<div class='published-date'>
+						Posted <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+					</div>
+					<TagPills tags={post.data.tags} />
+				</div>
+				<a href='/posts' class='back-link'>All posts</a>
+			</aside>
 		</div>
 	</article>
 </Base>
@@ -59,6 +63,9 @@ const { Content } = await render(post);
 	@use '../../styles/abstracts/spacing';
 	@use '../../styles/abstracts/typography';
 	@use '../../styles/abstracts/colors';
+
+	$sidebar-width: 220px;
+	$body-gap: spacing.$space-12;
 
 	article {
 		margin: 0;
@@ -74,33 +81,80 @@ const { Content } = await render(post);
 		margin-bottom: spacing.$space-6;
 	}
 
+	.post-image {
+		margin: spacing.$space-6 0 0;
+		max-width: 65ch;
+
+		@media (min-width: 1400px) {
+			max-width: calc(65ch + #{$body-gap} + #{$sidebar-width});
+		}
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+			border-bottom: spacing.$space-2 solid colors.$amber;
+		}
+
+		figcaption {
+			@include typography.caption-text;
+			color: colors.$graphite;
+			margin-top: spacing.$space-2;
+
+			a {
+				color: inherit;
+			}
+		}
+	}
+
+	.post-body {
+		margin-top: spacing.$space-16;
+
+		@media (min-width: 1400px) {
+			display: grid;
+			grid-template-columns: minmax(0, 65ch) $sidebar-width;
+			gap: $body-gap;
+			align-items: start;
+			max-width: calc(65ch + #{$body-gap} + #{$sidebar-width});
+		}
+	}
+
 	.prose {
 		@include typography.prose;
+	}
+
+	.post-meta {
 		margin-top: spacing.$space-6;
 
-		.post-meta {
-			margin-top: spacing.$space-6;
+		@media (min-width: 1400px) {
+			margin-top: 0;
 		}
+	}
 
-		.published-date {
-			@include typography.caption-text;
-			font-weight: typography.$weight-bold;
-			color: colors.$graphite;
-			margin-bottom: spacing.$space-2;
-		}
+	.published-date {
+		@include typography.caption-text;
+		font-weight: typography.$weight-bold;
+		color: colors.$graphite;
+		margin-bottom: spacing.$space-2;
+	}
 
-		.back-link {
-			@include typography.caption-text;
-			display: inline-block;
-			font-weight: typography.$weight-bold;
-			color: colors.$petrol;
-			text-decoration: none;
-			margin-top: spacing.$space-4;
-			padding-block: spacing.$space-2;
+	.back-link {
+		display: inline-block;
+		font-family: typography.$font-heading;
+		font-size: typography.$font-size-md;
+		font-weight: typography.$weight-bold;
+		letter-spacing: typography.$tracking-wider;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: colors.$ivory;
+		background-color: colors.$petrol;
+		padding: spacing.$space-2 spacing.$space-4;
+		border-radius: 3px;
+		margin-top: spacing.$space-6;
 
-			&:hover {
-				text-decoration: underline;
-			}
+		&:hover {
+			background-color: colors.$teal;
+			color: colors.$ivory;
 		}
 	}
 </style>

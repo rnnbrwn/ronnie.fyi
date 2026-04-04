@@ -5,19 +5,38 @@ import Logo from '../components/Logo.astro';
 ---
 
 <Base description='Writing about music, technology, and whatever else.'>
-	<h1 aria-label='ronnie.fyi'><Logo class='logo' aria-hidden='true' /></h1>
+	<div class='site-header'>
+		<h1 aria-label='ronnie.fyi'><Logo class='logo' aria-hidden='true' /></h1>
+		<p class='bio'>Writing about music, technology, and whatever else.</p>
+	</div>
 	<AllPosts limit={6} pinFirst />
 	<a href='/posts'>View all blog posts</a>
 
 	<style lang='scss'>
 		@use '../styles/abstracts/colors';
 		@use '../styles/abstracts/spacing';
+		@use '../styles/abstracts/typography';
+
+		.site-header {
+			margin-bottom: spacing.$space-16;
+		}
+
+		h1 {
+			margin: 0;
+		}
 
 		h1 :global(.logo) {
 			width: 250px;
 			height: auto;
 			color: colors.$graphite;
-			margin-bottom: spacing.$space-16;
+			margin-bottom: spacing.$space-3;
+		}
+
+		.bio {
+			font-family: typography.$font-body;
+			font-size: typography.$font-size-lg;
+			color: colors.$graphite;
+			max-width: 320px;
 		}
 	</style>
 </Base>
