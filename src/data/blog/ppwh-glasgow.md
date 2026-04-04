@@ -7,6 +7,7 @@ image:
   url: 'the-prince-and-princess-of-wales-hospice-building.webp'
   alt: 'The Prince & Princess of Wales Hospice building in Glasgow'
   source: 'https://www.princeandprincessofwaleshospice.org.uk/'
+pinned: true
 ---
 
 Two weeks today, on Sunday 29 April 2026 I will be taking part in [The Kiltwalk Big Stroll](https://thekiltwalk.co.uk/events/glasgow#bigStroll). I'll be walking with my family to raise funds for The Prince & Princess of Wales Hospice in Glasgow, Scotland.
