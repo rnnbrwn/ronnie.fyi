@@ -13,7 +13,11 @@ const currentYear = new Date().getFullYear();
 
 	footer {
 		margin-top: auto;
-		padding: spacing.$space-6 spacing.$space-24;
+		padding: spacing.$space-6 spacing.$space-4;
+
+		@media (min-width: 768px) {
+			padding: spacing.$space-6 spacing.$space-24;
+		}
 
 		p {
 			font-family: typography.$font-body;
