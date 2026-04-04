@@ -53,7 +53,10 @@ const { Content } = await render(post);
 					</div>
 					<TagPills tags={post.data.tags} />
 				</div>
-				<a href='/posts' class='back-link'>All posts</a>
+				<div class='aside-links'>
+					<a href='/posts' class='back-link'>All posts</a>
+					<a href='/tags' class='tags-link'>All tags</a>
+				</div>
 			</aside>
 		</div>
 	</article>
@@ -138,9 +141,16 @@ const { Content } = await render(post);
 		margin-bottom: spacing.$space-2;
 	}
 
+	.aside-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: spacing.$space-2;
+		margin-top: spacing.$space-6;
+	}
+
 	.back-link {
 		display: inline-block;
-		font-family: typography.$font-heading;
+		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-bold;
 		letter-spacing: typography.$tracking-wider;
@@ -148,13 +158,38 @@ const { Content } = await render(post);
 		text-decoration: none;
 		color: colors.$ivory;
 		background-color: colors.$petrol;
+		border: 2px solid transparent;
+		line-height: 1;
 		padding: spacing.$space-2 spacing.$space-4;
 		border-radius: 3px;
-		margin-top: spacing.$space-6;
-
 		&:hover {
 			background-color: colors.$teal;
 			color: colors.$ivory;
+		}
+	}
+
+	.tags-link {
+		display: inline-block;
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		font-weight: typography.$weight-bold;
+		letter-spacing: typography.$tracking-wider;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: colors.$petrol;
+		background-color: transparent;
+		border: 2px solid colors.$petrol;
+		line-height: 1;
+		padding: spacing.$space-2 spacing.$space-4;
+		border-radius: 3px;
+
+		&:visited {
+			color: colors.$petrol;
+		}
+
+		&:hover {
+			color: colors.$teal;
+			border-color: colors.$teal;
 		}
 	}
 </style>
