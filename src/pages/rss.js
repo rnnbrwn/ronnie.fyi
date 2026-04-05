@@ -3,7 +3,8 @@ import { getCollection, render } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 
 export async function GET(context) {
-	const posts = await getCollection('blog');
+	const now = new Date();
+	const posts = await getCollection('blog', ({ data }) => new Date(data.pubDate) <= now);
 	const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
 
 	const container = await AstroContainer.create();
