@@ -55,7 +55,7 @@ const links = [
 	@use '../styles/abstracts/typography';
 
 	nav {
-		background-color: colors.$graphite;
+		background-color: colors.$dark;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -73,21 +73,21 @@ const links = [
 
 		li a {
 			font-family: typography.$font-heading;
-			color: colors.$ivory;
+			color: colors.$light;
 			text-decoration: none;
 			font-weight: typography.$weight-bold;
 			font-size: typography.$font-size-xl;
 			line-height: typography.$leading-tight;
 			text-transform: uppercase;
 			&[aria-current='page'] {
-				color: colors.$amber;
+				color: colors.$primary;
 			}
 			&:hover {
-				color: colors.$amber;
+				color: colors.$primary;
 			}
 			&:focus-visible {
-				color: colors.$amber;
-				outline: 2px solid colors.$amber;
+				color: colors.$primary;
+				outline: 2px solid colors.$primary;
 				outline-offset: 2px;
 			}
 		}
@@ -97,9 +97,9 @@ const links = [
 		}
 
 		.social-link {
-			color: colors.$ivory;
+			color: colors.$light;
 			&:hover {
-				color: colors.$amber;
+				color: colors.$primary;
 			}
 		}
 

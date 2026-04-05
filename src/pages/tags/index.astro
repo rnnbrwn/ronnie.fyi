@@ -9,9 +9,13 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 <Base title='Tags'>
 	<h1>Tags</h1>
 	<ul>
-		{tags.map((tag) => (
-			<li><a href={`/tags/${tag}`}>#{tag}</a></li>
-		))}
+		{
+			tags.map((tag) => (
+				<li>
+					<a href={`/tags/${tag}`}>#{tag}</a>
+				</li>
+			))
+		}
 	</ul>
 </Base>
 
@@ -31,7 +35,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 
 	a {
 		font-size: typography.$font-size-lg;
-		color: colors.$petrol;
+		color: colors.$tertiary;
 		text-decoration: none;
 
 		&:hover {

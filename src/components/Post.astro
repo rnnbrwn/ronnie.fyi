@@ -65,7 +65,7 @@ const {
 						</time>
 					</div>
 					<TagPills tags={tags} />
-					{pinned && <p class='featured-label'>featured post</p>}
+					{pinned && <p class='highlight'>This is a pinned post</p>}
 				</div>
 			)
 		}
@@ -85,17 +85,26 @@ const {
 		@media (min-width: 768px) {
 			font-size: typography.$font-size-4xl;
 		}
-		color: colors.$graphite;
+		color: colors.$dark;
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
 		text-wrap: balance;
 		position: relative;
 
-		&::before {
-			content: '#';
+		&::before,
+		:global(.bsky-icon) {
 			position: absolute;
 			right: calc(100% + spacing.$space-3);
-			color: colors.$amber;
+			display: none;
+
+			@media (min-width: 768px) {
+				display: block;
+			}
+		}
+
+		&::before {
+			content: '#';
+			color: colors.$primary;
 			font-weight: typography.$weight-regular;
 		}
 
@@ -109,22 +118,20 @@ const {
 			}
 
 			&:hover {
-				color: colors.$petrol;
+				color: colors.$tertiary;
 			}
 		}
 
 		:global(.bsky-icon) {
-			position: absolute;
-			right: calc(100% + spacing.$space-3);
 			width: spacing.$space-8;
 			height: spacing.$space-8;
-			color: colors.$teal;
+			color: colors.$tertiary;
 		}
 
 		:global(.pin-icon) {
 			display: inline-block;
 			vertical-align: middle;
-			color: colors.$red;
+			color: map.get(colors.$dark-tones, 'tone-3');
 			margin-left: spacing.$space-2;
 			transform: rotate(25deg) translateY(-14px);
 		}
@@ -136,7 +143,7 @@ const {
 		&.post--digest {
 			h2 {
 				font-size: typography.$font-size-xl;
-				color: map.get(colors.$graphite-tones, 'tone-1');
+				color: map.get(colors.$dark-tones, 'tone-1');
 
 				@media (min-width: 768px) {
 					font-size: typography.$font-size-2xl;
@@ -149,7 +156,7 @@ const {
 
 			.post-body {
 				.published-date {
-					color: map.get(colors.$graphite-tones, 'tone-1');
+					color: map.get(colors.$dark-tones, 'tone-1');
 				}
 
 				.post-meta {
@@ -162,30 +169,32 @@ const {
 
 	.post-body {
 		@include typography.prose;
-		border-bottom: calc(spacing.$space-2 / 2) solid map.get(colors.$graphite-tones, 'tone-5');
+		border-bottom: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
 		padding-bottom: spacing.$space-24;
 
 		.post-meta {
 			margin-top: spacing.$space-8;
 		}
 
-		.featured-label {
-			display: block;
+		.highlight {
+			position: relative;
 			width: fit-content;
-			margin-top: spacing.$space-2;
-			font-size: typography.$font-size-sm;
-			font-weight: typography.$weight-semibold;
-			text-transform: uppercase;
-			background-color: colors.$red;
-			color: colors.$ivory;
-			padding: spacing.$space-1 spacing.$space-3;
+
+			&::before {
+				content: '';
+				position: absolute;
+				inset: 0 (-(spacing.$space-2));
+				background-color: colors.$secondary;
+				transform: rotate(-2deg);
+				z-index: -1;
+			}
 		}
 
 		.published-date {
 			@include typography.caption-text;
 			font-weight: typography.$weight-regular;
 			text-transform: uppercase;
-			color: map.get(colors.$graphite-tones, 'tone-2');
+			color: map.get(colors.$dark-tones, 'tone-2');
 			margin-bottom: spacing.$space-2;
 		}
 	}

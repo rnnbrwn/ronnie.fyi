@@ -25,7 +25,8 @@ const { tags } = Astro.props;
 	@use '../styles/abstracts/typography';
 
 	.tag-pills {
-		display: inline;
+		display: block;
+		margin-bottom: spacing.$space-4;
 	}
 
 	.tag-pill {
@@ -34,16 +35,16 @@ const { tags } = Astro.props;
 		font-family: typography.$font-body;
 		font-weight: typography.$weight-bold;
 		text-transform: uppercase;
-		color: colors.$petrol;
+		color: colors.$tertiary;
 		text-decoration: underline;
 
 		&:visited {
-			color: colors.$petrol;
+			color: colors.$tertiary;
 		}
 
 		&:hover,
 		&:visited:hover {
-			color: colors.$teal;
+			color: colors.$tertiary;
 		}
 	}
 </style>

@@ -23,12 +23,12 @@
 		<div id='spacing-24' class='spacing'>24</div>
 		<div id='spacing-32' class='spacing'>32</div>
 		<h3>colors</h3>
-		<div id='ivory' class='colours'></div>
-		<div id='red' class='colours'></div>
-		<div id='teal' class='colours'></div>
-		<div id='petrol' class='colours'></div>
-		<div id='graphite' class='colours'></div>
-		<div id='amber' class='colours'></div>
+		<div id='light' class='colours'></div>
+		<div id='secondary' class='colours'></div>
+		<div id='tertiary' class='colours'></div>
+		<div id='quaternary' class='colours'></div>
+		<div id='dark' class='colours'></div>
+		<div id='primary' class='colours'></div>
 		<h3>typography</h3>
 		<h4>headings</h4>
 		<div class='typography'>
@@ -88,7 +88,7 @@
 		}
 
 		.spacing {
-			background-color: colors.$red;
+			background-color: colors.$secondary;
 		}
 
 		#spacing-1 {
@@ -103,7 +103,7 @@
 		#spacing-3 {
 			width: spacing.$space-3;
 			height: spacing.$space-3;
-			background-color: colors.$red;
+			background-color: colors.$secondary;
 		}
 		#spacing-4 {
 			width: spacing.$space-4;
@@ -163,23 +163,23 @@
 			display: inline-block;
 		}
 
-		#ivory {
-			background-color: colors.$ivory;
+		#light {
+			background-color: colors.$light;
 		}
-		#red {
-			background-color: colors.$red;
+		#secondary {
+			background-color: colors.$secondary;
 		}
-		#teal {
-			background-color: colors.$teal;
+		#tertiary {
+			background-color: colors.$tertiary;
 		}
-		#petrol {
-			background-color: colors.$petrol;
+		#quaternary {
+			background-color: colors.$tertiary;
 		}
-		#graphite {
-			background-color: colors.$graphite;
+		#dark {
+			background-color: colors.$dark;
 		}
-		#amber {
-			background-color: colors.$amber;
+		#primary {
+			background-color: colors.$primary;
 		}
 
 		.typography h1,
@@ -189,7 +189,7 @@
 		.typography h5,
 		.typography h6 {
 			@include typography.heading-base;
-			color: colors.$graphite;
+			color: colors.$dark;
 			font-weight: typography.$weight-medium;
 			letter-spacing: typography.$tracking-normal;
 		}

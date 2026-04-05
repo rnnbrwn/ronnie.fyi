@@ -33,7 +33,10 @@ const { Content } = await render(post);
 		{
 			post.data.image && imageFiles[`/src/assets/images/${post.data.image.url}`] && (
 				<figure class='post-image'>
-					<Image src={imageFiles[`/src/assets/images/${post.data.image.url}`]!.default} alt={post.data.image.alt} />
+					<Image
+						src={imageFiles[`/src/assets/images/${post.data.image.url}`]!.default}
+						alt={post.data.image.alt}
+					/>
 					{post.data.image.source && (
 						<figcaption>
 							Image source: <a href={post.data.image.source}>{post.data.image.source}</a>
@@ -49,7 +52,15 @@ const { Content } = await render(post);
 			<aside class='post-aside'>
 				<div class='post-meta'>
 					<div class='published-date'>
-						Posted <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+						Posted <time datetime={post.data.pubDate.toISOString()}
+							>{
+								post.data.pubDate.toLocaleDateString('en-GB', {
+									day: 'numeric',
+									month: 'long',
+									year: 'numeric',
+								})
+							}</time
+						>
 					</div>
 					<TagPills tags={post.data.tags} />
 				</div>
@@ -79,7 +90,7 @@ const { Content } = await render(post);
 		display: flex;
 		align-items: center;
 		gap: spacing.$space-2;
-		color: colors.$red;
+		color: colors.$secondary;
 		font-weight: typography.$weight-semibold;
 		margin-bottom: spacing.$space-6;
 	}
@@ -96,12 +107,12 @@ const { Content } = await render(post);
 			display: block;
 			width: 100%;
 			height: auto;
-			border-bottom: spacing.$space-2 solid colors.$amber;
+			border-bottom: spacing.$space-2 solid colors.$primary;
 		}
 
 		figcaption {
 			@include typography.caption-text;
-			color: colors.$graphite;
+			color: colors.$dark;
 			margin-top: spacing.$space-2;
 
 			a {
@@ -137,7 +148,7 @@ const { Content } = await render(post);
 	.published-date {
 		@include typography.caption-text;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		margin-bottom: spacing.$space-2;
 	}
 
@@ -156,15 +167,15 @@ const { Content } = await render(post);
 		letter-spacing: typography.$tracking-wider;
 		text-transform: uppercase;
 		text-decoration: none;
-		color: colors.$ivory;
-		background-color: colors.$petrol;
+		color: colors.$light;
+		background-color: colors.$tertiary;
 		border: 2px solid transparent;
 		line-height: 1;
 		padding: spacing.$space-2 spacing.$space-4;
 		border-radius: 3px;
 		&:hover {
-			background-color: colors.$teal;
-			color: colors.$ivory;
+			background-color: colors.$tertiary;
+			color: colors.$light;
 		}
 	}
 
@@ -176,20 +187,20 @@ const { Content } = await render(post);
 		letter-spacing: typography.$tracking-wider;
 		text-transform: uppercase;
 		text-decoration: none;
-		color: colors.$petrol;
+		color: colors.$tertiary;
 		background-color: transparent;
-		border: 2px solid colors.$petrol;
+		border: 2px solid colors.$tertiary;
 		line-height: 1;
 		padding: spacing.$space-2 spacing.$space-4;
 		border-radius: 3px;
 
 		&:visited {
-			color: colors.$petrol;
+			color: colors.$tertiary;
 		}
 
 		&:hover {
-			color: colors.$teal;
-			border-color: colors.$teal;
+			color: colors.$tertiary;
+			border-color: colors.$tertiary;
 		}
 	}
 </style>

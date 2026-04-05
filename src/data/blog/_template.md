@@ -4,7 +4,7 @@ pubDate: YYYY-MM-DD hh:mm
 description: 'desc'
 tags: ['tag1', 'tag2']
 image:
-  url: '/1280px-Angine_de_poitrine_(20).jpg'
+  url: 'ronnie.png'
   alt: 'alt'
   source: 'where_I_got_the_image'
 ---

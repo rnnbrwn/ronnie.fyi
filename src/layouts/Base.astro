@@ -41,7 +41,7 @@ const { title, description } = Astro.props;
 
 			body {
 				font-family: typography.$font-body;
-				background-color: map.get(colors.$ivory-tones, 'tone-5');
+				background-color: map.get(colors.$light-tones, 'tone-5');
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
@@ -75,22 +75,22 @@ const { title, description } = Astro.props;
 			@use '../styles/abstracts/typography';
 
 			a {
-				color: colors.$petrol;
+				color: colors.$tertiary;
 				font-weight: typography.$weight-semibold;
 			}
 
 			a:visited {
-				color: colors.$petrol;
+				color: colors.$tertiary;
 			}
 
 			a:hover {
-				color: colors.$petrol;
+				color: colors.$tertiary;
 			}
 
 			a:focus-visible {
-				outline: 2px solid colors.$graphite;
+				outline: 2px solid colors.$dark;
 				outline-offset: 2px;
-				box-shadow: 0 0 0 4px colors.$amber;
+				box-shadow: 0 0 0 4px colors.$primary;
 			}
 
 			nav a {
@@ -98,7 +98,7 @@ const { title, description } = Astro.props;
 			}
 
 			nav a:focus-visible {
-				outline: 2px solid colors.$amber;
+				outline: 2px solid colors.$primary;
 				outline-offset: 2px;
 				box-shadow: none;
 			}
@@ -112,8 +112,8 @@ const { title, description } = Astro.props;
 				position: fixed;
 				top: 0;
 				left: 0;
-				background: colors.$graphite;
-				color: colors.$ivory;
+				background: colors.$dark;
+				color: colors.$light;
 				padding: spacing.$space-2 spacing.$space-4;
 				font-family: typography.$font-body;
 				z-index: 9999;

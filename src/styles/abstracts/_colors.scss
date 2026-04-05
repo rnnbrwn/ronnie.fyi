@@ -2,15 +2,20 @@
 @use 'sass:map';
 
 // Base colors from palette
-$ivory: #fef8f0;
-$red: #da2843;
-$teal: #3b8ea5;
-$petrol: #2a5f70;
-$graphite: #444444;
-$amber: #ffd677;
+$alabaster: #f6f4f5;
+$cerulean: #0c6291;
+$saffron: #f2dc5d;
+$pitch: #031105;
+$crimson: #d81e5b;
+
+$primary: $crimson;
+$secondary: $saffron;
+$tertiary: $cerulean;
+$dark: $pitch;
+$light: $alabaster;
 
 // Tone generator: creates opacity variants
-// Usage: map-get($ivory-tones, 'tone-2') or map-get($red-tones, 'tone-5')
+// Usage: map.get($primary-tones, 'tone-2')
 @function generate-tones($color, $steps: 5, $amount: 0.15) {
   $tones: (
     'base': $color,
@@ -28,10 +33,35 @@ $amber: #ffd677;
   @return $tones;
 }
 
+// Shade generator: creates lightness-based darker variants
+// Usage: map.get($primary-shades, 'shade-2')
+@function generate-shades($color, $steps: 5, $amount: 8) {
+  $shades: (
+    'base': $color,
+  );
+
+  @for $i from 1 through $steps {
+    $shades: map.merge(
+      $shades,
+      (
+        'shade-#{$i}': color.adjust($color, $lightness: -$amount * $i),
+      )
+    );
+  }
+
+  @return $shades;
+}
+
 // Generated tone maps
-$ivory-tones: generate-tones($ivory);
-$red-tones: generate-tones($red);
-$teal-tones: generate-tones($teal);
-$petrol-tones: generate-tones($petrol);
-$graphite-tones: generate-tones($graphite);
-$amber-tones: generate-tones($amber);
+$primary-tones: generate-tones($primary);
+$secondary-tones: generate-tones($secondary);
+$tertiary-tones: generate-tones($tertiary);
+$dark-tones: generate-tones($dark);
+$light-tones: generate-tones($light);
+
+// Generated shade maps
+$primary-shades: generate-shades($primary);
+$secondary-shades: generate-shades($secondary);
+$tertiary-shades: generate-shades($tertiary);
+$dark-shades: generate-shades($dark);
+$light-shades: generate-shades($light);

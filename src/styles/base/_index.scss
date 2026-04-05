@@ -22,7 +22,7 @@
 
 h1 {
 	@include h1;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-bottom: spacing.$space-6;
 	text-wrap: balance;
 
@@ -33,35 +33,35 @@ h1 {
 
 h2 {
 	@include h2;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-top: spacing.$space-10;
 	margin-bottom: spacing.$space-4;
 }
 
 h3 {
 	@include h3;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-top: spacing.$space-4;
 	margin-bottom: spacing.$space-4;
 }
 
 h4 {
 	@include h4;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-top: spacing.$space-4;
 	margin-bottom: spacing.$space-2;
 }
 
 h5 {
 	@include h5;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-top: spacing.$space-3;
 	margin-bottom: spacing.$space-2;
 }
 
 h6 {
 	@include h6;
-	color: colors.$graphite;
+	color: colors.$dark;
 	margin-top: spacing.$space-3;
 	margin-bottom: spacing.$space-2;
 }

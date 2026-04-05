@@ -50,14 +50,14 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 		@include typography.caption-text;
 		display: block;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		margin-bottom: spacing.$space-1;
 	}
 
 	:global(.stale-icon) {
 		display: inline-block !important;
 		vertical-align: middle;
-		color: colors.$graphite;
+		color: colors.$dark;
 		opacity: 0.5;
 		margin-left: spacing.$space-2;
 		transform: translateY(-5px);
@@ -67,22 +67,22 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 		display: block;
 		font-size: typography.$font-size-xl;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		text-decoration: none;
 		margin-bottom: spacing.$space-1;
 
 		&:visited {
-			color: colors.$graphite;
+			color: colors.$dark;
 		}
 
 		&:hover {
-			color: colors.$petrol;
+			color: colors.$tertiary;
 		}
 	}
 
 	p {
 		font-size: typography.$font-size-md;
-		color: map.get(colors.$graphite-tones, 'tone-2');
+		color: map.get(colors.$dark-tones, 'tone-2');
 		margin: 0;
 		line-height: typography.$leading-normal;
 	}

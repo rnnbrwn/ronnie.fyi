@@ -17,14 +17,21 @@ const posts = (await getCollection('blog'))
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
 	<a href='/tags' class='all-tags-link'>All tags</a>
-	<p class='post-count'>{posts.length} {posts.length === 1 ? 'post' : 'posts'} tagged <span class='tag-name'>#{tag}</span></p>
+	<p class='post-count'>
+		{posts.length}
+		{posts.length === 1 ? 'post' : 'posts'} tagged <span class='tag-name'>#{tag}</span>
+	</p>
 	<ul>
 		{
 			posts.map((post) => (
 				<li>
 					<a href={`/posts/${post.id}`}>{post.data.title}</a>
 					<time datetime={post.data.pubDate.toISOString()}>
-						{post.data.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+						{post.data.pubDate.toLocaleDateString('en-GB', {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						})}
 					</time>
 					<p>{post.data.description}</p>
 				</li>
@@ -42,7 +49,7 @@ const posts = (await getCollection('blog'))
 	.all-tags-link {
 		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-bold;
-		color: colors.$petrol;
+		color: colors.$tertiary;
 		text-decoration: underline;
 		display: block;
 		margin-bottom: spacing.$space-8;
@@ -55,12 +62,12 @@ const posts = (await getCollection('blog'))
 	.post-count {
 		@include typography.caption-text;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		margin-top: calc(-1 * spacing.$space-4);
 		margin-bottom: spacing.$space-8;
 
 		.tag-name {
-			color: colors.$red;
+			color: colors.$secondary;
 			font-weight: typography.$weight-bold;
 			text-transform: uppercase;
 		}
@@ -79,7 +86,7 @@ const posts = (await getCollection('blog'))
 		@include typography.caption-text;
 		display: block;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		margin-bottom: spacing.$space-1;
 	}
 
@@ -87,22 +94,22 @@ const posts = (await getCollection('blog'))
 		display: block;
 		font-size: typography.$font-size-xl;
 		font-weight: typography.$weight-bold;
-		color: colors.$graphite;
+		color: colors.$dark;
 		text-decoration: none;
 		margin-bottom: spacing.$space-1;
 
 		&:visited {
-			color: colors.$graphite;
+			color: colors.$dark;
 		}
 
 		&:hover {
-			color: colors.$petrol;
+			color: colors.$tertiary;
 		}
 	}
 
 	p {
 		font-size: typography.$font-size-md;
-		color: map.get(colors.$graphite-tones, 'tone-2');
+		color: map.get(colors.$dark-tones, 'tone-2');
 		margin: 0;
 		line-height: typography.$leading-normal;
 	}
