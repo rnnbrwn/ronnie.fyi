@@ -15,6 +15,6 @@ image:
 
 In January this year, the [YouTube channel Oxide Ghosts](https://www.youtube.com/@oxideghosts) was created and several videos have been published since.
 
-I'm going to assume that these videos are part of those tours. Either way, it's great to see hear Cummings' thoughts on the show all these years later.
+I'm going to assume that these videos are part of those tours. Either way, it's great to see hear Cumming's thoughts on the show all these years later.
 
 Here's the latest one, [Brass Eye Hidden Secrets | Ep 1](https://www.youtube.com/watch?v=ml6AJARRVno).
