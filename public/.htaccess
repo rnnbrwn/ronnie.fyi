@@ -1,3 +1,5 @@
+Options +MultiViews
+
 RewriteEngine On
 
 # Redirect /YYYY/MM/ to /YYYY/MM (remove trailing slash)
