@@ -1,6 +1,1 @@
-Options +MultiViews
-
 RewriteEngine On
-
-# Redirect /YYYY/MM/ to /YYYY/MM (remove trailing slash)
-RewriteRule ^([0-9]{4}/[0-9]{2})/$  /$1 [R=301,L]
