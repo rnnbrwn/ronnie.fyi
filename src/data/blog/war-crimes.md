@@ -22,3 +22,5 @@ If that were to come to pass, Trump would join a long list of [present and forme
 > Vladimir Putin, for his contribution in the illegal abduction of children from Ukraine and deportation into Russia during the Russian invasion of Ukraine.
 
 > Benjamin Netanyahu has been accused of war crimes in the Gaza war including starvation. Both he and his former Defense Minister Yoav Gallant have been said to use "starvation as a method of warfare."
+
+Trumps threats have been condemned by a number of public figures including [Pope Leo XIV](https://www.bbc.co.uk/news/live/c5yw4g3z7qgt?post=asset%3A0512143a-4b8d-4178-a6b9-b676949ac6a9#post) and the [UN Secretary-General, António Guterres](https://www.bbc.co.uk/news/live/c5yw4g3z7qgt?post=asset%3A0c4b9c12-2bae-4c98-90cf-5801d3bf907b#post).
