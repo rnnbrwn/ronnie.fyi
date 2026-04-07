@@ -24,7 +24,7 @@ const redirectTrailingSlash = {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://ronnie.fyi',
-  trailingSlash: 'ignore',
+  trailingSlash: 'never',
 
   markdown: {
       remarkPlugins: [remarkYouTube],
