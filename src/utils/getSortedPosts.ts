@@ -1,6 +1,12 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
+export function getPostUrl(pubDate: Date, id: string): string {
+	const year = pubDate.getFullYear();
+	const month = String(pubDate.getMonth() + 1).padStart(2, '0');
+	return `/${year}/${month}/${id}`;
+}
+
 export type BlogPost = { collection: 'blog'; entry: CollectionEntry<'blog'> };
 export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
 export type AnyPost = BlogPost | NotePost;

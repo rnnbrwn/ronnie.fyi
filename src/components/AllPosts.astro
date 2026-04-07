@@ -1,6 +1,6 @@
 ---
 import Post from './Post.astro';
-import { getSortedPosts } from '../utils/getSortedPosts';
+import { getSortedPosts, getPostUrl } from '../utils/getSortedPosts';
 
 // Shift all heading levels in an HTML string up by one (capped at h6).
 // Used so that in-post headings (written as h2+ for the single post page where
@@ -38,7 +38,7 @@ const posts = limit ? allPosts.slice(0, limit) : allPosts;
 		const tags = post.collection === 'blog' ? entry.data.tags : [];
 		const image = post.collection === 'blog' ? entry.data.image : undefined;
 		const pinned = post.collection === 'blog' ? entry.data.pinned : false;
-		const href = isDigest ? `/notes/${entry.id}` : `/posts/${entry.id}`;
+		const href = isDigest ? `/notes/${entry.id}` : getPostUrl(entry.data.pubDate, entry.id);
 		const html = shiftHeadings(entry.rendered?.html ?? '');
 
 		return (

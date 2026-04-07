@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { getPostUrl } from '../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -25,7 +26,7 @@ const posts = (await getCollection('blog'))
 		{
 			posts.map((post) => (
 				<li>
-					<a href={`/posts/${post.id}`}>{post.data.title}</a>
+					<a href={getPostUrl(post.data.pubDate, post.id)}>{post.data.title}</a>
 					<time datetime={post.data.pubDate.toISOString()}>
 						{post.data.pubDate.toLocaleDateString('en-GB', {
 							day: 'numeric',

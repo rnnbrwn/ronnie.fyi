@@ -1,0 +1,146 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import IconClock from '../../../components/IconClock.astro';
+import { getPostUrl } from '../../../utils/getSortedPosts';
+
+export async function getStaticPaths() {
+	const now = new Date();
+	const posts = (await getCollection('blog')).filter((p) => new Date(p.data.pubDate) <= now);
+
+	const monthMap = new Map<string, { year: string; month: string; posts: CollectionEntry<'blog'>[] }>();
+	for (const post of posts) {
+		const year = String(post.data.pubDate.getFullYear());
+		const month = String(post.data.pubDate.getMonth() + 1).padStart(2, '0');
+		const key = `${year}/${month}`;
+		if (!monthMap.has(key)) monthMap.set(key, { year, month, posts: [] });
+		monthMap.get(key)!.posts.push(post);
+	}
+
+	return [...monthMap.values()].map(({ year, month, posts }) => ({
+		params: { year, month },
+		props: {
+			year,
+			month,
+			posts: posts.sort(
+				(a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+			),
+		},
+	}));
+}
+
+const { year, month, posts } = Astro.props;
+
+const monthLabel = new Date(Number(year), Number(month) - 1, 1).toLocaleDateString('en-GB', {
+	month: 'long',
+	year: 'numeric',
+});
+---
+
+<Base title={`Posts from ${monthLabel}`}>
+	<h1>Posts from {monthLabel}</h1>
+	<a href='/posts' class='all-posts-link'>All posts</a>
+	<ul>
+		{
+			posts.map((post) => (
+				<li>
+					<a href={getPostUrl(post.data.pubDate, post.id)}>
+						{post.data.title}
+						{post.data.stale && <IconClock class='stale-icon' size={20} />}
+					</a>
+					<time datetime={post.data.pubDate.toISOString()}>
+						{post.data.pubDate.toLocaleDateString('en-GB', {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						})}
+					</time>
+					<p>{post.data.description}</p>
+				</li>
+			))
+		}
+	</ul>
+</Base>
+
+<style lang='scss'>
+	@use '../../../styles/abstracts/colors';
+	@use '../../../styles/abstracts/spacing';
+	@use '../../../styles/abstracts/typography';
+	@use 'sass:map';
+
+	.all-posts-link {
+		font-size: typography.$font-size-lg;
+		font-weight: typography.$weight-bold;
+		color: colors.$tertiary;
+		text-decoration: underline;
+		display: block;
+		margin-bottom: spacing.$space-8;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	ul {
+		padding: 0;
+		list-style: none;
+	}
+
+	li {
+		margin-block-end: spacing.$space-8;
+	}
+
+	time {
+		@include typography.caption-text;
+		display: block;
+		font-weight: typography.$weight-bold;
+		color: colors.$dark;
+		margin-bottom: spacing.$space-1;
+	}
+
+	:global([data-theme='dark']) time {
+		color: colors.$light;
+	}
+
+	:global(.stale-icon) {
+		display: inline-block !important;
+		vertical-align: middle;
+		color: map.get(colors.$dark-tones, 'tone-2');
+		margin-left: spacing.$space-2;
+		transform: translateY(-5px);
+	}
+
+	a {
+		display: block;
+		font-size: typography.$font-size-xl;
+		font-weight: typography.$weight-bold;
+		color: colors.$dark;
+		text-decoration: none;
+		margin-bottom: spacing.$space-1;
+
+		&:visited {
+			color: colors.$dark;
+		}
+
+		&:hover {
+			color: colors.$tertiary;
+		}
+	}
+
+	:global([data-theme='dark']) a {
+		color: colors.$light;
+
+		&:visited {
+			color: colors.$light;
+		}
+	}
+
+	p {
+		font-size: typography.$font-size-lg;
+		color: map.get(colors.$dark-tones, 'tone-2');
+		margin: 0;
+		line-height: typography.$leading-normal;
+		max-width: 65ch;
+	}
+</style>

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import IconClock from '../../components/IconClock.astro';
-import { getSortedPosts } from '../../utils/getSortedPosts';
+import { getSortedPosts, getPostUrl } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
@@ -13,7 +13,7 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 		{
 			posts.map((post) => (
 				<li>
-					<a href={`/posts/${post.id}`}>
+					<a href={getPostUrl(post.data.pubDate, post.id)}>
 						{post.data.title}
 						{post.data.stale && <IconClock class='stale-icon' size={28} />}
 					</a>

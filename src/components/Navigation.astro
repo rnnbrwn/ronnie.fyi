@@ -4,6 +4,7 @@ import IconGitHub from './IconGitHub.astro';
 import IconRSS from './IconRSS.astro';
 
 const pathname = Astro.url.pathname;
+const isPostPath = pathname.startsWith('/posts/') || /^\/\d{4}\/\d{2}(\/|$)/.test(pathname);
 
 const links = [
 	{ href: '/', label: 'Home' },
@@ -21,7 +22,7 @@ const links = [
 						href={href}
 						aria-current={
 							pathname === href ||
-							(href === '/posts' && pathname.startsWith('/posts/')) ||
+							(href === '/posts' && isPostPath) ||
 							(href === '/about' && (pathname === '/changelog' || pathname === '/uses'))
 								? 'page'
 								: undefined

@@ -44,7 +44,7 @@ $light: $alabaster;
     $shades: map.merge(
       $shades,
       (
-        'shade-#{$i}': color.adjust($color, $lightness: -$amount * $i),
+        'shade-#{$i}': color.adjust($color, $lightness: -$amount * $i * 1%),
       )
     );
   }
