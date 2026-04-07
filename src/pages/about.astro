@@ -9,10 +9,13 @@ const pageTitle = 'About';
 
 <Base title={pageTitle} description='Learn more about me and my journey as a developer.'>
 	<h1>{pageTitle}</h1>
-	<p>I will put something here when I figure out what to say.</p>
+	<p>
+		Scottish dad. Technology managing, music listening, bass playing, Rangers FC supporting, Scottish Gàidhlig
+		learning, self-proclaimed good egg. He/him.
+	</p>
 
 	<p>
-		In the meantime, here are <a href='/uses'>things I use</a> and a <a href='/changelog'>changelog</a>.
+		Here are <a href='/uses'>things I use</a> and a <a href='/changelog'>changelog</a>.
 	</p>
 
 	<p>Or, click these links.</p>
@@ -32,6 +35,10 @@ const pageTitle = 'About';
 
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
+
+	p {
+		max-width: 65ch;
+	}
 
 	.social-link {
 		color: colors.$dark;
