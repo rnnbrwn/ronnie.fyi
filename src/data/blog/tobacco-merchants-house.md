@@ -1,6 +1,6 @@
 ---
 title: "Tobacco Merchant's House"
-pubDate: 2026-04-07 23:00
+pubDate: 2026-04-07 22:00
 description: 'The Scottish Civic Trust are attempting to raise £250,000 to help preserve the 250-year old building for the next 250 years.'
 tags: ["tobacco merchant's house", 'glasgow', 'tobacco lords']
 image:
