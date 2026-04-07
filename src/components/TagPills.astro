@@ -23,6 +23,7 @@ const { tags } = Astro.props;
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
+	@use 'sass:color';
 
 	.tag-pills {
 		display: block;
@@ -44,7 +45,12 @@ const { tags } = Astro.props;
 
 		&:hover,
 		&:visited:hover {
-			color: colors.$tertiary;
+			color: color.scale(colors.$tertiary, $lightness: 20%);
+		}
+
+		:global(html[data-theme='dark']) &:hover,
+		:global(html[data-theme='dark']) &:visited:hover {
+			color: color.scale(colors.$tertiary, $lightness: 60%);
 		}
 	}
 </style>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>Sub-grid</title>
+	</head>
+	<body>
+		<div class='container'>
+			<nav>1</nav>
+			<main>2</main>
+		</div>
+	</body>
+</html>
+
+<style lang='scss'>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	.container {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		grid-template-areas: 'nav main';
+		min-height: 100vh;
+		nav {
+			background-color: #000;
+			padding: 1em;
+			color: white;
+		}
+		main {
+			margin: 1em;
+		}
+	}
+</style>

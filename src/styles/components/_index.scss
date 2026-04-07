@@ -1,5 +1,6 @@
 // Components — reusable UI blocks (buttons, cards, nav, tags, etc.)
 @use 'sass:map';
+@use 'sass:color';
 @use '../abstracts/spacing';
 @use '../abstracts/colors';
 @use '../abstracts/typography';
@@ -41,7 +42,11 @@
       margin-top: spacing.$space-2;
 
       a {
-        color: inherit;
+        color: colors.$tertiary;
+
+        &:hover {
+          color: color.scale(colors.$tertiary, $lightness: 20%);
+        }
       }
     }
   }
@@ -90,6 +95,7 @@
     color: colors.$tertiary;
 
     &:hover {
+      color: color.scale(colors.$tertiary, $lightness: 20%);
       text-decoration: none;
     }
   }

@@ -48,7 +48,7 @@ const {
 					<Image src={imageFiles[`/src/assets/images/${image.url}`]!.default} alt={image.alt} />
 					{image.source && (
 						<figcaption>
-							Image source: <a href={image.source}>{image.source}</a>
+							<a href={image.source}>Image source</a>
 						</figcaption>
 					)}
 				</figure>
@@ -75,6 +75,7 @@ const {
 
 <style lang='scss'>
 	@use 'sass:map';
+	@use 'sass:color';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use '../styles/abstracts/colors';
@@ -198,5 +199,14 @@ const {
 			color: map.get(colors.$dark-tones, 'tone-2');
 			margin-bottom: spacing.$space-2;
 		}
+
+	}
+
+	:global(html[data-theme='dark']) .post-body .published-date {
+		color: map.get(colors.$light-tones, 'tone-2');
+	}
+
+	:global(html[data-theme='dark']) h2 a:hover {
+		color: color.scale(colors.$tertiary, $lightness: 60%);
 	}
 </style>

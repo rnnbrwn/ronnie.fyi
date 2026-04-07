@@ -17,6 +17,13 @@ const { title, description } = Astro.props;
 <html lang='en'>
 	<head>
 		<meta charset='UTF-8' />
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem('theme');
+				var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				document.documentElement.dataset.theme = stored || preferred;
+			})();
+		</script>
 		<link rel='preload' href='/fonts/Geomanist-Bold.otf' as='font' type='font/otf' crossorigin />
 		<link rel='preload' href='/fonts/Geomanist-Medium.otf' as='font' type='font/otf' crossorigin />
 		<Head title={title} description={description} />

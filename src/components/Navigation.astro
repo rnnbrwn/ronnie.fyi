@@ -35,6 +35,46 @@ const links = [
 		}
 	</ul>
 	<div class='nav-bottom'>
+		<button class='theme-toggle' aria-label='Toggle dark mode'>
+			<svg
+				class='icon-sun'
+				xmlns='http://www.w3.org/2000/svg'
+				width='24'
+				height='24'
+				viewBox='0 0 24 24'
+				fill='none'
+				stroke='currentColor'
+				stroke-width='2'
+				stroke-linecap='round'
+				stroke-linejoin='round'
+				aria-hidden='true'
+			>
+				<circle cx='12' cy='12' r='4'></circle>
+				<line x1='12' y1='2' x2='12' y2='6'></line>
+				<line x1='12' y1='18' x2='12' y2='22'></line>
+				<line x1='4.93' y1='4.93' x2='7.76' y2='7.76'></line>
+				<line x1='16.24' y1='16.24' x2='19.07' y2='19.07'></line>
+				<line x1='2' y1='12' x2='6' y2='12'></line>
+				<line x1='18' y1='12' x2='22' y2='12'></line>
+				<line x1='4.93' y1='19.07' x2='7.76' y2='16.24'></line>
+				<line x1='16.24' y1='7.76' x2='19.07' y2='4.93'></line>
+			</svg>
+			<svg
+				class='icon-moon'
+				xmlns='http://www.w3.org/2000/svg'
+				width='24'
+				height='24'
+				viewBox='0 0 24 24'
+				fill='none'
+				stroke='currentColor'
+				stroke-width='2'
+				stroke-linecap='round'
+				stroke-linejoin='round'
+				aria-hidden='true'
+			>
+				<path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path>
+			</svg>
+		</button>
 		<div class='social-links'>
 			<a href='https://bsky.app/profile/ronnie.fyi' class='social-link' aria-label='Ronnie on Bluesky'>
 				<IconBlueSky size={32} />
@@ -49,11 +89,40 @@ const links = [
 	</div>
 </nav>
 
+<script>
+	const toggle = document.querySelector('.theme-toggle') as HTMLButtonElement;
+	const html = document.documentElement;
+	const iconSun = toggle?.querySelector('.icon-sun') as SVGElement;
+	const iconMoon = toggle?.querySelector('.icon-moon') as SVGElement;
+
+	function updateIcon(theme: string) {
+		if (!iconSun || !iconMoon) return;
+		if (theme === 'dark') {
+			iconSun.style.display = 'block';
+			iconMoon.style.display = 'none';
+		} else {
+			iconSun.style.display = 'none';
+			iconMoon.style.display = 'block';
+		}
+	}
+
+	// Sync icon with whatever theme the anti-flash script already set
+	updateIcon(html.dataset.theme ?? 'light');
+
+	toggle?.addEventListener('click', () => {
+		const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+		html.dataset.theme = next;
+		localStorage.setItem('theme', next);
+		updateIcon(next);
+	});
+</script>
+
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
+	@use 'sass:map';
 
 	nav {
 		background-color: colors.$dark;
@@ -94,7 +163,37 @@ const links = [
 		}
 
 		.nav-bottom {
-			display: none;
+			display: flex;
+			align-items: center;
+			gap: spacing.$space-4;
+			margin-left: auto;
+
+			.social-links {
+				display: none;
+			}
+		}
+
+		.theme-toggle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: spacing.$space-1;
+			color: colors.$light;
+
+			&:hover {
+				color: colors.$primary;
+			}
+
+			.icon-sun {
+				display: none;
+			}
+
+			.icon-moon {
+				display: block;
+			}
 		}
 
 		.social-link {
@@ -113,6 +212,7 @@ const links = [
 			flex-direction: column;
 			align-items: stretch;
 			padding: spacing.$space-8;
+			border-right: spacing.$space-1 solid map.get(colors.$light-tones, 'tone-4');
 
 			ul {
 				flex-direction: column;
@@ -124,9 +224,20 @@ const links = [
 			}
 
 			.nav-bottom {
-				display: block;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: spacing.$space-6;
+				margin-left: 0;
 				margin-top: auto;
 				padding-top: spacing.$space-8;
+
+				.social-links {
+					display: flex;
+				}
+			}
+
+			.theme-toggle {
+				padding: 0;
 			}
 		}
 	}

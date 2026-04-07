@@ -15,7 +15,7 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 				<li>
 					<a href={getPostUrl(post.data.pubDate, post.id)}>
 						{post.data.title}
-						{post.data.stale && <IconClock class='stale-icon' size={28} />}
+						{post.data.stale && <IconClock class='stale-icon' size={20} />}
 					</a>
 					<time datetime={post.data.pubDate.toISOString()}>
 						{post.data.pubDate.toLocaleDateString('en-GB', {
@@ -54,11 +54,14 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 		margin-bottom: spacing.$space-1;
 	}
 
+	:global([data-theme='dark']) time {
+		color: colors.$light;
+	}
+
 	:global(.stale-icon) {
 		display: inline-block !important;
 		vertical-align: middle;
-		color: colors.$dark;
-		opacity: 0.5;
+		color: map.get(colors.$dark-tones, 'tone-2');
 		margin-left: spacing.$space-2;
 		transform: translateY(-5px);
 	}
@@ -80,10 +83,19 @@ const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry
 		}
 	}
 
+	:global([data-theme='dark']) a {
+		color: colors.$light;
+
+		&:visited {
+			color: colors.$light;
+		}
+	}
+
 	p {
-		font-size: typography.$font-size-md;
+		font-size: typography.$font-size-lg;
 		color: map.get(colors.$dark-tones, 'tone-2');
 		margin: 0;
 		line-height: typography.$leading-normal;
+		max-width: 65ch;
 	}
 </style>

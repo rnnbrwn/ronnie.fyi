@@ -83,6 +83,7 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 
 <style lang='scss'>
 	@use 'sass:map';
+	@use 'sass:color';
 	@use '../../../styles/abstracts/spacing';
 	@use '../../../styles/abstracts/typography';
 	@use '../../../styles/abstracts/colors';
@@ -125,7 +126,11 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 			margin-top: spacing.$space-2;
 
 			a {
-				color: inherit;
+				color: colors.$tertiary;
+
+				&:hover {
+					color: color.scale(colors.$tertiary, $lightness: 20%);
+				}
 			}
 		}
 	}

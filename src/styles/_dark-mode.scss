@@ -1,0 +1,213 @@
+// ==========================================================================
+// Dark mode — html[data-theme="dark"] overrides
+//
+// Uses html[data-theme="dark"] prefix throughout to achieve higher specificity
+// than Astro's scoped component styles (which add a [data-astro-cid-*] attribute
+// selector). This lets one global file handle all dark mode theming without
+// touching individual component/page scoped styles.
+// ==========================================================================
+
+@use 'abstracts/colors';
+@use 'sass:map';
+@use 'sass:color';
+
+// Lighter cerulean for use on dark backgrounds
+$tertiary-dark: color.scale(colors.$tertiary, $lightness: 45%);
+// Hover state — visibly lighter than $tertiary-dark
+$tertiary-dark-hover: color.scale(colors.$tertiary, $lightness: 60%);
+
+html[data-theme='dark'] {
+	// ── Body ──────────────────────────────────────────────────────────────────
+	body {
+		background-color: colors.$dark;
+		color: colors.$light;
+	}
+
+	// ── Base elements ─────────────────────────────────────────────────────────
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: colors.$light;
+	}
+
+	// ── Links ─────────────────────────────────────────────────────────────────
+	a,
+	a:visited {
+		color: $tertiary-dark;
+	}
+
+	a:hover {
+		color: $tertiary-dark-hover;
+	}
+
+	// Tags-link button uses tertiary as a border colour too
+	.tags-link {
+		color: $tertiary-dark;
+		border-color: $tertiary-dark;
+
+		&:visited,
+		&:hover {
+			color: $tertiary-dark;
+			border-color: $tertiary-dark;
+		}
+	}
+
+	// Tag pills
+	.tag-pill {
+		color: $tertiary-dark;
+
+		&:visited {
+			color: $tertiary-dark;
+		}
+
+		&:hover,
+		&:visited:hover {
+			color: colors.$tertiary;
+		}
+	}
+
+	// ── Focus ring ────────────────────────────────────────────────────────────
+	a:focus-visible {
+		outline-color: colors.$light;
+		box-shadow: 0 0 0 4px colors.$primary;
+	}
+
+	// ── Footer ────────────────────────────────────────────────────────────────
+	footer p {
+		color: map.get(colors.$light-tones, 'tone-2');
+
+		a {
+			color: map.get(colors.$light-tones, 'tone-2');
+
+			&:hover {
+				color: $tertiary-dark-hover;
+			}
+		}
+	}
+
+	// ── Prose ─────────────────────────────────────────────────────────────────
+	.prose {
+		p,
+		ul,
+		ol,
+		blockquote,
+		pre {
+			color: colors.$light;
+		}
+
+		blockquote {
+			border-left-color: map.get(colors.$light-tones, 'tone-3');
+		}
+
+		hr {
+			border-top-color: map.get(colors.$light-tones, 'tone-3');
+		}
+
+		figcaption {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	// ── Post-related links (prose body, image source, tag pills) ─────────────
+	.prose a:not(.tag-pill),
+	.post-image figcaption a {
+		color: $tertiary-dark;
+
+		&:visited {
+			color: $tertiary-dark;
+		}
+
+		&:hover {
+			color: colors.$tertiary;
+		}
+	}
+
+	// ── Post component (Post.astro) ────────────────────────────────────────────
+	.post-body {
+		border-bottom-color: map.get(colors.$light-tones, 'tone-5');
+
+		.published-date {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	.post--digest {
+		h2 {
+			color: map.get(colors.$light-tones, 'tone-1');
+		}
+
+		.published-date {
+			color: map.get(colors.$light-tones, 'tone-1');
+		}
+	}
+
+	// ── Individual post page ([slug].astro) ───────────────────────────────────
+	.stale-warning {
+		color: map.get(colors.$light-tones, 'tone-2');
+	}
+
+	.post-image figcaption {
+		color: map.get(colors.$light-tones, 'tone-2');
+	}
+
+	.published-date {
+		color: colors.$light;
+	}
+
+	// ── Post list pages (posts/index, tags/[tag]) ─────────────────────────────
+	// Description paragraphs on list pages (muted, not full white)
+	li p {
+		color: map.get(colors.$light-tones, 'tone-2');
+	}
+
+	// ── Skeet embeds ──────────────────────────────────────────────────────────
+	.skeet {
+		border-bottom-color: map.get(colors.$light-tones, 'tone-4');
+	}
+
+	.skeet-display-name {
+		color: colors.$light;
+
+		&:visited {
+			color: colors.$light;
+		}
+	}
+
+	.skeet-handle,
+	.skeet-timestamp,
+	.skeet-quote-handle,
+	.skeet-quote-link-desc {
+		color: map.get(colors.$light-tones, 'tone-2');
+	}
+
+	.skeet-body {
+		color: map.get(colors.$light-tones, 'tone-1');
+	}
+
+	.skeet-quote {
+		border-color: map.get(colors.$light-tones, 'tone-3');
+	}
+
+	.skeet-quote-name {
+		color: colors.$light;
+
+		&:visited {
+			color: colors.$light;
+		}
+	}
+
+	.skeet-quote-body {
+		color: map.get(colors.$light-tones, 'tone-1');
+	}
+
+	.skeet-quote-link {
+		border-color: map.get(colors.$light-tones, 'tone-4');
+
+		a {
+			color: colors.$light;
+		}
+	}
+}

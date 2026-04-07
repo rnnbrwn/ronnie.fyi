@@ -18,10 +18,6 @@ const posts = (await getCollection('blog'))
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
 	<a href='/tags' class='all-tags-link'>All tags</a>
-	<p class='post-count'>
-		{posts.length}
-		{posts.length === 1 ? 'post' : 'posts'} tagged <span class='tag-name'>#{tag}</span>
-	</p>
 	<ul>
 		{
 			posts.map((post) => (
@@ -48,7 +44,7 @@ const posts = (await getCollection('blog'))
 	@use '../../styles/abstracts/typography';
 
 	.all-tags-link {
-		font-size: typography.$font-size-md;
+		font-size: typography.$font-size-lg;
 		font-weight: typography.$weight-bold;
 		color: colors.$tertiary;
 		text-decoration: underline;
@@ -60,21 +56,7 @@ const posts = (await getCollection('blog'))
 		}
 	}
 
-	.post-count {
-		@include typography.caption-text;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
-		margin-top: calc(-1 * spacing.$space-4);
-		margin-bottom: spacing.$space-8;
-
-		.tag-name {
-			color: colors.$secondary;
-			font-weight: typography.$weight-bold;
-			text-transform: uppercase;
-		}
-	}
-
-	ul {
+ul {
 		padding: 0;
 		list-style: none;
 	}
@@ -91,7 +73,11 @@ const posts = (await getCollection('blog'))
 		margin-bottom: spacing.$space-1;
 	}
 
-	a {
+	:global([data-theme='dark']) time {
+		color: colors.$light;
+	}
+
+	li a {
 		display: block;
 		font-size: typography.$font-size-xl;
 		font-weight: typography.$weight-bold;
@@ -108,8 +94,16 @@ const posts = (await getCollection('blog'))
 		}
 	}
 
+	:global([data-theme='dark']) li a {
+		color: colors.$light;
+
+		&:visited {
+			color: colors.$light;
+		}
+	}
+
 	p {
-		font-size: typography.$font-size-md;
+		font-size: typography.$font-size-lg;
 		color: map.get(colors.$dark-tones, 'tone-2');
 		margin: 0;
 		line-height: typography.$leading-normal;
