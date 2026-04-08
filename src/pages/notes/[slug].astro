@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { formatDate } from '../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
 	const notes = await getCollection('notes');
@@ -23,11 +24,7 @@ const { Content } = await render(note);
 				<div class='published-date'>
 					Posted <time datetime={note.data.pubDate.toISOString()}
 						>{
-							note.data.pubDate.toLocaleDateString('en-GB', {
-								day: 'numeric',
-								month: 'long',
-								year: 'numeric',
-							})
+							formatDate(note.data.pubDate)
 						}</time
 					>
 				</div>

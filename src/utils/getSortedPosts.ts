@@ -1,6 +1,18 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
+export function formatDate(date: Date): string {
+	return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+export function formatMonthYear(date: Date): string {
+	return date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+}
+
+export function formatDateShort(date: Date): string {
+	return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export function getPostUrl(pubDate: Date, id: string): string {
 	const year = pubDate.getFullYear();
 	const month = String(pubDate.getMonth() + 1).padStart(2, '0');

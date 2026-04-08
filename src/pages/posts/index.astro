@@ -1,14 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import IconClock from '../../components/IconClock.astro';
-import { getSortedPosts, getPostUrl } from '../../utils/getSortedPosts';
+import { getSortedPosts, getPostUrl, formatDateShort, formatMonthYear } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
 
 const grouped: Record<string, typeof posts> = {};
 for (const post of posts) {
-	const key = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+	const key = formatMonthYear(post.data.pubDate);
 	(grouped[key] ??= []).push(post);
 }
 const groupedPosts = Object.entries(grouped);
@@ -28,11 +28,7 @@ const groupedPosts = Object.entries(grouped);
 								{post.data.stale && <IconClock class='stale-icon' size={20} />}
 							</a>
 							<time datetime={post.data.pubDate.toISOString()}>
-								{post.data.pubDate.toLocaleDateString('en-GB', {
-									day: 'numeric',
-									month: 'short',
-									year: 'numeric',
-								})}
+								{formatDateShort(post.data.pubDate)}
 							</time>
 							<p>{post.data.description}</p>
 						</li>

@@ -4,7 +4,7 @@ import IconPin from './IconPin.astro';
 import IconBlueSky from './IconBlueSky.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getPostUrl } from '../utils/getSortedPosts';
+import { getPostUrl, formatDate } from '../utils/getSortedPosts';
 
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
@@ -62,7 +62,7 @@ const {
 					<div class='published-date'>
 						Posted{' '}
 						<time datetime={pubDate.toISOString()}>
-							{pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+							{formatDate(pubDate)}
 						</time>
 					</div>
 					<TagPills tags={tags} />

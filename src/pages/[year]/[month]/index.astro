@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import IconClock from '../../../components/IconClock.astro';
-import { getPostUrl } from '../../../utils/getSortedPosts';
+import { getPostUrl, formatDateShort, formatMonthYear } from '../../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
 	const now = new Date();
@@ -32,10 +32,7 @@ export async function getStaticPaths() {
 
 const { year, month, posts } = Astro.props;
 
-const monthLabel = new Date(Number(year), Number(month) - 1, 1).toLocaleDateString('en-GB', {
-	month: 'long',
-	year: 'numeric',
-});
+const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1));
 ---
 
 <Base title={`Posts from ${monthLabel}`}>
@@ -50,11 +47,7 @@ const monthLabel = new Date(Number(year), Number(month) - 1, 1).toLocaleDateStri
 						{post.data.stale && <IconClock class='stale-icon' size={20} />}
 					</a>
 					<time datetime={post.data.pubDate.toISOString()}>
-						{post.data.pubDate.toLocaleDateString('en-GB', {
-							day: 'numeric',
-							month: 'short',
-							year: 'numeric',
-						})}
+						{formatDateShort(post.data.pubDate)}
 					</time>
 					<p>{post.data.description}</p>
 				</li>
