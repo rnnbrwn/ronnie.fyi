@@ -59,6 +59,9 @@ $tertiary-tones: generate-tones($tertiary);
 $dark-tones: generate-tones($dark);
 $light-tones: generate-tones($light);
 
+// Shadow
+$shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+
 // Muted text — for secondary content like dates, captions, descriptions
 $text-muted: map.get($dark-tones, 'tone-2');
 
