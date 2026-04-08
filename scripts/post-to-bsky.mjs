@@ -33,13 +33,11 @@ function slugFromFilename(filename) {
 	return filename.replace(/\.md$/, '');
 }
 
-function buildUrl(slug) {
-	// slug format: YYYY-MM-DD-some-title → year/month/some-title
-	const match = slug.match(/^(\d{4})-(\d{2})-\d{2}-(.+)$/);
-	if (match) {
-		return `${BASE_URL}/${match[1]}/${match[2]}/${match[3]}`;
-	}
-	return `${BASE_URL}/${slug}`;
+function buildUrl(slug, pubDate) {
+	const d = new Date(pubDate);
+	const year = d.getFullYear();
+	const month = String(d.getMonth() + 1).padStart(2, '0');
+	return `${BASE_URL}/${year}/${month}/${slug}/`;
 }
 
 function getChangedFiles() {
@@ -129,7 +127,7 @@ async function main() {
 
 	for (const { filename, fullPath, content, fm } of targets) {
 		const slug = slugFromFilename(filename);
-		const url = buildUrl(slug);
+		const url = buildUrl(slug, fm.pubDate);
 		const postText = `${fm.title}\n\n${url}`;
 
 		let thumb;
