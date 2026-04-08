@@ -5,30 +5,42 @@ import { getSortedPosts, getPostUrl } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
+
+const grouped: Record<string, typeof posts> = {};
+for (const post of posts) {
+	const key = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+	(grouped[key] ??= []).push(post);
+}
+const groupedPosts = Object.entries(grouped);
 ---
 
 <Base title='Blog'>
 	<h1>All Posts</h1>
-	<ul>
-		{
-			posts.map((post) => (
-				<li>
-					<a href={getPostUrl(post.data.pubDate, post.id)}>
-						{post.data.title}
-						{post.data.stale && <IconClock class='stale-icon' size={20} />}
-					</a>
-					<time datetime={post.data.pubDate.toISOString()}>
-						{post.data.pubDate.toLocaleDateString('en-GB', {
-							day: 'numeric',
-							month: 'short',
-							year: 'numeric',
-						})}
-					</time>
-					<p>{post.data.description}</p>
-				</li>
-			))
-		}
-	</ul>
+	{
+		groupedPosts.map(([month, monthPosts]) => (
+			<>
+				<h2>{month}</h2>
+				<ul>
+					{monthPosts.map((post) => (
+						<li>
+							<a href={getPostUrl(post.data.pubDate, post.id)}>
+								{post.data.title}
+								{post.data.stale && <IconClock class='stale-icon' size={20} />}
+							</a>
+							<time datetime={post.data.pubDate.toISOString()}>
+								{post.data.pubDate.toLocaleDateString('en-GB', {
+									day: 'numeric',
+									month: 'short',
+									year: 'numeric',
+								})}
+							</time>
+							<p>{post.data.description}</p>
+						</li>
+					))}
+				</ul>
+			</>
+		))
+	}
 </Base>
 
 <style lang='scss'>
