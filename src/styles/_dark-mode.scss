@@ -163,6 +163,15 @@ html[data-theme='dark'] {
 		color: map.get(colors.$light-tones, 'tone-2');
 	}
 
+	// ── Theme toggle ──────────────────────────────────────────────────────────
+	.theme-toggle {
+		color: colors.$light;
+
+		&:hover {
+			color: colors.$primary;
+		}
+	}
+
 	// ── Skeet embeds ──────────────────────────────────────────────────────────
 	.skeet {
 		border-bottom-color: map.get(colors.$light-tones, 'tone-4');

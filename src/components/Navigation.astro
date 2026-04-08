@@ -237,7 +237,26 @@ const links = [
 			}
 
 			.theme-toggle {
+				position: fixed;
+				top: spacing.$space-8;
+				right: spacing.$space-8;
 				padding: 0;
+				color: colors.$dark;
+
+				&:hover {
+					color: colors.$primary;
+				}
+			}
+
+		}
+	}
+
+	@media (min-width: 768px) {
+		:global([data-theme='dark'] .theme-toggle) {
+			color: colors.$light !important;
+
+			&:hover {
+				color: colors.$primary !important;
 			}
 		}
 	}
