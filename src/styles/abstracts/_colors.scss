@@ -59,6 +59,11 @@ $tertiary-tones: generate-tones($tertiary);
 $dark-tones: generate-tones($dark);
 $light-tones: generate-tones($light);
 
+// Tertiary link colour variants
+$tertiary-hover: color.scale($tertiary, $lightness: 20%);
+$tertiary-on-dark: color.scale($tertiary, $lightness: 45%);
+$tertiary-on-dark-hover: color.scale($tertiary, $lightness: 60%);
+
 // Generated shade maps
 $primary-shades: generate-shades($primary);
 $secondary-shades: generate-shades($secondary);

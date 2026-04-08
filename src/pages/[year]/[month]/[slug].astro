@@ -130,15 +130,15 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 				color: colors.$tertiary;
 
 				&:hover {
-					color: color.scale(colors.$tertiary, $lightness: 20%);
+					color: colors.$tertiary-hover;
 				}
 			}
 
 			:global(html[data-theme='dark']) & a {
-				color: color.scale(colors.$tertiary, $lightness: 45%);
+				color: colors.$tertiary-on-dark;
 
 				&:hover {
-					color: color.scale(colors.$tertiary, $lightness: 60%);
+					color: colors.$tertiary-on-dark-hover;
 				}
 			}
 		}
@@ -202,18 +202,18 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		}
 
 		&:hover {
-			color: color.scale(colors.$tertiary, $lightness: 20%);
+			color: colors.$tertiary-hover;
 		}
 
 		:global(html[data-theme='dark']) & {
-			color: color.scale(colors.$tertiary, $lightness: 45%);
+			color: colors.$tertiary-on-dark;
 
 			&:visited {
-				color: color.scale(colors.$tertiary, $lightness: 45%);
+				color: colors.$tertiary-on-dark;
 			}
 
 			&:hover {
-				color: color.scale(colors.$tertiary, $lightness: 60%);
+				color: colors.$tertiary-on-dark-hover;
 			}
 		}
 	}

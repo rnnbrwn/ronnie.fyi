@@ -75,7 +75,6 @@ const {
 
 <style lang='scss'>
 	@use 'sass:map';
-	@use 'sass:color';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use '../styles/abstracts/colors';
@@ -207,6 +206,6 @@ const {
 	}
 
 	:global(html[data-theme='dark']) h2 a:hover {
-		color: color.scale(colors.$tertiary, $lightness: 60%);
+		color: colors.$tertiary-on-dark-hover;
 	}
 </style>

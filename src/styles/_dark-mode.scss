@@ -11,10 +11,8 @@
 @use 'sass:map';
 @use 'sass:color';
 
-// Lighter cerulean for use on dark backgrounds
-$tertiary-dark: color.scale(colors.$tertiary, $lightness: 45%);
-// Hover state — visibly lighter than $tertiary-dark
-$tertiary-dark-hover: color.scale(colors.$tertiary, $lightness: 60%);
+$tertiary-dark: colors.$tertiary-on-dark;
+$tertiary-dark-hover: colors.$tertiary-on-dark-hover;
 
 html[data-theme='dark'] {
 	// ── Body ──────────────────────────────────────────────────────────────────

@@ -24,7 +24,6 @@ const sortedTags = [...tags].sort((a, b) => a.localeCompare(b));
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
-	@use 'sass:color';
 
 	.tag-pills {
 		display: block;
@@ -46,12 +45,12 @@ const sortedTags = [...tags].sort((a, b) => a.localeCompare(b));
 
 		&:hover,
 		&:visited:hover {
-			color: color.scale(colors.$tertiary, $lightness: 20%);
+			color: colors.$tertiary-hover;
 		}
 
 		:global(html[data-theme='dark']) &:hover,
 		:global(html[data-theme='dark']) &:visited:hover {
-			color: color.scale(colors.$tertiary, $lightness: 60%);
+			color: colors.$tertiary-on-dark-hover;
 		}
 	}
 </style>
