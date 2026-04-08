@@ -173,9 +173,14 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 
 	.published-date {
 		@include typography.caption-text;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
+		font-weight: typography.$weight-regular;
+		text-transform: uppercase;
+		color: map.get(colors.$dark-tones, 'tone-2');
 		margin-bottom: spacing.$space-2;
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
 	}
 
 	.aside-links {

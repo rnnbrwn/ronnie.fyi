@@ -145,10 +145,6 @@ html[data-theme='dark'] {
 		border-top-color: map.get(colors.$light-tones, 'tone-5');
 	}
 
-	.published-date {
-		color: colors.$light;
-	}
-
 	// ── Post list pages (posts/index, tags/[tag]) ─────────────────────────────
 	// Description paragraphs on list pages (muted, not full white)
 	li p {
