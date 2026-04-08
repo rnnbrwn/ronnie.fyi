@@ -129,6 +129,15 @@ async function main() {
 		const slug = slugFromFilename(filename);
 		const url = buildUrl(slug, fm.pubDate);
 		const postText = `${fm.title}\n\n${url}`;
+		const textBytes = Buffer.from(postText, 'utf-8');
+		const urlBytes = Buffer.from(url, 'utf-8');
+		const urlByteStart = textBytes.indexOf(urlBytes);
+		const facets = [
+			{
+				index: { byteStart: urlByteStart, byteEnd: urlByteStart + urlBytes.length },
+				features: [{ $type: 'app.bsky.richtext.facet#link', uri: url }],
+			},
+		];
 
 		let thumb;
 		const ogImageUrl = `${BASE_URL}/og/${slug}.png`;
@@ -155,6 +164,7 @@ async function main() {
 		const record = {
 			$type: 'app.bsky.feed.post',
 			text: postText,
+			facets,
 			createdAt: new Date().toISOString(),
 			embed,
 		};
