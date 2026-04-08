@@ -1,7 +1,21 @@
+@use 'colors';
+
 $prose-width: 65ch;
 
 $radius-sm: 4px;
 $radius-md: 8px;
+
+@mixin tertiary-link {
+  color: colors.$tertiary;
+  &:visited { color: colors.$tertiary; }
+  &:hover { color: colors.$tertiary-hover; }
+}
+
+@mixin tertiary-link-on-dark {
+  color: colors.$tertiary-on-dark;
+  &:visited { color: colors.$tertiary-on-dark; }
+  &:hover { color: colors.$tertiary-on-dark-hover; }
+}
 
 @mixin focus-ring($outline-color, $shadow-color: null) {
   outline: 2px solid $outline-color;

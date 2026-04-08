@@ -128,19 +128,11 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			}
 
 			a {
-				color: colors.$tertiary;
-
-				&:hover {
-					color: colors.$tertiary-hover;
-				}
+				@include layout.tertiary-link;
 			}
 
 			:global(html[data-theme='dark']) & a {
-				color: colors.$tertiary-on-dark;
-
-				&:hover {
-					color: colors.$tertiary-on-dark-hover;
-				}
+				@include layout.tertiary-link-on-dark;
 			}
 		}
 	}
@@ -196,26 +188,10 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-bold;
-		color: colors.$tertiary;
-
-		&:visited {
-			color: colors.$tertiary;
-		}
-
-		&:hover {
-			color: colors.$tertiary-hover;
-		}
+		@include layout.tertiary-link;
 
 		:global(html[data-theme='dark']) & {
-			color: colors.$tertiary-on-dark;
-
-			&:visited {
-				color: colors.$tertiary-on-dark;
-			}
-
-			&:hover {
-				color: colors.$tertiary-on-dark-hover;
-			}
+			@include layout.tertiary-link-on-dark;
 		}
 	}
 </style>

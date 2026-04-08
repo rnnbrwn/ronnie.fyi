@@ -22,6 +22,7 @@ const sortedTags = [...tags].sort((a, b) => a.localeCompare(b));
 
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 
@@ -36,14 +37,9 @@ const sortedTags = [...tags].sort((a, b) => a.localeCompare(b));
 		font-family: typography.$font-body;
 		font-weight: typography.$weight-bold;
 		text-transform: uppercase;
-		color: colors.$tertiary;
+		@include layout.tertiary-link;
 		text-decoration: underline;
 
-		&:visited {
-			color: colors.$tertiary;
-		}
-
-		&:hover,
 		&:visited:hover {
 			color: colors.$tertiary-hover;
 		}

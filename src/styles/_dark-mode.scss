@@ -8,6 +8,7 @@
 // ==========================================================================
 
 @use 'abstracts/colors';
+@use 'abstracts/layout';
 @use 'sass:map';
 @use 'sass:color';
 
@@ -100,15 +101,7 @@ html[data-theme='dark'] {
 	// ── Post-related links (prose body, image source, tag pills) ─────────────
 	.prose a:not(.tag-pill),
 	.post-image figcaption a {
-		color: $tertiary-dark;
-
-		&:visited {
-			color: $tertiary-dark;
-		}
-
-		&:hover {
-			color: colors.$tertiary;
-		}
+		@include layout.tertiary-link-on-dark;
 	}
 
 	// ── Post component (Post.astro) ────────────────────────────────────────────

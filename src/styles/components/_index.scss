@@ -45,11 +45,7 @@
       margin-top: spacing.$space-2;
 
       a {
-        color: colors.$tertiary;
-
-        &:hover {
-          color: colors.$tertiary-hover;
-        }
+        @include layout.tertiary-link;
       }
     }
   }
