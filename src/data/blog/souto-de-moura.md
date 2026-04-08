@@ -1,6 +1,6 @@
 ---
 title: 'Braga Municipal Stadium'
-pubDate: 2026-04-08 21:00
+pubDate: 2026-04-08 20:30
 description: 'Rangers have played here a few times over recent years, but I knew nothing about the architect.'
 tags: ['souto de moura', 'braga', 'braga municipal stadium', 'sc braga', 'rangers fc']
 image:
