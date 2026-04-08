@@ -1,5 +1,8 @@
 $prose-width: 65ch;
 
+$radius-sm: 4px;
+$radius-md: 8px;
+
 @mixin focus-ring($outline-color, $shadow-color: null) {
   outline: 2px solid $outline-color;
   outline-offset: 2px;
