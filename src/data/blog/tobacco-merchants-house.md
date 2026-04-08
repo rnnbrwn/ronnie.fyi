@@ -13,8 +13,8 @@ image:
 
 > The building at 42 Miller Street is the last of the Georgian villas known as the Virginia Tobacco Merchants’ houses to remain standing in Merchant City of Glasgow.
 
-This area of the city was once the playground of the Glasgow "[Tobacco Lords](https://en.wikipedia.org/wiki/Tobacco_Lords)", a group of slavers whose names adorn many of the streets and buildings in the area.
+This area of the city was once the playground of the Glasgow "[Tobacco Lords](https://en.wikipedia.org/wiki/Tobacco_Lords)", a group of slavers whose names still adorn many of the streets and buildings in the area.
 
-In fact, back in 2020, there was [a campaign to have them renamed](https://www.bbc.co.uk/news/uk-scotland-glasgow-west-52950006).
+In fact, back in 2020, there was [a campaign to have them renamed](https://www.bbc.co.uk/news/uk-scotland-glasgow-west-52950006) - I would still like to see that happen.
 
-Anyway, just because the original proprietors were problematic, doesn't mean it's not a nice building we should look after. Visit the [Scottish Civic Trust Just Giving page](https://www.justgiving.com/campaign/250for250?utm_medium=CA&utm_source=CL) and donate, if you can.
+Anyway, just because the original proprietors were problematic doesn't mean it's not a building worth looking after. [Visit the Scottish Civic Trust's JustGiving page](https://www.justgiving.com/campaign/250for250?utm_medium=CA&utm_source=CL) and donate if you can.
