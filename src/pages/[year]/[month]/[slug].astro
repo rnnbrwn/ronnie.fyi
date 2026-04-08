@@ -132,6 +132,14 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 					color: color.scale(colors.$tertiary, $lightness: 20%);
 				}
 			}
+
+			:global(html[data-theme='dark']) & a {
+				color: color.scale(colors.$tertiary, $lightness: 45%);
+
+				&:hover {
+					color: color.scale(colors.$tertiary, $lightness: 60%);
+				}
+			}
 		}
 	}
 
@@ -168,54 +176,39 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 
 	.aside-links {
 		display: flex;
-		flex-wrap: wrap;
-		gap: spacing.$space-2;
+		flex-direction: column;
+		gap: spacing.$space-3;
 		margin-top: spacing.$space-6;
+		padding-top: spacing.$space-6;
+		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
 	}
 
 	.back-link,
-	.month-link {
-		display: inline-block;
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
-		font-weight: typography.$weight-bold;
-		letter-spacing: typography.$tracking-wider;
-		text-transform: uppercase;
-		text-decoration: none;
-		color: colors.$light;
-		background-color: colors.$tertiary;
-		border: 2px solid transparent;
-		line-height: 1;
-		padding: spacing.$space-2 spacing.$space-4;
-		border-radius: 3px;
-		&:hover {
-			background-color: colors.$tertiary;
-			color: colors.$light;
-		}
-	}
-
+	.month-link,
 	.tags-link {
-		display: inline-block;
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-bold;
-		letter-spacing: typography.$tracking-wider;
-		text-transform: uppercase;
-		text-decoration: none;
 		color: colors.$tertiary;
-		background-color: transparent;
-		border: 2px solid colors.$tertiary;
-		line-height: 1;
-		padding: spacing.$space-2 spacing.$space-4;
-		border-radius: 3px;
 
 		&:visited {
 			color: colors.$tertiary;
 		}
 
 		&:hover {
-			color: colors.$tertiary;
-			border-color: colors.$tertiary;
+			color: color.scale(colors.$tertiary, $lightness: 20%);
+		}
+
+		:global(html[data-theme='dark']) & {
+			color: color.scale(colors.$tertiary, $lightness: 45%);
+
+			&:visited {
+				color: color.scale(colors.$tertiary, $lightness: 45%);
+			}
+
+			&:hover {
+				color: color.scale(colors.$tertiary, $lightness: 60%);
+			}
 		}
 	}
 </style>
