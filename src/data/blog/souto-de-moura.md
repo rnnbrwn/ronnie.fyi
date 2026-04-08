@@ -7,7 +7,7 @@ image:
   url: 'braga-stadium.jpg'
   alt: 'A photograph of the gutter system on the Braga Municipal Stadium'
   source: 'https://juanrv.com/braga-stadium/'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mizgfemlaq23"
 ---
 
 Architecture & Design site [Dezeen](https://www.dezeen.com) have a short video about [Souto de Moura](https://en.wikipedia.org/wiki/Eduardo_Souto_de_Moura) and his time working on [Braga Municipal Stadium](https://en.wikipedia.org/wiki/Est%C3%A1dio_Municipal_de_Braga), home of [SC Braga](https://en.wikipedia.org/wiki/S.C._Braga).
