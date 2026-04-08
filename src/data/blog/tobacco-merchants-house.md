@@ -9,11 +9,11 @@ image:
   source: 'https://en.wikipedia.org/wiki/Tobacco_Merchant%27s_House'
 ---
 
-[The Tobacco Merchant's House](https://en.wikipedia.org/wiki/Tobacco_Merchant%27s_House) in Glasgow's Merchant City is 250-year old building, owned and maintained by the [Scottish Civic Trust](https://scottishcivictrust.org.uk/about/our-building), who work from the building.
+[The Tobacco Merchant's House](https://en.wikipedia.org/wiki/Tobacco_Merchant%27s_House) in Glasgow's Merchant City is 250-year old building, owned and maintained by the [Scottish Civic Trust](https://scottishcivictrust.org.uk/about/our-building), who work from the building. They are currently running a Just Giving page to help raise £250,000 for its upkeep.
 
-> The building at 42 Miller Street is the last of the Georgian villas known as the Virginia Tobacco Merchants’ houses to remain standing in Merchant City of Glasgow. The house known as Tobacco Merchants’ House, or Baillie Craig’s House, was originally designed by John Craig in 1775 as his own home, on land previously owned by John Miller, a wealthy Maltman and namesake of the street.
+> The building at 42 Miller Street is the last of the Georgian villas known as the Virginia Tobacco Merchants’ houses to remain standing in Merchant City of Glasgow.
 
-This area of the city was once the playground of the Glasgow "[Tobacco Lords](https://en.wikipedia.org/wiki/Tobacco_Lords)", a group of slavers whose names adorn many of the streets and buildings of this area.
+This area of the city was once the playground of the Glasgow "[Tobacco Lords](https://en.wikipedia.org/wiki/Tobacco_Lords)", a group of slavers whose names adorn many of the streets and buildings in the area.
 
 In fact, back in 2020, there was [a campaign to have them renamed](https://www.bbc.co.uk/news/uk-scotland-glasgow-west-52950006).
 
