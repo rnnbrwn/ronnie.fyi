@@ -29,7 +29,6 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
-	@use 'sass:map';
 
 	li {
 		margin-block-end: spacing.$space-8;
@@ -50,7 +49,7 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 	:global(.stale-icon) {
 		display: inline-block !important;
 		vertical-align: middle;
-		color: map.get(colors.$dark-tones, 'tone-2');
+		color: colors.$text-muted;
 		margin-left: spacing.$space-2;
 		transform: translateY(-5px);
 	}
@@ -86,7 +85,7 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 
 	p {
 		font-size: typography.$font-size-lg;
-		color: map.get(colors.$dark-tones, 'tone-2');
+		color: colors.$text-muted;
 		margin: 0;
 		line-height: typography.$leading-normal;
 		max-width: layout.$prose-width;
