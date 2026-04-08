@@ -2,9 +2,10 @@
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string;
 }
 
-const { title = 'ronnie.fyi', description } = Astro.props;
+const { title = 'ronnie.fyi', description, ogImage } = Astro.props;
 ---
 
 <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -23,4 +24,7 @@ const { title = 'ronnie.fyi', description } = Astro.props;
 {description && <meta property='og:description' content={description} />}
 <meta property='og:url' content={new URL(Astro.url.pathname, Astro.site).href} />
 <meta property='og:type' content='website' />
+{ogImage && <meta property='og:image' content={ogImage} />}
+{ogImage && <meta name='twitter:card' content='summary_large_image' />}
+{ogImage && <meta name='twitter:image' content={ogImage} />}
 <title>{title}</title>

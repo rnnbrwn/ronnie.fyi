@@ -25,10 +25,14 @@ const { post } = Astro.props;
 const { year, month } = Astro.params;
 const { Content } = await render(post);
 
+const ogImage = post.data.image?.url
+	? new URL(`/og/${post.id}.png`, Astro.site).href
+	: undefined;
+
 const monthLabel = formatMonthYear(post.data.pubDate);
 ---
 
-<Base title={post.data.title} description={post.data.description}>
+<Base title={post.data.title} description={post.data.description} ogImage={ogImage}>
 	<article aria-labelledby='post-title'>
 		<h1 id='post-title'>{post.data.title}</h1>
 		{

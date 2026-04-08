@@ -8,9 +8,10 @@ import '../styles/main.scss';
 interface Props {
 	title?: string;
 	description?: string;
+	ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,7 +27,7 @@ const { title, description } = Astro.props;
 		</script>
 		<link rel='preload' href='/fonts/Geomanist-Bold.otf' as='font' type='font/otf' crossorigin />
 		<link rel='preload' href='/fonts/Geomanist-Medium.otf' as='font' type='font/otf' crossorigin />
-		<Head title={title} description={description} />
+		<Head title={title} description={description} ogImage={ogImage} />
 		<link rel='sitemap' href='/sitemap-index.xml' />
 	</head>
 

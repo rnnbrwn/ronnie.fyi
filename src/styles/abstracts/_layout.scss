@@ -20,7 +20,11 @@ $radius-md: 8px;
 @mixin focus-ring($outline-color, $shadow-color: null) {
   outline: 2px solid $outline-color;
   outline-offset: 2px;
-  box-shadow: if($shadow-color, 0 0 0 4px $shadow-color, none);
+  @if $shadow-color {
+    box-shadow: 0 0 0 4px $shadow-color;
+  } @else {
+    box-shadow: none;
+  }
 }
 
 @mixin list-reset {

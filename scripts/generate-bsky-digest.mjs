@@ -1,4 +1,4 @@
-import { existsSync, writeFileSync, mkdirSync, unlinkSync, readdirSync, renameSync } from 'node:fs';
+import { existsSync, writeFileSync, mkdirSync, unlinkSync, readdirSync, renameSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,6 +23,18 @@ async function fetchWithRetry(url, attempt = 1) {
 
 const ACTOR = 'ronnie.fyi';
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function getSiteOriginatedUris() {
+	const blogDir = join(__dirname, '..', 'src', 'data', 'blog');
+	const uris = new Set();
+	for (const file of readdirSync(blogDir)) {
+		if (!file.endsWith('.md')) continue;
+		const content = readFileSync(join(blogDir, file), 'utf-8');
+		const match = content.match(/^bskyPostUri:\s*["']?(.+?)["']?\s*$/m);
+		if (match) uris.add(match[1].trim());
+	}
+	return uris;
+}
 
 function uriToUrl(uri) {
 	const rkey = uri.split('/').at(-1);
@@ -113,10 +125,13 @@ async function main() {
 	const authorName = profile.displayName || ACTOR;
 	const profileUrl = `https://bsky.app/profile/${ACTOR}`;
 
+	const siteOriginatedUris = getSiteOriginatedUris();
+
 	const recentPosts = data.feed
 		.map((item) => item.post)
 		.filter((post) => new Date(post.record.createdAt) >= sevenDaysAgo)
 		.filter((post) => post.record.$type === 'app.bsky.feed.post')
+		.filter((post) => !siteOriginatedUris.has(post.uri))
 		.sort((a, b) => new Date(b.record.createdAt) - new Date(a.record.createdAt))
 		.slice(0, 3);
 

@@ -1,0 +1,38 @@
+name: Post to Bluesky
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    needs: []
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Post to Bluesky
+        env:
+          BSKY_IDENTIFIER: ${{ secrets.BLUESKY_USERNAME }}
+          BSKY_APP_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+        run: node scripts/post-to-bsky.mjs
+
+      - name: Commit frontmatter rewrites
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/blog/
+          git diff --cached --quiet || git commit -m "chore: record bskyPostUri after posting"
+          git push
