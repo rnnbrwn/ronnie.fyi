@@ -46,7 +46,7 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 					/>
 					{post.data.image.source && (
 						<figcaption>
-							<a href={post.data.image.source}>Image source</a>
+							Image source: <a href={post.data.image.source}>{post.data.image.source.length > 80 ? post.data.image.source.slice(0, 80) + '…' : post.data.image.source}</a>
 						</figcaption>
 					)}
 				</figure>
@@ -124,6 +124,10 @@ const monthLabel = post.data.pubDate.toLocaleDateString('en-GB', { month: 'long'
 			@include typography.caption-text;
 			color: colors.$dark;
 			margin-top: spacing.$space-2;
+
+			:global(html[data-theme='dark']) & {
+				color: colors.$light;
+			}
 
 			a {
 				color: colors.$tertiary;
