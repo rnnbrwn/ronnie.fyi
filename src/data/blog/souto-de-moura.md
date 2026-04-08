@@ -19,4 +19,4 @@ As a bonus, here's my football team, [Rangers](https://www.rangers.co.uk/), beat
 
 https://www.youtube.com/watch?v=7_uq3lYXbGI
 
-This is second part of a Dezeen series on the architect, with the first focusing on [how de Moura became an architect](https://www.youtube.com/watch?v=pbOeAbgeE1Y).
+Dezeen's video is the second part of a series on the architect, with the first focusing on [how de Moura became an architect](https://www.youtube.com/watch?v=pbOeAbgeE1Y).
