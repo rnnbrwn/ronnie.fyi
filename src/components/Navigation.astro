@@ -118,6 +118,7 @@ const links = [
 </script>
 
 <style lang='scss'>
+	@use '../styles/abstracts/breakpoints';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
@@ -203,7 +204,7 @@ const links = [
 			}
 		}
 
-		@media (min-width: 768px) {
+		@media (min-width: breakpoints.$md) {
 			flex-shrink: 0;
 			position: sticky;
 			top: 0;
@@ -251,7 +252,7 @@ const links = [
 		}
 	}
 
-	@media (min-width: 768px) {
+	@media (min-width: breakpoints.$md) {
 		:global([data-theme='dark'] .theme-toggle) {
 			color: colors.$light !important;
 

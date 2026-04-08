@@ -2,6 +2,7 @@
 // Typography
 // ==========================================================================
 
+@use 'breakpoints';
 @use 'layout';
 
 html {
@@ -110,7 +111,7 @@ $tracking-widest: 0.1em;
   font-size: $font-size-xl;
   text-transform: uppercase;
 
-  @media (min-width: 768px) {
+  @media (min-width: breakpoints.$md) {
     font-size: $font-size-4xl;
   }
 }

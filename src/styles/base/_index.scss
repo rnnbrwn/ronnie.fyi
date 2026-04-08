@@ -1,5 +1,6 @@
 // Base — reset overrides, element-level defaults (html, body, a, img, etc.)
 
+@use '../abstracts/breakpoints';
 @use '../abstracts/typography' as *;
 @use '../abstracts/colors';
 @use '../abstracts/spacing';
@@ -26,7 +27,7 @@ h1 {
 	margin-bottom: spacing.$space-6;
 	text-wrap: balance;
 
-	@media (min-width: 768px) {
+	@media (min-width: breakpoints.$md) {
 		margin-bottom: spacing.$space-8;
 	}
 }

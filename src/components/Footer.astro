@@ -7,6 +7,7 @@ const currentYear = new Date().getFullYear();
 </footer>
 
 <style lang='scss'>
+	@use '../styles/abstracts/breakpoints';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/typography';
@@ -15,7 +16,7 @@ const currentYear = new Date().getFullYear();
 		margin-top: auto;
 		padding: spacing.$space-6 spacing.$space-4;
 
-		@media (min-width: 768px) {
+		@media (min-width: breakpoints.$md) {
 			padding: spacing.$space-6 spacing.$space-24;
 		}
 

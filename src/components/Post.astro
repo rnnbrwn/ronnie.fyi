@@ -75,6 +75,7 @@ const {
 
 <style lang='scss'>
 	@use 'sass:map';
+	@use '../styles/abstracts/breakpoints';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use '../styles/abstracts/colors';
@@ -83,7 +84,7 @@ const {
 		font-weight: typography.$weight-bold;
 		font-size: typography.$font-size-2xl;
 
-		@media (min-width: 768px) {
+		@media (min-width: breakpoints.$md) {
 			font-size: typography.$font-size-4xl;
 		}
 		color: colors.$dark;
@@ -98,7 +99,7 @@ const {
 			right: calc(100% + spacing.$space-3);
 			display: none;
 
-			@media (min-width: 768px) {
+			@media (min-width: breakpoints.$md) {
 				display: block;
 			}
 		}
@@ -146,7 +147,7 @@ const {
 				font-size: typography.$font-size-xl;
 				color: map.get(colors.$dark-tones, 'tone-1');
 
-				@media (min-width: 768px) {
+				@media (min-width: breakpoints.$md) {
 					font-size: typography.$font-size-2xl;
 				}
 
