@@ -1,5 +1,11 @@
 $prose-width: 65ch;
 
+@mixin focus-ring($outline-color, $shadow-color: null) {
+  outline: 2px solid $outline-color;
+  outline-offset: 2px;
+  box-shadow: if($shadow-color, 0 0 0 4px $shadow-color, none);
+}
+
 @mixin list-reset {
   padding: 0;
   list-style: none;

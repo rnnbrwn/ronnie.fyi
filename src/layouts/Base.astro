@@ -44,6 +44,7 @@ const { title, description } = Astro.props;
 			@use 'sass:map';
 			@use '../styles/abstracts/breakpoints';
 			@use '../styles/abstracts/colors';
+			@use '../styles/abstracts/layout';
 			@use '../styles/abstracts/typography';
 			@use '../styles/abstracts/spacing';
 
@@ -79,6 +80,7 @@ const { title, description } = Astro.props;
 		<style is:global lang='scss'>
 			@use 'sass:map';
 			@use '../styles/abstracts/colors';
+			@use '../styles/abstracts/layout';
 			@use '../styles/abstracts/spacing';
 			@use '../styles/abstracts/typography';
 
@@ -96,9 +98,7 @@ const { title, description } = Astro.props;
 			}
 
 			a:focus-visible {
-				outline: 2px solid colors.$dark;
-				outline-offset: 2px;
-				box-shadow: 0 0 0 4px colors.$primary;
+				@include layout.focus-ring(colors.$dark, colors.$primary);
 			}
 
 			nav a {
@@ -106,9 +106,7 @@ const { title, description } = Astro.props;
 			}
 
 			nav a:focus-visible {
-				outline: 2px solid colors.$primary;
-				outline-offset: 2px;
-				box-shadow: none;
+				@include layout.focus-ring(colors.$primary);
 			}
 
 			.skip-link:not(:focus) {
