@@ -35,9 +35,10 @@ const pageTitle = 'About';
 
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
 
 	p {
-		max-width: 65ch;
+		max-width: layout.$prose-width;
 	}
 
 	.social-link {

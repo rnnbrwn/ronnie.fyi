@@ -24,8 +24,10 @@ const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' U
 </Base>
 
 <style lang='scss'>
+	@use '../styles/abstracts/layout';
+
 	ul {
-		max-width: 65ch;
+		max-width: layout.$prose-width;
 	}
 	hr {
 		margin: 3rem 0;

@@ -26,6 +26,7 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use 'sass:map';
@@ -88,6 +89,6 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 		color: map.get(colors.$dark-tones, 'tone-2');
 		margin: 0;
 		line-height: typography.$leading-normal;
-		max-width: 65ch;
+		max-width: layout.$prose-width;
 	}
 </style>

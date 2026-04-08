@@ -2,6 +2,8 @@
 // Typography
 // ==========================================================================
 
+@use 'layout';
+
 html {
   font-size: 18px; // Base font size for rem calculations
 }
@@ -83,7 +85,7 @@ $tracking-widest: 0.1em;
 
 // Prose container — apply to any element rendering markdown content
 @mixin prose {
-  max-width: 65ch;
+  max-width: layout.$prose-width;
   font-size: $font-size-lg;
   line-height: $leading-relaxed;
 }
