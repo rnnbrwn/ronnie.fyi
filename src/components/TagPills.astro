@@ -4,16 +4,17 @@ interface Props {
 }
 
 const { tags } = Astro.props;
+const sortedTags = [...tags].sort((a, b) => a.localeCompare(b));
 ---
 
 <span class='tag-pills'>
 	{
-		tags.map((tag, i) => (
+		sortedTags.map((tag, i) => (
 			<>
 				<a class='tag-pill' href={`/tags/${tag}`}>
 					{tag}
 				</a>
-				{i < tags.length - 1 ? ' ' : ''}
+				{i < sortedTags.length - 1 ? ' ' : ''}
 			</>
 		))
 	}
