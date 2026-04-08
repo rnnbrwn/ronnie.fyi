@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-import IconClock from '../../../components/IconClock.astro';
-import { getPostUrl, formatDateShort, formatMonthYear } from '../../../utils/getSortedPosts';
+import PostListItem from '../../../components/PostListItem.astro';
+import { formatMonthYear } from '../../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
 	const now = new Date();
@@ -41,16 +41,13 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 	<ul>
 		{
 			posts.map((post) => (
-				<li>
-					<a href={getPostUrl(post.data.pubDate, post.id)}>
-						{post.data.title}
-						{post.data.stale && <IconClock class='stale-icon' size={20} />}
-					</a>
-					<time datetime={post.data.pubDate.toISOString()}>
-						{formatDateShort(post.data.pubDate)}
-					</time>
-					<p>{post.data.description}</p>
-				</li>
+				<PostListItem
+					id={post.id}
+					title={post.data.title}
+					pubDate={post.data.pubDate}
+					description={post.data.description}
+					stale={post.data.stale}
+				/>
 			))
 		}
 	</ul>
@@ -60,7 +57,6 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 	@use '../../../styles/abstracts/colors';
 	@use '../../../styles/abstracts/spacing';
 	@use '../../../styles/abstracts/typography';
-	@use 'sass:map';
 
 	.all-posts-link {
 		font-size: typography.$font-size-lg;
@@ -78,62 +74,5 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 	ul {
 		padding: 0;
 		list-style: none;
-	}
-
-	li {
-		margin-block-end: spacing.$space-8;
-	}
-
-	time {
-		@include typography.caption-text;
-		display: block;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
-		margin-bottom: spacing.$space-1;
-	}
-
-	:global([data-theme='dark']) time {
-		color: colors.$light;
-	}
-
-	:global(.stale-icon) {
-		display: inline-block !important;
-		vertical-align: middle;
-		color: map.get(colors.$dark-tones, 'tone-2');
-		margin-left: spacing.$space-2;
-		transform: translateY(-5px);
-	}
-
-	a {
-		display: block;
-		font-size: typography.$font-size-xl;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
-		text-decoration: none;
-		margin-bottom: spacing.$space-1;
-
-		&:visited {
-			color: colors.$dark;
-		}
-
-		&:hover {
-			color: colors.$tertiary;
-		}
-	}
-
-	:global([data-theme='dark']) a {
-		color: colors.$light;
-
-		&:visited {
-			color: colors.$light;
-		}
-	}
-
-	p {
-		font-size: typography.$font-size-lg;
-		color: map.get(colors.$dark-tones, 'tone-2');
-		margin: 0;
-		line-height: typography.$leading-normal;
-		max-width: 65ch;
 	}
 </style>

@@ -1,0 +1,93 @@
+---
+import IconClock from './IconClock.astro';
+import { getPostUrl, formatDateShort } from '../utils/getSortedPosts';
+
+interface Props {
+	id: string;
+	title: string;
+	pubDate: Date;
+	description: string;
+	stale?: boolean;
+}
+
+const { id, title, pubDate, description, stale = false } = Astro.props;
+---
+
+<li>
+	<a href={getPostUrl(pubDate, id)}>
+		{title}
+		{stale && <IconClock class='stale-icon' size={20} />}
+	</a>
+	<time datetime={pubDate.toISOString()}>
+		{formatDateShort(pubDate)}
+	</time>
+	<p>{description}</p>
+</li>
+
+<style lang='scss'>
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+	@use 'sass:map';
+
+	li {
+		margin-block-end: spacing.$space-8;
+	}
+
+	time {
+		@include typography.caption-text;
+		display: block;
+		font-weight: typography.$weight-bold;
+		color: colors.$dark;
+		margin-bottom: spacing.$space-1;
+
+		:global([data-theme='dark']) & {
+			color: colors.$light;
+		}
+	}
+
+	:global(.stale-icon) {
+		display: inline-block !important;
+		vertical-align: middle;
+		color: map.get(colors.$dark-tones, 'tone-2');
+		margin-left: spacing.$space-2;
+		transform: translateY(-5px);
+	}
+
+	a {
+		display: block;
+		font-size: typography.$font-size-xl;
+		font-weight: typography.$weight-bold;
+		color: colors.$dark;
+		text-decoration: none;
+		margin-bottom: spacing.$space-1;
+
+		&:visited {
+			color: colors.$dark;
+		}
+
+		&:hover {
+			color: colors.$tertiary;
+		}
+
+		:global([data-theme='dark']) & {
+			color: colors.$light;
+
+			&:visited {
+				color: colors.$light;
+			}
+
+			&:hover {
+				color: colors.$tertiary-on-dark;
+			}
+		}
+	}
+
+	p {
+		font-size: typography.$font-size-lg;
+		color: map.get(colors.$dark-tones, 'tone-2');
+		margin: 0;
+		line-height: typography.$leading-normal;
+		max-width: 65ch;
+	}
+</style>

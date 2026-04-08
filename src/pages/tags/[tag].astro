@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getPostUrl, formatDateShort } from '../../utils/getSortedPosts';
+import PostListItem from '../../components/PostListItem.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -21,20 +21,19 @@ const posts = (await getCollection('blog'))
 	<ul>
 		{
 			posts.map((post) => (
-				<li>
-					<a href={getPostUrl(post.data.pubDate, post.id)}>{post.data.title}</a>
-					<time datetime={post.data.pubDate.toISOString()}>
-						{formatDateShort(post.data.pubDate)}
-					</time>
-					<p>{post.data.description}</p>
-				</li>
+				<PostListItem
+					id={post.id}
+					title={post.data.title}
+					pubDate={post.data.pubDate}
+					description={post.data.description}
+					stale={post.data.stale}
+				/>
 			))
 		}
 	</ul>
 </Base>
 
 <style lang='scss'>
-	@use 'sass:map';
 	@use '../../styles/abstracts/colors';
 	@use '../../styles/abstracts/spacing';
 	@use '../../styles/abstracts/typography';
@@ -52,56 +51,8 @@ const posts = (await getCollection('blog'))
 		}
 	}
 
-ul {
+	ul {
 		padding: 0;
 		list-style: none;
-	}
-
-	li {
-		margin-block-end: spacing.$space-8;
-	}
-
-	time {
-		@include typography.caption-text;
-		display: block;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
-		margin-bottom: spacing.$space-1;
-	}
-
-	:global([data-theme='dark']) time {
-		color: colors.$light;
-	}
-
-	li a {
-		display: block;
-		font-size: typography.$font-size-xl;
-		font-weight: typography.$weight-bold;
-		color: colors.$dark;
-		text-decoration: none;
-		margin-bottom: spacing.$space-1;
-
-		&:visited {
-			color: colors.$dark;
-		}
-
-		&:hover {
-			color: colors.$tertiary;
-		}
-	}
-
-	:global([data-theme='dark']) li a {
-		color: colors.$light;
-
-		&:visited {
-			color: colors.$light;
-		}
-	}
-
-	p {
-		font-size: typography.$font-size-lg;
-		color: map.get(colors.$dark-tones, 'tone-2');
-		margin: 0;
-		line-height: typography.$leading-normal;
 	}
 </style>
