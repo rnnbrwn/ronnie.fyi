@@ -37,7 +37,7 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 
 <Base title={`Posts from ${monthLabel}`}>
 	<h1>Posts from {monthLabel}</h1>
-	<a href='/posts' class='all-posts-link'>All posts</a>
+	<a href='/posts' class='archive-back-link'>All posts</a>
 	<ul>
 		{
 			posts.map((post) => (
@@ -54,23 +54,6 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 </Base>
 
 <style lang='scss'>
-	@use '../../../styles/abstracts/colors';
-	@use '../../../styles/abstracts/spacing';
-	@use '../../../styles/abstracts/typography';
-
-	.all-posts-link {
-		font-size: typography.$font-size-lg;
-		font-weight: typography.$weight-bold;
-		color: colors.$tertiary;
-		text-decoration: underline;
-		display: block;
-		margin-bottom: spacing.$space-8;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
 	ul {
 		padding: 0;
 		list-style: none;

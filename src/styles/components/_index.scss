@@ -346,6 +346,20 @@
   }
 }
 
+// Back-navigation link used on tag and month archive pages
+.archive-back-link {
+  font-size: typography.$font-size-lg;
+  font-weight: typography.$weight-bold;
+  color: colors.$tertiary;
+  text-decoration: underline;
+  display: block;
+  margin-bottom: spacing.$space-8;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .youtube-embed {
   background-color: colors.$primary;
   padding-bottom: spacing.$space-2;

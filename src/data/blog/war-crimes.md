@@ -2,7 +2,7 @@
 title: 'War Crimes'
 pubDate: 2026-04-07 21:00
 description: 'Truthout.org on the latest oubursts from Donald Trump'
-tags: ['donald trump', 'Vladimir Putin', 'Benjamin Netanyahu']
+tags: ['donald trump', 'vladimir putin', 'benjamin netanyahu']
 image:
   url: 'trump-civilization.jpg'
   alt: "A tweet from Trump, 'A whole civilization will die tonight, never to be brought back again. I don’t want that to happen, but it probably will'"

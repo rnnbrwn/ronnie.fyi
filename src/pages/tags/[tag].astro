@@ -17,7 +17,7 @@ const posts = (await getCollection('blog'))
 
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
-	<a href='/tags' class='all-tags-link'>All tags</a>
+	<a href='/tags' class='archive-back-link'>All tags</a>
 	<ul>
 		{
 			posts.map((post) => (
@@ -34,23 +34,6 @@ const posts = (await getCollection('blog'))
 </Base>
 
 <style lang='scss'>
-	@use '../../styles/abstracts/colors';
-	@use '../../styles/abstracts/spacing';
-	@use '../../styles/abstracts/typography';
-
-	.all-tags-link {
-		font-size: typography.$font-size-lg;
-		font-weight: typography.$weight-bold;
-		color: colors.$tertiary;
-		text-decoration: underline;
-		display: block;
-		margin-bottom: spacing.$space-8;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
 	ul {
 		padding: 0;
 		list-style: none;
