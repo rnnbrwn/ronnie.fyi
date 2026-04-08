@@ -37,10 +37,10 @@ const groupedPosts = Object.entries(grouped);
 </Base>
 
 <style lang='scss'>
+	@use '../../styles/abstracts/layout';
 	@use '../../styles/abstracts/spacing';
 
 	ul {
-		padding: 0;
-		list-style: none;
+		@include layout.list-reset;
 	}
 </style>

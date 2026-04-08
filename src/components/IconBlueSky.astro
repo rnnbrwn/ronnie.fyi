@@ -1,27 +1,8 @@
 ---
-interface Props {
-	class?: string;
-	size?: number;
-}
-
-const { class: className, size = 20 } = Astro.props;
+import Icon from './Icon.astro';
+interface Props { class?: string; size?: number; }
+const props = Astro.props;
 ---
-
-<svg
-	xmlns='http://www.w3.org/2000/svg'
-	viewBox='0 0 568 501'
-	aria-hidden='true'
-	class={className}
-	width={size}
-	height={size}
->
-
+<Icon viewBox='0 0 568 501' {...props}>
 	<path d='M123.121 33.664C188.241 90.664 258.801 206.394 284 266.384c25.2-59.99 95.759-175.72 160.879-232.72C491.866-1.086 568-28.906 568 57.682c0 17.86-10.719 149.998-17.005 171.382-21.843 74.527-101.377 93.502-172.196 82.02 123.764 21.063 155.237 90.921 87.174 160.779-129.138 132.397-185.543-33.236-199.177-75.614-2.575-7.816-3.776-11.469-3.796-8.363-.02-3.106-1.221.547-3.796 8.363-13.634 42.378-70.04 208.011-199.178 75.614-68.062-69.858-36.589-139.716 87.175-160.779-70.819 11.482-150.353-7.493-172.196-82.02C10.719 207.68 0 75.542 0 57.682 0-28.906 76.135-1.086 123.121 33.664z' />
-</svg>
-
-<style>
-	svg {
-		display: inline-block;
-		fill: currentColor;
-	}
-</style>
+</Icon>

@@ -26,8 +26,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 	@use '../../styles/abstracts/typography';
 
 	ul {
-		padding: 0;
-		list-style: none;
+		@include layout.list-reset;
 		display: flex;
 		flex-wrap: wrap;
 		gap: spacing.$space-3;

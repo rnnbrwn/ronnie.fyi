@@ -54,8 +54,9 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 </Base>
 
 <style lang='scss'>
+	@use '../../../styles/abstracts/layout';
+
 	ul {
-		padding: 0;
-		list-style: none;
+		@include layout.list-reset;
 	}
 </style>
