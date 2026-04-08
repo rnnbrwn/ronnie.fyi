@@ -41,7 +41,7 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 		color: colors.$dark;
 		margin-bottom: spacing.$space-1;
 
-		:global([data-theme='dark']) & {
+		:global(html[data-theme='dark']) & {
 			color: colors.$light;
 		}
 	}
@@ -70,7 +70,7 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 			color: colors.$tertiary;
 		}
 
-		:global([data-theme='dark']) & {
+		:global(html[data-theme='dark']) & {
 			color: colors.$light;
 
 			&:visited {

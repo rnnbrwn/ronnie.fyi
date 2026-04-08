@@ -81,6 +81,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 <style lang='scss'>
 	@use 'sass:map';
 	@use 'sass:color';
+	@use '../../../styles/abstracts/breakpoints';
 	@use '../../../styles/abstracts/layout';
 	@use '../../../styles/abstracts/spacing';
 	@use '../../../styles/abstracts/typography';
@@ -107,7 +108,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		margin: spacing.$space-6 0 0 0;
 		max-width: layout.$prose-width;
 
-		@media (min-width: 1400px) {
+		@media (min-width: breakpoints.$lg) {
 			max-width: calc(#{layout.$prose-width} + #{$body-gap} + #{$sidebar-width});
 		}
 
@@ -140,7 +141,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.post-body {
 		margin-top: spacing.$space-16;
 
-		@media (min-width: 1400px) {
+		@media (min-width: breakpoints.$lg) {
 			display: grid;
 			grid-template-columns: minmax(0, layout.$prose-width) $sidebar-width;
 			gap: $body-gap;
@@ -156,7 +157,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.post-meta {
 		margin-top: spacing.$space-6;
 
-		@media (min-width: 1400px) {
+		@media (min-width: breakpoints.$lg) {
 			margin-top: 0;
 		}
 	}
