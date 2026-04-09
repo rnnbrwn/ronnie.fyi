@@ -1,6 +1,8 @@
 ---
 import Post from './Post.astro';
 import { getSortedPosts, getPostUrl } from '../utils/getSortedPosts';
+import type { BskyActor } from '../utils/bsky';
+import { fetchBskyInteractors } from '../utils/bsky';
 
 // Shift all heading levels in an HTML string up by one (capped at h6).
 // Used so that in-post headings (written as h2+ for the single post page where
@@ -30,6 +32,17 @@ if (pinFirst) {
 }
 
 const posts = limit ? allPosts.slice(0, limit) : allPosts;
+
+const bskyInteractorsMap = new Map<string, BskyActor[]>();
+await Promise.all(
+	posts
+		.filter((p) => p.collection === 'blog' && p.entry.data.bskyPostUri)
+		.map(async (p) => {
+			const uri = (p.entry as any).data.bskyPostUri as string;
+			const interactors = await fetchBskyInteractors(uri);
+			if (interactors.length > 0) bskyInteractorsMap.set(p.entry.id, interactors);
+		})
+);
 ---
 
 {
@@ -54,6 +67,8 @@ const posts = limit ? allPosts.slice(0, limit) : allPosts;
 				href={href}
 				html={html}
 				relativeDate={relativeDate}
+				bskyPostUri={post.collection === 'blog' ? (entry as any).data.bskyPostUri : undefined}
+				bskyInteractors={bskyInteractorsMap.get(entry.id)}
 			/>
 		);
 	})
