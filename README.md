@@ -24,7 +24,7 @@ Built with [Astro](https://astro.build), styled with Sass, deployed to Dreamhost
 │   ├── pages/              # File-based routes (index, about, uses, blog, rss, og, etc.)
 │   ├── plugins/            # Remark plugins (YouTube embed)
 │   ├── styles/             # Sass architecture (abstracts, base, components, layout, utilities)
-│   ├── utils/              # Shared utilities (getSortedPosts, timeAgo)
+│   ├── utils/              # Shared utilities (getSortedPosts, bsky)
 │   └── content.config.ts   # Content collection schema
 └── package.json
 ```
@@ -37,15 +37,22 @@ Frontmatter fields:
 
 ```yaml
 title: 'Post title'
-pubDate: 2026-01-01
+pubDate: 2026-01-01        # Supports time: 2026-01-01 09:00. Post won't appear until this date/time.
 description: 'Short description'
 tags: ['tag-one', 'tag-two']
-pinned: false # Set to true to pin to the top of the homepage feed
-image: # Optional
-  url: '/image.webp'
+pinned: false              # Set to true to pin to the top of the homepage feed
+pinnedFrom: 2026-01-01    # Optional. Pin starts no earlier than this date (defaults to pubDate behaviour)
+pinnedUntil: 2026-01-08   # Optional. Pin is removed after this date on the next scheduled rebuild
+stale: false               # Set to true to show an "outdated" warning on the post
+image:                     # Optional
+  url: 'image.webp'
   alt: 'Alt text'
   source: 'https://example.com' # Optional image credit URL
+postToBsky: true           # Set to true to auto-post to Bluesky after the next deploy (see below)
+bskyPostUri: "at://..."   # Written automatically after posting. Do not set manually.
 ```
+
+`_` prefixed files (e.g. `_template.md`) are excluded from the collection and treated as drafts.
 
 ### Post images
 
@@ -61,16 +68,16 @@ Images should use a standard aspect ratio. At the default content width of 793px
 
 ## Bluesky auto-post
 
-When a blog post has `postToBsky: true` in its frontmatter, it will be automatically posted to Bluesky after the next successful deploy.
+When a blog post has `postToBsky: true` in its frontmatter, it will be automatically posted to Bluesky after the next successful deploy — provided the post's `pubDate` is not in the future.
 
 ```yaml
-postToBsky: true # triggers a post to Bluesky on next deploy
+postToBsky: true # triggers a post to Bluesky on next deploy (only if pubDate has passed)
 ```
 
 The workflow (`.github/workflows/post-to-bsky.yml`) runs after the deploy workflow completes. It calls `scripts/post-to-bsky.mjs`, which:
 
 1. Scans `src/data/blog/` for any file containing `postToBsky: true`
-2. Checks `git diff --name-only HEAD~1 HEAD` to confirm the file was part of the current push
+2. Skips any post whose `pubDate` is in the future
 3. Fetches the OG image from `https://ronnie.fyi/og/[slug].png`, uploads it to Bluesky's blob store, and posts with a link card embed
 4. Rewrites the frontmatter in-place: replaces `postToBsky: true` with `bskyPostUri: "at://..."` as a permanent record and to prevent re-posting
 
@@ -78,9 +85,13 @@ Required GitHub secrets: `BLUESKY_USERNAME` and `BLUESKY_PASSWORD` (Bluesky app 
 
 Posts originating from the site are excluded from the weekly digest — the digest script reads all `bskyPostUri` values and filters them out.
 
+## RSS feed
+
+An RSS feed is available at `/rss.xml`. It includes all published blog posts (not digest notes) with full post content and feature images. Media RSS extensions (`media:content`, `media:thumbnail`) are included for feed readers that support them.
+
 ## OG images
 
-OG images are generated at build time via `src/pages/og/[slug].png.ts` using Satori + sharp. Each post with a feature image gets a 1200×630 PNG. Design: feature image as full background, dark gradient overlay, crimson accent bar, post title in Geomanist Bold bottom-left, `ronnie.fyi` SVG in top-right.
+OG images are generated at build time via `src/pages/og/[slug].png.ts` using Satori + sharp. Only posts with **both** a feature image and `postToBsky` set get a 1200×630 PNG. Design: feature image as full background, dark gradient overlay, pink-red accent bar, post title in Geomanist Bold bottom-left, `ronnie.fyi` SVG in top-right.
 
 The `og:image` meta tag is set on all blog post pages that have a feature image.
 
@@ -92,7 +103,7 @@ When the workflow runs it:
 
 1. Calls the Bluesky public API for posts from `ronnie.fyi`
 2. Writes a Markdown file to `src/data/notes/bsky-digest-YYYY-MM-DD.md`
-3. Commits and pushes to `main`, which triggers the deploy workflow
+3. Commits the file and explicitly triggers the deploy workflow via `gh workflow run` (only if a digest was created)
 
 To run it manually:
 
@@ -102,7 +113,15 @@ node scripts/generate-bsky-digest.mjs
 
 If a digest file for today already exists, the script exits without overwriting it.
 
-Digest posts appear on the homepage mixed with blog posts but are excluded from `/blog`.
+Digest posts appear on the homepage mixed with blog posts but are excluded from `/posts`.
+
+## Scheduled rebuilds
+
+The deploy workflow (`.github/workflows/deploy.yml`) runs on every push to `main` and also on a cron schedule every 2 hours. This means time-sensitive features resolve automatically without a manual push:
+
+- Future-dated posts go live within 2 hours of their `pubDate`
+- `pinnedUntil` dates are respected within the same window
+- Bluesky auto-posts are picked up once a post's `pubDate` passes
 
 ## Commands
 
