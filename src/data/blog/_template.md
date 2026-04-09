@@ -7,6 +7,9 @@ image:
   url: 'ronnie.png'
   alt: 'alt'
   source: 'where_I_got_the_image'
+postToBsky: false
+stale: false
+pinned: false
 ---
 
 ## First header is h2
