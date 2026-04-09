@@ -20,8 +20,8 @@ const { title, description, ogImage } = Astro.props;
 		<meta charset='UTF-8' />
 		<script is:inline>
 			(function () {
-				var stored = localStorage.getItem('theme');
-				var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+				const stored = localStorage.getItem('theme');
+				const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 				document.documentElement.dataset.theme = stored || preferred;
 			})();
 		</script>

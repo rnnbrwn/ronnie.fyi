@@ -1,9 +1,13 @@
 import { existsSync, writeFileSync, mkdirSync, unlinkSync, readdirSync, renameSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { formatDate, parseFrontmatter } from './utils.mjs';
 
 const MAX_RETRIES = 5;
 const RETRY_DELAY_MS = 15 * 60 * 1000;
+const DIGEST_LOOKBACK_DAYS = 7;
+const FEED_FETCH_LIMIT = 100;
+const MAX_DIGEST_POSTS = 3;
 
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,8 +34,8 @@ function getSiteOriginatedUris() {
 	for (const file of readdirSync(blogDir)) {
 		if (!file.endsWith('.md')) continue;
 		const content = readFileSync(join(blogDir, file), 'utf-8');
-		const match = content.match(/^bskyPostUri:\s*["']?(.+?)["']?\s*$/m);
-		if (match) uris.add(match[1].trim());
+		const fm = parseFrontmatter(content);
+		if (fm.bskyPostUri) uris.add(fm.bskyPostUri);
 	}
 	return uris;
 }
@@ -41,13 +45,6 @@ function uriToUrl(uri) {
 	return `https://bsky.app/profile/${ACTOR}/post/${rkey}`;
 }
 
-function formatDate(iso) {
-	return new Date(iso).toLocaleDateString('en-GB', {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-	});
-}
 
 function formatShortDateTime(iso) {
 	const d = new Date(iso);
@@ -88,30 +85,19 @@ function textToHtml(text) {
 		.join('\n');
 }
 
-async function main() {
-	const today = new Date();
-	const todayStr = today.toISOString().slice(0, 10);
-	const pubDate = today.toISOString().slice(0, 16).replace('T', ' ');
-
-	const notesDir = join(__dirname, '..', 'src', 'data', 'notes');
-	const outputPath = join(notesDir, `bsky-digest-${todayStr}.md`);
-
-	const existingDigests = readdirSync(notesDir).filter(
-		(f) => f.match(/^bsky-digest-\d{4}-\d{2}-\d{2}\.md$/)
+function archiveExistingDigests(notesDir) {
+	const existing = readdirSync(notesDir).filter(
+		(f) => /^bsky-digest-\d{4}-\d{2}-\d{2}\.md$/.test(f)
 	);
-
-	for (const file of existingDigests) {
-		const oldPath = join(notesDir, file);
-		const newPath = join(notesDir, `_${file}`);
-		renameSync(oldPath, newPath);
+	for (const file of existing) {
+		renameSync(join(notesDir, file), join(notesDir, `_${file}`));
 		console.log(`Archived: ${file} → _${file}`);
 	}
+}
 
-	const sevenDaysAgo = new Date(today);
-	sevenDaysAgo.setDate(today.getDate() - 7);
-
+async function fetchBskyData(since) {
 	const [feedRes, profileRes] = await Promise.all([
-		fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${ACTOR}&filter=posts_no_replies&limit=100`),
+		fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${ACTOR}&filter=posts_no_replies&limit=${FEED_FETCH_LIMIT}`),
 		fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${ACTOR}`),
 	]);
 
@@ -121,72 +107,67 @@ async function main() {
 	}
 
 	const [data, profile] = await Promise.all([feedRes.json(), profileRes.json()]);
-	const authorAvatar = profile.avatar ?? '';
-	const authorName = profile.displayName || ACTOR;
-	const profileUrl = `https://bsky.app/profile/${ACTOR}`;
-
 	const siteOriginatedUris = getSiteOriginatedUris();
 
-	const recentPosts = data.feed
+	const posts = data.feed
 		.map((item) => item.post)
-		.filter((post) => new Date(post.record.createdAt) >= sevenDaysAgo)
+		.filter((post) => new Date(post.record.createdAt) >= since)
 		.filter((post) => post.record.$type === 'app.bsky.feed.post')
 		.filter((post) => !siteOriginatedUris.has(post.uri))
 		.sort((a, b) => new Date(b.record.createdAt) - new Date(a.record.createdAt))
-		.slice(0, 3);
+		.slice(0, MAX_DIGEST_POSTS);
 
-	if (recentPosts.length === 0) {
-		console.log('No posts in the last 7 days, skipping digest.');
-		process.exit(0);
-	}
+	return { posts, profile };
+}
 
-	const title = `Recent Bluesky chat`;
-	const description = `${recentPosts.length} post${recentPosts.length === 1 ? '' : 's'} from Bluesky this week.`;
+async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) {
+	const postUrl = uriToUrl(post.uri);
+	const timestamp = formatShortDateTime(post.record.createdAt);
+	const postText = textToHtml(applyFacets(post.record.text, post.record.facets));
 
-	const sections = await Promise.all(recentPosts.map(async (post) => {
-		const postUrl = uriToUrl(post.uri);
-		const timestamp = formatShortDateTime(post.record.createdAt);
-		const postText = textToHtml(applyFacets(post.record.text, post.record.facets));
+	let quoteHtml = '';
+	if (post.embed?.$type === 'app.bsky.embed.record#view' && post.embed.record) {
+		const quoted = post.embed.record;
+		const qHandle = quoted.author?.handle ?? '';
+		const qName = quoted.author?.displayName || qHandle;
+		const qAvatar = quoted.author?.avatar ?? '';
+		const qProfileUrl = `https://bsky.app/profile/${qHandle}`;
+		const qText = textToHtml(applyFacets(quoted.value?.text ?? '', quoted.value?.facets));
 
-		let quoteHtml = '';
-		if (post.embed?.$type === 'app.bsky.embed.record#view' && post.embed.record) {
-			const quoted = post.embed.record;
-			const qAuthor = quoted.author;
-			const qHandle = qAuthor?.handle ?? '';
-			const qName = qAuthor?.displayName || qHandle;
-			const qAvatar = qAuthor?.avatar ?? '';
-			const qProfileUrl = `https://bsky.app/profile/${qHandle}`;
-			const qText = textToHtml(applyFacets(quoted.value?.text ?? '', quoted.value?.facets));
+		let qLinkHtml = '';
+		const externalEmbed = quoted.embeds?.find((e) => e.$type === 'app.bsky.embed.external#view');
+		if (externalEmbed?.external) {
+			const { uri, title: linkTitle, description: linkDesc } = externalEmbed.external;
+			qLinkHtml = `\n<div class="skeet-quote-link"><a href="${uri}" target="_blank" rel="noopener noreferrer">${linkTitle}</a>${linkDesc ? `<span class="skeet-quote-link-desc">${linkDesc}</span>` : ''}</div>`;
+		}
 
-			let qLinkHtml = '';
-			const externalEmbed = quoted.embeds?.find((e) => e.$type === 'app.bsky.embed.external#view');
-			if (externalEmbed?.external) {
-				const { uri, title: linkTitle, description: linkDesc } = externalEmbed.external;
-				qLinkHtml = `\n<div class="skeet-quote-link"><a href="${uri}" target="_blank" rel="noopener noreferrer">${linkTitle}</a>${linkDesc ? `<span class="skeet-quote-link-desc">${linkDesc}</span>` : ''}</div>`;
-			}
-
-			quoteHtml = `
+		quoteHtml = `
 <div class="skeet-quote">
   <div class="skeet-quote-header">
     <img class="skeet-quote-avatar" src="${qAvatar}" alt="${qName}" /><a class="skeet-quote-name" href="${qProfileUrl}" target="_blank" rel="noopener noreferrer">${qName}</a><span class="skeet-quote-handle">@${qHandle}</span>
   </div>
   <div class="skeet-quote-body">${qText}${qLinkHtml}</div>
 </div>`;
-		}
+	}
 
-		let footerHtml = '';
-		const likesRes = await fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes?uri=${encodeURIComponent(post.uri)}&limit=100`);
-		if (likesRes.ok) {
-			const likesData = await likesRes.json();
-			if (likesData.likes?.length) {
-				const avatars = likesData.likes
-					.map(({ actor }) => `<a class="bsky-avatar" href="https://bsky.app/profile/${actor.handle || actor.did}" target="_blank" rel="noopener noreferrer"><img src="${actor.avatar}" alt="${actor.displayName || actor.handle}" title="${actor.displayName || actor.handle}" /></a>`)
-					.join('');
-				footerHtml = `\n<div class="skeet-footer"><p class="bsky-likes">${avatars}</p></div>`;
-			}
+	let footerHtml = '';
+	const likesRes = await fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.feed.getLikes?uri=${encodeURIComponent(post.uri)}&limit=${FEED_FETCH_LIMIT}`);
+	if (likesRes.ok) {
+		let likesData;
+		try {
+			likesData = await likesRes.json();
+		} catch {
+			console.warn(`Could not parse likes response for ${post.uri}`);
 		}
+		if (likesData?.likes?.length) {
+			const avatars = likesData.likes
+				.map(({ actor }) => `<a class="bsky-avatar" href="https://bsky.app/profile/${actor.handle || actor.did}" target="_blank" rel="noopener noreferrer"><img src="${actor.avatar}" alt="${actor.displayName || actor.handle}" title="${actor.displayName || actor.handle}" /></a>`)
+				.join('');
+			footerHtml = `\n<div class="skeet-footer"><p class="bsky-likes">${avatars}</p></div>`;
+		}
+	}
 
-		return `<div class="skeet">
+	return `<div class="skeet">
   <a class="skeet-author-avatar" href="${profileUrl}" target="_blank" rel="noopener noreferrer"><img src="${authorAvatar}" alt="${authorName}" /></a>
   <div class="skeet-main">
     <div class="skeet-header">
@@ -195,21 +176,51 @@ async function main() {
     <div class="skeet-body">${postText}${quoteHtml}</div>${footerHtml}
   </div>
 </div>`;
-	}));
+}
 
-	const body = sections.join('\n');
-
-	const markdown = `---
+function buildMarkdown(title, pubDate, description, sections) {
+	return `---
 title: "${title}"
 pubDate: ${pubDate}
 description: "${description}"
 ---
 
-${body}
+${sections.join('\n')}
 `;
+}
+
+async function main() {
+	const today = new Date();
+	const todayStr = today.toISOString().slice(0, 10);
+	const pubDate = today.toISOString().slice(0, 16).replace('T', ' ');
+
+	const notesDir = join(__dirname, '..', 'src', 'data', 'notes');
+	const outputPath = join(notesDir, `bsky-digest-${todayStr}.md`);
+
+	archiveExistingDigests(notesDir);
+
+	const since = new Date(today);
+	since.setDate(today.getDate() - DIGEST_LOOKBACK_DAYS);
+
+	const { posts, profile } = await fetchBskyData(since);
+
+	if (posts.length === 0) {
+		console.log('No posts in the last 7 days, skipping digest.');
+		process.exit(0);
+	}
+
+	const authorInfo = {
+		authorAvatar: profile.avatar ?? '',
+		authorName: profile.displayName || ACTOR,
+		profileUrl: `https://bsky.app/profile/${ACTOR}`,
+	};
+
+	const title = `Recent Bluesky chat`;
+	const description = `${posts.length} post${posts.length === 1 ? '' : 's'} from Bluesky this week.`;
+	const sections = await Promise.all(posts.map((post) => buildPostSection(post, authorInfo)));
 
 	mkdirSync(notesDir, { recursive: true });
-	writeFileSync(outputPath, markdown, 'utf8');
+	writeFileSync(outputPath, buildMarkdown(title, pubDate, description, sections), 'utf8');
 	console.log(`Written: ${outputPath}`);
 }
 

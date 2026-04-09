@@ -53,6 +53,74 @@ export const GET: APIRoute = async ({ props, params }) => {
 	const mimeType = ext === 'png' && !needsConversion ? 'image/png' : 'image/jpeg';
 	const imageBase64 = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
 
+	const ogBackground = (src: string) => ({
+		type: 'img',
+		props: {
+			src,
+			style: { position: 'absolute', top: 0, left: 0, width: '1200px', height: '630px', objectFit: 'cover' },
+		},
+	});
+
+	const ogGradientOverlay = () => ({
+		type: 'div',
+		props: {
+			style: {
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				width: '1200px',
+				height: '630px',
+				background: 'linear-gradient(to bottom, rgba(21,21,21,0.15) 0%, rgba(21,21,21,0.5) 40%, rgba(21,21,21,0.92) 100%)',
+			},
+		},
+	});
+
+	const ogLogo = () => ({
+		type: 'img',
+		props: {
+			src: getLogoDataUri('#f6f4f5'),
+			style: { position: 'absolute', top: '32px', right: '48px', width: '190px', height: '60px', opacity: 0.85 },
+		},
+	});
+
+	const ogTitle = (title: string) => ({
+		type: 'div',
+		props: {
+			style: {
+				position: 'absolute',
+				bottom: '56px',
+				left: '56px',
+				right: '56px',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '16px',
+			},
+			children: [
+				{
+					type: 'div',
+					props: {
+						style: { width: '56px', height: '5px', backgroundColor: '#d81e5b', borderRadius: '2px' },
+					},
+				},
+				{
+					type: 'div',
+					props: {
+						style: {
+							color: '#ffffff',
+							fontSize: '56px',
+							fontFamily: 'Geomanist',
+							fontWeight: 700,
+							lineHeight: 1.15,
+							letterSpacing: '-0.01em',
+							maxWidth: '900px',
+						},
+						children: title,
+					},
+				},
+			],
+		},
+	});
+
 	const svg = await satori(
 		{
 			type: 'div',
@@ -67,105 +135,17 @@ export const GET: APIRoute = async ({ props, params }) => {
 					backgroundColor: '#151515',
 				},
 				children: [
-					// Background image
-					{
-						type: 'img',
-						props: {
-							src: imageBase64,
-							style: {
-								position: 'absolute',
-								top: 0,
-								left: 0,
-								width: '1200px',
-								height: '630px',
-								objectFit: 'cover',
-							},
-						},
-					},
-					// Dark gradient overlay
-					{
-						type: 'div',
-						props: {
-							style: {
-								position: 'absolute',
-								top: 0,
-								left: 0,
-								width: '1200px',
-								height: '630px',
-								background:
-									'linear-gradient(to bottom, rgba(21,21,21,0.15) 0%, rgba(21,21,21,0.5) 40%, rgba(21,21,21,0.92) 100%)',
-							},
-						},
-					},
-					// Logo — top right
-					{
-						type: 'img',
-						props: {
-							src: getLogoDataUri('#f6f4f5'),
-							style: {
-								position: 'absolute',
-								top: '32px',
-								right: '48px',
-								width: '190px',
-								height: '60px',
-								opacity: 0.85,
-							},
-						},
-					},
-					// Bottom content
-					{
-						type: 'div',
-						props: {
-							style: {
-								position: 'absolute',
-								bottom: '56px',
-								left: '56px',
-								right: '56px',
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '16px',
-							},
-							children: [
-								// Crimson accent bar
-								{
-									type: 'div',
-									props: {
-										style: {
-											width: '56px',
-											height: '5px',
-											backgroundColor: '#d81e5b',
-											borderRadius: '2px',
-										},
-									},
-								},
-								// Title
-								{
-									type: 'div',
-									props: {
-										style: {
-											color: '#ffffff',
-											fontSize: '56px',
-											fontFamily: 'Geomanist',
-											fontWeight: 700,
-											lineHeight: 1.15,
-											letterSpacing: '-0.01em',
-											maxWidth: '900px',
-										},
-										children: post.data.title,
-									},
-								},
-							],
-						},
-					},
+					ogBackground(imageBase64),
+					ogGradientOverlay(),
+					ogLogo(),
+					ogTitle(post.data.title),
 				],
 			},
 		},
 		{
 			width: 1200,
 			height: 630,
-			fonts: [
-				{ name: 'Geomanist', data: fontBoldBuffer, weight: 700, style: 'normal' },
-			],
+			fonts: [{ name: 'Geomanist', data: fontBoldBuffer, weight: 700, style: 'normal' }],
 		}
 	);
 

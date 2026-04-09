@@ -12,7 +12,10 @@ export default function BskyInteractors({ uri, initial = [] }: Props) {
 	const [interactors, setInteractors] = useState<BskyActor[]>(initial);
 
 	useEffect(() => {
-		fetchBskyInteractors(uri).then(setInteractors);
+		(async () => {
+			const data = await fetchBskyInteractors(uri);
+			setInteractors(data);
+		})();
 	}, [uri]);
 
 	if (interactors.length === 0) return null;

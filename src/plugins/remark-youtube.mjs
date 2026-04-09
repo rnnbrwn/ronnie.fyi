@@ -4,15 +4,16 @@ const ytRegex =
 	/^https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/;
 
 function getYouTubeId(node) {
+	const [child] = node.children ?? [];
+	if (!child) return null;
 	// Plain text URL
-	if (node.children.length === 1 && node.children[0].type === 'text') {
-		const match = node.children[0].value.trim().match(ytRegex);
+	if (child.type === 'text') {
+		const match = child.value?.trim().match(ytRegex);
 		if (match) return match[1];
 	}
 	// Auto-linked URL (link whose text matches its href)
-	if (node.children.length === 1 && node.children[0].type === 'link') {
-		const link = node.children[0];
-		const match = link.url.match(ytRegex);
+	if (child.type === 'link') {
+		const match = child.url?.match(ytRegex);
 		if (match) return match[1];
 	}
 	return null;

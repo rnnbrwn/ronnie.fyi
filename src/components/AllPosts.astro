@@ -1,6 +1,7 @@
 ---
 import Post from './Post.astro';
 import { getSortedPosts, getPostUrl } from '../utils/getSortedPosts';
+import type { BlogPost } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
 import { fetchBskyInteractors } from '../utils/bsky';
 
@@ -38,7 +39,7 @@ await Promise.all(
 	posts
 		.filter((p) => p.collection === 'blog' && p.entry.data.bskyPostUri)
 		.map(async (p) => {
-			const uri = (p.entry as any).data.bskyPostUri as string;
+			const uri = (p as BlogPost).entry.data.bskyPostUri as string;
 			const interactors = await fetchBskyInteractors(uri);
 			if (interactors.length > 0) bskyInteractorsMap.set(p.entry.id, interactors);
 		})
@@ -67,7 +68,7 @@ await Promise.all(
 				href={href}
 				html={html}
 				relativeDate={relativeDate}
-				bskyPostUri={post.collection === 'blog' ? (entry as any).data.bskyPostUri : undefined}
+				bskyPostUri={post.collection === 'blog' ? (post as BlogPost).entry.data.bskyPostUri : undefined}
 				bskyInteractors={bskyInteractorsMap.get(entry.id)}
 			/>
 		);

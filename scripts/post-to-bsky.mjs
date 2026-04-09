@@ -2,25 +2,15 @@ import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { BASE_URL, getPostUrl, parseFrontmatter } from './utils.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BLOG_DIR = join(__dirname, '..', 'src', 'data', 'blog');
-const BASE_URL = 'https://ronnie.fyi';
 
-function parseFrontmatter(content) {
-	const match = content.match(/^---\n([\s\S]*?)\n---/);
-	if (!match) return {};
-	const raw = match[1];
-	const result = {};
-	for (const line of raw.split('\n')) {
-		const colonIdx = line.indexOf(':');
-		if (colonIdx === -1) continue;
-		const key = line.slice(0, colonIdx).trim();
-		const value = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
-		result[key] = value;
-	}
-	return result;
-}
+const MAX_BLOB_SIZE = 1_000_000;
+const OG_IMAGE_WIDTH = 800;
+const OG_IMAGE_QUALITY = 85;
+
 
 function rewriteFrontmatter(content, uri) {
 	return content.replace(
@@ -31,13 +21,6 @@ function rewriteFrontmatter(content, uri) {
 
 function slugFromFilename(filename) {
 	return filename.replace(/\.md$/, '');
-}
-
-function buildUrl(slug, pubDate) {
-	const d = new Date(pubDate);
-	const year = d.getFullYear();
-	const month = String(d.getMonth() + 1).padStart(2, '0');
-	return `${BASE_URL}/${year}/${month}/${slug}/`;
 }
 
 
@@ -114,7 +97,7 @@ async function main() {
 
 	for (const { filename, fullPath, content, fm } of targets) {
 		const slug = slugFromFilename(filename);
-		const url = buildUrl(slug, fm.pubDate);
+		const url = getPostUrl(fm.pubDate, slug, { absolute: true, trailingSlash: true });
 		const postText = `${fm.title}\n\n${url}`;
 		const textBytes = Buffer.from(postText, 'utf-8');
 		const urlBytes = Buffer.from(url, 'utf-8');
@@ -132,11 +115,10 @@ async function main() {
 			const imgRes = await fetch(ogImageUrl);
 			if (imgRes.ok) {
 				let imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-				const MAX_BLOB_SIZE = 1_000_000;
 				if (imgBuffer.length > MAX_BLOB_SIZE) {
 					imgBuffer = await sharp(imgBuffer)
-						.resize({ width: 800 })
-						.jpeg({ quality: 85 })
+						.resize({ width: OG_IMAGE_WIDTH })
+						.jpeg({ quality: OG_IMAGE_QUALITY })
 						.toBuffer();
 					thumb = await uploadBlob(accessJwt, imgBuffer, 'image/jpeg');
 				} else {
