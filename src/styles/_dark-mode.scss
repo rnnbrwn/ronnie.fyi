@@ -108,7 +108,7 @@ html[data-theme='dark'] {
 	.post-body {
 		border-bottom-color: map.get(colors.$light-tones, 'tone-5');
 
-		.published-date {
+		.post-meta .published-date {
 			color: map.get(colors.$light-tones, 'tone-2');
 		}
 	}
