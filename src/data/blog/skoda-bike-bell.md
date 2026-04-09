@@ -8,7 +8,9 @@ stale: false
 pinned: false
 ---
 
-The video itself is quite dry, but the design that Skoda have come up with is cool. And a couple of surprising things are mentioned.
+Car manufacturer [Skoda](https://en.wikipedia.org/wiki/%C5%A0koda_Auto) have designed a bicycle bell that can be heard by people wearing noise-cancelling headphones.
+
+The promotional video itself is quite dry, but the design that Skoda have come up with is cool. And a couple of surprising things are mentioned.
 
 https://www.youtube.com/watch?v=zDaVPfpQvPI
 
