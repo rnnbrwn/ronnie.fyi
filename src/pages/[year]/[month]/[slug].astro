@@ -234,6 +234,9 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 
 	.bsky-interactions {
 		margin-top: spacing.$space-6;
+	}
+
+	.bsky-interactions :global(.bsky-avatars--has-interactors) {
 		padding-top: spacing.$space-6;
 		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
 	}

@@ -21,7 +21,7 @@ export default function BskyInteractors({ uri, initial = [] }: Props) {
 	if (interactors.length === 0) return null;
 
 	return (
-		<div class='bsky-avatars'>
+		<div class='bsky-avatars bsky-avatars--has-interactors'>
 			{interactors.map((actor) =>
 				actor.avatar ? (
 					<a
