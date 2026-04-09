@@ -1,7 +1,8 @@
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { tmpdir } from 'node:os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BLOG_DIR = join(__dirname, '..', 'src', 'data', 'blog');
@@ -144,8 +145,23 @@ async function main() {
 		try {
 			const imgRes = await fetch(ogImageUrl);
 			if (imgRes.ok) {
-				const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-				thumb = await uploadBlob(accessJwt, imgBuffer, 'image/png');
+				let imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+				const MAX_BLOB_SIZE = 1_000_000;
+				if (imgBuffer.length > MAX_BLOB_SIZE) {
+					const tmpDir = mkdtempSync(join(tmpdir(), 'bsky-'));
+					const srcPath = join(tmpDir, 'og.png');
+					const outPath = join(tmpDir, 'og-small.jpg');
+					try {
+						writeFileSync(srcPath, imgBuffer);
+						execSync(`convert "${srcPath}" -resize 800x -quality 85 "${outPath}"`);
+						imgBuffer = readFileSync(outPath);
+					} finally {
+						rmSync(tmpDir, { recursive: true, force: true });
+					}
+					thumb = await uploadBlob(accessJwt, imgBuffer, 'image/jpeg');
+				} else {
+					thumb = await uploadBlob(accessJwt, imgBuffer, 'image/png');
+				}
 			}
 		} catch (err) {
 			console.warn(`Could not fetch OG image for ${slug}: ${err.message}`);
