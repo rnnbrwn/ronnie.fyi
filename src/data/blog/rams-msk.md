@@ -7,7 +7,7 @@ image:
   url: 'rams-nyc.png'
   alt: 'RAMS mid-paint, high above the streets of NYC'
   source: 'https://news.artnet.com/art-world/graffiti-artist-rams-bombs-abandoned-44-story-skyscraper-2538738'
-postToBsky: false
+postToBsky: true
 stale: false
 pinned: false
 ---
