@@ -9,6 +9,19 @@ export function formatMonthYear(date: Date): string {
 	return date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 }
 
+export function formatRelativeDate(date: Date): string {
+	const now = new Date();
+	const diffMs = now.valueOf() - date.valueOf();
+	const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+	if (diffHours < 24) {
+		return diffHours <= 1 ? '1 hour ago' : `${diffHours} hours ago`;
+	}
+
+	const diffDays = Math.floor(diffHours / 24);
+	return diffDays === 1 ? '1 day ago' : `${diffDays} days ago`;
+}
+
 export function formatDateShort(date: Date): string {
 	return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }

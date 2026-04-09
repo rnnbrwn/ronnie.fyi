@@ -16,9 +16,10 @@ function shiftHeadings(html: string): string {
 interface Props {
 	limit?: number;
 	pinFirst?: boolean;
+	relativeDate?: boolean;
 }
 
-const { limit, pinFirst = false } = Astro.props;
+const { limit, pinFirst = false, relativeDate = false } = Astro.props;
 
 let allPosts = await getSortedPosts();
 
@@ -52,6 +53,7 @@ const posts = limit ? allPosts.slice(0, limit) : allPosts;
 				isDigest={isDigest}
 				href={href}
 				html={html}
+				relativeDate={relativeDate}
 			/>
 		);
 	})

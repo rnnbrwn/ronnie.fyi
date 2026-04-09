@@ -4,7 +4,7 @@ import IconPin from './IconPin.astro';
 import IconBlueSky from './IconBlueSky.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getPostUrl, formatDate } from '../utils/getSortedPosts';
+import { getPostUrl, formatDate, formatRelativeDate } from '../utils/getSortedPosts';
 
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
@@ -19,6 +19,7 @@ interface Props {
 	isDigest?: boolean;
 	href?: string;
 	html?: string;
+	relativeDate?: boolean;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
 	isDigest = false,
 	href = getPostUrl(pubDate, id),
 	html,
+	relativeDate = false,
 } = Astro.props;
 ---
 
@@ -62,7 +64,7 @@ const {
 					<div class='published-date'>
 						Posted{' '}
 						<time datetime={pubDate.toISOString()}>
-							{formatDate(pubDate)}
+							{relativeDate ? formatRelativeDate(pubDate) : formatDate(pubDate)}
 						</time>
 					</div>
 					<TagPills tags={tags} />
