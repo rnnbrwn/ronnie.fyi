@@ -4,9 +4,11 @@ pubDate: 2026-04-15 09:00
 description: "I'm helping raise funds for the Prince & Princess of Wales Hospice in Glasgow, Scotland"
 tags: ['glasgow', 'the prince & princess of wales hospice']
 image:
-  url: 'the-prince-and-princess-of-wales-hospice-building.webp'
+  url: 'the-prince-and-princess-of-wales-hospice-building.jpeg'
   alt: 'The Prince & Princess of Wales Hospice building in Glasgow'
-  source: 'https://www.princeandprincessofwaleshospice.org.uk/'
+  source: 'https://stonescreen.org/prince-and-princess-of-wales-hospice/'
+postToBsky: true
+stale: false
 pinned: true
 ---
 
