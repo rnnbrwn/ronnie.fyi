@@ -2,12 +2,12 @@
 title: 'Braga Municipal Stadium'
 pubDate: 2026-04-08 20:30
 description: 'Rangers have played here a few times over recent years, but I knew nothing about the architect.'
-tags: ['dezeen', 'souto de moura', 'braga', 'braga municipal stadium', 'sc braga', 'rangers fc']
+tags: ['dezeen', 'souto de moura', 'braga', 'braga municipal stadium', 'sc braga', 'rangers fc', 'architecture']
 image:
   url: 'braga-stadium.jpg'
   alt: 'A photograph of the gutter system on the Braga Municipal Stadium'
   source: 'https://juanrv.com/braga-stadium/'
-bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mizgpdhteb2y"
+bskyPostUri: 'at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mizgpdhteb2y'
 ---
 
 Architecture & Design site [Dezeen](https://www.dezeen.com) have a short video about [Souto de Moura](https://en.wikipedia.org/wiki/Eduardo_Souto_de_Moura) and his time working on [Braga Municipal Stadium](https://en.wikipedia.org/wiki/Est%C3%A1dio_Municipal_de_Braga), home of [SC Braga](https://en.wikipedia.org/wiki/S.C._Braga).
