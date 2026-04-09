@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import TagPills from '../../../components/TagPills.astro';
+import IconBlueSky from '../../../components/IconBlueSky.astro';
 import IconClock from '../../../components/IconClock.astro';
 import { Image } from 'astro:assets';
 import { formatDate, formatMonthYear } from '../../../utils/getSortedPosts';
@@ -24,6 +25,49 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { year, month } = Astro.params;
 const { Content } = await render(post);
+
+interface BskyActor {
+	did: string;
+	handle: string;
+	displayName?: string;
+	avatar?: string;
+}
+
+let bskyInteractors: BskyActor[] = [];
+
+if (post.data.bskyPostUri) {
+	const uri = encodeURIComponent(post.data.bskyPostUri);
+	const base = 'https://public.api.bsky.app/xrpc';
+	const seen = new Set<string>();
+
+	try {
+		const [likesRes, repostsRes] = await Promise.all([
+			fetch(`${base}/app.bsky.feed.getLikes?uri=${uri}&limit=100`),
+			fetch(`${base}/app.bsky.feed.getRepostedBy?uri=${uri}&limit=100`),
+		]);
+
+		if (likesRes.ok) {
+			const data = await likesRes.json();
+			for (const like of data.likes ?? []) {
+				if (!seen.has(like.actor.did)) {
+					seen.add(like.actor.did);
+					bskyInteractors.push(like.actor);
+				}
+			}
+		}
+		if (repostsRes.ok) {
+			const data = await repostsRes.json();
+			for (const actor of data.repostedBy ?? []) {
+				if (!seen.has(actor.did)) {
+					seen.add(actor.did);
+					bskyInteractors.push(actor);
+				}
+			}
+		}
+	} catch {
+		// silently skip if fetch fails at build time
+	}
+}
 
 const ogImage = post.data.image?.url
 	? new URL(`/og/${post.id}.png`, Astro.site).href
@@ -71,6 +115,45 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 						>
 					</div>
 					<TagPills tags={post.data.tags} />
+					{
+						bskyInteractors.length > 0 && (
+							<div class='bsky-interactions'>
+								<a
+									href={`https://bsky.app/profile/${post.data.bskyPostUri!.split('/')[2]}/post/${post.data.bskyPostUri!.split('/').at(-1)}`}
+									class='bsky-interactions-label'
+									target='_blank'
+									rel='noopener noreferrer'
+								>
+									<IconBlueSky size={14} />
+									{bskyInteractors.length} {bskyInteractors.length === 1 ? 'person' : 'people'}
+								</a>
+								<div class='bsky-avatars'>
+									{bskyInteractors.map((actor) =>
+										actor.avatar ? (
+											<a
+												href={`https://bsky.app/profile/${actor.handle}`}
+												target='_blank'
+												rel='noopener noreferrer'
+												title={actor.displayName ?? actor.handle}
+											>
+												<img src={actor.avatar} alt={actor.displayName ?? actor.handle} width='28' height='28' class='bsky-avatar' />
+											</a>
+										) : (
+											<a
+												href={`https://bsky.app/profile/${actor.handle}`}
+												target='_blank'
+												rel='noopener noreferrer'
+												title={actor.displayName ?? actor.handle}
+												class='bsky-avatar bsky-avatar--placeholder'
+											>
+												{(actor.displayName ?? actor.handle).charAt(0).toUpperCase()}
+											</a>
+										)
+									)}
+								</div>
+							</div>
+						)
+					}
 				</div>
 				<div class='aside-links'>
 					<a href='/posts' class='back-link'>All posts</a>
@@ -176,6 +259,59 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		:global(html[data-theme='dark']) & {
 			color: map.get(colors.$light-tones, 'tone-2');
 		}
+	}
+
+	.bsky-interactions {
+		margin-top: spacing.$space-4;
+	}
+
+	.bsky-interactions-label {
+		display: inline-flex;
+		align-items: center;
+		gap: spacing.$space-1;
+		@include typography.caption-text;
+		font-weight: typography.$weight-regular;
+		text-transform: uppercase;
+		color: colors.$text-muted;
+		text-decoration: none;
+		margin-bottom: spacing.$space-2;
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+
+		&:hover {
+			color: colors.$tertiary;
+		}
+	}
+
+	.bsky-avatars {
+		display: flex;
+		flex-wrap: wrap;
+		gap: spacing.$space-1;
+	}
+
+	.bsky-avatar {
+		display: block;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		overflow: hidden;
+		object-fit: cover;
+	}
+
+	:global(.bsky-avatar--placeholder) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		background-color: map.get(colors.$dark-tones, 'tone-4');
+		color: colors.$light;
+		font-size: typography.$font-size-xs;
+		font-weight: typography.$weight-bold;
+		text-decoration: none;
 	}
 
 	.aside-links {
