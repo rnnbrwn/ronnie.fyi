@@ -7,7 +7,7 @@ image:
   url: 'union-st-fire.jpg'
   alt: 'An aerial photograph of water being sprayed on a recent fire by firefighters'
   source: 'https://news.stv.tv/west-central/glasgow-city-council-to-push-for-vape-shop-regulation-after-devastating-union-street-fire'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mj37pyceai2r"
 ---
 
 Matt Loader from Glasgow-based architecture firm, [Loader Monteith](https://loadermonteith.co.uk/) in Dezeen magazine talking about Glasgow's old buildings and their tendency to catch fire: [Glasgow's burning problem is a symptom of a greater failure](https://www.dezeen.com/2026/04/09/glasgow-burning-heritage-buildings-matt-loader-opinion/)
