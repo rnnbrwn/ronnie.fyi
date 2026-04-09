@@ -41,15 +41,6 @@ function buildUrl(slug, pubDate) {
 	return `${BASE_URL}/${year}/${month}/${slug}/`;
 }
 
-function getChangedFiles() {
-	try {
-		const output = execSync('git diff --name-only HEAD~1 HEAD', { encoding: 'utf-8' });
-		return output.trim().split('\n').filter(Boolean);
-	} catch {
-		// First commit or shallow clone — fall back to all blog files
-		return readdirSync(BLOG_DIR).map((f) => `src/data/blog/${f}`);
-	}
-}
 
 async function createSession(identifier, password) {
 	const res = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
@@ -100,14 +91,10 @@ async function main() {
 		process.exit(1);
 	}
 
-	const changedFiles = getChangedFiles();
-	const blogFiles = changedFiles.filter((f) => f.startsWith('src/data/blog/') && f.endsWith('.md'));
-
 	const targets = [];
-	for (const relPath of blogFiles) {
-		const filename = relPath.split('/').at(-1);
-		if (filename.startsWith('_')) continue;
-		const fullPath = join(__dirname, '..', relPath);
+	for (const filename of readdirSync(BLOG_DIR)) {
+		if (!filename.endsWith('.md') || filename.startsWith('_')) continue;
+		const fullPath = join(BLOG_DIR, filename);
 		let content;
 		try {
 			content = readFileSync(fullPath, 'utf-8');
