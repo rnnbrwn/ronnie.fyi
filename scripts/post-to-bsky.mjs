@@ -85,6 +85,7 @@ async function main() {
 		}
 		const fm = parseFrontmatter(content);
 		if (fm.postToBsky !== 'true') continue;
+		if (fm.pubDate && new Date(fm.pubDate) > new Date()) continue;
 		targets.push({ filename, fullPath, content, fm });
 	}
 
