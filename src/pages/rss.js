@@ -2,6 +2,8 @@ import rss from '@astrojs/rss';
 import { getCollection, render } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 
+const imageFiles = import.meta.glob('/src/assets/images/*', { eager: true });
+
 export async function GET(context) {
 	const now = new Date();
 	const posts = await getCollection('blog', ({ data }) => new Date(data.pubDate) <= now);
@@ -14,8 +16,11 @@ export async function GET(context) {
 			const { Content } = await render(post);
 			const html = await container.renderToString(Content);
 
-			const imageUrl = post.data.image
-				? new URL(`images/${post.data.image.url}`, context.site).href
+			const imageModule = post.data.image
+				? imageFiles[`/src/assets/images/${post.data.image.url}`]
+				: null;
+			const imageUrl = imageModule
+				? new URL(imageModule.default.src, context.site).href
 				: null;
 
 			const imageHtml = imageUrl
