@@ -5,6 +5,8 @@ import rehypeRaw from 'rehype-raw';
 
 import sitemap from '@astrojs/sitemap';
 
+import preact from '@astrojs/preact';
+
 /** @type {import('vite').Plugin} */
 const redirectTrailingSlash = {
   name: 'redirect-trailing-slash',
@@ -31,7 +33,7 @@ export default defineConfig({
       rehypePlugins: [rehypeRaw],
     },
 
-  integrations: [sitemap()],
+  integrations: [sitemap(), preact({ compat: true })],
 
   vite: {
     plugins: [redirectTrailingSlash],

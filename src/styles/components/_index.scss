@@ -366,3 +366,34 @@
     display: block;
   }
 }
+
+.bsky-avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing.$space-1;
+}
+
+.bsky-avatar {
+  display: block;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+}
+
+.bsky-avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: map.get(colors.$dark-tones, 'tone-4');
+  color: colors.$light;
+  font-size: typography.$font-size-sm;
+  font-weight: typography.$weight-bold;
+  text-decoration: none;
+}

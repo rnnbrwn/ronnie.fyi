@@ -6,6 +6,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getPostUrl, formatDate, formatRelativeDate } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
+import BskyInteractors from './BskyInteractors.tsx';
 
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
@@ -74,32 +75,9 @@ const {
 					</div>
 					<TagPills tags={tags} />
 					{
-						bskyPostUri && bskyInteractors.length > 0 && (
+						bskyPostUri && (
 							<div class='bsky-interactions'>
-								<div class='bsky-avatars'>
-									{bskyInteractors.map((actor) =>
-										actor.avatar ? (
-											<a
-												href={`https://bsky.app/profile/${actor.handle}`}
-												target='_blank'
-												rel='noopener noreferrer'
-												title={actor.displayName ?? actor.handle}
-											>
-												<img src={actor.avatar} alt={actor.displayName ?? actor.handle} width='28' height='28' class='bsky-avatar' />
-											</a>
-										) : (
-											<a
-												href={`https://bsky.app/profile/${actor.handle}`}
-												target='_blank'
-												rel='noopener noreferrer'
-												title={actor.displayName ?? actor.handle}
-												class='bsky-avatar bsky-avatar--placeholder'
-											>
-												{(actor.displayName ?? actor.handle).charAt(0).toUpperCase()}
-											</a>
-										)
-									)}
-								</div>
+								<BskyInteractors uri={bskyPostUri} initial={bskyInteractors} client:visible />
 							</div>
 						)
 					}
@@ -239,38 +217,6 @@ const {
 
 		.bsky-interactions {
 			margin-top: spacing.$space-4;
-		}
-
-		.bsky-avatars {
-			display: flex;
-			flex-wrap: wrap;
-			gap: spacing.$space-1;
-		}
-
-		.bsky-avatar {
-			display: block;
-			width: 28px;
-			height: 28px;
-			border-radius: 50%;
-			overflow: hidden;
-			object-fit: cover;
-			// override prose img defaults
-			border-bottom: none;
-			margin-bottom: 0;
-		}
-
-		:global(.bsky-avatar--placeholder) {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 28px;
-			height: 28px;
-			border-radius: 50%;
-			background-color: map.get(colors.$dark-tones, 'tone-4');
-			color: colors.$light;
-			font-size: typography.$font-size-sm;
-			font-weight: typography.$weight-bold;
-			text-decoration: none;
 		}
 
 	}

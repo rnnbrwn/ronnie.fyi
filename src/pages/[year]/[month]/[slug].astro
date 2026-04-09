@@ -8,6 +8,7 @@ import { Image } from 'astro:assets';
 import { formatDate, formatMonthYear } from '../../../utils/getSortedPosts';
 import { fetchBskyInteractors } from '../../../utils/bsky';
 import type { BskyActor } from '../../../utils/bsky';
+import BskyInteractors from '../../../components/BskyInteractors.tsx';
 import type { ImageMetadata } from 'astro';
 
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
@@ -84,32 +85,9 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 					<a href={`/${year}/${month}`} class='month-link'>{monthLabel}</a>
 					<a href='/tags' class='tags-link'>All tags</a>
 					{
-						bskyInteractors.length > 0 && (
+						post.data.bskyPostUri && (
 							<div class='bsky-interactions'>
-								<div class='bsky-avatars'>
-									{bskyInteractors.map((actor) =>
-										actor.avatar ? (
-											<a
-												href={`https://bsky.app/profile/${actor.handle}`}
-												target='_blank'
-												rel='noopener noreferrer'
-												title={actor.displayName ?? actor.handle}
-											>
-												<img src={actor.avatar} alt={actor.displayName ?? actor.handle} width='28' height='28' class='bsky-avatar' />
-											</a>
-										) : (
-											<a
-												href={`https://bsky.app/profile/${actor.handle}`}
-												target='_blank'
-												rel='noopener noreferrer'
-												title={actor.displayName ?? actor.handle}
-												class='bsky-avatar bsky-avatar--placeholder'
-											>
-												{(actor.displayName ?? actor.handle).charAt(0).toUpperCase()}
-											</a>
-										)
-									)}
-								</div>
+								<BskyInteractors uri={post.data.bskyPostUri} initial={bskyInteractors} client:visible />
 							</div>
 						)
 					}
@@ -219,35 +197,6 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		margin-top: spacing.$space-6;
 		padding-top: spacing.$space-6;
 		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
-	}
-
-	.bsky-avatars {
-		display: flex;
-		flex-wrap: wrap;
-		gap: spacing.$space-1;
-	}
-
-	.bsky-avatar {
-		display: block;
-		width: 28px;
-		height: 28px;
-		border-radius: 50%;
-		overflow: hidden;
-		object-fit: cover;
-	}
-
-	:global(.bsky-avatar--placeholder) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 28px;
-		height: 28px;
-		border-radius: 50%;
-		background-color: map.get(colors.$dark-tones, 'tone-4');
-		color: colors.$light;
-		font-size: typography.$font-size-sm;
-		font-weight: typography.$weight-bold;
-		text-decoration: none;
 	}
 
 	.aside-links {

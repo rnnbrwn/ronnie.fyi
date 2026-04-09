@@ -12,10 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/preact": "^5.1.1",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
     "@resvg/resvg-js": "^2.6.2",
-    "astro": "^6.1.0",
+    "astro": "^6.1.5",
+    "preact": "^10.29.1",
     "rehype-raw": "^7.0.0",
     "satori": "^0.26.0"
   },
