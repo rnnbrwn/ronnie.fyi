@@ -2,10 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import TagPills from '../../../components/TagPills.astro';
-import IconBlueSky from '../../../components/IconBlueSky.astro';
 import IconClock from '../../../components/IconClock.astro';
 import { Image } from 'astro:assets';
-import { formatDate, formatMonthYear } from '../../../utils/getSortedPosts';
+import { formatDate, formatMonthYear, getPostUrl } from '../../../utils/getSortedPosts';
 import { fetchBskyInteractors } from '../../../utils/bsky';
 import type { BskyActor } from '../../../utils/bsky';
 import BskyInteractors from '../../../components/BskyInteractors.tsx';
@@ -14,18 +13,27 @@ import type { ImageMetadata } from 'astro';
 const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => {
+	const now = new Date();
+	const posts = (await getCollection('blog'))
+		.filter((p) => new Date(p.data.pubDate) <= now)
+		.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+	return posts.map((post, index) => {
 		const year = String(post.data.pubDate.getFullYear());
 		const month = String(post.data.pubDate.getMonth() + 1).padStart(2, '0');
+		const prev = posts[index + 1];
+		const next = posts[index - 1];
 		return {
 			params: { year, month, slug: post.id },
-			props: { post },
+			props: {
+				post,
+				prevPost: prev ? { url: getPostUrl(prev.data.pubDate, prev.id), title: prev.data.title } : null,
+				nextPost: next ? { url: getPostUrl(next.data.pubDate, next.id), title: next.data.title } : null,
+			},
 		};
 	});
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { year, month } = Astro.params;
 const { Content } = await render(post);
 
@@ -95,6 +103,28 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			</aside>
 		</div>
 	</article>
+	{
+		(prevPost || nextPost) && (
+			<nav class='post-nav' aria-label='Post navigation'>
+				<div class='post-nav-prev'>
+					{prevPost && (
+						<a href={prevPost.url}>
+							<span class='post-nav-label'>Previous</span>
+							<span class='post-nav-title'>{prevPost.title}</span>
+						</a>
+					)}
+				</div>
+				<div class='post-nav-next'>
+					{nextPost && (
+						<a href={nextPost.url}>
+							<span class='post-nav-label'>Next</span>
+							<span class='post-nav-title'>{nextPost.title}</span>
+						</a>
+					)}
+				</div>
+			</nav>
+		)
+	}
 </Base>
 
 <style lang='scss'>
@@ -219,5 +249,47 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		:global(html[data-theme='dark']) & {
 			@include layout.tertiary-link-on-dark;
 		}
+	}
+
+	.post-nav {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: spacing.$space-6;
+		margin-top: spacing.$space-16;
+		padding-top: spacing.$space-8;
+		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+		max-width: calc(#{layout.$prose-width} + #{$body-gap} + #{$sidebar-width});
+	}
+
+	.post-nav-next {
+		text-align: right;
+	}
+
+	.post-nav-prev a,
+	.post-nav-next a {
+		display: flex;
+		flex-direction: column;
+		gap: spacing.$space-1;
+
+		&:hover .post-nav-title {
+			text-decoration: underline;
+		}
+	}
+
+	.post-nav-label {
+		@include typography.caption-text;
+		text-transform: uppercase;
+		color: colors.$text-muted;
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	.post-nav-title {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		font-weight: typography.$weight-bold;
+		color: colors.$tertiary;
 	}
 </style>
