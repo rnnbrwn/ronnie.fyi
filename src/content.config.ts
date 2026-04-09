@@ -16,6 +16,8 @@ const blog = defineCollection({
 			.optional(),
 		tags: z.array(z.string()),
 		pinned: z.boolean().default(false),
+		pinnedFrom: z.coerce.date().optional(),
+		pinnedUntil: z.coerce.date().optional(),
 		stale: z.boolean().default(false),
 		postToBsky: z.boolean().optional(),
 		bskyPostUri: z.string().optional(),

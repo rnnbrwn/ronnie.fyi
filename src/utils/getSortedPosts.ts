@@ -32,6 +32,13 @@ export function getPostUrl(pubDate: Date, id: string): string {
 	return `/${year}/${month}/${id}`;
 }
 
+export function isEffectivelyPinned(data: CollectionEntry<'blog'>['data'], now: Date = new Date()): boolean {
+	if (!data.pinned) return false;
+	if (data.pinnedFrom && now < data.pinnedFrom) return false;
+	if (data.pinnedUntil && now > data.pinnedUntil) return false;
+	return true;
+}
+
 export type BlogPost = { collection: 'blog'; entry: CollectionEntry<'blog'> };
 export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
 export type AnyPost = BlogPost | NotePost;
