@@ -1,6 +1,7 @@
 ---
 import IconBlueSky from './IconBlueSky.astro';
 import IconGitHub from './IconGitHub.astro';
+import IconInstagram from './IconInstagram.astro';
 import IconRSS from './IconRSS.astro';
 
 const pathname = Astro.url.pathname;
@@ -78,6 +79,9 @@ const links = [
 		<div class='social-links'>
 			<a href='https://bsky.app/profile/ronnie.fyi' class='social-link' aria-label='Ronnie on Bluesky'>
 				<IconBlueSky size={32} />
+			</a>
+			<a href='https://www.instagram.com/rnnbrwn/' class='social-link' aria-label='Ronnie on Instagram'>
+				<IconInstagram size={32} />
 			</a>
 			<a href='https://github.com/rnnbrwn/' class='social-link' aria-label='Ronnie on GitHub'>
 				<IconGitHub size={32} />
@@ -247,7 +251,6 @@ const links = [
 					color: colors.$primary;
 				}
 			}
-
 		}
 	}
 
