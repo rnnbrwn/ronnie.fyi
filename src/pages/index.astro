@@ -24,6 +24,10 @@ import Logo from '../components/Logo.astro';
 			margin: 0;
 		}
 
+		:global(.post:last-of-type .post-body) {
+			border-bottom: none;
+		}
+
 		h1 :global(.logo) {
 			width: 250px;
 			height: auto;

@@ -49,6 +49,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 ---
 
 <Base title={post.data.title} description={post.data.description} ogImage={ogImage}>
+	<div class='post-page'>
 	<article aria-labelledby='post-title'>
 		<h1 id='post-title'>{post.data.title}</h1>
 		{
@@ -125,6 +126,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			</nav>
 		)
 	}
+	</div>
 </Base>
 
 <style lang='scss'>
@@ -139,7 +141,14 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	$sidebar-width: 220px;
 	$body-gap: spacing.$space-12;
 
+	.post-page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+	}
+
 	article {
+		flex: 1;
 		margin: 0;
 		padding: 0;
 	}
