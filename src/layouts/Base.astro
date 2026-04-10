@@ -55,6 +55,10 @@ const { title, description, ogImage } = Astro.props;
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
+
+				:global(html[data-theme='dark']) & {
+					background-color: colors.$dark;
+				}
 			}
 			.content {
 				display: flex;

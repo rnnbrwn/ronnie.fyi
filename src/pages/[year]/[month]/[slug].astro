@@ -244,6 +244,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.aside-links {
 		display: flex;
 		flex-direction: column;
+		align-items: start;
 		gap: spacing.$space-3;
 		margin-top: spacing.$space-6;
 		padding-top: spacing.$space-6;
@@ -271,6 +272,10 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		padding-top: spacing.$space-8;
 		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
 		max-width: calc(#{layout.$prose-width} + #{$body-gap} + #{$sidebar-width});
+
+		:global(html[data-theme='dark']) & {
+			border-top-color: map.get(colors.$light-tones, 'tone-5');
+		}
 	}
 
 	.post-nav-next {
@@ -279,12 +284,13 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 
 	.post-nav-prev a,
 	.post-nav-next a {
-		display: flex;
+		display: inline-flex;
 		flex-direction: column;
 		gap: spacing.$space-1;
+		@include layout.tertiary-link;
 
-		&:hover .post-nav-title {
-			text-decoration: underline;
+		:global(html[data-theme='dark']) & {
+			@include layout.tertiary-link-on-dark;
 		}
 	}
 
@@ -302,6 +308,5 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-bold;
-		color: colors.$tertiary;
 	}
 </style>

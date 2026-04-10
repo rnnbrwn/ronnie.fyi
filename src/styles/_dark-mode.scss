@@ -62,19 +62,6 @@ html[data-theme='dark'] {
 		box-shadow: 0 0 0 4px colors.$primary;
 	}
 
-	// ── Footer ────────────────────────────────────────────────────────────────
-	footer p {
-		color: map.get(colors.$light-tones, 'tone-2');
-
-		a {
-			color: map.get(colors.$light-tones, 'tone-2');
-
-			&:hover {
-				color: $tertiary-dark-hover;
-			}
-		}
-	}
-
 	// ── Prose ─────────────────────────────────────────────────────────────────
 	.prose {
 		p,
