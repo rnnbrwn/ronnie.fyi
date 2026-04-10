@@ -128,7 +128,7 @@ const {
 		}
 
 		&:has(a:hover)::before {
-			color: colors.$tertiary;
+			color: colors.$primary;
 		}
 
 		a {
@@ -141,18 +141,12 @@ const {
 			}
 
 			&:hover {
-				color: colors.$tertiary;
-			}
-
-			:global(html[data-theme='dark']) & {
-				&:hover {
-					color: colors.$tertiary-on-dark;
-				}
+				color: colors.$primary;
 			}
 		}
 
 		:global(html[data-theme='dark']) &:has(a:hover)::before {
-			color: colors.$tertiary-on-dark;
+			color: colors.$primary;
 		}
 
 		:global(.bsky-icon) {
