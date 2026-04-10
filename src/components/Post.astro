@@ -162,6 +162,10 @@ const {
 				font-size: typography.$font-size-xl;
 				color: map.get(colors.$dark-tones, 'tone-1');
 
+				:global(html[data-theme='dark']) & {
+					color: colors.$light;
+				}
+
 				@media (min-width: breakpoints.$md) {
 					font-size: typography.$font-size-2xl;
 				}
