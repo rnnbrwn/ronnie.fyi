@@ -9,10 +9,13 @@ import Logo from '../components/Logo.astro';
 		<h1 aria-label='ronnie.fyi'><Logo class='logo' aria-hidden='true' /></h1>
 	</div>
 	<AllPosts limit={12} pinFirst relativeDate />
-	<a href='/posts'>View all posts</a>
+	<nav class='pagination'>
+		<a href='/posts/page/2'>Older posts</a>
+	</nav>
 
 	<style lang='scss'>
 		@use '../styles/abstracts/colors';
+		@use '../styles/abstracts/layout';
 		@use '../styles/abstracts/spacing';
 		@use '../styles/abstracts/typography';
 
@@ -26,6 +29,13 @@ import Logo from '../components/Logo.astro';
 
 		:global(.post:last-of-type .post-body) {
 			border-bottom: none;
+		}
+
+		.pagination {
+			display: flex;
+			justify-content: space-between;
+			max-width: layout.$prose-width;
+			margin-top: spacing.$space-8;
 		}
 
 		h1 :global(.logo) {

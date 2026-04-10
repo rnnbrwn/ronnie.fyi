@@ -1,0 +1,49 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AllPosts from '../../../components/AllPosts.astro';
+import { getSortedPosts } from '../../../utils/getSortedPosts';
+
+export async function getStaticPaths() {
+	const PAGE_SIZE = 12;
+	const allPosts = await getSortedPosts();
+	const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
+
+	return Array.from({ length: totalPages - 1 }, (_, i) => ({
+		params: { page: String(i + 2) },
+		props: { page: i + 2, totalPages, pageSize: PAGE_SIZE },
+	}));
+}
+
+const { page, totalPages, pageSize } = Astro.props;
+const offset = (page - 1) * pageSize;
+const isFirst = page === 2;
+const isLast = page === totalPages;
+---
+
+<Base title={`Posts – Page ${page}`}>
+	<AllPosts limit={pageSize} offset={offset} />
+	<nav class='pagination'>
+		{!isLast && <a href={`/posts/page/${page + 1}`}>Older posts</a>}
+		<a href={isFirst ? '/' : `/posts/page/${page - 1}`}>Newer posts</a>
+	</nav>
+</Base>
+
+<style lang='scss'>
+	@use '../../../styles/abstracts/layout';
+	@use '../../../styles/abstracts/spacing';
+
+	:global(.post:last-of-type .post-body) {
+		border-bottom: none;
+	}
+
+	.pagination {
+		display: flex;
+		justify-content: space-between;
+		max-width: layout.$prose-width;
+		margin-top: spacing.$space-8;
+	}
+
+	.pagination a:only-child {
+		margin-left: auto;
+	}
+</style>

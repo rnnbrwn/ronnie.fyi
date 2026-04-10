@@ -18,11 +18,12 @@ function shiftHeadings(html: string): string {
 
 interface Props {
 	limit?: number;
+	offset?: number;
 	pinFirst?: boolean;
 	relativeDate?: boolean;
 }
 
-const { limit, pinFirst = false, relativeDate = false } = Astro.props;
+const { limit, offset = 0, pinFirst = false, relativeDate = false } = Astro.props;
 
 let allPosts = await getSortedPosts();
 
@@ -32,7 +33,7 @@ if (pinFirst) {
 	allPosts = [...pinned, ...rest];
 }
 
-const posts = limit ? allPosts.slice(0, limit) : allPosts;
+const posts = limit ? allPosts.slice(offset, offset + limit) : allPosts.slice(offset);
 
 const bskyInteractorsMap = new Map<string, BskyActor[]>();
 await Promise.all(
