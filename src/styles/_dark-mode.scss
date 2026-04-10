@@ -100,16 +100,6 @@ html[data-theme='dark'] {
 		}
 	}
 
-	.post--digest {
-		h2 {
-			color: map.get(colors.$light-tones, 'tone-1');
-		}
-
-		.published-date {
-			color: map.get(colors.$light-tones, 'tone-1');
-		}
-	}
-
 	// ── Individual post page ([slug].astro) ───────────────────────────────────
 	.stale-warning {
 		color: map.get(colors.$light-tones, 'tone-2');
