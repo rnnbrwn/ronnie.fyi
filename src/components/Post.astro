@@ -91,13 +91,16 @@ const {
 <style lang='scss'>
 	@use 'sass:map';
 	@use '../styles/abstracts/breakpoints';
+	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 	@use '../styles/abstracts/colors';
 
 	h2 {
-		font-weight: typography.$weight-bold;
+		font-weight: typography.$weight-semibold;
 		font-size: typography.$font-size-2xl;
+		letter-spacing: typography.$tracking-wide;
+		max-width: layout.$heading-max-width;
 
 		@media (min-width: breakpoints.$md) {
 			font-size: typography.$font-size-4xl;
@@ -105,7 +108,6 @@ const {
 		color: colors.$dark;
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
-		text-wrap: balance;
 		position: relative;
 
 		&::before,
@@ -125,6 +127,10 @@ const {
 			font-weight: typography.$weight-regular;
 		}
 
+		&:has(a:hover)::before {
+			color: colors.$tertiary;
+		}
+
 		a {
 			color: inherit;
 			text-decoration: none;
@@ -137,6 +143,16 @@ const {
 			&:hover {
 				color: colors.$tertiary;
 			}
+
+			:global(html[data-theme='dark']) & {
+				&:hover {
+					color: colors.$tertiary-on-dark;
+				}
+			}
+		}
+
+		:global(html[data-theme='dark']) &:has(a:hover)::before {
+			color: colors.$tertiary-on-dark;
 		}
 
 		:global(.bsky-icon) {

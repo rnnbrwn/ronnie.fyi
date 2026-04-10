@@ -29,7 +29,7 @@ html[data-theme='dark'] {
 	h4,
 	h5,
 	h6 {
-		color: colors.$light;
+		color: map.get(colors.$light-tones, 'tone-1');
 	}
 
 	// ── Links ─────────────────────────────────────────────────────────────────
@@ -66,7 +66,10 @@ html[data-theme='dark'] {
 	.prose {
 		p,
 		ul,
-		ol,
+		ol {
+			color: map.get(colors.$light-tones, 'tone-1');
+		}
+
 		blockquote,
 		pre {
 			color: colors.$light;
