@@ -1,6 +1,6 @@
 ---
 title: 'Prince &  Princess of Wales Hospice'
-pubDate: 2026-04-15 09:00
+pubDate: 2026-04-12 09:00
 description: "I'm helping raise funds for the Prince & Princess of Wales Hospice in Glasgow, Scotland"
 tags: ['glasgow', 'the prince & princess of wales hospice']
 image:
