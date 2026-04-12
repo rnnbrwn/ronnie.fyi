@@ -7,7 +7,7 @@ image:
   url: 'the-prince-and-princess-of-wales-hospice-building.jpeg'
   alt: 'The Prince & Princess of Wales Hospice building in Glasgow'
   source: 'https://stonescreen.org/prince-and-princess-of-wales-hospice/'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjc4kdg7vv2o"
 stale: false
 pinned: true
 pinnedUntil: 2026-05-09
