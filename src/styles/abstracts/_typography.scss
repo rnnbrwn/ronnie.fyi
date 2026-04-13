@@ -116,6 +116,28 @@ $tracking-widest: 0.1em;
   }
 }
 
+// Section label h2 — used on content pages (uses, changelog)
+// Scales down from the large global h2 to sit comfortably under a page title
+@mixin h2-section-label {
+  font-size: $font-size-xl;
+  font-weight: $weight-medium;
+  letter-spacing: $tracking-normal;
+
+  @media (min-width: breakpoints.$md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+// Page title h1 — used on content pages (posts, about, uses, changelog)
+// Overrides the base h1 uppercase/bold style with a softer, sentence-case treatment
+@mixin h1-page-title {
+  font-weight: $weight-medium;
+  letter-spacing: $tracking-normal;
+  text-transform: none;
+  text-wrap: unset;
+  max-width: layout.$heading-max-width;
+}
+
 // homepage: post card titles (overridden by Post.astro scoped styles — see that file)
 @mixin h2 {
   @include heading-base;

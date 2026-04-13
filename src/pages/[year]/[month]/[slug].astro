@@ -109,18 +109,18 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			<nav class='post-nav' aria-label='Post navigation'>
 				<div class='post-nav-prev'>
 					{prevPost && (
-						<a href={prevPost.url}>
+						<>
 							<span class='post-nav-label'>Previous</span>
-							<span class='post-nav-title'>{prevPost.title}</span>
-						</a>
+							<a href={prevPost.url} class='post-nav-title'>{prevPost.title}</a>
+						</>
 					)}
 				</div>
 				<div class='post-nav-next'>
 					{nextPost && (
-						<a href={nextPost.url}>
+						<>
 							<span class='post-nav-label'>Next</span>
-							<span class='post-nav-title'>{nextPost.title}</span>
-						</a>
+							<a href={nextPost.url} class='post-nav-title'>{nextPost.title}</a>
+						</>
 					)}
 				</div>
 			</nav>
@@ -153,11 +153,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		padding: 0;
 
 		h1 {
-			max-width: layout.$heading-max-width;
-			text-wrap: unset;
-			font-weight: typography.$weight-medium;
-			letter-spacing: typography.$tracking-normal;
-			text-transform: none;
+			@include typography.h1-page-title;
 		}
 	}
 
@@ -195,11 +191,11 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			}
 
 			a {
-				@include layout.tertiary-link;
+				@include layout.body-link;
 			}
 
 			:global(html[data-theme='dark']) & a {
-				@include layout.tertiary-link-on-dark;
+				@include layout.body-link-on-dark;
 			}
 		}
 	}
@@ -264,11 +260,10 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.tags-link {
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
-		font-weight: typography.$weight-bold;
-		@include layout.tertiary-link;
+		@include layout.body-link;
 
 		:global(html[data-theme='dark']) & {
-			@include layout.tertiary-link-on-dark;
+			@include layout.body-link-on-dark;
 		}
 	}
 
@@ -290,18 +285,6 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		text-align: right;
 	}
 
-	.post-nav-prev a,
-	.post-nav-next a {
-		display: inline-flex;
-		flex-direction: column;
-		gap: spacing.$space-1;
-		@include layout.tertiary-link;
-
-		:global(html[data-theme='dark']) & {
-			@include layout.tertiary-link-on-dark;
-		}
-	}
-
 	.post-nav-label {
 		@include typography.caption-text;
 		text-transform: uppercase;
@@ -313,8 +296,13 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	}
 
 	.post-nav-title {
+		display: block;
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
-		font-weight: typography.$weight-bold;
+		@include layout.body-link;
+
+		:global(html[data-theme='dark']) & {
+			@include layout.body-link-on-dark;
+		}
 	}
 </style>

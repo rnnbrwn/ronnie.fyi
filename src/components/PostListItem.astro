@@ -58,28 +58,11 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 		display: inline-block;
 		font-size: typography.$font-size-xl;
 		font-weight: typography.$weight-medium;
-		color: colors.$dark;
-		text-decoration: none;
+		@include layout.body-link;
 		margin-bottom: spacing.$space-1;
 
-		&:visited {
-			color: colors.$dark;
-		}
-
-		&:hover {
-			color: colors.$primary;
-		}
-
 		:global(html[data-theme='dark']) & {
-			color: colors.$light;
-
-			&:visited {
-				color: colors.$light;
-			}
-
-			&:hover {
-				color: colors.$primary;
-			}
+			@include layout.body-link-on-dark;
 		}
 	}
 

@@ -37,8 +37,26 @@ const groupedPosts = Object.entries(grouped);
 </Base>
 
 <style lang='scss'>
+	@use '../../styles/abstracts/colors';
 	@use '../../styles/abstracts/layout';
 	@use '../../styles/abstracts/spacing';
+	@use '../../styles/abstracts/typography';
+
+	h1 {
+		@include typography.h1-page-title;
+	}
+
+	h2 {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-lg;
+		line-height: typography.$leading-normal;
+		letter-spacing: typography.$tracking-wide;
+		font-weight: typography.$weight-bold;
+		text-transform: uppercase;
+		color: colors.$dark;
+		margin-top: spacing.$space-10;
+		margin-bottom: spacing.$space-4;
+	}
 
 	ul {
 		@include layout.list-reset;

@@ -40,9 +40,23 @@ const pageTitle = 'About';
 <style lang='scss'>
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
+	@use '../styles/abstracts/typography';
+
+	h1 {
+		@include typography.h1-page-title;
+	}
+
 
 	p {
 		max-width: layout.$prose-width;
+
+		a {
+			@include layout.body-link;
+
+			:global(html[data-theme='dark']) & {
+				@include layout.body-link-on-dark;
+			}
+		}
 	}
 
 	.social-link {

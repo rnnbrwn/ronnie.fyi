@@ -91,12 +91,7 @@
   }
 
   a:not(.tag-pill) {
-    color: colors.$tertiary;
-
-    &:hover {
-      color: colors.$tertiary-hover;
-      text-decoration: none;
-    }
+    @include layout.body-link;
   }
 
   pre {
@@ -346,15 +341,9 @@
 // Back-navigation link used on tag and month archive pages
 .archive-back-link {
   font-size: typography.$font-size-lg;
-  font-weight: typography.$weight-bold;
-  color: colors.$tertiary;
-  text-decoration: underline;
-  display: block;
+  display: inline-block;
   margin-bottom: spacing.$space-8;
-
-  &:hover {
-    text-decoration: none;
-  }
+  @include layout.body-link;
 }
 
 .youtube-embed {

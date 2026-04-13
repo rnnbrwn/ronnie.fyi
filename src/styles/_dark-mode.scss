@@ -44,16 +44,7 @@ html[data-theme='dark'] {
 
 	// Tag pills
 	.tag-pill {
-		color: $tertiary-dark;
-
-		&:visited {
-			color: $tertiary-dark;
-		}
-
-		&:hover,
-		&:visited:hover {
-			color: colors.$tertiary;
-		}
+		@include layout.body-link-on-dark;
 	}
 
 	// ── Focus ring ────────────────────────────────────────────────────────────
@@ -91,7 +82,7 @@ html[data-theme='dark'] {
 	// ── Post-related links (prose body, image source, tag pills) ─────────────
 	.prose a:not(.tag-pill),
 	.post-image figcaption a {
-		@include layout.tertiary-link-on-dark;
+		@include layout.body-link-on-dark;
 	}
 
 	// ── Post component (Post.astro) ────────────────────────────────────────────
@@ -114,6 +105,11 @@ html[data-theme='dark'] {
 
 	.aside-links {
 		border-top-color: map.get(colors.$light-tones, 'tone-5');
+	}
+
+	// ── Archive back link (month and tag archive pages) ──────────────────────
+	.archive-back-link {
+		@include layout.body-link-on-dark;
 	}
 
 	// ── Post list pages (posts/index, tags/[tag]) ─────────────────────────────

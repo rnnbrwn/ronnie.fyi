@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use 'colors';
 
 $prose-width: 65ch;
@@ -16,6 +17,39 @@ $radius-md: 8px;
   color: colors.$tertiary-on-dark;
   &:visited { color: colors.$tertiary-on-dark; }
   &:hover { color: colors.$tertiary-on-dark-hover; }
+}
+
+// body-link — applied to all regular content links (prose, tags, meta, pagination)
+// Light mode: azure with muted underline; dark mode: lighter azure variant
+@mixin body-link {
+  color: colors.$tertiary;
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: map.get(colors.$dark-tones, 'tone-5');
+
+  &:visited {
+    color: colors.$tertiary;
+  }
+
+  &:hover {
+    color: colors.$tertiary-hover;
+    text-decoration-color: colors.$tertiary-hover;
+  }
+}
+
+@mixin body-link-on-dark {
+  color: colors.$tertiary-on-dark;
+  text-decoration-color: map.get(colors.$light-tones, 'tone-5');
+
+  &:visited {
+    color: colors.$tertiary-on-dark;
+  }
+
+  &:hover {
+    color: colors.$tertiary-on-dark-hover;
+    text-decoration-color: colors.$tertiary-on-dark-hover;
+  }
 }
 
 @mixin focus-ring($outline-color, $shadow-color: null) {

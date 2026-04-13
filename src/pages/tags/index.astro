@@ -20,7 +20,6 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 </Base>
 
 <style lang='scss'>
-	@use '../../styles/abstracts/colors';
 	@use '../../styles/abstracts/layout';
 	@use '../../styles/abstracts/spacing';
 	@use '../../styles/abstracts/typography';
@@ -35,11 +34,10 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 
 	a {
 		font-size: typography.$font-size-lg;
-		color: colors.$tertiary;
-		text-decoration: none;
+		@include layout.body-link;
 
-		&:hover {
-			text-decoration: underline;
+		:global(html[data-theme='dark']) & {
+			@include layout.body-link-on-dark;
 		}
 	}
 </style>

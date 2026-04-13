@@ -29,6 +29,24 @@ const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' U
 <style lang='scss'>
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+
+	h1 {
+		@include typography.h1-page-title;
+	}
+
+	h2 {
+		@include typography.h2-section-label;
+	}
+
+
+	a {
+		@include layout.body-link;
+
+		:global(html[data-theme='dark']) & {
+			@include layout.body-link-on-dark;
+		}
+	}
 
 	ul {
 		max-width: layout.$prose-width;
