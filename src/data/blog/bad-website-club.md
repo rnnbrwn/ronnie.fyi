@@ -3,7 +3,7 @@ title: 'Bad Website Club'
 pubDate: 2026-04-13 20:00
 description: 'Learn how to build websites - for free - with the folks at badwebsiteclub.com'
 tags: ['bad website club', 'free code camp']
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjfotvuhdo2h"
 stale: false
 pinned: false
 ---
