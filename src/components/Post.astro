@@ -162,6 +162,10 @@ const {
 			margin-left: spacing.$space-2;
 			transform: rotate(25deg) translateY(-14px);
 		}
+
+		:global(html[data-theme='dark']) & :global(.pin-icon) {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
 	}
 
 	.post {
