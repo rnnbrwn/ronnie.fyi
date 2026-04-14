@@ -29,18 +29,13 @@ const currentYear = new Date().getFullYear();
 			font-weight: typography.$weight-regular;
 			font-size: typography.$font-size-md;
 			a {
-				color: colors.$dark;
-				text-decoration: underline;
-				&:hover {
-					color: colors.$tertiary;
-					text-decoration: none;
-				}
+				@include layout.body-link;
 			}
 
 			:global(html[data-theme='dark']) & {
 				color: map.get(colors.$light-tones, 'tone-2');
 				a {
-					@include layout.tertiary-link-on-dark;
+					@include layout.body-link-on-dark;
 				}
 			}
 		}
