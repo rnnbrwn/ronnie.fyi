@@ -2,12 +2,12 @@
 title: 'RAMS'
 pubDate: 2026-04-09 18:00
 description: 'RAMS MSK is a world-renowned graffiti artist from New Zealand, getting known recently for rappel graffiti and art at the Pyramids'
-tags: ['rams', 'msk', 'egypt', 'nyc', 'graffiti', 'roger gastman']
+tags: ['art', 'rams', 'msk', 'egypt', 'nyc', 'graffiti', 'roger gastman']
 image:
   url: 'rams-nyc.png'
   alt: 'RAMS mid-paint, high above the streets of NYC'
   source: 'https://news.artnet.com/art-world/graffiti-artist-rams-bombs-abandoned-44-story-skyscraper-2538738'
-bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mj3rv3bouu26"
+bskyPostUri: 'at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mj3rv3bouu26'
 stale: false
 pinned: false
 ---
