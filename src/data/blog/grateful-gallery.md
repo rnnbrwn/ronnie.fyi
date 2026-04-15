@@ -7,7 +7,7 @@ image:
   url: 'did-ye-aye.png'
   alt: 'Did Ye Aye by Conzo'
   source: 'https://www.conzo.co.uk/store'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjku53s4e32c"
 stale: false
 pinned: false
 ---
