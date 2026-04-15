@@ -20,16 +20,17 @@ $radius-md: 8px;
 }
 
 // body-link — applied to all regular content links (prose, tags, meta, pagination)
-// Light mode: azure with muted underline; dark mode: lighter azure variant
+// Light mode: darkened azure ($tertiary-link) for WCAG 1.4.3 AA (4.6:1 on white)
+// Dark mode: lighter azure variant
 @mixin body-link {
-  color: colors.$tertiary;
+  color: colors.$tertiary-link;
   font-weight: 400;
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-color: map.get(colors.$dark-tones, 'tone-5');
 
   &:visited {
-    color: colors.$tertiary;
+    color: colors.$tertiary-link;
   }
 
   &:hover {

@@ -66,7 +66,9 @@ $shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
 $text-muted: map.get($dark-tones, 'tone-2');
 
 // Tertiary link colour variants
-$tertiary-hover: color.scale($tertiary, $lightness: 20%);
+// $tertiary-link is darkened for WCAG 1.4.3 AA contrast (4.6:1 on white)
+$tertiary-link: color.scale($tertiary, $lightness: -18%);
+$tertiary-hover: color.scale($tertiary-link, $lightness: -12%);
 $tertiary-on-dark: color.scale($tertiary, $lightness: 45%);
 $tertiary-on-dark-hover: color.scale($tertiary, $lightness: 60%);
 
