@@ -1,6 +1,5 @@
 ---
 import TagPills from './TagPills.astro';
-import IconPin from './IconPin.astro';
 import IconBlueSky from './IconBlueSky.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -47,8 +46,8 @@ const {
 	<h2 id={`post-title-${id}`}>
 		{isDigest && <IconBlueSky class='bsky-icon' size={28} />}
 		{isDigest ? <span>{title}</span> : <a href={href}>{title}</a>}
-		{pinned && <IconPin class='pin-icon' size={32} />}
 	</h2>
+	{pinned && <p class='highlight'>This is a pinned post</p>}
 	<div class='post-body prose'>
 		{
 			image && imageFiles[`/src/assets/images/${image.url}`] && (
@@ -74,14 +73,11 @@ const {
 						</time>
 					</div>
 					<TagPills tags={tags} />
-					{
-						bskyPostUri && (
-							<div class='bsky-interactions'>
-								<BskyInteractors uri={bskyPostUri} initial={bskyInteractors} client:visible />
-							</div>
-						)
-					}
-					{pinned && <p class='highlight'>This is a pinned post</p>}
+					{bskyPostUri && (
+						<div class='bsky-interactions'>
+							<BskyInteractors uri={bskyPostUri} initial={bskyInteractors} client:visible />
+						</div>
+					)}
 				</div>
 			)
 		}
@@ -108,6 +104,10 @@ const {
 		color: colors.$dark;
 		margin-top: 0;
 		margin-bottom: spacing.$space-8;
+
+		&:has(+ .highlight) {
+			margin-bottom: spacing.$space-2;
+		}
 		position: relative;
 
 		&::before,
@@ -154,18 +154,6 @@ const {
 			height: spacing.$space-8;
 			color: colors.$tertiary;
 		}
-
-		:global(.pin-icon) {
-			display: inline-block;
-			vertical-align: middle;
-			color: map.get(colors.$dark-tones, 'tone-3');
-			margin-left: spacing.$space-2;
-			transform: rotate(25deg) translateY(-14px);
-		}
-
-		:global(html[data-theme='dark']) & :global(.pin-icon) {
-			color: map.get(colors.$light-tones, 'tone-2');
-		}
 	}
 
 	.post {
@@ -202,6 +190,17 @@ const {
 		}
 	}
 
+	.highlight {
+		position: relative;
+		width: fit-content;
+		color: colors.$dark;
+		padding: 0 spacing.$space-2;
+		background-color: colors.$secondary;
+		@include typography.caption-text;
+		font-weight: typography.$weight-regular;
+		text-transform: uppercase;
+	}
+
 	.post-body {
 		@include typography.prose;
 		border-bottom: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
@@ -209,21 +208,6 @@ const {
 
 		.post-meta {
 			margin-top: spacing.$space-8;
-		}
-
-		.highlight {
-			position: relative;
-			width: fit-content;
-			color: colors.$dark;
-
-			&::before {
-				content: '';
-				position: absolute;
-				inset: 0 (-(spacing.$space-2));
-				background-color: colors.$secondary;
-				transform: rotate(-2deg);
-				z-index: -1;
-			}
 		}
 
 		.published-date {
@@ -237,7 +221,5 @@ const {
 		.bsky-interactions {
 			margin-top: spacing.$space-4;
 		}
-
 	}
-
 </style>

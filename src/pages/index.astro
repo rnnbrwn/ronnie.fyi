@@ -20,6 +20,7 @@ const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
 	</nav>
 
 	<style lang='scss'>
+		@use '../styles/abstracts/breakpoints';
 		@use '../styles/abstracts/colors';
 		@use '../styles/abstracts/layout';
 		@use '../styles/abstracts/spacing';
@@ -27,6 +28,10 @@ const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
 
 		.site-header {
 			margin-bottom: spacing.$space-16;
+
+			@media (max-width: #{breakpoints.$md - 1px}) {
+				margin-top: spacing.$space-10;
+			}
 		}
 
 		h1 {
