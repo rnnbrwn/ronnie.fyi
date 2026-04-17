@@ -11,14 +11,22 @@ $radius-md: 8px;
 
 @mixin tertiary-link {
   color: colors.$tertiary;
-  &:visited { color: colors.$tertiary; }
-  &:hover { color: colors.$tertiary-hover; }
+  &:visited {
+    color: colors.$tertiary;
+  }
+  &:hover {
+    color: colors.$tertiary-hover;
+  }
 }
 
 @mixin tertiary-link-on-dark {
   color: colors.$tertiary-on-dark;
-  &:visited { color: colors.$tertiary-on-dark; }
-  &:hover { color: colors.$tertiary-on-dark-hover; }
+  &:visited {
+    color: colors.$tertiary-on-dark;
+  }
+  &:hover {
+    color: colors.$tertiary-on-dark-hover;
+  }
 }
 
 // body-link — applied to all regular content links (prose, tags, meta, pagination)
@@ -78,7 +86,7 @@ $radius-md: 8px;
   &::before {
     content: '';
     position: absolute;
-    inset: calc(55% - spacing.$space-2) calc(spacing.$space-20 * -1) calc(-10% + spacing.$space-2) spacing.$space-20;
+    inset: calc(55% - spacing.$space-2) calc(spacing.$space-24 * -1) calc(-10% + spacing.$space-2) spacing.$space-4;
     background-color: colors.$secondary;
     border-bottom: calc(spacing.$space-2 / 4) solid map.get(colors.$secondary-shades, 'shade-1');
     z-index: -1;
