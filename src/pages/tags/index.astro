@@ -24,6 +24,11 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 	@use '../../styles/abstracts/spacing';
 	@use '../../styles/abstracts/typography';
 
+	h1 {
+		@include typography.h1-page-title;
+		@include layout.h1-saffron-underlay;
+	}
+
 	ul {
 		@include layout.list-reset;
 		display: flex;

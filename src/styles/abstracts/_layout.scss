@@ -1,5 +1,7 @@
 @use 'sass:map';
 @use 'colors';
+@use 'spacing';
+@use 'breakpoints';
 
 $prose-width: 65ch;
 $heading-max-width: 32ch;
@@ -66,4 +68,24 @@ $radius-md: 8px;
 @mixin list-reset {
   padding: 0;
   list-style: none;
+}
+
+@mixin h1-saffron-underlay {
+  position: relative;
+  width: fit-content;
+  z-index: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: calc(55% - spacing.$space-2) calc(spacing.$space-20 * -1) calc(-10% + spacing.$space-2) spacing.$space-20;
+    background-color: colors.$secondary;
+    border-bottom: calc(spacing.$space-2 / 4) solid map.get(colors.$secondary-shades, 'shade-1');
+    z-index: -1;
+    display: none;
+
+    @media (min-width: breakpoints.$md) {
+      display: block;
+    }
+  }
 }
