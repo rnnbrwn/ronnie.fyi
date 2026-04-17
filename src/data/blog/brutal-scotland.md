@@ -18,4 +18,7 @@ The work featured is currently being exhibited **for free** in Glasgow's [Street
 
 If that's your thing, you should also check out [Nebo Peklo's work](https://www.nebo-peklo.co.uk/). I have this print on my wall at home.
 
-<a href="https://www.nebo-peklo.co.uk/shop/p/wyndford"><img src="/images/wyndford-nebo-peklo.webp" alt="Nebo Peklo's Wyndford" /></a>
+<figure class="post-image">
+  <a href="https://www.nebo-peklo.co.uk/shop/p/wyndford"><img src="/images/wyndford-nebo-peklo.webp" alt="Nebo Peklo's Wyndford" /></a>
+  <figcaption>Nebo Peklo's Wyndford</figcaption>
+</figure>
