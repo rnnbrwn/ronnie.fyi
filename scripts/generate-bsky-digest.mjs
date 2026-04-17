@@ -125,6 +125,29 @@ async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) 
 	const timestamp = formatShortDateTime(post.record.createdAt);
 	const postText = textToHtml(applyFacets(post.record.text, post.record.facets));
 
+	let externalHtml = '';
+	if (post.embed?.$type === 'app.bsky.embed.external#view' && post.embed.external) {
+		const { uri, title: linkTitle, description: linkDesc } = post.embed.external;
+		const ytMatch = uri.match(/(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+		if (ytMatch) {
+			const videoId = ytMatch[1];
+			const urlParams = new URL(uri).searchParams;
+			const start = urlParams.get('t') ?? urlParams.get('start');
+			const src = `https://www.youtube-nocookie.com/embed/${videoId}${start ? `?start=${start}` : ''}`;
+			externalHtml = `\n<div class="skeet-youtube"><iframe src="${src}" title="${linkTitle ?? ''}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`;
+		} else {
+			externalHtml = `\n<div class="skeet-external-link"><a href="${uri}" target="_blank" rel="noopener noreferrer">${linkTitle ?? uri}</a>${linkDesc ? `<span class="skeet-external-link-desc">${linkDesc}</span>` : ''}</div>`;
+		}
+	}
+
+	let imagesHtml = '';
+	const imageEmbed = post.embed?.$type === 'app.bsky.embed.images#view' ? post.embed : null;
+	if (imageEmbed?.images?.length) {
+		imagesHtml = imageEmbed.images
+			.map((img) => `<img src="${img.fullsize}" alt="${img.alt ?? ''}" />`)
+			.join('');
+	}
+
 	let quoteHtml = '';
 	if (post.embed?.$type === 'app.bsky.embed.record#view' && post.embed.record) {
 		const quoted = post.embed.record;
@@ -173,7 +196,7 @@ async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) 
     <div class="skeet-header">
       <a class="skeet-display-name" href="${profileUrl}" target="_blank" rel="noopener noreferrer">${authorName}</a><span class="skeet-handle">@${ACTOR}</span><a class="skeet-timestamp" href="${postUrl}" target="_blank" rel="noopener noreferrer">${timestamp}</a>
     </div>
-    <div class="skeet-body">${postText}${quoteHtml}</div>${footerHtml}
+    <div class="skeet-body">${postText}${imagesHtml}${externalHtml}${quoteHtml}</div>${footerHtml}
   </div>
 </div>`;
 }
