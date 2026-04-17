@@ -3,7 +3,11 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer>
-	<p><a href='/'>ronnie.fyi</a> | Online from 2001 - {currentYear} in some guise or other.</p>
+	<p><a href='/'>ronnie.fyi</a> online from 2001 - {currentYear} in some guise or other.</p>
+	<nav>
+		<a href='/uses'>Uses</a>
+		<a href='/changelog'>Changelog</a>
+	</nav>
 </footer>
 
 <style lang='scss'>
@@ -17,12 +21,34 @@ const currentYear = new Date().getFullYear();
 	footer {
 		margin-top: auto;
 		padding: spacing.$space-6 spacing.$space-4;
+		border-top: 1px solid map.get(colors.$dark-tones, 'tone-5');
+		background-color: map.get(colors.$light-shades, 'shade-1');
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
 
 		@media (min-width: breakpoints.$md) {
-			padding: spacing.$space-6 spacing.$space-24;
+			padding: spacing.$space-6 spacing.$space-24 spacing.$space-8;
+		}
+
+		nav {
+			margin-top: 0;
+			display: flex;
+			gap: spacing.$space-4;
+
+			a {
+				@include layout.body-link;
+				font-family: typography.$font-body;
+				font-size: typography.$font-size-md;
+			}
+
+			:global(html[data-theme='dark']) & a {
+				@include layout.body-link-on-dark;
+			}
 		}
 
 		p {
+			margin: 0;
 			font-family: typography.$font-body;
 			color: colors.$dark;
 			text-decoration: none;
