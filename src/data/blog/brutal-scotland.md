@@ -7,7 +7,7 @@ image:
   url: 'brutal-scotland.jpg'
   alt: "An image of a brutalist style building from Simon Phipps' book Brutal Scotland"
   source: 'https://booksfromscotland.com/2025/10/brutal-scotland-by-simon-phipps/'
-bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjnnwm7exy2y"
+bskyPostUri: 'at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjnnwm7exy2y'
 stale: false
 pinned: false
 ---
@@ -18,4 +18,5 @@ The work featured is currently being exhibited **for free** in Glasgow's [Street
 
 If that's your thing, you should also check out [Nebo Peklo's work](https://www.nebo-peklo.co.uk/). I have this print on my wall at home.
 
-<img src="/images/wyndford-nebo-peklo.webp" alt="Description" />
+<img src="/images/wyndford-nebo-peklo.webp" alt="Nebo Peklo's Wyndford" />
+git
