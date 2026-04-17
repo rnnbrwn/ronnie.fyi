@@ -18,4 +18,4 @@ The work featured is currently being exhibited **for free** in Glasgow's [Street
 
 If that's your thing, you should also check out [Nebo Peklo's work](https://www.nebo-peklo.co.uk/). I have this print on my wall at home.
 
-<img src="/src/assets/images/wyndford-nebo-peklo.webp" alt="Description" />
+<img src="/images/wyndford-nebo-peklo.webp" alt="Description" />
