@@ -7,7 +7,7 @@ image:
   url: 'brutal-scotland.jpg'
   alt: "An image of a brutalist style building from Simon Phipps' book Brutal Scotland"
   source: 'https://booksfromscotland.com/2025/10/brutal-scotland-by-simon-phipps/'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjnnwm7exy2y"
 stale: false
 pinned: false
 ---
