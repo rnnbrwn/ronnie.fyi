@@ -1,53 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getPage } from '../utils/wordpress';
+
+const page = await getPage('uses');
 ---
 
-<Base>
+<Base title='Uses' description='Things Ronnie uses.'>
 	<h1>Uses</h1>
-
-	<section>
-		<h2>Hardware</h2>
-		<ul>
-			<li>
-				<a href='https://support.apple.com/en-gb/111947'>MacBook Pro, 15-inch, 2017</a>
-			</li>
-			<li>Dell monitor of some kind</li>
-			<li>An old Apple keyboard</li>
-			<li>
-				<a href='https://www.logitech.com/en-gb/products/mice/mx-master-3s.html'>Logitech MX Master 3</a>
-			</li>
-		</ul>
-	</section>
-
-	<section>
-		<h2>Web Development</h2>
-		<ul>
-			<li><a href='https://www.warp.dev/'>Warp</a></li>
-			<li><a href='https://code.visualstudio.com/'>VS Code</a></li>
-			<li>
-				<a href='https://www.mozilla.org/en-US/firefox/new/'>Firefox</a>
-			</li>
-			<li><a href='https://astro.build/'>Astro</a></li>
-			<li>This website uses the <a href='https://www.atipofoundry.com/'>Geomanist font from Atipo foundry</a></li>
-		</ul>
-	</section>
-	<section>
-		<h2>Hosting &amp; Services</h2>
-		<ul>
-			<li><a href='https://github.com/rnnbrwn'>GitHub</a></li>
-			<li><a href='https://www.dreamhost.com/'>Dreamhost</a></li>
-		</ul>
-	</section>
-
-	<section>
-		<h2>Other Software</h2>
-		<ul>
-			<li><a href='https://www.ynab.com/'>YNAB</a></li>
-			<li><a href='https://todoist.com/'>Todoist</a></li>
-			<li><a href='https://obsidian.md/'>Obsidian</a></li>
-			<li><a href='https://www.tunnelbear.com/'>Tunnelbear</a></li>
-		</ul>
-	</section>
+	<div class='wp-content'><Fragment set:html={page?.content} /></div>
 </Base>
 
 <style lang='scss'>
@@ -60,11 +20,11 @@ import Base from '../layouts/Base.astro';
 		@include layout.h1-saffron-underlay;
 	}
 
-	h2 {
+	.wp-content :global(h2) {
 		@include typography.h2-section-label;
 	}
 
-	a {
+	.wp-content :global(a) {
 		@include layout.body-link;
 
 		:global(html[data-theme='dark']) & {
@@ -72,7 +32,7 @@ import Base from '../layouts/Base.astro';
 		}
 	}
 
-	section {
+	.wp-content :global(section) {
 		margin-bottom: spacing.$space-8;
 	}
 </style>

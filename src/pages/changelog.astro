@@ -1,27 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getPage } from '../utils/wordpress';
 
 const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' UTC';
+const page = await getPage('changelog');
 ---
 
 <Base title='Changelog' description='A log of notable updates and changes to ronnie.fyi.'>
 	<h1>Changelog</h1>
-	<h2>April 2026</h2>
-	<ul>
-		<li>Bsky integration</li>
-		<li>Post page layout changes</li>
-		<li>Updated the colour scheme to provide more contrast and a more limited palette</li>
-		<li>Dark mode, and toggle location</li>
-		<li>Link colour fine-tuning throughout</li>
-		<li>Add dates in Posts page</li>
-		<li>Post to bsky setup</li>
-		<li>In-page navigation between posts</li>
-		<li>Likes on bsky for posts that originated on the site now show that interaction on site</li>
-	</ul>
-	<h2>March 2026</h2>
-	<ul>
-		<li>Redesign</li>
-	</ul>
+	<div class='wp-content'><Fragment set:html={page?.content} /></div>
 	<hr />
 	<pre>last build: {buildDate}</pre>
 </Base>
@@ -36,12 +23,11 @@ const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' U
 		@include layout.h1-saffron-underlay;
 	}
 
-	h2 {
+	.wp-content :global(h2) {
 		@include typography.h2-section-label;
 	}
 
-
-	a {
+	.wp-content :global(a) {
 		@include layout.body-link;
 
 		:global(html[data-theme='dark']) & {
@@ -49,7 +35,7 @@ const buildDate = new Date().toISOString().replace('T', ' ').split('.')[0] + ' U
 		}
 	}
 
-	ul {
+	.wp-content :global(ul) {
 		max-width: layout.$prose-width;
 	}
 
