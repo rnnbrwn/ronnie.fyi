@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:color';
 @use 'colors';
 @use 'spacing';
 @use 'breakpoints';
@@ -95,5 +96,10 @@ $radius-md: 8px;
     @media (min-width: breakpoints.$md) {
       display: block;
     }
+  }
+
+  :global(html[data-theme='dark']) &::before {
+    background-color: color.scale(colors.$secondary, $lightness: -65%);
+    border-bottom-color: color.scale(colors.$secondary, $lightness: -73%);
   }
 }

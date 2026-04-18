@@ -162,6 +162,10 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		h1 {
 			@include typography.h1-page-title;
 			@include layout.h1-saffron-underlay;
+
+			@media (min-width: breakpoints.$md) {
+				margin-bottom: spacing.$space-16;
+			}
 		}
 	}
 
@@ -175,7 +179,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	}
 
 	.post-image {
-		margin: spacing.$space-6 0 0 0;
+		margin: spacing.$space-6 0 spacing.$space-16 0;
 		max-width: layout.$prose-width;
 
 		@media (min-width: breakpoints.$lg) {
@@ -209,7 +213,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	}
 
 	.post-body {
-		margin-top: spacing.$space-16;
+		margin-top: 0;
 
 		@media (min-width: breakpoints.$lg) {
 			display: grid;

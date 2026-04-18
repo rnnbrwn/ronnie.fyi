@@ -4,20 +4,15 @@ import IconBlueSky from '../components/IconBlueSky.astro';
 import IconGitHub from '../components/IconGitHub.astro';
 import IconInstagram from '../components/IconInstagram.astro';
 import IconRSS from '../components/IconRSS.astro';
+import { getPage } from '../utils/wordpress';
 
 const pageTitle = 'About';
+const page = await getPage('about');
 ---
 
 <Base title={pageTitle} description='desc'>
 	<h1>{pageTitle}</h1>
-	<p>
-		Scottish dad. Technology managing, music listening, bass playing, Rangers FC supporting, Scottish Gàidhlig
-		learning, self-proclaimed good egg. He/him.
-	</p>
-
-	<p>
-		Here are <a href='/uses'>things I use</a> and a <a href='/changelog'>changelog</a>.
-	</p>
+	<Fragment set:html={page?.content} />
 
 	<p>Or, click these links.</p>
 
@@ -46,7 +41,6 @@ const pageTitle = 'About';
 		@include typography.h1-page-title;
 		@include layout.h1-saffron-underlay;
 	}
-
 
 	p {
 		max-width: layout.$prose-width;
