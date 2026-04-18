@@ -1,4 +1,11 @@
 const WORDPRESS_API_URL = import.meta.env.WORDPRESS_API_URL ?? 'https://cms.ronnie.fyi/graphql';
+const WORDPRESS_CMS_URL = import.meta.env.WORDPRESS_CMS_URL ?? 'https://cms.ronnie.fyi';
+
+function rewriteContentUrls(content: string): string {
+	return content
+		.replaceAll(WORDPRESS_CMS_URL, '')
+		.replace(/href="(\/[^"]*?)\/"/g, 'href="$1"');
+}
 
 async function fetchGraphQL(query: string, variables = {}) {
 	try {
@@ -25,5 +32,7 @@ export async function getPage(slug: string) {
 		}`,
 		{ slug }
 	);
-	return data?.page ?? null;
+	const page = data?.page ?? null;
+	if (page?.content) page.content = rewriteContentUrls(page.content);
+	return page;
 }
