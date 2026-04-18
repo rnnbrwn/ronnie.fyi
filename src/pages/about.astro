@@ -12,7 +12,7 @@ const page = await getPage('about');
 
 <Base title={pageTitle} description='desc'>
 	<h1>{pageTitle}</h1>
-	<Fragment set:html={page?.content} />
+	<div class='wp-content'><Fragment set:html={page?.content} /></div>
 
 	<p>Or, click these links.</p>
 
@@ -46,6 +46,18 @@ const page = await getPage('about');
 		max-width: layout.$prose-width;
 
 		a {
+			@include layout.body-link;
+
+			:global(html[data-theme='dark']) & {
+				@include layout.body-link-on-dark;
+			}
+		}
+	}
+
+	.wp-content :global(p) {
+		max-width: layout.$prose-width;
+
+		:global(a) {
 			@include layout.body-link;
 
 			:global(html[data-theme='dark']) & {
