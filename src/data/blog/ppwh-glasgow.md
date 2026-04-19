@@ -13,7 +13,7 @@ pinned: true
 pinnedUntil: 2026-05-09
 ---
 
-On Sunday 29 April 2026 I will be taking part in [The Kiltwalk Big Stroll](https://thekiltwalk.co.uk/events/glasgow#bigStroll). I'll be walking with my family to raise funds for The Prince & Princess of Wales Hospice in Glasgow, Scotland.
+On Sunday 26 April 2026 I will be taking part in [The Kiltwalk Big Stroll](https://thekiltwalk.co.uk/events/glasgow#bigStroll). I'll be walking with my family to raise funds for The Prince & Princess of Wales Hospice in Glasgow, Scotland.
 
 We'll be raising funds on behalf of my mother-in-law, who passed away at the hospice in October 2025.
 
