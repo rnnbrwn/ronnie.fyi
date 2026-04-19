@@ -4,6 +4,18 @@ Personal site at [ronnie.fyi](https://ronnie.fyi). Writing about music, technolo
 
 Built with [Astro](https://astro.build), styled with Sass, deployed to Dreamhost via GitHub Actions.
 
+## WordPress CMS
+
+Static pages (About, Uses, Changelog) are managed via a headless WordPress CMS fetched at build time via WPGraphQL. This site is part of a wider stack:
+
+| Repo                                                          | Role                          |
+| ------------------------------------------------------------- | ----------------------------- |
+| [rnnbrwn-cms](https://github.com/rnnbrwn/rnnbrwn-cms)         | WordPress deployment pipeline |
+| [rnnbrwn-themes](https://github.com/rnnbrwn/rnnbrwn-themes)   | WordPress themes              |
+| [rnnbrwn-plugins](https://github.com/rnnbrwn/rnnbrwn-plugins) | WordPress plugins             |
+
+All GraphQL queries live in `src/utils/wordpress.ts`. WordPress-sourced HTML must be wrapped in `<div class='wp-content'>` and styled with `.wp-content :global(element)` to work around Astro's scoped styles. Internal CMS links are automatically rewritten to relative URLs at build time.
+
 ## Project structure
 
 ```text
@@ -37,19 +49,19 @@ Frontmatter fields:
 
 ```yaml
 title: 'Post title'
-pubDate: 2026-01-01        # Supports time: 2026-01-01 09:00. Post won't appear until this date/time.
+pubDate: 2026-01-01 # Supports time: 2026-01-01 09:00. Post won't appear until this date/time.
 description: 'Short description'
 tags: ['tag-one', 'tag-two']
-pinned: false              # Set to true to pin to the top of the homepage feed
-pinnedFrom: 2026-01-01    # Optional. Pin starts no earlier than this date (defaults to pubDate behaviour)
-pinnedUntil: 2026-01-08   # Optional. Pin is removed after this date on the next scheduled rebuild
-stale: false               # Set to true to show an "outdated" warning on the post
-image:                     # Optional
+pinned: false # Set to true to pin to the top of the homepage feed
+pinnedFrom: 2026-01-01 # Optional. Pin starts no earlier than this date (defaults to pubDate behaviour)
+pinnedUntil: 2026-01-08 # Optional. Pin is removed after this date on the next scheduled rebuild
+stale: false # Set to true to show an "outdated" warning on the post
+image: # Optional
   url: 'image.webp'
   alt: 'Alt text'
   source: 'https://example.com' # Optional image credit URL
-postToBsky: true           # Set to true to auto-post to Bluesky after the next deploy (see below)
-bskyPostUri: "at://..."   # Written automatically after posting. Do not set manually.
+postToBsky: true # Set to true to auto-post to Bluesky after the next deploy (see below)
+bskyPostUri: 'at://...' # Written automatically after posting. Do not set manually.
 ```
 
 `_` prefixed files (e.g. `_template.md`) are excluded from the collection and treated as drafts.
