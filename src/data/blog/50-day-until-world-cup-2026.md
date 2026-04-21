@@ -7,7 +7,7 @@ image:
   url: 'ronaldo-tom-boyd.jpg'
   alt: 'Scotland facing Brazil in the 1998 World Cup. Picture shows Ronaldo (Brazil), Tom Boyd and Colin Hendry (Scotland)'
   source: 'https://www.skysports.com/football/news/20245/10561275/andy-walker-on-scotlands-world-cup-qualifying-campaign'
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjzlr2tke52f"
 stale: false
 pinned: false
 ---
