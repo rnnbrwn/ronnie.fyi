@@ -2,12 +2,12 @@
 title: '50 Days Until World Cup 2026'
 pubDate: 2026-04-21 09:00
 description: "Today marks 50 days until the World Cup in North and Central America. It is going to be a disaster, isn't it? And not just for Scotland, I mean."
-tags: ['scotland', 'fifa', 'world cup', 'ryan chrstie', 'claude', 'ai', 'ronaldo']
+tags: ['scotland', 'fifa', 'world cup', 'ryan christie', 'claude', 'ai', 'ronaldo']
 image:
   url: 'ronaldo-tom-boyd.jpg'
   alt: 'Scotland facing Brazil in the 1998 World Cup. Picture shows Ronaldo (Brazil), Tom Boyd and Colin Hendry (Scotland)'
   source: 'https://www.skysports.com/football/news/20245/10561275/andy-walker-on-scotlands-world-cup-qualifying-campaign'
-bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjzlr2tke52f"
+bskyPostUri: 'at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mjzlr2tke52f'
 stale: false
 pinned: false
 ---
