@@ -5,7 +5,7 @@ description: "Seeing SFA live in Glasgow a decade on"
 tags: ['music', 'glasgow', 'super furry animals', 'bbc', 'maida vale', 'getdown services', 'kelvingrove bandstand']
 stale: false
 pinned: false
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mltvldc47l2h"
 image:
   url: 'super-furry-animals.jpg'
   alt: 'Super Furry Animals on a carousel. From left to right: Bunf, Guto, Gruff, Daf, Cian'
