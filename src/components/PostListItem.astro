@@ -8,15 +8,17 @@ interface Props {
 	pubDate: Date;
 	description: string;
 	stale?: boolean;
+	draft?: boolean;
 }
 
-const { id, title, pubDate, description, stale = false } = Astro.props;
+const { id, title, pubDate, description, stale = false, draft = false } = Astro.props;
 ---
 
 <li>
 	<a href={getPostUrl(pubDate, id)}>
 		{title}
 		{stale && <IconClock class='stale-icon' size={20} />}
+		{draft && <span class='draft-badge'>Draft</span>}
 	</a>
 	<time datetime={pubDate.toISOString()}>
 		{formatDateShort(pubDate)}
@@ -44,6 +46,20 @@ const { id, title, pubDate, description, stale = false } = Astro.props;
 		:global(html[data-theme='dark']) & {
 			color: colors.$light;
 		}
+	}
+
+	.draft-badge {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: typography.$font-size-sm;
+		font-weight: typography.$weight-bold;
+		text-transform: uppercase;
+		letter-spacing: typography.$tracking-wide;
+		color: colors.$light;
+		background-color: colors.$primary;
+		padding: 0 spacing.$space-1;
+		margin-left: spacing.$space-2;
+		transform: translateY(-2px);
 	}
 
 	:global(.stale-icon) {

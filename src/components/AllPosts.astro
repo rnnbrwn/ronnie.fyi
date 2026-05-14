@@ -1,6 +1,6 @@
 ---
 import Post from './Post.astro';
-import { getSortedPosts, getPostUrl, isEffectivelyPinned } from '../utils/getSortedPosts';
+import { getSortedPosts, getPostUrl, isEffectivelyPinned, isDraft } from '../utils/getSortedPosts';
 import type { BlogPost } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
 import { fetchBskyInteractors } from '../utils/bsky';
@@ -54,6 +54,7 @@ await Promise.all(
 		const tags = post.collection === 'blog' ? entry.data.tags : [];
 		const image = post.collection === 'blog' ? entry.data.image : undefined;
 		const pinned = post.collection === 'blog' ? isEffectivelyPinned(entry.data) : false;
+		const draft = isDraft(entry.id);
 		const href = isDigest ? `/notes/${entry.id}` : getPostUrl(entry.data.pubDate, entry.id);
 		const html = shiftHeadings(entry.rendered?.html ?? '');
 
@@ -65,6 +66,7 @@ await Promise.all(
 				tags={tags}
 				image={image}
 				pinned={pinned}
+				draft={draft}
 				isDigest={isDigest}
 				href={href}
 				html={html}

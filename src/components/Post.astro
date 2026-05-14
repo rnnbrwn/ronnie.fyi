@@ -17,6 +17,7 @@ interface Props {
 	tags: string[];
 	image?: { url: string; alt: string; source?: string };
 	pinned?: boolean;
+	draft?: boolean;
 	isDigest?: boolean;
 	href?: string;
 	html?: string;
@@ -33,6 +34,7 @@ const {
 	tags,
 	image,
 	pinned = false,
+	draft = false,
 	isDigest = false,
 	href = getPostUrl(pubDate, id),
 	html,
@@ -47,6 +49,7 @@ const {
 		{isDigest && <IconBlueSky class='bsky-icon' size={28} />}
 		{isDigest ? <span>{title}</span> : <a href={href}>{title}</a>}
 	</h2>
+	{draft && <p class='draft-flag'>Draft</p>}
 	{pinned && <p class='highlight'>This is a pinned post</p>}
 	<div class='post-body prose'>
 		{
@@ -188,6 +191,18 @@ const {
 				}
 			}
 		}
+	}
+
+	.draft-flag {
+		position: relative;
+		width: fit-content;
+		color: colors.$light;
+		padding: 0 spacing.$space-2;
+		background-color: colors.$primary;
+		@include typography.caption-text;
+		font-weight: typography.$weight-bold;
+		text-transform: uppercase;
+		letter-spacing: typography.$tracking-wide;
 	}
 
 	.highlight {

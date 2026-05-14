@@ -43,11 +43,15 @@ export type BlogPost = { collection: 'blog'; entry: CollectionEntry<'blog'> };
 export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
 export type AnyPost = BlogPost | NotePost;
 
+export function isDraft(id: string): boolean {
+	return id.startsWith('_');
+}
+
 export async function getSortedPosts(): Promise<AnyPost[]> {
 	const now = new Date();
 
 	const blogPosts = (await getCollection('blog'))
-		.filter((p) => new Date(p.data.pubDate) <= now)
+		.filter((p) => import.meta.env.DEV || new Date(p.data.pubDate) <= now)
 		.map((entry): BlogPost => ({ collection: 'blog', entry }));
 
 	const notePosts = (await getCollection('notes'))

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostListItem from '../../components/PostListItem.astro';
-import { getSortedPosts, formatMonthYear } from '../../utils/getSortedPosts';
+import { getSortedPosts, formatMonthYear, isDraft } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
@@ -28,6 +28,7 @@ const groupedPosts = Object.entries(grouped);
 							pubDate={post.data.pubDate}
 							description={post.data.description}
 							stale={post.data.stale}
+							draft={isDraft(post.id)}
 						/>
 					))}
 				</ul>
