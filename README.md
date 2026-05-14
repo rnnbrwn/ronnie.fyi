@@ -145,3 +145,29 @@ All commands are run from the root of the project:
 | `npm run dev`     | Start local dev server at `localhost:4321` |
 | `npm run build`   | Build production site to `./dist/`         |
 | `npm run preview` | Preview production build locally           |
+
+## Claude Code agents and slash commands
+
+Defined in `.claude/agents/` and `.claude/commands/` (gitignored — local only).
+
+### Slash commands
+
+| Command | Usage | What it does |
+| :-------------- | :------------------------------------ | :----------- |
+| `/new-post` | `/new-post My Post Title` | Scaffolds a new `_draft.md` with frontmatter filled in. Prompts for description and tags. |
+| `/post-status` | `/post-status` | Lists all posts by state: drafts, scheduled (future-dated), pinned, pending Bluesky, stale, and recent. |
+| `/publish` | `/publish slug-name` or `/publish` | Prepares a draft for publishing: strips the `_` prefix, confirms `pubDate`, optionally sets `postToBsky: true`. |
+| `/bsky-digest` | `/bsky-digest` | Runs `generate-bsky-digest.mjs` locally and offers to commit the result. |
+
+### Agents
+
+Agents are invoked by asking Claude to use them by name, e.g. _"Use the blog-writer agent to draft a post about X."_
+
+| Agent | Purpose |
+| :------------ | :------- |
+| `blog-writer` | Drafts blog posts in the site's voice. Knows the frontmatter schema, tag conventions, and writing style. Produces a complete draft ready to save. |
+| `site-auditor` | Read-only audit of all posts. Reports on drafts, scheduled posts, pinned posts (including expired pins), posts pending Bluesky, and stale content. |
+
+### Draft posts in dev
+
+In the local dev server, `_`-prefixed draft posts are included in the feed and marked with a red **Draft** badge. They are excluded from production builds automatically.
