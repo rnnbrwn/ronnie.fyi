@@ -2,7 +2,7 @@
 title: 'SFA are back, but Maida Vale is going'
 pubDate: 2026-05-14 20:00
 description: "Seeing SFA live in Glasgow a decade on"
-tags: ['music', 'glasgow', 'super furry animals', 'bbc', 'maida vale', 'getdown services', 'kelvingrove bandstand']
+tags: ['music', 'glasgow', 'super furry animals', 'bbc', 'maida vale', 'getdown services', 'kelvingrove bandstand', 'barrowlands']
 stale: false
 pinned: false
 bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mltvldc47l2h"
@@ -18,7 +18,7 @@ They're are one of my favourite bands but the electronic nature of some of their
 
 https://www.youtube.com/watch?v=QGc_59ySJ8A
 
-Anyway, the gig was great. I'm not convinced they're back for anything more than a bit of a financial leg up; it's difficult to put my finger on it, as they're not the most effusive bunch on stage, but it was quite a low-key show.
+I saw them again last week at Glasgow's [Barrowlands](https://barrowland.co.uk/). It was great, but I'm not convinced they're back for anything more than a bit of a financial leg up; it's difficult to put my finger on it, as they're not the most effusive bunch on stage, but it was quite a low-key show.
 
 [Getdown Services](https://en.wikipedia.org/wiki/Getdown_Services) were the support act and they sweat enough for 3 or 4 bands so it all evens out, I suppose.
 
