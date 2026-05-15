@@ -21,6 +21,7 @@ const blog = defineCollection({
 		stale: z.boolean().default(false),
 		postToBsky: z.boolean().optional(),
 		bskyPostUri: z.string().optional(),
+		hardcoverId: z.number().optional(),
 	}),
 });
 

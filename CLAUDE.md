@@ -99,5 +99,6 @@ Defined in `.claude/agents/` and `.claude/commands/`:
 - `/post-status` — show scheduled, pinned, stale, pending-bsky, and draft posts
 - `/publish` — prepare a draft post for publishing
 - `/bsky-digest` — run the Bluesky digest script locally
+- `/hardcover-id` — look up a Hardcover book ID from its slug, for blog post frontmatter
 - `blog-writer` agent — draft blog posts in Ronnie's voice
 - `site-auditor` agent — audit post health and site state

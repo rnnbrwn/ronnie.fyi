@@ -1,0 +1,197 @@
+---
+import type { UserBook } from '../utils/hardcover';
+
+interface Props {
+	ub: UserBook;
+	postUrl?: string;
+}
+
+const { ub, postUrl } = Astro.props;
+const authorsList = ub.book.contributions.map((c) => c.author.name);
+const hardcoverUrl = `https://hardcover.app/books/${ub.book.slug}`;
+
+function normalize(str: string) {
+	return str.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+const bookTitleNorm = normalize(ub.book.title);
+const series = ub.book.book_series.find(({ position, series: s }) => {
+	const seriesNorm = normalize(s.name);
+	if (seriesNorm.length === 0) return false;
+	// Filter out positionless entries where the series name is just the book title repeated
+	if (position === null && bookTitleNorm.includes(seriesNorm)) return false;
+	return true;
+});
+---
+
+<li class='book-card' data-series={series?.series.name} data-authors={authorsList.join('|')}>
+	<a class='book-cover-link' href={hardcoverUrl} target='_blank' rel='noopener noreferrer'>
+		{ub.book.image
+			? <img src={ub.book.image.url} alt={ub.book.title} loading='lazy' />
+			: <div class='no-cover' aria-hidden='true' />
+		}
+	</a>
+	<p class='book-title'>{ub.book.title}</p>
+	<p class='book-author'>
+		{authorsList.map((name, i) => (
+			<>{i > 0 && ', '}<button class='book-author-btn' data-author-name={name}>{name}</button></>
+		))}
+	</p>
+	{series && (
+		<button class='book-series' data-series-name={series.series.name}>
+			{series.series.name}
+			{series.position != null && ` · #${series.position}`}
+		</button>
+	)}
+	{ub.rating === 5 && <p class='book-recommended'>Loved it</p>}
+	{postUrl && <a href={postUrl} class='book-post-link'>My post →</a>}
+</li>
+
+<style lang='scss'>
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+	@use 'sass:map';
+
+	.book-card {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.book-cover-link {
+		display: block;
+
+		&:hover img,
+		&:hover .no-cover {
+			opacity: 0.85;
+		}
+
+		&:focus-visible {
+			@include layout.focus-ring(colors.$primary);
+		}
+	}
+
+	img,
+	.no-cover {
+		width: 100%;
+		aspect-ratio: 2 / 3;
+		object-fit: cover;
+		display: block;
+		border-radius: 2px;
+		background-color: map.get(colors.$dark-tones, 'tone-4');
+	}
+
+	.book-title {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		font-weight: typography.$weight-semibold;
+		margin-top: spacing.$space-2;
+		margin-bottom: spacing.$space-1;
+		line-height: typography.$leading-snug;
+	}
+
+	.book-author {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		color: colors.$text-muted;
+		margin: 0;
+		line-height: typography.$leading-snug;
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	.book-author-btn {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		color: inherit;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		text-decoration: underline;
+		text-decoration-style: dotted;
+
+		&:hover {
+			color: colors.$primary;
+		}
+
+		&:focus-visible {
+			@include layout.focus-ring(colors.$primary);
+		}
+	}
+
+	.book-series {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		font-style: italic;
+		font-weight: typography.$weight-semibold;
+		color: colors.$text-muted;
+		margin: 0;
+		padding: 0;
+		line-height: typography.$leading-snug;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
+		text-decoration: underline;
+		text-decoration-style: dotted;
+
+		&:hover {
+			color: colors.$primary;
+		}
+
+		&:focus-visible {
+			@include layout.focus-ring(colors.$primary);
+		}
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+
+			&:hover {
+				color: colors.$primary;
+			}
+		}
+	}
+
+	.book-recommended {
+		display: inline-block;
+		align-self: flex-start;
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-sm;
+		font-weight: typography.$weight-semibold;
+		letter-spacing: typography.$tracking-wider;
+		text-transform: uppercase;
+		color: colors.$light;
+		background-color: colors.$primary;
+		padding: 1px spacing.$space-2;
+		border-radius: 2px;
+		margin-top: spacing.$space-2;
+		margin-bottom: 0;
+
+	}
+
+	.book-post-link {
+		display: inline-block;
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		color: colors.$text-muted;
+		text-decoration: underline;
+		text-decoration-style: dotted;
+		margin-top: spacing.$space-1;
+
+		&:hover {
+			color: colors.$primary;
+		}
+
+		&:focus-visible {
+			@include layout.focus-ring(colors.$primary);
+		}
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+</style>

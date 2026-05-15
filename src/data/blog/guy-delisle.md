@@ -7,6 +7,7 @@ image:
   url: 'muybridge.jpg'
   alt: 'An illustration of Eadweard Muybridge by Guy Delisle'
   source: 'https://www.comicsbeat.com/graphic-novel-review-guy-delisles-muybridge-combines-a-fascinating-biography-with-the-technical-history-of-visual-media/'
+hardcoverId: 2126459
 ---
 
 I recently picked up a couple of [Guy Delisle](https://www.guydelisle.com) books, doing what you're not supposed to and literally judging them by their covers.
@@ -20,3 +21,4 @@ Jerusalem: Chronicles from the Holy City is a journal of Delisle's time spent in
 Muybridge himself deserves so many more stories to be written about him. Unfortunately, the recent documentary, **Exposing Muybridge** doesn't seem to be available in the UK, so I'll have to track it down elsewhere.
 
 https://www.youtube.com/watch?v=dHHNMziv4-g
+

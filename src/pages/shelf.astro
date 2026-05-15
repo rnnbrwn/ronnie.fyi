@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BookCard from '../components/BookCard.astro';
+import { getShelf } from '../utils/hardcover';
+import { getPostUrl } from '../utils/getSortedPosts';
+
+const { currentlyReading, readByYear } = await getShelf();
+
+const allPosts = await getCollection('blog');
+const postsByBookId = new Map(
+	allPosts
+		.filter((p) => p.data.hardcoverId != null)
+		.map((p) => [p.data.hardcoverId!, p])
+);
+---
+
+<Base title='Book Shelf' description="Books I'm reading and have read.">
+	<h1>Book Shelf</h1>
+
+	<div id='filter-banner' style='display:none'>
+		<span>Showing: <strong id='filter-series-name'></strong></span>
+		<button id='clear-filter'>Show all</button>
+	</div>
+
+	{currentlyReading.length > 0 && (
+		<section>
+			<h2>Currently Reading</h2>
+			<ul class='book-grid'>
+				{currentlyReading.map((ub) => {
+					const post = postsByBookId.get(ub.book.id);
+					return <BookCard ub={ub} postUrl={post && getPostUrl(post.data.pubDate, post.id)} />;
+				})}
+			</ul>
+		</section>
+	)}
+
+	{[...readByYear.entries()].map(([year, books]) => (
+		<section>
+			<h2>{year === 0 ? 'I\'ve read these at some point, too' : year}</h2>
+			<ul class='book-grid'>
+				{books.map((ub) => {
+					const post = postsByBookId.get(ub.book.id);
+					return <BookCard ub={ub} postUrl={post && getPostUrl(post.data.pubDate, post.id)} />;
+				})}
+			</ul>
+		</section>
+	))}
+</Base>
+
+<script>
+	const banner = document.getElementById('filter-banner') as HTMLDivElement;
+	const bannerLabel = document.getElementById('filter-series-name') as HTMLElement;
+	const clearBtn = document.getElementById('clear-filter') as HTMLButtonElement;
+	const cards = document.querySelectorAll<HTMLElement>('.book-card');
+	const sections = document.querySelectorAll<HTMLElement>('section');
+
+	function applyFilter(label: string, match: (card: HTMLElement) => boolean) {
+		cards.forEach((card) => {
+			card.style.display = match(card) ? '' : 'none';
+		});
+		sections.forEach((section) => {
+			const hasVisible = section.querySelectorAll('.book-card:not([style*="display: none"])').length > 0;
+			section.style.display = hasVisible ? '' : 'none';
+		});
+		bannerLabel.textContent = label;
+		banner.style.display = '';
+	}
+
+	function clearFilter() {
+		cards.forEach((card) => { card.style.display = ''; });
+		sections.forEach((section) => { section.style.display = ''; });
+		bannerLabel.textContent = '';
+		banner.style.display = 'none';
+	}
+
+	document.addEventListener('click', (e) => {
+		const target = e.target as Element;
+
+		const seriesBtn = target.closest<HTMLButtonElement>('.book-series');
+		if (seriesBtn?.dataset.seriesName) {
+			const name = seriesBtn.dataset.seriesName;
+			applyFilter(name, (card) => card.dataset.series === name);
+			return;
+		}
+
+		const authorBtn = target.closest<HTMLButtonElement>('.book-author-btn');
+		if (authorBtn?.dataset.authorName) {
+			const name = authorBtn.dataset.authorName;
+			applyFilter(name, (card) => card.dataset.authors?.split('|').includes(name) ?? false);
+		}
+	});
+
+	clearBtn.addEventListener('click', clearFilter);
+</script>
+
+<style lang='scss'>
+	@use '../styles/abstracts/breakpoints';
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+
+	h1 {
+		@include typography.h1-page-title;
+		@include layout.h1-saffron-underlay;
+	}
+
+	#filter-banner {
+		display: flex;
+		align-items: center;
+		gap: spacing.$space-4;
+		margin-bottom: spacing.$space-4;
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+
+		button {
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-family: typography.$font-body;
+			font-size: typography.$font-size-md;
+			color: colors.$primary;
+			text-decoration: underline;
+			padding: 0;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+
+	h2 {
+		@include typography.h2-section-label;
+		margin-top: spacing.$space-8;
+		margin-bottom: spacing.$space-4;
+	}
+
+	.book-grid {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+		gap: spacing.$space-6;
+
+		@media (min-width: breakpoints.$md) {
+			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+		}
+	}
+</style>
