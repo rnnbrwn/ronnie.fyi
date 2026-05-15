@@ -1,6 +1,6 @@
 ---
 title: "Recent Bluesky chat"
-pubDate: 2026-05-15 17:13
+pubDate: 2026-05-15 17:31
 description: "2 posts from Bluesky this week."
 ---
 
