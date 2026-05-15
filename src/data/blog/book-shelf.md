@@ -5,7 +5,7 @@ description: 'A new /shelf page pulling reading data from Hardcover via their Gr
 tags: ['this website', 'web development', 'books']
 stale: false
 pinned: false
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mlwcmiuyjd23"
 image:
   url: 'book-shelf.webp'
   alt: 'A rather organised looking set of bookshelves'
