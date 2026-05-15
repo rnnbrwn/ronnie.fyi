@@ -97,8 +97,12 @@ Defined in `.claude/agents/` and `.claude/commands/`:
 
 - `/new-post` — scaffold a new draft blog post
 - `/post-status` — show scheduled, pinned, stale, pending-bsky, and draft posts
-- `/publish` — prepare a draft post for publishing
+- `/publish` — prepare a draft post for publishing (branch → merge → push)
 - `/bsky-digest` — run the Bluesky digest script locally
 - `/hardcover-id` — look up a Hardcover book ID from its slug, for blog post frontmatter
+- `/audit-scss` — scan all SCSS for token violations, duplication, and missed mixins
+- `/audit-html` — scan all Astro templates for semantic HTML and accessibility issues
+- `/dry-check` — find duplicated markup, style blocks, and prop shapes across components
 - `blog-writer` agent — draft blog posts in Ronnie's voice
 - `site-auditor` agent — audit post health and site state
+- `web-reviewer` agent — interactive code reviewer; knows the full design token system
