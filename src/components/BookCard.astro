@@ -8,6 +8,9 @@ interface Props {
 
 const { ub, postUrl } = Astro.props;
 const authorsList = ub.book.contributions.map((c) => c.author.name);
+const MAX_AUTHORS = 3;
+const visibleAuthors = authorsList.slice(0, MAX_AUTHORS);
+const hasMoreAuthors = authorsList.length > MAX_AUTHORS;
 const hardcoverUrl = `https://hardcover.app/books/${ub.book.slug}`;
 
 function normalize(str: string) {
@@ -33,9 +36,10 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	</a>
 	<p class='book-title'>{ub.book.title}</p>
 	<p class='book-author'>
-		{authorsList.map((name, i) => (
+		{visibleAuthors.map((name, i) => (
 			<>{i > 0 && ', '}<button class='book-author-btn' data-author-name={name}>{name}</button></>
 		))}
+		{hasMoreAuthors && <span> et al.</span>}
 	</p>
 	{series && (
 		<button class='book-series' data-series-name={series.series.name}>
