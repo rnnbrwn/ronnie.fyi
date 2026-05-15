@@ -38,19 +38,14 @@ const page = await getPage('about');
 	@use '../styles/abstracts/typography';
 
 	h1 {
-		@include typography.h1-page-title;
-		@include layout.h1-saffron-underlay;
+		@include typography.h1-content-page;
 	}
 
 	p {
 		max-width: layout.$prose-width;
 
 		a {
-			@include layout.body-link;
-
-			:global(html[data-theme='dark']) & {
-				@include layout.body-link-on-dark;
-			}
+			@include layout.body-link-full;
 		}
 	}
 
@@ -58,11 +53,7 @@ const page = await getPage('about');
 		max-width: layout.$prose-width;
 
 		:global(a) {
-			@include layout.body-link;
-
-			:global(html[data-theme='dark']) & {
-				@include layout.body-link-on-dark;
-			}
+			@include layout.body-link-full;
 		}
 	}
 

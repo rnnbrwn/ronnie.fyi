@@ -160,8 +160,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		padding: 0;
 
 		h1 {
-			@include typography.h1-page-title;
-			@include layout.h1-saffron-underlay;
+			@include typography.h1-content-page;
 
 			@media (min-width: breakpoints.$md) {
 				margin-bottom: spacing.$space-16;
@@ -237,9 +236,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	}
 
 	.published-date {
-		@include typography.caption-text;
-		font-weight: typography.$weight-regular;
-		text-transform: uppercase;
+		@include typography.meta-label;
 		color: colors.$text-muted;
 		margin-bottom: spacing.$space-2;
 
@@ -254,7 +251,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 
 	.bsky-interactions :global(.bsky-avatars--has-interactors) {
 		padding-top: spacing.$space-6;
-		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+		border-top: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
 	}
 
 	.aside-links {
@@ -264,7 +261,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		gap: spacing.$space-3;
 		margin-top: spacing.$space-6;
 		padding-top: spacing.$space-6;
-		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+		border-top: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
 	}
 
 	.back-link,
@@ -272,11 +269,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.tags-link {
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
-		@include layout.body-link;
-
-		:global(html[data-theme='dark']) & {
-			@include layout.body-link-on-dark;
-		}
+		@include layout.body-link-full;
 	}
 
 	.post-nav {
@@ -285,7 +278,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		gap: spacing.$space-6;
 		margin-top: spacing.$space-16;
 		padding-top: spacing.$space-8;
-		border-top: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+		border-top: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
 		max-width: calc(#{layout.$prose-width} + #{$body-gap} + #{$sidebar-width});
 
 		:global(html[data-theme='dark']) & {
@@ -298,8 +291,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	}
 
 	.post-nav-label {
-		@include typography.caption-text;
-		text-transform: uppercase;
+		@include typography.meta-label;
 		color: colors.$text-muted;
 
 		:global(html[data-theme='dark']) & {
@@ -311,10 +303,6 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 		display: block;
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
-		@include layout.body-link;
-
-		:global(html[data-theme='dark']) & {
-			@include layout.body-link-on-dark;
-		}
+		@include layout.body-link-full;
 	}
 </style>

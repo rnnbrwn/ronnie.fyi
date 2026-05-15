@@ -54,9 +54,7 @@ const { Content } = await render(note);
 		}
 
 		.published-date {
-			@include typography.caption-text;
-			font-weight: typography.$weight-regular;
-			text-transform: uppercase;
+			@include typography.meta-label;
 			color: colors.$text-muted;
 			margin-bottom: spacing.$space-2;
 		}

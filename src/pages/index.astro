@@ -27,10 +27,11 @@ const totalPages = Math.ceil(allPosts.length / PAGE_SIZE);
 		@use '../styles/abstracts/typography';
 
 		.site-header {
+			margin-top: spacing.$space-10;
 			margin-bottom: spacing.$space-16;
 
-			@media (max-width: #{breakpoints.$md - 1px}) {
-				margin-top: spacing.$space-10;
+			@media (min-width: breakpoints.$md) {
+				margin-top: 0;
 			}
 		}
 

@@ -74,12 +74,8 @@ const { id, title, pubDate, description, stale = false, draft = false } = Astro.
 		display: inline-block;
 		font-size: typography.$font-size-xl;
 		font-weight: typography.$weight-medium;
-		@include layout.body-link;
+		@include layout.body-link-full;
 		margin-bottom: spacing.$space-1;
-
-		:global(html[data-theme='dark']) & {
-			@include layout.body-link-on-dark;
-		}
 	}
 
 	p {

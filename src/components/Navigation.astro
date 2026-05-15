@@ -134,13 +134,10 @@ const links = [
 		padding: spacing.$space-4;
 
 		ul {
-			padding: 0;
+			@include layout.list-reset;
 			margin: 0;
 			display: flex;
 			gap: spacing.$space-6;
-			li {
-				list-style: none;
-			}
 		}
 
 		li a {
@@ -213,7 +210,7 @@ const links = [
 			flex-direction: column;
 			align-items: stretch;
 			padding: spacing.$space-8;
-			border-right: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+			border-right: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
 
 			ul {
 				flex-direction: column;

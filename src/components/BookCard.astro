@@ -84,7 +84,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		aspect-ratio: 2 / 3;
 		object-fit: cover;
 		display: block;
-		border-radius: 2px;
+		border-radius: layout.$radius-xs;
 	}
 
 	.no-cover {
@@ -95,7 +95,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		justify-content: center;
 		gap: spacing.$space-2;
 		padding: spacing.$space-3;
-		border-radius: 2px;
+		border-radius: layout.$radius-xs;
 		background-color: map.get(colors.$dark-tones, 'tone-3');
 		box-sizing: border-box;
 
@@ -225,7 +225,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		color: colors.$light;
 		background-color: colors.$primary;
 		padding: 1px spacing.$space-2;
-		border-radius: 2px;
+		border-radius: layout.$radius-xs;
 		margin-top: spacing.$space-2;
 		margin-bottom: 0;
 

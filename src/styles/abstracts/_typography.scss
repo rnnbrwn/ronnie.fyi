@@ -84,6 +84,19 @@ $tracking-widest: 0.1em;
   letter-spacing: $tracking-wide;
 }
 
+// Uppercase meta label — used for published dates, nav labels, and similar metadata
+@mixin meta-label {
+  @include caption-text;
+  font-weight: $weight-regular;
+  text-transform: uppercase;
+}
+
+// Standard content page h1 — page title style with the saffron underlay decoration
+@mixin h1-content-page {
+  @include h1-page-title;
+  @include layout.h1-saffron-underlay;
+}
+
 // Prose container — apply to any element rendering markdown content
 @mixin prose {
   max-width: layout.$prose-width;

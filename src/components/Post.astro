@@ -218,7 +218,7 @@ const {
 
 	.post-body {
 		@include typography.prose;
-		border-bottom: calc(spacing.$space-2 / 2) solid map.get(colors.$dark-tones, 'tone-5');
+		border-bottom: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
 		padding-bottom: spacing.$space-24;
 
 		.post-meta {
@@ -226,9 +226,7 @@ const {
 		}
 
 		.published-date {
-			@include typography.caption-text;
-			font-weight: typography.$weight-regular;
-			text-transform: uppercase;
+			@include typography.meta-label;
 			color: colors.$text-muted;
 			margin-bottom: spacing.$space-2;
 		}

@@ -25,8 +25,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 	@use '../../styles/abstracts/typography';
 
 	h1 {
-		@include typography.h1-page-title;
-		@include layout.h1-saffron-underlay;
+		@include typography.h1-content-page;
 	}
 
 	ul {
@@ -39,10 +38,6 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 
 	a {
 		font-size: typography.$font-size-lg;
-		@include layout.body-link;
-
-		:global(html[data-theme='dark']) & {
-			@include layout.body-link-on-dark;
-		}
+		@include layout.body-link-full;
 	}
 </style>

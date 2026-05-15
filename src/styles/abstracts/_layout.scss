@@ -7,8 +7,11 @@
 $prose-width: 65ch;
 $heading-max-width: 32ch;
 
+$radius-xs: 2px;
 $radius-sm: 4px;
 $radius-md: 8px;
+
+$avatar-size: 28px;
 
 @mixin tertiary-link {
   color: colors.$tertiary;
@@ -47,6 +50,13 @@ $radius-md: 8px;
   &:hover {
     color: colors.$tertiary-hover;
     text-decoration-color: colors.$tertiary-hover;
+  }
+}
+
+@mixin body-link-full {
+  @include body-link;
+  :global(html[data-theme='dark']) & {
+    @include body-link-on-dark;
   }
 }
 
