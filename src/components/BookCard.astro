@@ -50,8 +50,8 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 			{series.position != null && ` · #${series.position}`}
 		</button>
 	)}
-	{ub.rating === 5 && <p class='book-recommended'>Loved it</p>}
-	{postUrl && <a href={postUrl} class='book-post-link'>Blog Post →</a>}
+	{ub.rating === 5 && <span class='book-recommended'>Loved it</span>}
+	{postUrl && <a href={postUrl} class='book-post-link' aria-label={`Blog post about ${ub.book.title}`}>Blog Post →</a>}
 </li>
 
 <style lang='scss'>

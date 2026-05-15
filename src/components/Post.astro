@@ -49,8 +49,8 @@ const {
 		{isDigest && <IconBlueSky class='bsky-icon' size={28} />}
 		{isDigest ? <span>{title}</span> : <a href={href}>{title}</a>}
 	</h2>
-	{draft && <p class='draft-flag'>Draft</p>}
-	{pinned && <p class='highlight'>This is a pinned post</p>}
+	{draft && <div class='draft-flag'>Draft</div>}
+	{pinned && <div class='highlight'>This is a pinned post</div>}
 	<div class='post-body prose'>
 		{
 			image && imageFiles[`/src/assets/images/${image.url}`] && (

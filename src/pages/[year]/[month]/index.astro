@@ -37,7 +37,9 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 
 <Base title={`Posts from ${monthLabel}`}>
 	<h1>Posts from {monthLabel}</h1>
-	<a href='/posts' class='archive-back-link'>All posts</a>
+	<nav aria-label='Archive navigation'>
+		<a href='/posts' class='archive-back-link'>All posts</a>
+	</nav>
 	<ul>
 		{
 			posts.map((post) => (

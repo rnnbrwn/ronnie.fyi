@@ -18,7 +18,7 @@ const groupedPosts = Object.entries(grouped);
 	<h1>All Posts</h1>
 	{
 		groupedPosts.map(([month, monthPosts]) => (
-			<>
+			<section>
 				<h2>{month}</h2>
 				<ul>
 					{monthPosts.map((post) => (
@@ -32,7 +32,7 @@ const groupedPosts = Object.entries(grouped);
 						/>
 					))}
 				</ul>
-			</>
+			</section>
 		))
 	}
 </Base>

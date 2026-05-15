@@ -10,7 +10,7 @@ const pageTitle = 'About';
 const page = await getPage('about');
 ---
 
-<Base title={pageTitle} description='desc'>
+<Base title={pageTitle} description='A little bit about Ronnie Brown — links and more.'>
 	<h1>{pageTitle}</h1>
 	<div class='wp-content'><Fragment set:html={page?.content} /></div>
 

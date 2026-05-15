@@ -22,7 +22,7 @@ const isLast = page === totalPages;
 
 <Base title={`Posts – Page ${page}`}>
 	<AllPosts limit={pageSize} offset={offset} />
-	<nav class='pagination'>
+	<nav class='pagination' aria-label='Pagination'>
 		{!isLast && <a class='pagination-older' href={`/posts/page/${page + 1}`}>Older posts</a>}
 		<span class='pagination-label'>Page {page} of {totalPages}</span>
 		<a class='pagination-newer' href={isFirst ? '/' : `/posts/page/${page - 1}`}>Newer posts</a>

@@ -17,7 +17,9 @@ const posts = (await getCollection('blog'))
 
 <Base title={`Posts tagged "${tag}"`}>
 	<h1>#{tag}</h1>
-	<a href='/tags' class='archive-back-link'>All tags</a>
+	<nav aria-label='Archive navigation'>
+		<a href='/tags' class='archive-back-link'>All tags</a>
+	</nav>
 	<ul>
 		{
 			posts.map((post) => (

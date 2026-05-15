@@ -44,6 +44,7 @@ export default function BskyInteractors({ uri, initial = [] }: Props) {
 						target='_blank'
 						rel='noopener noreferrer'
 						title={actor.displayName ?? actor.handle}
+						aria-label={actor.displayName ?? actor.handle}
 						class='bsky-avatar bsky-avatar--placeholder'
 					>
 						{(actor.displayName ?? actor.handle).charAt(0).toUpperCase()}

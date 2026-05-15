@@ -18,7 +18,7 @@ const postsByBookId = new Map(
 <Base title='Book Shelf' description="Books I'm reading and have read.">
 	<h1>Book Shelf</h1>
 
-	<div id='filter-banner' style='display:none'>
+	<div id='filter-banner' style='display:none' aria-live='polite' aria-atomic='true'>
 		<span>Showing: <strong id='filter-series-name'></strong></span>
 		<button id='clear-filter'>Show all</button>
 	</div>

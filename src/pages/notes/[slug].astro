@@ -20,14 +20,12 @@ const { Content } = await render(note);
 		<h1 id='post-title'>{note.data.title}</h1>
 		<div class='prose'>
 			<Content />
-			<div class='post-meta'>
-				<div class='published-date'>
-					Posted <time datetime={note.data.pubDate.toISOString()}
-						>{
-							formatDate(note.data.pubDate)
-						}</time
-					>
-				</div>
+			<div class='published-date'>
+				Posted <time datetime={note.data.pubDate.toISOString()}
+					>{
+						formatDate(note.data.pubDate)
+					}</time
+				>
 			</div>
 			<a href='/' class='back-link'>← Home</a>
 		</div>
@@ -49,13 +47,10 @@ const { Content } = await render(note);
 		@include typography.prose;
 		margin-top: spacing.$space-6;
 
-		.post-meta {
-			margin-top: spacing.$space-6;
-		}
-
 		.published-date {
 			@include typography.meta-label;
 			color: colors.$text-muted;
+			margin-top: spacing.$space-6;
 			margin-bottom: spacing.$space-2;
 		}
 
