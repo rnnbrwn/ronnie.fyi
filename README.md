@@ -156,8 +156,12 @@ Defined in `.claude/agents/` and `.claude/commands/` (gitignored — local only)
 | :-------------- | :------------------------------------ | :----------- |
 | `/new-post` | `/new-post My Post Title` | Scaffolds a new `_draft.md` with frontmatter filled in. Prompts for description and tags. |
 | `/post-status` | `/post-status` | Lists all posts by state: drafts, scheduled (future-dated), pinned, pending Bluesky, stale, and recent. |
-| `/publish` | `/publish slug-name` or `/publish` | Prepares a draft for publishing: strips the `_` prefix, confirms `pubDate`, optionally sets `postToBsky: true`. |
+| `/publish` | `/publish slug-name` or `/publish` | Prepares a draft for publishing: strips the `_` prefix, confirms `pubDate`, optionally sets `postToBsky: true`, commits and pushes via a named branch. |
 | `/bsky-digest` | `/bsky-digest` | Runs `generate-bsky-digest.mjs` locally and offers to commit the result. |
+| `/hardcover-id` | `/hardcover-id book-slug` | Looks up a Hardcover book ID from its slug — useful for linking blog posts to the `/shelf` page. |
+| `/audit-scss` | `/audit-scss` | Scans all SCSS for token violations, duplication, and patterns that should use existing mixins. |
+| `/audit-html` | `/audit-html` | Scans all Astro templates for semantic HTML issues, unnecessary wrappers, and accessibility gaps. |
+| `/dry-check` | `/dry-check` | Cross-component comparison to find repeated markup, style blocks, and prop shapes that should be shared abstractions. |
 
 ### Agents
 
@@ -167,6 +171,7 @@ Agents are invoked by asking Claude to use them by name, e.g. _"Use the blog-wri
 | :------------ | :------- |
 | `blog-writer` | Drafts blog posts in the site's voice. Knows the frontmatter schema, tag conventions, and writing style. Produces a complete draft ready to save. |
 | `site-auditor` | Read-only audit of all posts. Reports on drafts, scheduled posts, pinned posts (including expired pins), posts pending Bluesky, and stale content. |
+| `web-reviewer` | Interactive code reviewer for Astro components and SCSS. Knows the full design token system and component conventions. Use it to review specific files for weight, DRY violations, and semantic HTML. |
 
 ### Draft posts in dev
 
