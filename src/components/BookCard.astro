@@ -31,7 +31,10 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	<a class='book-cover-link' href={hardcoverUrl} target='_blank' rel='noopener noreferrer'>
 		{ub.book.image
 			? <img src={ub.book.image.url} alt={ub.book.title} loading='lazy' />
-			: <div class='no-cover' aria-hidden='true' />
+			: <div class='no-cover' aria-hidden='true'>
+					<span class='no-cover-title'>{ub.book.title}</span>
+					{visibleAuthors[0] && <span class='no-cover-author'>{visibleAuthors[0]}</span>}
+				</div>
 		}
 	</a>
 	<p class='book-title'>{ub.book.title}</p>
@@ -76,14 +79,61 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		}
 	}
 
-	img,
-	.no-cover {
+	img {
 		width: 100%;
 		aspect-ratio: 2 / 3;
 		object-fit: cover;
 		display: block;
 		border-radius: 2px;
-		background-color: map.get(colors.$dark-tones, 'tone-4');
+	}
+
+	.no-cover {
+		width: 100%;
+		aspect-ratio: 2 / 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: spacing.$space-2;
+		padding: spacing.$space-3;
+		border-radius: 2px;
+		background-color: map.get(colors.$dark-tones, 'tone-3');
+		box-sizing: border-box;
+
+		:global(html[data-theme='dark']) & {
+			background-color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	.no-cover-title {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-sm;
+		font-weight: typography.$weight-bold;
+		color: colors.$light;
+		line-height: typography.$leading-snug;
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		:global(html[data-theme='dark']) & {
+			color: colors.$dark;
+		}
+	}
+
+	.no-cover-author {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-sm;
+		font-weight: typography.$weight-regular;
+		color: map.get(colors.$light-tones, 'tone-2');
+		line-height: typography.$leading-snug;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		:global(html[data-theme='dark']) & {
+			color: colors.$text-muted;
+		}
 	}
 
 	.book-title {
@@ -93,6 +143,10 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		margin-top: spacing.$space-2;
 		margin-bottom: spacing.$space-1;
 		line-height: typography.$leading-snug;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 
 	.book-author {
