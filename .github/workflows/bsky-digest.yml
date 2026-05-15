@@ -34,6 +34,7 @@ jobs:
             echo "pushed=false" >> $GITHUB_OUTPUT
           else
             git commit -m "chore: add Bluesky digest $(date -u +%Y-%m-%d)"
+            git pull --rebase
             git push
             echo "pushed=true" >> $GITHUB_OUTPUT
           fi
