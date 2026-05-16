@@ -26,6 +26,13 @@ export function formatDateShort(date: Date): string {
 	return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+export function formatShelfEventDate(date: Date): string {
+	const weekday = date.toLocaleDateString('en-GB', { weekday: 'short' });
+	const day = date.getDate();
+	const month = date.toLocaleDateString('en-GB', { month: 'short' });
+	return `${weekday} ${day} ${month}`.toUpperCase();
+}
+
 export function getPostUrl(pubDate: Date, id: string): string {
 	const year = pubDate.getFullYear();
 	const month = String(pubDate.getMonth() + 1).padStart(2, '0');
@@ -41,7 +48,8 @@ export function isEffectivelyPinned(data: CollectionEntry<'blog'>['data'], now: 
 
 export type BlogPost = { collection: 'blog'; entry: CollectionEntry<'blog'> };
 export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
-export type AnyPost = BlogPost | NotePost;
+export type ShelfEventPost = { collection: 'shelf-events'; entry: CollectionEntry<'shelf-events'> };
+export type AnyPost = BlogPost | NotePost | ShelfEventPost;
 
 export function isDraft(id: string): boolean {
 	return id.startsWith('_');
@@ -58,7 +66,11 @@ export async function getSortedPosts(): Promise<AnyPost[]> {
 		.filter((p) => new Date(p.data.pubDate) <= now)
 		.map((entry): NotePost => ({ collection: 'notes', entry }));
 
-	return [...blogPosts, ...notePosts].sort(
+	const shelfEventPosts = (await getCollection('shelf-events'))
+		.filter((p) => new Date(p.data.pubDate) <= now)
+		.map((entry): ShelfEventPost => ({ collection: 'shelf-events', entry }));
+
+	return [...blogPosts, ...notePosts, ...shelfEventPosts].sort(
 		(a, b) => new Date(b.entry.data.pubDate).valueOf() - new Date(a.entry.data.pubDate).valueOf()
 	);
 }

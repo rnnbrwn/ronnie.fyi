@@ -1,26 +1,28 @@
 ---
 import IconClock from './IconClock.astro';
-import { getPostUrl, formatDateShort } from '../utils/getSortedPosts';
+import { getPostUrl, formatDateShort, formatShelfEventDate } from '../utils/getSortedPosts';
 import type { PostBase } from '../utils/types';
 
 interface Props extends PostBase {
-	description: string;
+	description?: string;
 	stale?: boolean;
+	isShelfEvent?: boolean;
+	href?: string;
 }
 
-const { id, title, pubDate, description, stale = false, draft = false } = Astro.props;
+const { id, title, pubDate, description, stale = false, draft = false, isShelfEvent = false, href } = Astro.props;
 ---
 
-<li>
-	<a href={getPostUrl(pubDate, id)}>
-		{title}
+<li class={isShelfEvent ? 'shelf-event' : undefined}>
+	<a href={href ?? getPostUrl(pubDate, id)}>
+{title}
 		{stale && <IconClock class='stale-icon' size={20} />}
 		{draft && <span class='draft-badge'>Draft</span>}
 	</a>
 	<time datetime={pubDate.toISOString()}>
-		{formatDateShort(pubDate)}
+		{isShelfEvent ? formatShelfEventDate(pubDate) : formatDateShort(pubDate)}
 	</time>
-	<p>{description}</p>
+	{description && <p>{description}</p>}
 </li>
 
 <style lang='scss'>
@@ -75,7 +77,13 @@ const { id, title, pubDate, description, stale = false, draft = false } = Astro.
 		margin-bottom: spacing.$space-1;
 	}
 
-	p {
+	li.shelf-event a {
+		font-size: typography.$font-size-lg;
+		font-weight: typography.$weight-regular;
+		text-transform: uppercase;
+	}
+
+p {
 		font-size: typography.$font-size-lg;
 		color: colors.$text-muted;
 		margin: 0;

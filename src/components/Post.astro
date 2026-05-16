@@ -3,7 +3,7 @@ import TagPills from './TagPills.astro';
 import IconBlueSky from './IconBlueSky.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getPostUrl, formatDate, formatRelativeDate } from '../utils/getSortedPosts';
+import { getPostUrl, formatDate, formatRelativeDate, formatShelfEventDate } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
 import BskyInteractors from './BskyInteractors.tsx';
 import type { PostBase } from '../utils/types';
@@ -16,6 +16,8 @@ interface Props extends PostBase {
 	image?: { url: string; alt: string; source?: string };
 	pinned?: boolean;
 	isDigest?: boolean;
+	isShelfEvent?: boolean;
+	rating?: number;
 	href?: string;
 	html?: string;
 	relativeDate?: boolean;
@@ -33,6 +35,8 @@ const {
 	pinned = false,
 	draft = false,
 	isDigest = false,
+	isShelfEvent = false,
+	rating,
 	href = getPostUrl(pubDate, id),
 	html,
 	relativeDate = false,
@@ -41,11 +45,16 @@ const {
 } = Astro.props;
 ---
 
-<section class={`post${isDigest ? ' post--digest' : ''}`} aria-labelledby={`post-title-${id}`}>
+<section class={`post${isDigest ? ' post--digest' : ''}${isShelfEvent ? ' post--shelf-event' : ''}`} aria-labelledby={`post-title-${id}`}>
 	<h2 id={`post-title-${id}`}>
 		{isDigest && <IconBlueSky class='bsky-icon' size={28} />}
 		{isDigest ? <span>{title}</span> : <a href={href}>{title}</a>}
 	</h2>
+	{isShelfEvent && (
+		<time class='shelf-event-date' datetime={pubDate.toISOString()}>
+			{formatShelfEventDate(pubDate)}
+		</time>
+	)}
 	{draft && <div class='draft-flag'>Draft</div>}
 	{pinned && <div class='highlight'>This is a pinned post</div>}
 	<div class='post-body prose'>
@@ -61,19 +70,26 @@ const {
 				</figure>
 			)
 		}
-		<p>{description}</p>
+		{description && <p>{description}</p>}
 		{html ? <Fragment set:html={html} /> : <slot />}
 		{
 			!isDigest && (
 				<div class='post-meta'>
-					<div class='published-date'>
-						Posted{' '}
-						<time datetime={pubDate.toISOString()}>
-							{relativeDate ? formatRelativeDate(pubDate) : formatDate(pubDate)}
-						</time>
-					</div>
-					<TagPills tags={tags} />
-					{bskyPostUri && (
+					{isShelfEvent && rating !== undefined && (
+						<div class='shelf-event-rating' aria-label={`Rating: ${rating} out of 5`}>
+							{'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
+						</div>
+					)}
+					{!isShelfEvent && (
+						<div class='published-date'>
+							Posted{' '}
+							<time datetime={pubDate.toISOString()}>
+								{relativeDate ? formatRelativeDate(pubDate) : formatDate(pubDate)}
+							</time>
+						</div>
+					)}
+					{!isShelfEvent && <TagPills tags={tags} />}
+					{!isShelfEvent && bskyPostUri && (
 						<div class='bsky-interactions'>
 							<BskyInteractors uri={bskyPostUri} initial={bskyInteractors} client:visible />
 						</div>
@@ -154,6 +170,7 @@ const {
 			height: spacing.$space-8;
 			color: colors.$tertiary;
 		}
+
 	}
 
 	.post {
@@ -185,6 +202,49 @@ const {
 				.post-meta {
 					margin-top: 0;
 					padding-top: spacing.$space-10;
+				}
+			}
+		}
+
+		&.post--shelf-event {
+			h2 {
+				font-size: typography.$font-size-xl;
+				font-weight: typography.$weight-regular;
+				color: map.get(colors.$dark-tones, 'tone-1');
+				text-transform: uppercase;
+				margin-bottom: spacing.$space-1;
+
+				:global(html[data-theme='dark']) & {
+					color: colors.$light;
+				}
+
+				&::before {
+					display: none;
+				}
+			}
+
+			.shelf-event-date {
+				@include typography.caption-text;
+				display: block;
+				font-weight: typography.$weight-bold;
+				color: colors.$dark;
+				margin-bottom: spacing.$space-3;
+
+				:global(html[data-theme='dark']) & {
+					color: colors.$light;
+				}
+			}
+
+			.post-body {
+				.post-meta {
+					margin-top: 0;
+					padding-top: 0;
+				}
+
+				.shelf-event-rating {
+					@include typography.meta-label;
+					color: colors.$primary;
+					letter-spacing: 2px;
 				}
 			}
 		}

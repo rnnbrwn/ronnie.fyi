@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'zod';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
@@ -34,4 +35,15 @@ const notes = defineCollection({
 	}),
 });
 
-export const collections = { blog, notes };
+const shelfEvents = defineCollection({
+	loader: glob({ pattern: '**/[^_]*.md', base: './src/data/shelf-events' }),
+	schema: z.object({
+		title: z.string(),
+		pubDate: z.coerce.date(),
+		bookTitle: z.string(),
+		bookSlug: z.string().optional(),
+		rating: z.number().min(0).max(5).optional(),
+	}),
+});
+
+export const collections = { blog, notes, 'shelf-events': shelfEvents };

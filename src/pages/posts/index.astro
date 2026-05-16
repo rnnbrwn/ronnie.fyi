@@ -2,13 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import PostListItem from '../../components/PostListItem.astro';
 import { getSortedPosts, formatMonthYear, isDraft } from '../../utils/getSortedPosts';
+import type { AnyPost } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
-const posts = allPosts.filter((p) => p.collection === 'blog').map((p) => p.entry);
+const posts = allPosts.filter((p) => p.collection === 'blog' || p.collection === 'shelf-events');
 
-const grouped: Record<string, typeof posts> = {};
+const grouped: Record<string, AnyPost[]> = {};
 for (const post of posts) {
-	const key = formatMonthYear(post.data.pubDate);
+	const key = formatMonthYear(post.entry.data.pubDate);
 	(grouped[key] ??= []).push(post);
 }
 const groupedPosts = Object.entries(grouped);
@@ -21,16 +22,21 @@ const groupedPosts = Object.entries(grouped);
 			<section>
 				<h2>{month}</h2>
 				<ul>
-					{monthPosts.map((post) => (
-						<PostListItem
-							id={post.id}
-							title={post.data.title}
-							pubDate={post.data.pubDate}
-							description={post.data.description}
-							stale={post.data.stale}
-							draft={isDraft(post.id)}
-						/>
-					))}
+					{monthPosts.map((post) => {
+						const isShelfEvent = post.collection === 'shelf-events';
+						return (
+							<PostListItem
+								id={post.entry.id}
+								title={post.entry.data.title}
+								pubDate={post.entry.data.pubDate}
+								description={'description' in post.entry.data ? post.entry.data.description : undefined}
+								stale={post.collection === 'blog' ? post.entry.data.stale : false}
+								draft={isDraft(post.entry.id)}
+								isShelfEvent={isShelfEvent}
+								href={isShelfEvent ? '/shelf' : undefined}
+							/>
+						);
+					})}
 				</ul>
 			</section>
 		))

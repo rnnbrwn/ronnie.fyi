@@ -1,7 +1,7 @@
 ---
 import Post from './Post.astro';
 import { getSortedPosts, getPostUrl, isEffectivelyPinned, isDraft } from '../utils/getSortedPosts';
-import type { BlogPost } from '../utils/getSortedPosts';
+import type { BlogPost, ShelfEventPost } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
 import { fetchBskyInteractors } from '../utils/bsky';
 
@@ -50,13 +50,19 @@ await Promise.all(
 {
 	posts.map((post) => {
 		const isDigest = post.collection === 'notes';
+		const isShelfEvent = post.collection === 'shelf-events';
 		const entry = post.entry;
-		const tags = post.collection === 'blog' ? entry.data.tags : [];
-		const image = post.collection === 'blog' ? entry.data.image : undefined;
-		const pinned = post.collection === 'blog' ? isEffectivelyPinned(entry.data) : false;
+		const tags = post.collection === 'blog' ? (post as BlogPost).entry.data.tags : [];
+		const image = post.collection === 'blog' ? (post as BlogPost).entry.data.image : undefined;
+		const pinned = post.collection === 'blog' ? isEffectivelyPinned((post as BlogPost).entry.data) : false;
 		const draft = isDraft(entry.id);
-		const href = isDigest ? `/notes/${entry.id}` : getPostUrl(entry.data.pubDate, entry.id);
+		const href = isDigest
+			? `/notes/${entry.id}`
+			: isShelfEvent
+			? '/shelf'
+			: getPostUrl(entry.data.pubDate, entry.id);
 		const html = shiftHeadings(entry.rendered?.html ?? '');
+		const rating = isShelfEvent ? (post as ShelfEventPost).entry.data.rating : undefined;
 
 		return (
 			<Post
@@ -68,6 +74,8 @@ await Promise.all(
 				pinned={pinned}
 				draft={draft}
 				isDigest={isDigest}
+				isShelfEvent={isShelfEvent}
+				rating={rating}
 				href={href}
 				html={html}
 				relativeDate={relativeDate}
