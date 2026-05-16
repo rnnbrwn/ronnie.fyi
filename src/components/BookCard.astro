@@ -27,7 +27,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 });
 ---
 
-<li class='book-card' data-series={series?.series.name} data-authors={authorsList.join('|')}>
+<li id={`book-${ub.book.id}`} class='book-card' data-series={series?.series.name} data-authors={authorsList.join('|')}>
 	<a class='book-cover-link' href={hardcoverUrl} target='_blank' rel='noopener noreferrer'>
 		{ub.book.image
 			? <img src={ub.book.image.url} alt={ub.book.title} loading='lazy' />

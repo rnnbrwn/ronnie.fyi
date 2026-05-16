@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { getShelf } from '../../../utils/hardcover';
 import Base from '../../../layouts/Base.astro';
 import TagPills from '../../../components/TagPills.astro';
 import IconClock from '../../../components/IconClock.astro';
@@ -17,23 +18,30 @@ export async function getStaticPaths() {
 	const posts = (await getCollection('blog'))
 		.filter((p) => new Date(p.data.pubDate) <= now)
 		.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+
+	const { currentlyReading, readByYear } = await getShelf();
+	const allShelfBooks = [...currentlyReading, ...[...readByYear.values()].flat()];
+	const bookById = new Map(allShelfBooks.map((ub) => [ub.book.id, { id: ub.book.id, title: ub.book.title }]));
+
 	return posts.map((post, index) => {
 		const year = String(post.data.pubDate.getFullYear());
 		const month = String(post.data.pubDate.getMonth() + 1).padStart(2, '0');
 		const prev = posts[index + 1];
 		const next = posts[index - 1];
+		const shelfBooks = (post.data.hardcoverIds ?? []).map((id) => bookById.get(id)).filter((b) => b != null);
 		return {
 			params: { year, month, slug: post.id },
 			props: {
 				post,
 				prevPost: prev ? { url: getPostUrl(prev.data.pubDate, prev.id), title: prev.data.title } : null,
 				nextPost: next ? { url: getPostUrl(next.data.pubDate, next.id), title: next.data.title } : null,
+				shelfBooks,
 			},
 		};
 	});
 }
 
-const { post, prevPost, nextPost } = Astro.props;
+const { post, prevPost, nextPost, shelfBooks } = Astro.props;
 const { year, month } = Astro.params;
 const { Content } = await render(post);
 
@@ -91,6 +99,14 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 					<a href='/posts' class='back-link'>All posts</a>
 					<a href={`/${year}/${month}`} class='month-link'>{monthLabel}</a>
 					<a href='/tags' class='tags-link'>All tags</a>
+					{shelfBooks.length > 0 && (
+						<div class='shelf-section'>
+							<p class='shelf-label'>On my shelf</p>
+							{shelfBooks.map((book) => (
+								<a href={`/shelf#book-${book.id}`} class='shelf-link'>{book.title}</a>
+							))}
+						</div>
+					)}
 					{
 						post.data.bskyPostUri && (
 							<div class='bsky-interactions'>
@@ -255,6 +271,32 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 	.back-link,
 	.month-link,
 	.tags-link {
+		font-family: typography.$font-body;
+		font-size: typography.$font-size-md;
+		@include layout.body-link-full;
+	}
+
+	.shelf-section {
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		gap: spacing.$space-3;
+		width: 100%;
+		padding-top: spacing.$space-4;
+		border-top: spacing.$space-1 solid map.get(colors.$dark-tones, 'tone-5');
+	}
+
+	.shelf-label {
+		@include typography.meta-label;
+		color: colors.$text-muted;
+		margin: 0;
+
+		:global(html[data-theme='dark']) & {
+			color: map.get(colors.$light-tones, 'tone-2');
+		}
+	}
+
+	.shelf-link {
 		font-family: typography.$font-body;
 		font-size: typography.$font-size-md;
 		@include layout.body-link-full;
