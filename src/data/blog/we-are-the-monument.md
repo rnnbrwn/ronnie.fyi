@@ -5,7 +5,7 @@ description: "Scottish artist Nathan Coley's text-based installation on the roof
 tags: ['art', 'glasgow', 'scotland', 'nathan coley', 'glasgow dental hospital and school']
 stale: false
 pinned: false
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mlyk3y7hr42c"
 image:
   url: 'we-are-the-monument.jpg'
   alt: '"We Are The Monument" lettering displayed on the rooftop of the Glasgow Dental Hospital'
