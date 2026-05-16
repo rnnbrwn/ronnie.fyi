@@ -97,6 +97,7 @@ const postsByBookId = new Map(
 <style lang='scss'>
 	@use '../styles/abstracts/breakpoints';
 	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
 	@use '../styles/abstracts/typography';
 
@@ -113,14 +114,11 @@ const postsByBookId = new Map(
 		font-size: typography.$font-size-md;
 
 		button {
-			background: none;
-			border: none;
-			cursor: pointer;
+			@include layout.button-reset;
 			font-family: typography.$font-body;
 			font-size: typography.$font-size-md;
 			color: colors.$primary;
 			text-decoration: underline;
-			padding: 0;
 
 			&:hover {
 				text-decoration: none;
@@ -135,8 +133,7 @@ const postsByBookId = new Map(
 	}
 
 	.book-grid {
-		list-style: none;
-		padding: 0;
+		@include layout.list-reset;
 		margin: 0;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));

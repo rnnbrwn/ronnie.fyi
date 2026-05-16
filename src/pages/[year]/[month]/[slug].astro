@@ -200,11 +200,7 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			}
 
 			a {
-				@include layout.body-link;
-			}
-
-			:global(html[data-theme='dark']) & a {
-				@include layout.body-link-on-dark;
+				@include layout.body-link-full;
 			}
 		}
 	}

@@ -61,8 +61,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	@use '../styles/abstracts/typography';
 	@use 'sass:map';
 
-	.book-card {
-		display: flex;
+	.book-card {		display: flex;
 		flex-direction: column;
 	}
 
@@ -104,54 +103,37 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 		}
 	}
 
-	.no-cover-title {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-sm;
+	.no-cover-title {		font-size: typography.$font-size-sm;
 		font-weight: typography.$weight-bold;
 		color: colors.$light;
 		line-height: typography.$leading-snug;
-		display: -webkit-box;
-		-webkit-line-clamp: 4;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+		@include typography.line-clamp(4);
 
 		:global(html[data-theme='dark']) & {
 			color: colors.$dark;
 		}
 	}
 
-	.no-cover-author {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-sm;
+	.no-cover-author {		font-size: typography.$font-size-sm;
 		font-weight: typography.$weight-regular;
 		color: map.get(colors.$light-tones, 'tone-2');
 		line-height: typography.$leading-snug;
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+		@include typography.line-clamp(2);
 
 		:global(html[data-theme='dark']) & {
 			color: colors.$text-muted;
 		}
 	}
 
-	.book-title {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
+	.book-title {		font-size: typography.$font-size-md;
 		font-weight: typography.$weight-semibold;
 		margin-top: spacing.$space-2;
 		margin-bottom: spacing.$space-1;
 		line-height: typography.$leading-snug;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+		@include typography.line-clamp(3);
 	}
 
-	.book-author {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
+	.book-author {		font-size: typography.$font-size-md;
 		color: colors.$text-muted;
 		margin: 0;
 		line-height: typography.$leading-snug;
@@ -162,15 +144,9 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	}
 
 	.book-author-btn {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
+		@include layout.button-reset;		font-size: typography.$font-size-md;
 		color: inherit;
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		text-decoration: underline;
-		text-decoration-style: dotted;
+		@include layout.dotted-link;
 
 		&:hover {
 			color: colors.$primary;
@@ -182,20 +158,14 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	}
 
 	.book-series {
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
+		@include layout.button-reset;		font-size: typography.$font-size-md;
 		font-style: italic;
 		font-weight: typography.$weight-semibold;
 		color: colors.$text-muted;
 		margin: 0;
-		padding: 0;
 		line-height: typography.$leading-snug;
-		background: none;
-		border: none;
-		cursor: pointer;
 		text-align: left;
-		text-decoration: underline;
-		text-decoration-style: dotted;
+		@include layout.dotted-link;
 
 		&:hover {
 			color: colors.$primary;
@@ -216,9 +186,7 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 
 	.book-recommended {
 		display: inline-block;
-		align-self: flex-start;
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-sm;
+		align-self: flex-start;		font-size: typography.$font-size-sm;
 		font-weight: typography.$weight-semibold;
 		letter-spacing: typography.$tracking-wider;
 		text-transform: uppercase;
@@ -232,12 +200,9 @@ const series = ub.book.book_series.find(({ position, series: s }) => {
 	}
 
 	.book-post-link {
-		display: inline-block;
-		font-family: typography.$font-body;
-		font-size: typography.$font-size-md;
+		display: inline-block;		font-size: typography.$font-size-md;
 		color: colors.$text-muted;
-		text-decoration: underline;
-		text-decoration-style: dotted;
+		@include layout.dotted-link;
 		margin-top: spacing.$space-1;
 
 		&:hover {

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import PostListItem from '../../../components/PostListItem.astro';
+import ArchiveBackLink from '../../../components/ArchiveBackLink.astro';
 import { formatMonthYear } from '../../../utils/getSortedPosts';
 
 export async function getStaticPaths() {
@@ -37,9 +38,7 @@ const monthLabel = formatMonthYear(new Date(Number(year), Number(month) - 1, 1))
 
 <Base title={`Posts from ${monthLabel}`}>
 	<h1>Posts from {monthLabel}</h1>
-	<nav aria-label='Archive navigation'>
-		<a href='/posts' class='archive-back-link'>All posts</a>
-	</nav>
+	<ArchiveBackLink href='/posts' label='All posts' />
 	<ul>
 		{
 			posts.map((post) => (

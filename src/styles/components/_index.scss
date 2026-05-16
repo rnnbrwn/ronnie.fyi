@@ -162,14 +162,18 @@
   flex-wrap: wrap;
 }
 
-.skeet-display-name {
-  font-weight: typography.$weight-bold;
+@mixin skeet-link {
   color: colors.$dark;
   text-decoration: none;
 
   &:hover {
     color: colors.$tertiary;
   }
+}
+
+.skeet-display-name {
+  font-weight: typography.$weight-bold;
+  @include skeet-link;
 
   &:visited {
     color: colors.$dark;
@@ -237,12 +241,7 @@
 .skeet-quote-name {
   font-weight: typography.$weight-bold;
   font-size: typography.$font-size-sm;
-  color: colors.$dark;
-  text-decoration: none;
-
-  &:hover {
-    color: colors.$tertiary;
-  }
+  @include skeet-link;
 }
 
 .skeet-quote-handle {
@@ -278,12 +277,7 @@
 
   a {
     font-weight: typography.$weight-semibold;
-    color: colors.$dark;
-    text-decoration: none;
-
-    &:hover {
-      color: colors.$tertiary;
-    }
+    @include skeet-link;
   }
 }
 
@@ -318,7 +312,7 @@
   font-size: typography.$font-size-lg;
   display: inline-block;
   margin-bottom: spacing.$space-8;
-  @include layout.body-link;
+  @include layout.body-link-full;
 }
 
 .youtube-embed {

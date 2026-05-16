@@ -89,6 +89,18 @@ $avatar-size: 28px;
   list-style: none;
 }
 
+@mixin button-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+@mixin dotted-link {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
 @mixin h1-saffron-underlay {
   position: relative;
   width: fit-content;

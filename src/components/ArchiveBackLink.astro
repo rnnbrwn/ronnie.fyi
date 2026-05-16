@@ -1,0 +1,12 @@
+---
+interface Props {
+	href: string;
+	label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<nav aria-label='Archive navigation'>
+	<a href={href} class='archive-back-link'>{label}</a>
+</nav>

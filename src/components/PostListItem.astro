@@ -1,14 +1,11 @@
 ---
 import IconClock from './IconClock.astro';
 import { getPostUrl, formatDateShort } from '../utils/getSortedPosts';
+import type { PostBase } from '../utils/types';
 
-interface Props {
-	id: string;
-	title: string;
-	pubDate: Date;
+interface Props extends PostBase {
 	description: string;
 	stale?: boolean;
-	draft?: boolean;
 }
 
 const { id, title, pubDate, description, stale = false, draft = false } = Astro.props;
