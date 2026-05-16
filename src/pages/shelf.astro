@@ -65,6 +65,7 @@ const postsByBookId = new Map(
 		});
 		bannerLabel.textContent = label;
 		banner.style.display = '';
+		history.pushState({ filtered: true }, '');
 	}
 
 	function clearFilter() {
@@ -92,6 +93,8 @@ const postsByBookId = new Map(
 	});
 
 	clearBtn.addEventListener('click', clearFilter);
+
+	window.addEventListener('popstate', clearFilter);
 </script>
 
 <style lang='scss'>
