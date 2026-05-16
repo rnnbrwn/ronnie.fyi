@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PostListItem from '../../components/PostListItem.astro';
 import { getSortedPosts, formatMonthYear, isDraft } from '../../utils/getSortedPosts';
-import type { AnyPost } from '../../utils/getSortedPosts';
+import type { AnyPost, ShelfEventPost } from '../../utils/getSortedPosts';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.filter((p) => p.collection === 'blog' || p.collection === 'shelf-events');
@@ -24,6 +24,7 @@ const groupedPosts = Object.entries(grouped);
 				<ul>
 					{monthPosts.map((post) => {
 						const isShelfEvent = post.collection === 'shelf-events';
+						const bookSlug = isShelfEvent ? (post as ShelfEventPost).entry.data.bookSlug : undefined;
 						return (
 							<PostListItem
 								id={post.entry.id}
@@ -33,7 +34,7 @@ const groupedPosts = Object.entries(grouped);
 								stale={post.collection === 'blog' ? post.entry.data.stale : false}
 								draft={isDraft(post.entry.id)}
 								isShelfEvent={isShelfEvent}
-								href={isShelfEvent ? '/shelf' : undefined}
+								href={isShelfEvent ? `/shelf${bookSlug ? `#book-${bookSlug}` : ''}` : undefined}
 							/>
 						);
 					})}

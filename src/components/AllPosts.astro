@@ -56,10 +56,11 @@ await Promise.all(
 		const image = post.collection === 'blog' ? (post as BlogPost).entry.data.image : undefined;
 		const pinned = post.collection === 'blog' ? isEffectivelyPinned((post as BlogPost).entry.data) : false;
 		const draft = isDraft(entry.id);
+		const shelfBookSlug = isShelfEvent ? (post as ShelfEventPost).entry.data.bookSlug : undefined;
 		const href = isDigest
 			? `/notes/${entry.id}`
 			: isShelfEvent
-			? '/shelf'
+			? `/shelf${shelfBookSlug ? `#book-${shelfBookSlug}` : ''}`
 			: getPostUrl(entry.data.pubDate, entry.id);
 		const html = shiftHeadings(entry.rendered?.html ?? '');
 		const rating = isShelfEvent ? (post as ShelfEventPost).entry.data.rating : undefined;
