@@ -48,7 +48,12 @@ const {
 <section class={`post${isDigest ? ' post--digest' : ''}${isShelfEvent ? ' post--shelf-event' : ''}`} aria-labelledby={`post-title-${id}`}>
 	<h2 id={`post-title-${id}`}>
 		{isDigest && <IconBlueSky class='bsky-icon' size={28} />}
-		{isDigest ? <span>{title}</span> : <a href={href}>{title}</a>}
+		{isDigest
+			? <span>{title}</span>
+			: isShelfEvent
+			? <a href={href}><span class='shelf-event-prefix'>Finished:</span> {title.replace(/^Finished:\s*/, '')}</a>
+			: <a href={href}>{title}</a>
+		}
 	</h2>
 	{isShelfEvent && (
 		<time class='shelf-event-date' datetime={pubDate.toISOString()}>
@@ -220,6 +225,11 @@ const {
 
 				&::before {
 					display: none;
+				}
+
+				.shelf-event-prefix {
+					color: colors.$text-muted;
+					font-weight: typography.$weight-regular;
 				}
 			}
 

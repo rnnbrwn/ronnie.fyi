@@ -1,0 +1,40 @@
+name: Sync Shelf Events
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Deploy to Dreamhost
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync shelf events from Hardcover
+        env:
+          HARDCOVER_API_TOKEN: ${{ secrets.HARDCOVER_API_TOKEN }}
+        run: node scripts/sync-shelf-events.mjs
+
+      - name: Commit new shelf events
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/shelf-events/
+          git diff --cached --quiet || git commit -m "chore: add shelf events for newly read books"
+          git push
