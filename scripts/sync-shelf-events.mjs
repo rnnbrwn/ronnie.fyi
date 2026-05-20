@@ -28,15 +28,28 @@ function formatDate(dateStr) {
 	return dateStr.split('T')[0];
 }
 
-function getExistingBookSlugs() {
-	const slugs = new Set();
+function getExistingFiles() {
+	const files = new Map(); // slug → { filepath, review }
 	for (const file of readdirSync(SHELF_EVENTS_DIR)) {
 		if (!file.endsWith('.md')) continue;
-		const content = readFileSync(join(SHELF_EVENTS_DIR, file), 'utf-8');
+		const filepath = join(SHELF_EVENTS_DIR, file);
+		const content = readFileSync(filepath, 'utf-8');
 		const fm = parseFrontmatter(content);
-		if (fm.bookSlug) slugs.add(fm.bookSlug);
+		if (fm.bookSlug) files.set(fm.bookSlug, { filepath, review: fm.review ?? null });
 	}
-	return slugs;
+	return files;
+}
+
+function updateReviewInFile(filepath, review) {
+	let content = readFileSync(filepath, 'utf-8');
+	const reviewLine = `review: ${yamlStr(review)}`;
+	if (/^review:/m.test(content)) {
+		content = content.replace(/^review:.*$/m, reviewLine);
+	} else {
+		// Insert before the closing --- (opening --- is at position 0, not preceded by \n)
+		content = content.replace(/(\n)---(\n|$)/, `\n${reviewLine}\n---$2`);
+	}
+	writeFileSync(filepath, content, 'utf-8');
 }
 
 const LOOKBACK_DAYS = 30;
@@ -82,18 +95,31 @@ async function fetchReadBooks() {
 }
 
 async function main() {
-	const existingSlugs = getExistingBookSlugs();
+	const existingFiles = getExistingFiles();
 	const readBooks = await fetchReadBooks();
 
 	let created = 0;
+	let updated = 0;
+
 	for (const ub of readBooks) {
 		const { title, slug } = ub.book;
-		if (!slug || existingSlugs.has(slug)) continue;
+		if (!slug) continue;
+
+		const review = ub.review ? stripHtml(ub.review) : null;
+
+		if (existingFiles.has(slug)) {
+			const { filepath, review: existingReview } = existingFiles.get(slug);
+			if (review && review !== existingReview) {
+				updateReviewInFile(filepath, review);
+				console.log(`Updated review: ${slug}`);
+				updated++;
+			}
+			continue;
+		}
 
 		const finishedAt = ub.user_book_reads[0]?.finished_at ?? null;
 		const pubDate = formatDate(finishedAt);
 		const rating = ub.rating != null ? Math.round(ub.rating) : null;
-		const review = ub.review ? stripHtml(ub.review) : null;
 
 		const lines = [
 			'---',
@@ -112,10 +138,11 @@ async function main() {
 		created++;
 	}
 
-	if (created === 0) {
-		console.log('No new shelf events to create.');
+	if (created === 0 && updated === 0) {
+		console.log('No changes.');
 	} else {
-		console.log(`Created ${created} shelf event(s).`);
+		if (created) console.log(`Created ${created} shelf event(s).`);
+		if (updated) console.log(`Updated ${updated} shelf event(s).`);
 	}
 }
 
