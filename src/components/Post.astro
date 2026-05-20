@@ -83,9 +83,14 @@ const {
 		{
 			!isDigest && (
 				<div class='post-meta'>
-					{isShelfEvent && rating !== undefined && (
-						<div class='shelf-event-rating' aria-label={`Rating: ${rating} out of 5`}>
-							{'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
+					{isShelfEvent && (
+						<div class='shelf-event-rating'>
+							{rating !== undefined && (
+								<span aria-label={`Rating: ${rating} out of 5`}>
+									{'★'.repeat(rating)}{'☆'.repeat(5 - rating)}
+								</span>
+							)}
+							<a href='https://hardcover.app/@rnnbrwn/reviews'>More on Hardcover.app</a>
 						</div>
 					)}
 					{!isShelfEvent && (
@@ -255,9 +260,24 @@ const {
 				}
 
 				.shelf-event-rating {
-					@include typography.meta-label;
-					color: colors.$primary;
-					letter-spacing: 2px;
+					display: flex;
+					align-items: center;
+					gap: spacing.$space-4;
+
+					span {
+						@include typography.meta-label;
+						color: colors.$primary;
+						letter-spacing: 2px;
+					}
+
+					a {
+						@include typography.meta-label;
+						color: colors.$text-muted;
+
+						&:hover {
+							color: colors.$primary;
+						}
+					}
 				}
 			}
 		}
