@@ -12,6 +12,17 @@ function yamlStr(value) {
 	return `'${value}'`;
 }
 
+function stripHtml(html) {
+	return html
+		.replace(/<[^>]+>/g, '')
+		.replace(/&amp;/g, '&')
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.trim();
+}
+
 function formatDate(dateStr) {
 	if (!dateStr) return new Date().toISOString().split('T')[0];
 	return dateStr.split('T')[0];
@@ -50,6 +61,7 @@ async function fetchReadBooks() {
 							user_book_reads: { finished_at: { _gte: "${cutoffStr}" } }
 						}) {
 							rating
+							review
 							user_book_reads(order_by: { finished_at: desc_nulls_last }, limit: 1) {
 								finished_at
 							}
@@ -81,6 +93,7 @@ async function main() {
 		const finishedAt = ub.user_book_reads[0]?.finished_at ?? null;
 		const pubDate = formatDate(finishedAt);
 		const rating = ub.rating != null ? Math.round(ub.rating) : null;
+		const review = ub.review ? stripHtml(ub.review) : null;
 
 		const lines = [
 			'---',
@@ -90,6 +103,7 @@ async function main() {
 			`bookSlug: ${yamlStr(slug)}`,
 		];
 		if (rating !== null) lines.push(`rating: ${rating}`);
+		if (review) lines.push(`review: ${yamlStr(review)}`);
 		lines.push('---', '');
 
 		const filename = `${slug}-finished.md`;

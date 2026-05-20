@@ -43,6 +43,7 @@ const shelfEvents = defineCollection({
 		bookTitle: z.string(),
 		bookSlug: z.string().optional(),
 		rating: z.number().min(0).max(5).optional(),
+		review: z.string().optional(),
 	}),
 });
 

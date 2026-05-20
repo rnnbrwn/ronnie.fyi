@@ -64,6 +64,7 @@ await Promise.all(
 			: getPostUrl(entry.data.pubDate, entry.id);
 		const html = shiftHeadings(entry.rendered?.html ?? '');
 		const rating = isShelfEvent ? (post as ShelfEventPost).entry.data.rating : undefined;
+		const review = isShelfEvent ? (post as ShelfEventPost).entry.data.review : undefined;
 
 		return (
 			<Post
@@ -77,6 +78,7 @@ await Promise.all(
 				isDigest={isDigest}
 				isShelfEvent={isShelfEvent}
 				rating={rating}
+				review={review}
 				href={href}
 				html={html}
 				relativeDate={relativeDate}

@@ -18,6 +18,7 @@ interface Props extends PostBase {
 	isDigest?: boolean;
 	isShelfEvent?: boolean;
 	rating?: number;
+	review?: string;
 	href?: string;
 	html?: string;
 	relativeDate?: boolean;
@@ -37,6 +38,7 @@ const {
 	isDigest = false,
 	isShelfEvent = false,
 	rating,
+	review,
 	href = getPostUrl(pubDate, id),
 	html,
 	relativeDate = false,
@@ -76,6 +78,7 @@ const {
 			)
 		}
 		{description && <p>{description}</p>}
+		{isShelfEvent && review && <p class='shelf-event-review'>{review}</p>}
 		{html ? <Fragment set:html={html} /> : <slot />}
 		{
 			!isDigest && (
