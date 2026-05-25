@@ -29,6 +29,7 @@ const { id, title, pubDate, description, stale = false, draft = false, isShelfEv
 </li>
 
 <style lang='scss'>
+	@use 'sass:map';
 	@use '../styles/abstracts/colors';
 	@use '../styles/abstracts/layout';
 	@use '../styles/abstracts/spacing';
@@ -87,6 +88,10 @@ const { id, title, pubDate, description, stale = false, draft = false, isShelfEv
 
 		.shelf-event-prefix {
 			color: colors.$text-muted;
+
+			:global(html[data-theme='dark']) & {
+				color: map.get(colors.$light-tones, 'tone-2');
+			}
 		}
 	}
 

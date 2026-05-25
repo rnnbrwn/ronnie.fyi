@@ -238,6 +238,10 @@ const {
 				.shelf-event-prefix {
 					color: colors.$text-muted;
 					font-weight: typography.$weight-regular;
+
+					:global(html[data-theme='dark']) & {
+						color: map.get(colors.$light-tones, 'tone-2');
+					}
 				}
 			}
 
