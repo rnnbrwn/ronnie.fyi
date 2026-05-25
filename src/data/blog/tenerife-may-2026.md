@@ -3,7 +3,7 @@ title: 'No hablo Español'
 pubDate: 2026-05-25 12:00
 description: 'A week in Tenerife reminds me that making the effort to speak someone''s language, even badly, is worth it'
 tags: ['travel', 'language', 'spain', 'tenerife']
-postToBsky: true
+bskyPostUri: "at://did:plc:dgjcc7qnywm72fj43nmuvjlh/app.bsky.feed.post/3mmomdicjv52h"
 stale: false
 pinned: false
 image:
