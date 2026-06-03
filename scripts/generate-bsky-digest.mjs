@@ -186,7 +186,7 @@ async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) 
 			const avatars = likesData.likes
 				.map(({ actor }) => `<a class="bsky-avatar" href="https://bsky.app/profile/${actor.handle || actor.did}" target="_blank" rel="noopener noreferrer"><img src="${actor.avatar}" alt="${actor.displayName || actor.handle}" title="${actor.displayName || actor.handle}" /></a>`)
 				.join('');
-			footerHtml = `\n<div class="skeet-footer"><p class="bsky-likes">${avatars}</p></div>`;
+			footerHtml = `\n<div class="skeet-footer"><p class="bsky-avatars">${avatars}</p></div>`;
 		}
 	}
 
