@@ -8,7 +8,7 @@ interface Props {
 	initial?: BskyActor[];
 }
 
-export default function BskyInteractors({ uri, initial = [] }: Props) {
+export default function BskyInteractors({ uri, initial = [] }: Props) { // Preact island that fetches and renders Bluesky likers/reposters as avatar links on mount
 	const [interactors, setInteractors] = useState<BskyActor[]>(initial);
 
 	useEffect(() => {

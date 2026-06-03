@@ -4,7 +4,7 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 
 const imageFiles = import.meta.glob('/src/assets/images/*', { eager: true });
 
-export async function GET(context) {
+export async function GET(context) { // Astro API route that generates the RSS feed with full post content and feature images
 	const now = new Date();
 	const posts = await getCollection('blog', ({ data }) => new Date(data.pubDate) <= now);
 	const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);

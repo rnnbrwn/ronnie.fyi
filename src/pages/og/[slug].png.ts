@@ -6,7 +6,7 @@ import { Resvg } from '@resvg/resvg-js';
 import sharp from 'sharp';
 import type { APIRoute } from 'astro';
 
-function getLogoDataUri(color: string): string {
+function getLogoDataUri(color: string): string { // extracts the SVG from Logo.astro, fills it with the given color, and returns it as a base64 data URI
 	const logoPath = join(process.cwd(), 'src/components/Logo.astro');
 	const raw = readFileSync(logoPath, 'utf-8');
 	const svgMatch = raw.match(/<svg[\s\S]*<\/svg>/);
@@ -19,7 +19,7 @@ function getLogoDataUri(color: string): string {
 	return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths() { // tells Astro which posts need an OG image route (those with both a feature image and postToBsky)
 	const posts = await getCollection('blog');
 	return posts
 		.filter((post) => post.data.image?.url && post.data.postToBsky)
@@ -29,7 +29,7 @@ export async function getStaticPaths() {
 		}));
 }
 
-export const GET: APIRoute = async ({ props, params }) => {
+export const GET: APIRoute = async ({ props, params }) => { // generates a 1200×630 OG image PNG for a post using Satori and sharp
 	const { post } = props;
 
 	const cachedPath = join(process.cwd(), 'dist/og', `${params.slug}.png`);
@@ -53,7 +53,7 @@ export const GET: APIRoute = async ({ props, params }) => {
 	const mimeType = ext === 'png' && !needsConversion ? 'image/png' : 'image/jpeg';
 	const imageBase64 = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
 
-	const ogBackground = (src: string) => ({
+	const ogBackground = (src: string) => ({ // full-bleed background image layer
 		type: 'img',
 		props: {
 			src,
@@ -61,7 +61,7 @@ export const GET: APIRoute = async ({ props, params }) => {
 		},
 	});
 
-	const ogGradientOverlay = () => ({
+	const ogGradientOverlay = () => ({ // dark gradient overlay to improve text legibility
 		type: 'div',
 		props: {
 			style: {
@@ -75,7 +75,7 @@ export const GET: APIRoute = async ({ props, params }) => {
 		},
 	});
 
-	const ogLogo = () => ({
+	const ogLogo = () => ({ // site logo positioned top-right
 		type: 'img',
 		props: {
 			src: getLogoDataUri('#f6f4f5'),
@@ -83,7 +83,7 @@ export const GET: APIRoute = async ({ props, params }) => {
 		},
 	});
 
-	const ogTitle = (title: string) => ({
+	const ogTitle = (title: string) => ({ // post title text block with accent rule, positioned bottom-left
 		type: 'div',
 		props: {
 			style: {

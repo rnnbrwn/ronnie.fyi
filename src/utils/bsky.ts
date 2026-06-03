@@ -5,12 +5,12 @@ export interface BskyActor {
 	avatar?: string;
 }
 
-export function bskyPostUrl(uri: string): string {
+export function bskyPostUrl(uri: string): string { // converts an AT Protocol URI to a bsky.app post URL
 	const parts = uri.split('/');
 	return `https://bsky.app/profile/${parts[2]}/post/${parts.at(-1)}`;
 }
 
-export async function fetchBskyInteractors(uri: string): Promise<BskyActor[]> {
+export async function fetchBskyInteractors(uri: string): Promise<BskyActor[]> { // fetches all unique likers and reposters for a post, deduped by DID
 	const encoded = encodeURIComponent(uri);
 	const base = 'https://public.api.bsky.app/xrpc';
 	const seen = new Set<string>();
