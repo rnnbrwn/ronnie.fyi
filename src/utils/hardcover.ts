@@ -25,7 +25,7 @@ export interface ShelfData {
 	readByYear: Map<number, UserBook[]>;
 }
 
-async function fetchGraphQL(query: string, variables = {}): Promise<any> {
+async function fetchGraphQL(query: string, variables = {}): Promise<any> { // sends a GraphQL query to the Hardcover API and returns the data payload
 	const token = import.meta.env.HARDCOVER_API_TOKEN;
 	try {
 		const response = await fetch(HARDCOVER_API_URL, {
@@ -44,7 +44,7 @@ async function fetchGraphQL(query: string, variables = {}): Promise<any> {
 	}
 }
 
-export async function getShelf(): Promise<ShelfData> {
+export async function getShelf(): Promise<ShelfData> { // fetches the user's shelf from Hardcover and organises books into currently-reading and read-by-year groups
 	const data = await fetchGraphQL(`
 		query GetShelf {
 			me {

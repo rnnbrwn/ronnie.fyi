@@ -7,12 +7,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const SHELF_EVENTS_DIR = join(__dirname, '..', 'src', 'data', 'shelf-events');
 const HARDCOVER_API_URL = 'https://api.hardcover.app/v1/graphql';
 
-function yamlStr(value) {
+function yamlStr(value) { // safely wraps a string value in YAML single quotes, escaping any existing single quotes
 	if (value.includes("'")) return `'${value.replace(/'/g, "''")}'`;
 	return `'${value}'`;
 }
 
-function stripHtml(html) {
+function stripHtml(html) { // strips HTML tags and decodes common HTML entities to plain text
 	return html
 		.replace(/<[^>]+>/g, '')
 		.replace(/&amp;/g, '&')
@@ -23,12 +23,12 @@ function stripHtml(html) {
 		.trim();
 }
 
-function formatDate(dateStr) {
+function formatDate(dateStr) { // extracts the YYYY-MM-DD date portion from an ISO string, defaulting to today
 	if (!dateStr) return new Date().toISOString().split('T')[0];
 	return dateStr.split('T')[0];
 }
 
-function getExistingFiles() {
+function getExistingFiles() { // reads all shelf-event .md files and returns a Map of bookSlug → {filepath, review}
 	const files = new Map(); // slug → { filepath, review }
 	for (const file of readdirSync(SHELF_EVENTS_DIR)) {
 		if (!file.endsWith('.md')) continue;
@@ -40,7 +40,7 @@ function getExistingFiles() {
 	return files;
 }
 
-function updateReviewInFile(filepath, review) {
+function updateReviewInFile(filepath, review) { // updates or inserts the review field in a shelf event file's frontmatter
 	let content = readFileSync(filepath, 'utf-8');
 	const reviewLine = `review: ${yamlStr(review)}`;
 	if (/^review:/m.test(content)) {
@@ -54,7 +54,7 @@ function updateReviewInFile(filepath, review) {
 
 const LOOKBACK_DAYS = 30;
 
-async function fetchReadBooks() {
+async function fetchReadBooks() { // queries the Hardcover API for books marked as read within the lookback window
 	const token = process.env.HARDCOVER_API_TOKEN;
 	if (!token) throw new Error('HARDCOVER_API_TOKEN is not set');
 
@@ -94,7 +94,7 @@ async function fetchReadBooks() {
 	return data?.me?.[0]?.user_books ?? [];
 }
 
-async function main() {
+async function main() { // syncs recently-read Hardcover books to local shelf-event .md files, creating new ones or updating reviews
 	const existingFiles = getExistingFiles();
 	const readBooks = await fetchReadBooks();
 

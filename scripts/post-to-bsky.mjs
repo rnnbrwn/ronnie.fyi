@@ -12,19 +12,19 @@ const OG_IMAGE_WIDTH = 800;
 const OG_IMAGE_QUALITY = 85;
 
 
-function rewriteFrontmatter(content, uri) {
+function rewriteFrontmatter(content, uri) { // replaces postToBsky: true with bskyPostUri in post frontmatter
 	return content.replace(
 		/^(---\n[\s\S]*?)postToBsky:\s*true(\n[\s\S]*?---)/,
 		`$1bskyPostUri: "${uri}"$2`
 	);
 }
 
-function slugFromFilename(filename) {
+function slugFromFilename(filename) { // strips the .md extension from a filename to produce a URL slug
 	return filename.replace(/\.md$/, '');
 }
 
 
-async function createSession(identifier, password) {
+async function createSession(identifier, password) { // authenticates with Bluesky and returns an access token and DID
 	const res = await fetch('https://bsky.social/xrpc/com.atproto.server.createSession', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -34,7 +34,7 @@ async function createSession(identifier, password) {
 	return res.json();
 }
 
-async function uploadBlob(accessJwt, imageBuffer, mimeType) {
+async function uploadBlob(accessJwt, imageBuffer, mimeType) { // uploads a binary blob (image) to Bluesky and returns the blob reference
 	const res = await fetch('https://bsky.social/xrpc/com.atproto.repo.uploadBlob', {
 		method: 'POST',
 		headers: {
@@ -48,7 +48,7 @@ async function uploadBlob(accessJwt, imageBuffer, mimeType) {
 	return data.blob;
 }
 
-async function createPost(accessJwt, did, record) {
+async function createPost(accessJwt, did, record) { // publishes a post record to Bluesky and returns the result including the post URI
 	const res = await fetch('https://bsky.social/xrpc/com.atproto.repo.createRecord', {
 		method: 'POST',
 		headers: {
@@ -65,7 +65,7 @@ async function createPost(accessJwt, did, record) {
 	return res.json();
 }
 
-async function main() {
+async function main() { // finds posts flagged for Bluesky, authenticates, and posts each with an OG image embed
 	const identifier = process.env.BSKY_IDENTIFIER;
 	const password = process.env.BSKY_APP_PASSWORD;
 	if (!identifier || !password) {

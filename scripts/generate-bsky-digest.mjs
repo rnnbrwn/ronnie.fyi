@@ -9,11 +9,11 @@ const DIGEST_LOOKBACK_DAYS = 7;
 const FEED_FETCH_LIMIT = 100;
 const MAX_DIGEST_POSTS = 3;
 
-function sleep(ms) {
+function sleep(ms) { // pauses execution for ms milliseconds
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchWithRetry(url, attempt = 1) {
+async function fetchWithRetry(url, attempt = 1) { // fetches a URL, retrying up to MAX_RETRIES times on network failure
 	try {
 		const res = await fetch(url);
 		return res;
@@ -28,7 +28,7 @@ async function fetchWithRetry(url, attempt = 1) {
 const ACTOR = 'ronnie.fyi';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-function getSiteOriginatedUris() {
+function getSiteOriginatedUris() { // reads all blog post frontmatter and returns a Set of bskyPostUri values to exclude from digests
 	const blogDir = join(__dirname, '..', 'src', 'data', 'blog');
 	const uris = new Set();
 	for (const file of readdirSync(blogDir)) {
@@ -40,20 +40,20 @@ function getSiteOriginatedUris() {
 	return uris;
 }
 
-function uriToUrl(uri) {
+function uriToUrl(uri) { // converts an AT Protocol URI to a bsky.app post URL
 	const rkey = uri.split('/').at(-1);
 	return `https://bsky.app/profile/${ACTOR}/post/${rkey}`;
 }
 
 
-function formatShortDateTime(iso) {
+function formatShortDateTime(iso) { // formats an ISO date string as "1 Jan · 14:30"
 	const d = new Date(iso);
 	const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 	const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 	return `${date} · ${time}`;
 }
 
-function applyFacets(text, facets) {
+function applyFacets(text, facets) { // converts Bluesky facets (links, mentions) into HTML anchor tags within the post text
 	if (!facets?.length) return text;
 	const bytes = Buffer.from(text, 'utf8');
 	const sorted = [...facets].sort((a, b) => a.index.byteStart - b.index.byteStart);
@@ -77,7 +77,7 @@ function applyFacets(text, facets) {
 	return result;
 }
 
-function textToHtml(text) {
+function textToHtml(text) { // wraps double-newline-separated paragraphs in <p> tags, converting single newlines to <br>
 	return text
 		.split('\n\n')
 		.filter((p) => p.trim())
@@ -85,7 +85,7 @@ function textToHtml(text) {
 		.join('\n');
 }
 
-function archiveExistingDigests(notesDir) {
+function archiveExistingDigests(notesDir) { // renames any existing bsky-digest-*.md files to _prefixed to archive them
 	const existing = readdirSync(notesDir).filter(
 		(f) => /^bsky-digest-\d{4}-\d{2}-\d{2}\.md$/.test(f)
 	);
@@ -95,7 +95,7 @@ function archiveExistingDigests(notesDir) {
 	}
 }
 
-async function fetchBskyData(since) {
+async function fetchBskyData(since) { // fetches recent posts and profile from Bluesky, filtered to the lookback window and excluding site-originated posts
 	const [feedRes, profileRes] = await Promise.all([
 		fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${ACTOR}&filter=posts_no_replies&limit=${FEED_FETCH_LIMIT}`),
 		fetchWithRetry(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${ACTOR}`),
@@ -120,7 +120,7 @@ async function fetchBskyData(since) {
 	return { posts, profile };
 }
 
-async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) {
+async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) { // builds the full HTML card for a single Bluesky post, including embeds, quotes, and liker avatars
 	const postUrl = uriToUrl(post.uri);
 	const timestamp = formatShortDateTime(post.record.createdAt);
 	const postText = textToHtml(applyFacets(post.record.text, post.record.facets));
@@ -201,7 +201,7 @@ async function buildPostSection(post, { authorAvatar, authorName, profileUrl }) 
 </div>`;
 }
 
-function buildMarkdown(title, pubDate, description, sections) {
+function buildMarkdown(title, pubDate, description, sections) { // assembles the final digest .md file content with frontmatter and post sections
 	return `---
 title: "${title}"
 pubDate: ${pubDate}
@@ -212,7 +212,7 @@ ${sections.join('\n')}
 `;
 }
 
-async function main() {
+async function main() { // archives the old digest, fetches recent posts, and writes a new digest .md file
 	const today = new Date();
 	const todayStr = today.toISOString().slice(0, 10);
 	const pubDate = today.toISOString().slice(0, 16).replace('T', ' ');
