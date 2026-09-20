@@ -2,18 +2,16 @@
 import TagPills from './TagPills.astro';
 import IconBlueSky from './IconBlueSky.astro';
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import { getPostUrl, formatDate, formatRelativeDate, formatShelfEventDate } from '../utils/getSortedPosts';
 import type { BskyActor } from '../utils/bsky';
 import BskyInteractors from './BskyInteractors.tsx';
 import type { PostBase } from '../utils/types';
 
-const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
 interface Props extends PostBase {
 	description?: string;
 	tags: string[];
-	image?: { url: string; alt: string; source?: string };
+	image?: { url: string; alt: string; source?: string; width?: number; height?: number };
 	pinned?: boolean;
 	isDigest?: boolean;
 	isShelfEvent?: boolean;
@@ -66,9 +64,9 @@ const {
 	{pinned && <div class='highlight'>This is a pinned post</div>}
 	<div class='post-body prose'>
 		{
-			image && imageFiles[`/src/assets/images/${image.url}`] && (
+			image && (
 				<figure class='post-image'>
-					<Image src={imageFiles[`/src/assets/images/${image.url}`]!.default} alt={image.alt} />
+					<Image src={image.url} alt={image.alt} {...(image.width && image.height ? { width: image.width, height: image.height } : { inferSize: true })} />
 					{image.source && (
 						<figcaption>
 							<a href={image.source}>Image source</a>

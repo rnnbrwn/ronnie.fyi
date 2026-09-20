@@ -9,9 +9,7 @@ import { formatDate, formatMonthYear, getPostUrl } from '../../../utils/getSorte
 import { fetchBskyInteractors } from '../../../utils/bsky';
 import type { BskyActor } from '../../../utils/bsky';
 import BskyInteractors from '../../../components/BskyInteractors.tsx';
-import type { ImageMetadata } from 'astro';
 
-const imageFiles = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*', { eager: true });
 
 export async function getStaticPaths() {
 	const now = new Date();
@@ -63,11 +61,12 @@ const monthLabel = formatMonthYear(post.data.pubDate);
 			)
 		}
 		{
-			post.data.image && imageFiles[`/src/assets/images/${post.data.image.url}`] && (
+			post.data.image && (
 				<figure class='post-image'>
 					<Image
-						src={imageFiles[`/src/assets/images/${post.data.image.url}`]!.default}
+						src={post.data.image.url}
 						alt={post.data.image.alt}
+						{...(post.data.image.width && post.data.image.height ? { width: post.data.image.width, height: post.data.image.height } : { inferSize: true })}
 					/>
 					{post.data.image.source && (
 						<figcaption>

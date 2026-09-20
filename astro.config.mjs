@@ -7,6 +7,8 @@ import sitemap from '@astrojs/sitemap';
 
 import preact from '@astrojs/preact';
 
+import wordpressDevRefresh from './src/integrations/wordpress-dev-refresh.mjs';
+
 /** @type {import('vite').Plugin} */
 const redirectTrailingSlash = {
   name: 'redirect-trailing-slash',
@@ -33,7 +35,12 @@ export default defineConfig({
       rehypePlugins: [rehypeRaw],
     },
 
-  integrations: [sitemap(), preact({ compat: true })],
+  integrations: [sitemap(), preact({ compat: true }), wordpressDevRefresh()],
+
+  image: {
+    domains: ['cms.ronnie.fyi'],
+    remotePatterns: [{ protocol: 'http', hostname: 'localhost' }],
+  },
 
   vite: {
     plugins: [redirectTrailingSlash],

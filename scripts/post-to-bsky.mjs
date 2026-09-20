@@ -1,27 +1,27 @@
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { BASE_URL, getPostUrl, parseFrontmatter } from './utils.mjs';
+import { BASE_URL, getPostUrl } from './utils.mjs';
+import { decodeEntities, fetchGraphQL, stripTags, updatePostMeta } from './wordpress.mjs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const BLOG_DIR = join(__dirname, '..', 'src', 'data', 'blog');
+const FLAGGED_POSTS_QUERY = `
+	query FlaggedPosts {
+		posts(first: 100) {
+			nodes {
+				databaseId
+				slug
+				title
+				date
+				dateGmt
+				excerpt
+				blogPostMeta { postToBsky bskyPostUri }
+			}
+		}
+	}
+`;
 
 const MAX_BLOB_SIZE = 1_000_000;
 const OG_IMAGE_WIDTH = 800;
 const OG_IMAGE_QUALITY = 85;
 
-
-function rewriteFrontmatter(content, uri) { // replaces postToBsky: true with bskyPostUri in post frontmatter
-	return content.replace(
-		/^(---\n[\s\S]*?)postToBsky:\s*true(\n[\s\S]*?---)/,
-		`$1bskyPostUri: "${uri}"$2`
-	);
-}
-
-function slugFromFilename(filename) { // strips the .md extension from a filename to produce a URL slug
-	return filename.replace(/\.md$/, '');
-}
 
 
 async function createSession(identifier, password) { // authenticates with Bluesky and returns an access token and DID
@@ -73,21 +73,12 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 		process.exit(1);
 	}
 
-	const targets = [];
-	for (const filename of readdirSync(BLOG_DIR)) {
-		if (!filename.endsWith('.md') || filename.startsWith('_')) continue;
-		const fullPath = join(BLOG_DIR, filename);
-		let content;
-		try {
-			content = readFileSync(fullPath, 'utf-8');
-		} catch {
-			continue; // file deleted
-		}
-		const fm = parseFrontmatter(content);
-		if (fm.postToBsky !== 'true') continue;
-		if (fm.pubDate && new Date(fm.pubDate) > new Date()) continue;
-		targets.push({ filename, fullPath, content, fm });
-	}
+	const { posts } = await fetchGraphQL(FLAGGED_POSTS_QUERY);
+	const targets = posts.nodes.filter((post) => {
+		const meta = post.blogPostMeta;
+		if (!meta?.postToBsky || meta.bskyPostUri) return false;
+		return new Date(`${post.dateGmt}Z`) <= new Date(); // not scheduled for the future
+	});
 
 	if (targets.length === 0) {
 		console.log('No posts flagged for Bluesky.');
@@ -96,10 +87,11 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 
 	const { accessJwt, did } = await createSession(identifier, password);
 
-	for (const { filename, fullPath, content, fm } of targets) {
-		const slug = slugFromFilename(filename);
-		const url = getPostUrl(fm.pubDate, slug, { absolute: true, trailingSlash: true });
-		const postText = `${fm.title}\n\n${url}`;
+	for (const post of targets) {
+		const slug = post.slug;
+		const title = decodeEntities(post.title);
+		const url = getPostUrl(post.date, slug, { absolute: true, trailingSlash: true });
+		const postText = `${title}\n\n${url}`;
 		const textBytes = Buffer.from(postText, 'utf-8');
 		const urlBytes = Buffer.from(url, 'utf-8');
 		const urlByteStart = textBytes.indexOf(urlBytes);
@@ -134,8 +126,8 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 			$type: 'app.bsky.embed.external',
 			external: {
 				uri: url,
-				title: fm.title,
-				description: fm.description ?? '',
+				title,
+				description: stripTags(post.excerpt),
 				...(thumb ? { thumb } : {}),
 			},
 		};
@@ -151,9 +143,14 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 		const result = await createPost(accessJwt, did, record);
 		console.log(`Posted: ${result.uri}`);
 
-		const updated = rewriteFrontmatter(content, result.uri);
-		writeFileSync(fullPath, updated, 'utf-8');
-		console.log(`Rewrote frontmatter: ${filename}`);
+		try {
+			await updatePostMeta(post.databaseId, { bsky_post_uri: result.uri, post_to_bsky: false });
+		} catch (err) {
+			// The post is already on Bluesky; without this write-back the next run would post it again.
+			console.error(`POSTED but could not record the URI in WordPress. Set bsky_post_uri to ${result.uri} on "${title}" and untick "Post to Bluesky" by hand.`);
+			throw err;
+		}
+		console.log(`Recorded Bluesky URI in WordPress: ${slug}`);
 	}
 }
 

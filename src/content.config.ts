@@ -1,9 +1,10 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'zod';
 import { glob } from 'astro/loaders';
+import { wordpressPosts } from './loaders/wordpress-posts';
 
 const blog = defineCollection({
-	loader: glob({ pattern: import.meta.env.DEV ? ['**/*.md', '!**/_template.md'] : '**/[^_]*.md', base: './src/data/blog' }),
+	loader: wordpressPosts(),
 	schema: z.object({
 		title: z.string(),
 		pubDate: z.coerce.date(),
@@ -13,6 +14,8 @@ const blog = defineCollection({
 				url: z.string(),
 				alt: z.string(),
 				source: z.string().optional(),
+				width: z.number().optional(),
+				height: z.number().optional(),
 			})
 			.optional(),
 		tags: z.array(z.string()),
@@ -23,6 +26,7 @@ const blog = defineCollection({
 		postToBsky: z.boolean().optional(),
 		bskyPostUri: z.string().optional(),
 		hardcoverIds: z.number().array().optional(),
+		draft: z.boolean().default(false),
 	}),
 });
 

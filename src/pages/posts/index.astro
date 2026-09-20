@@ -32,7 +32,7 @@ const groupedPosts = Object.entries(grouped);
 								pubDate={post.entry.data.pubDate}
 								description={'description' in post.entry.data ? post.entry.data.description : undefined}
 								stale={post.collection === 'blog' ? post.entry.data.stale : false}
-								draft={isDraft(post.entry.id)}
+								draft={isDraft(post)}
 								isShelfEvent={isShelfEvent}
 								href={isShelfEvent ? `/shelf${bookSlug ? `#book-${bookSlug}` : ''}` : undefined}
 							/>

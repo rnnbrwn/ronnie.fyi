@@ -12,62 +12,49 @@ Personal website/blog at ronnie.fyi. Built with Astro, styled with Sass, deploye
 
 ## Content types
 
-### Blog posts (`src/data/blog/*.md`)
+### Blog posts (WordPress)
 
-Files prefixed `_` are drafts — excluded from the Astro content collection and Bluesky posting. The canonical template is `src/data/blog/_template.md`.
+Blog posts live in the headless WordPress at `cms.ronnie.fyi`, not in this repo. `src/loaders/wordpress-posts.ts` is an Astro content loader that reads them via WPGraphQL into the `blog` collection (schema in `src/content.config.ts`), so pages still use `getCollection('blog')` and `entry.rendered.html`.
 
-Frontmatter schema (defined in `src/content.config.ts`):
+Fields (WordPress → collection): title, slug (= `id`, URL is `/year/month/slug`), date (parsed in the runtime's timezone, like the old frontmatter dates, so URLs don't move), excerpt → `description`, tags, featured image → `image` (`url`, `alt`, `source`, `width`, `height`), and the **Blog Post Meta** ACF group (`rnnbrwn-themes/ronnie.fyi/acf-json/group_blog_post_meta.json`): `pinned`, `pinnedFrom`, `pinnedUntil`, `stale`, `postToBsky`, `bskyPostUri`, `hardcoverIds` (comma-separated), plus `image_alt`/`image_source`. Unpublished posts have `draft: true` and only appear in dev.
 
-```yaml
-title: 'Post title'
-pubDate: 2026-01-01           # supports time: 2026-01-01 09:00. Future dates = scheduled.
-description: 'Short description'
-tags: ['tag-one', 'tag-two']
-pinned: false                 # true = pinned at top of homepage feed
-pinnedFrom: 2026-01-01        # optional, defaults to pubDate behaviour
-pinnedUntil: 2026-01-08       # optional, auto-unpins on next rebuild after this date
-stale: false                  # true = "outdated content" warning on post page
-image:                        # optional feature image
-  url: 'filename.webp'        # relative to public/images/
-  alt: 'Alt text'
-  source: 'https://...'       # optional credit URL
-postToBsky: true              # triggers Bluesky auto-post after next deploy (only if pubDate has passed)
-bskyPostUri: 'at://...'       # written automatically post-posting — do not set manually
-```
-
-Only one post can be pinned at a time (enforced by `scripts/enforce-single-pin.mjs`).
+- The loader **throws** on any fetch failure or zero posts, so a CMS outage fails the build instead of deploying an empty site.
+- HTML post-processing in the loader: CMS links → site-relative (`/year/month/slug`), YouTube embeds → `.youtube-embed` (nocookie). Media URLs stay on `cms.ronnie.fyi`.
+- Only one post can be pinned (an `acf/save_post` hook in the `ronnie.fyi` theme keeps the newest).
+- `src/data/blog/*.md` is the legacy Markdown source: **no longer read**, kept temporarily for rollback.
+- In dev, drafts and scheduled posts appear when `WORDPRESS_API_URL` points at the local WordPress (`rnnbrwn-cms`: `bash local-setup.sh --site ronnie-fyi`); `src/integrations/wordpress-dev-refresh.mjs` re-syncs posts when the local WordPress changes.
 
 ### Notes (`src/data/notes/*.md`)
 
-Auto-generated weekly Bluesky digests. Schema: `title`, `pubDate`, `description` only. Files prefixed `_` are archived digests. Do not create notes manually.
+Auto-generated weekly Bluesky digests. Schema: `title`, `pubDate`, `description` only. Files prefixed `_` are archived digests. Do not create notes manually. (Still Markdown — not in WordPress.)
 
 ## Key scripts
 
 | Script | Purpose |
 |---|---|
-| `scripts/generate-bsky-digest.mjs` | Fetch recent Bluesky posts, write a digest note |
-| `scripts/post-to-bsky.mjs` | Post blog posts with `postToBsky: true` to Bluesky |
-| `scripts/enforce-single-pin.mjs` | Validate only one post is pinned |
+| `scripts/generate-bsky-digest.mjs` | Fetch recent Bluesky posts, write a digest note (skips posts the site itself posted, read from WordPress) |
+| `scripts/post-to-bsky.mjs` | Post blog posts flagged "Post to Bluesky" in WordPress, then write `bsky_post_uri` back via the REST API |
+| `scripts/wordpress.mjs` | Shared WPGraphQL client and REST write-back helper (needs `WP_APP_USER` / `WP_APP_PASSWORD` for writes) |
 
 ## GitHub Actions workflows
 
 | Workflow | Trigger | What it does |
 |---|---|---|
 | `deploy.yml` | Push to main + cron every 2h | Build + rsync to Dreamhost |
-| `post-to-bsky.yml` | After successful deploy | Run `post-to-bsky.mjs`, commit frontmatter rewrites |
+| `post-to-bsky.yml` | After successful deploy | Run `post-to-bsky.mjs` (records the URI back in WordPress) |
 | `bsky-digest.yml` | Fridays 08:00 UTC | Run `generate-bsky-digest.mjs`, commit, trigger deploy |
 
-The 2-hour cron deploy means future-dated posts and `pinnedUntil` dates resolve automatically.
+Publishing or updating a post/page in WordPress also triggers `deploy.yml` (mu-plugin in `rnnbrwn-cms`). The 2-hour cron means `pinnedUntil` dates and Bluesky auto-posts resolve automatically.
 
 ## WordPress CMS (headless)
 
-Static pages (About, Uses, Changelog) are fetched at build time via WPGraphQL. All queries live in `src/utils/wordpress.ts`. WordPress-sourced HTML must be wrapped in `<div class="wp-content">` and styled with `.wp-content :global(element)`. CMS internal links are auto-rewritten to relative URLs at build time.
+Blog posts (see above) and the static pages (About, Uses, Changelog) are fetched at build time via WPGraphQL. Page queries live in `src/utils/wordpress.ts`; the post query is in the loader. WordPress-sourced HTML must be wrapped in `<div class="wp-content">` and styled with `.wp-content :global(element)`. CMS internal links are auto-rewritten to relative URLs at build time.
 
 Related repos: `rnnbrwn-cms` (deployment), `rnnbrwn-themes` (themes), `rnnbrwn-plugins` (plugins).
 
 ## OG images
 
-Generated at build time via `src/pages/og/[slug].png.ts` using Satori + sharp. Only posts with both a feature image and `postToBsky` set get an OG image (1200×630 PNG).
+Generated at build time via `src/pages/og/[slug].png.ts` using Satori + sharp. Only posts with both a feature image and Post to Bluesky ticked get an OG image (1200×630 PNG); the image is fetched from WordPress at build time.
 
 ## Post images — standard dimensions
 
@@ -79,7 +66,7 @@ At content width of 793px:
 | 4:3 | 793 × 595px |
 | 1:1 | 793 × 793px |
 
-Images go in `public/images/`. Reference in frontmatter as just the filename (e.g. `my-image.webp`).
+Upload as the post's Featured image in WordPress (with alt text); Astro downloads and optimises it at build time (`image.domains` in `astro.config.mjs`). Inline `/images/…` images in a few post bodies are served from `public/images/`.
 
 ## Dev commands
 
@@ -88,12 +75,12 @@ npm run dev      # dev server at localhost:4321
 npm run build    # production build to ./dist/
 npm run preview  # preview production build
 node scripts/generate-bsky-digest.mjs   # run digest locally
-node scripts/post-to-bsky.mjs           # post to Bluesky (needs env vars)
+node scripts/post-to-bsky.mjs           # post to Bluesky (needs BSKY_* and WP_APP_* env vars)
 ```
 
 ## Custom agents and commands
 
-Defined in `.claude/agents/` and `.claude/commands/`:
+Defined in `.claude/agents/` and `.claude/commands/` (`/new-post`, `/post-status`, `/publish`, `blog-writer` and `site-auditor` assume the old Markdown workflow and need rewriting or retiring):
 
 - `/new-post` — scaffold a new draft blog post
 - `/post-status` — show scheduled, pinned, stale, pending-bsky, and draft posts

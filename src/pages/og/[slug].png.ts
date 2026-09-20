@@ -43,9 +43,10 @@ export const GET: APIRoute = async ({ props, params }) => { // generates a 1200Ã
 	const fontBoldBuffer = readFileSync(join(process.cwd(), 'public/fonts/Geomanist-Bold.otf'));
 
 	const imageUrl = post.data.image!.url;
-	const imagePath = join(process.cwd(), 'src/assets/images', imageUrl);
-	const rawBuffer = readFileSync(imagePath);
-	const ext = imageUrl.split('.').pop()?.toLowerCase();
+	const imageResponse = await fetch(imageUrl);
+	if (!imageResponse.ok) throw new Error(`Could not fetch OG source image ${imageUrl}: ${imageResponse.status}`);
+	const rawBuffer = Buffer.from(await imageResponse.arrayBuffer());
+	const ext = new URL(imageUrl).pathname.split('.').pop()?.toLowerCase();
 	const needsConversion = ext === 'webp' || ext === 'gif' || ext === 'avif';
 	const imageBuffer = needsConversion
 		? await sharp(rawBuffer).jpeg({ quality: 90 }).toBuffer()

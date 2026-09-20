@@ -51,8 +51,8 @@ export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
 export type ShelfEventPost = { collection: 'shelf-events'; entry: CollectionEntry<'shelf-events'> };
 export type AnyPost = BlogPost | NotePost | ShelfEventPost;
 
-export function isDraft(id: string): boolean { // returns true if the post ID starts with _ (the draft file convention)
-	return id.startsWith('_');
+export function isDraft(post: AnyPost): boolean { // returns true if the post is an unpublished WordPress draft (only ever visible in dev)
+	return post.collection === 'blog' && post.entry.data.draft;
 }
 
 export async function getSortedPosts(): Promise<AnyPost[]> { // fetches all published blog posts, notes, and shelf events, merged and sorted by date descending

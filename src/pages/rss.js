@@ -1,8 +1,8 @@
 import rss from '@astrojs/rss';
 import { getCollection, render } from 'astro:content';
+import { getImage } from 'astro:assets';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 
-const imageFiles = import.meta.glob('/src/assets/images/*', { eager: true });
 
 export async function GET(context) { // Astro API route that generates the RSS feed with full post content and feature images
 	const now = new Date();
@@ -16,12 +16,10 @@ export async function GET(context) { // Astro API route that generates the RSS f
 			const { Content } = await render(post);
 			const html = await container.renderToString(Content);
 
-			const imageModule = post.data.image
-				? imageFiles[`/src/assets/images/${post.data.image.url}`]
+			const image = post.data.image
+				? await getImage({ src: post.data.image.url, width: post.data.image.width, height: post.data.image.height, inferSize: !(post.data.image.width && post.data.image.height) })
 				: null;
-			const imageUrl = imageModule
-				? new URL(imageModule.default.src, context.site).href
-				: null;
+			const imageUrl = image ? new URL(image.src, context.site).href : null;
 
 			const imageHtml = imageUrl
 				? `<img src="${imageUrl}" alt="${post.data.image.alt}" />`

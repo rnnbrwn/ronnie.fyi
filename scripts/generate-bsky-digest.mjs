@@ -1,7 +1,8 @@
-import { existsSync, writeFileSync, mkdirSync, unlinkSync, readdirSync, renameSync, readFileSync } from 'node:fs';
+import { existsSync, writeFileSync, mkdirSync, unlinkSync, readdirSync, renameSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { formatDate, parseFrontmatter } from './utils.mjs';
+import { formatDate } from './utils.mjs';
+import { fetchGraphQL } from './wordpress.mjs';
 
 const MAX_RETRIES = 5;
 const RETRY_DELAY_MS = 15 * 60 * 1000;
@@ -28,16 +29,9 @@ async function fetchWithRetry(url, attempt = 1) { // fetches a URL, retrying up 
 const ACTOR = 'ronnie.fyi';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-function getSiteOriginatedUris() { // reads all blog post frontmatter and returns a Set of bskyPostUri values to exclude from digests
-	const blogDir = join(__dirname, '..', 'src', 'data', 'blog');
-	const uris = new Set();
-	for (const file of readdirSync(blogDir)) {
-		if (!file.endsWith('.md')) continue;
-		const content = readFileSync(join(blogDir, file), 'utf-8');
-		const fm = parseFrontmatter(content);
-		if (fm.bskyPostUri) uris.add(fm.bskyPostUri);
-	}
-	return uris;
+async function getSiteOriginatedUris() { // reads every blog post's bskyPostUri from WordPress and returns them as a Set, to exclude from digests
+	const data = await fetchGraphQL('{ posts(first: 100) { nodes { blogPostMeta { bskyPostUri } } } }');
+	return new Set(data.posts.nodes.map((post) => post.blogPostMeta?.bskyPostUri).filter(Boolean));
 }
 
 function uriToUrl(uri) { // converts an AT Protocol URI to a bsky.app post URL
@@ -107,7 +101,7 @@ async function fetchBskyData(since) { // fetches recent posts and profile from B
 	}
 
 	const [data, profile] = await Promise.all([feedRes.json(), profileRes.json()]);
-	const siteOriginatedUris = getSiteOriginatedUris();
+	const siteOriginatedUris = await getSiteOriginatedUris(1);
 
 	const posts = data.feed
 		.map((item) => item.post)

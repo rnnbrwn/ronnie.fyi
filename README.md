@@ -6,7 +6,7 @@ Built with [Astro](https://astro.build), styled with Sass, deployed to Dreamhost
 
 ## WordPress CMS
 
-Static pages (About, Uses, Changelog) are managed via a headless WordPress CMS fetched at build time via WPGraphQL. This site is part of a wider stack:
+Blog posts and the static pages (About, Uses, Changelog) are written and managed in a headless WordPress CMS (`cms.ronnie.fyi`) and fetched at build time via WPGraphQL. This site is part of a wider stack:
 
 | Repo                                                          | Role                          |
 | ------------------------------------------------------------- | ----------------------------- |
@@ -29,7 +29,7 @@ All GraphQL queries live in `src/utils/wordpress.ts`. WordPress-sourced HTML mus
 ├── src/
 │   ├── components/         # Astro components (Navigation, Post, Footer, icons, etc.)
 │   ├── data/
-│   │   ├── blog/           # Markdown blog posts
+│   │   ├── blog/           # legacy Markdown posts (no longer read; kept for rollback)
 │   │   └── notes/          # Auto-generated Bluesky digest posts
 │   ├── layouts/
 │   │   └── Base.astro      # Main page layout
@@ -43,32 +43,26 @@ All GraphQL queries live in `src/utils/wordpress.ts`. WordPress-sourced HTML mus
 
 ## Blog posts
 
-Posts live in `src/data/blog/` as Markdown files. Files prefixed with `_` are drafts and excluded from the collection.
+Posts are written in WordPress at `cms.ronnie.fyi/wp-admin` and loaded at build time by `src/loaders/wordpress-posts.ts`, an Astro content loader that reads WPGraphQL and feeds the same `blog` collection the pages have always used (`src/content.config.ts`).
 
-Frontmatter fields:
+| In WordPress | On the site |
+| :-- | :-- |
+| Title | title |
+| Post URL slug | the URL, `/year/month/slug` (don't change it after publishing) |
+| Publish date (or schedule) | pubDate. Scheduled posts go live when WordPress publishes them |
+| Excerpt | description |
+| Tags | tags |
+| Featured image | feature image (size is taken from the upload) |
+| Post content | the body. Start with an H2 (the title is the H1). A YouTube link on its own line becomes a responsive embed |
+| **Blog Post Meta** box | Image Alt, Image Source, Pinned (+ From/Until), Stale, Post to Bluesky, Bluesky Post URI (written automatically), Hardcover IDs (comma-separated, links a post to `/shelf`) |
 
-```yaml
-title: 'Post title'
-pubDate: 2026-01-01 # Supports time: 2026-01-01 09:00. Post won't appear until this date/time.
-description: 'Short description'
-tags: ['tag-one', 'tag-two']
-pinned: false # Set to true to pin to the top of the homepage feed
-pinnedFrom: 2026-01-01 # Optional. Pin starts no earlier than this date (defaults to pubDate behaviour)
-pinnedUntil: 2026-01-08 # Optional. Pin is removed after this date on the next scheduled rebuild
-stale: false # Set to true to show an "outdated" warning on the post
-image: # Optional
-  url: 'image.webp'
-  alt: 'Alt text'
-  source: 'https://example.com' # Optional image credit URL
-postToBsky: true # Set to true to auto-post to Bluesky after the next deploy (see below)
-bskyPostUri: 'at://...' # Written automatically after posting. Do not set manually.
-```
+Only one post can be pinned: saving a pinned post unpins all but the newest (a hook in the `ronnie.fyi` theme in `rnnbrwn-themes`).
 
-`_` prefixed files (e.g. `_template.md`) are excluded from the collection and treated as drafts.
+The build **fails rather than publishing an empty site** if WordPress can't be reached or returns no posts.
 
 ### Post images
 
-Images should use a standard aspect ratio. At the default content width of 793px:
+Upload the image as the post's **Featured image** and fill in the alt text. Astro downloads it at build time and serves an optimised copy from ronnie.fyi. At the content width of 793px:
 
 | Ratio | Dimensions   |
 | :---- | :----------- |
@@ -78,24 +72,26 @@ Images should use a standard aspect ratio. At the default content width of 793px
 | 3:4   | 793 × 1057px |
 | 9:16  | 793 × 1410px |
 
+Images inside a post body that were written as `/images/…` still come from `public/images/`.
+
+### Drafts and scheduled posts in dev
+
+With the local WordPress running (`bash local-setup.sh --site ronnie-fyi` in `rnnbrwn-cms`), `npm run dev` also shows drafts (marked with a red **Draft** badge) and scheduled posts, and picks up edits made in the local WordPress within a few seconds. Production builds only ever see published posts.
+
 ## Bluesky auto-post
 
-When a blog post has `postToBsky: true` in its frontmatter, it will be automatically posted to Bluesky after the next successful deploy — provided the post's `pubDate` is not in the future.
-
-```yaml
-postToBsky: true # triggers a post to Bluesky on next deploy (only if pubDate has passed)
-```
+Tick **Post to Bluesky** in the post's Blog Post Meta box and the post is automatically posted to Bluesky after the next successful deploy — provided its publish date is not in the future.
 
 The workflow (`.github/workflows/post-to-bsky.yml`) runs after the deploy workflow completes. It calls `scripts/post-to-bsky.mjs`, which:
 
-1. Scans `src/data/blog/` for any file containing `postToBsky: true`
-2. Skips any post whose `pubDate` is in the future
+1. Asks WordPress (WPGraphQL) for posts with **Post to Bluesky** ticked and no Bluesky Post URI
+2. Skips any post scheduled for the future
 3. Fetches the OG image from `https://ronnie.fyi/og/[slug].png`, uploads it to Bluesky's blob store, and posts with a link card embed
-4. Rewrites the frontmatter in-place: replaces `postToBsky: true` with `bskyPostUri: "at://..."` as a permanent record and to prevent re-posting
+4. Writes the resulting `at://…` URI into the post's **Bluesky Post URI** field and unticks **Post to Bluesky** (through the WordPress REST API), as a permanent record and to prevent re-posting
 
-Required GitHub secrets: `BLUESKY_USERNAME` and `BLUESKY_PASSWORD` (Bluesky app password).
+Required GitHub secrets: `BLUESKY_USERNAME` and `BLUESKY_PASSWORD` (Bluesky app password), and `WP_APP_USER` and `WP_APP_PASSWORD` (a WordPress Application Password for that user, used for the write-back).
 
-Posts originating from the site are excluded from the weekly digest — the digest script reads all `bskyPostUri` values and filters them out.
+Posts originating from the site are excluded from the weekly digest — the digest script reads all Bluesky Post URIs from WordPress and filters them out.
 
 ## RSS feed
 
@@ -127,13 +123,12 @@ If a digest file for today already exists, the script exits without overwriting 
 
 Digest posts appear on the homepage mixed with blog posts but are excluded from `/posts`.
 
-## Scheduled rebuilds
+## Rebuilds
 
-The deploy workflow (`.github/workflows/deploy.yml`) runs on every push to `main` and also on a cron schedule every 2 hours. This means time-sensitive features resolve automatically without a manual push:
+The deploy workflow (`.github/workflows/deploy.yml`) runs on every push to `main`, on a cron schedule every 2 hours, and when content is published in WordPress:
 
-- Future-dated posts go live within 2 hours of their `pubDate`
-- `pinnedUntil` dates are respected within the same window
-- Bluesky auto-posts are picked up once a post's `pubDate` passes
+- **On publish:** saving a published post or page in WordPress asks GitHub to rebuild (via `mu-plugins/trigger-frontend-deploy.php` in `rnnbrwn-cms`), so changes are live within a couple of minutes.
+- **Every 2 hours:** anything time-based resolves on its own — `Pinned Until` dates, and Bluesky auto-posts once a post's date passes.
 
 ## Commands
 
@@ -149,6 +144,8 @@ All commands are run from the root of the project:
 ## Claude Code agents and slash commands
 
 Defined in `.claude/agents/` and `.claude/commands/` (gitignored — local only).
+
+> **Note:** `/new-post`, `/post-status`, `/publish`, `blog-writer` and `site-auditor` were written for the old Markdown workflow (posts as files in `src/data/blog/`). Posts now live in WordPress, so these need rewriting or retiring.
 
 ### Slash commands
 
@@ -172,7 +169,3 @@ Agents are invoked by asking Claude to use them by name, e.g. _"Use the blog-wri
 | `blog-writer` | Drafts blog posts in the site's voice. Knows the frontmatter schema, tag conventions, and writing style. Produces a complete draft ready to save. |
 | `site-auditor` | Read-only audit of all posts. Reports on drafts, scheduled posts, pinned posts (including expired pins), posts pending Bluesky, and stale content. |
 | `web-reviewer` | Interactive code reviewer for Astro components and SCSS. Knows the full design token system and component conventions. Use it to review specific files for weight, DRY violations, and semantic HTML. |
-
-### Draft posts in dev
-
-In the local dev server, `_`-prefixed draft posts are included in the feed and marked with a red **Draft** badge. They are excluded from production builds automatically.

@@ -55,7 +55,7 @@ await Promise.all(
 		const tags = post.collection === 'blog' ? (post as BlogPost).entry.data.tags : [];
 		const image = post.collection === 'blog' ? (post as BlogPost).entry.data.image : undefined;
 		const pinned = post.collection === 'blog' ? isEffectivelyPinned((post as BlogPost).entry.data) : false;
-		const draft = isDraft(entry.id);
+		const draft = isDraft(post);
 		const shelfBookSlug = isShelfEvent ? (post as ShelfEventPost).entry.data.bookSlug : undefined;
 		const href = isDigest
 			? `/notes/${entry.id}`
