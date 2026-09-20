@@ -46,6 +46,10 @@ export function isEffectivelyPinned(data: CollectionEntry<'blog'>['data'], now: 
 	return true;
 }
 
+export function isPublished(data: CollectionEntry<'blog'>['data'], now: Date = new Date()): boolean { // true once a blog post's publish time has passed. Uses the real UTC instant: pubDate is WordPress' local time read as UTC, which runs an hour ahead in British Summer Time and would hide a new post for an hour
+	return (data.publishedAt ?? data.pubDate) <= now;
+}
+
 export type BlogPost = { collection: 'blog'; entry: CollectionEntry<'blog'> };
 export type NotePost = { collection: 'notes'; entry: CollectionEntry<'notes'> };
 export type ShelfEventPost = { collection: 'shelf-events'; entry: CollectionEntry<'shelf-events'> };
@@ -59,7 +63,7 @@ export async function getSortedPosts(): Promise<AnyPost[]> { // fetches all publ
 	const now = new Date();
 
 	const blogPosts = (await getCollection('blog'))
-		.filter((p) => import.meta.env.DEV || new Date(p.data.pubDate) <= now)
+		.filter((p) => import.meta.env.DEV || isPublished(p.data, now))
 		.map((entry): BlogPost => ({ collection: 'blog', entry }));
 
 	const notePosts = (await getCollection('notes'))

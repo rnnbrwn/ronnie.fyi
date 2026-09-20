@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { BASE_URL, getPostUrl } from './utils.mjs';
+import { BASE_URL, getPostUrl, isPageLive } from './utils.mjs';
 import { decodeEntities, fetchGraphQL, stripTags, updatePostMeta } from './wordpress.mjs';
 
 const FLAGGED_POSTS_QUERY = `
@@ -80,14 +80,27 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 		return new Date(`${post.dateGmt}Z`) <= new Date(); // not scheduled for the future
 	});
 
-	if (targets.length === 0) {
-		console.log('No posts flagged for Bluesky.');
+	// A deploy can succeed without containing a brand-new post, and a Bluesky link to a page that
+	// isn't live yet is a 404 for anyone who clicks it. Leave such posts flagged: the next successful
+	// deploy runs this script again and picks them up.
+	const ready = [];
+	for (const post of targets) {
+		const url = getPostUrl(post.date, post.slug, { absolute: true, trailingSlash: true });
+		if (await isPageLive(url)) {
+			ready.push(post);
+		} else {
+			console.warn(`Not posting "${decodeEntities(post.title)}" yet: ${url} is not live. It stays flagged and is retried after the next deploy.`);
+		}
+	}
+
+	if (ready.length === 0) {
+		console.log('No posts flagged for Bluesky are live yet.');
 		return;
 	}
 
 	const { accessJwt, did } = await createSession(identifier, password);
 
-	for (const post of targets) {
+	for (const post of ready) {
 		const slug = post.slug;
 		const title = decodeEntities(post.title);
 		const url = getPostUrl(post.date, slug, { absolute: true, trailingSlash: true });

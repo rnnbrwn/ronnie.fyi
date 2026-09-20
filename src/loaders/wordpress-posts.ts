@@ -11,6 +11,7 @@ const POSTS_QUERY = `
 				title
 				status
 				date
+				dateGmt
 				excerpt
 				content
 				tags(first: 100) { nodes { name } }
@@ -72,6 +73,7 @@ type WpPost = {
 	title: string;
 	status: string;
 	date: string;
+	dateGmt: string;
 	excerpt: string;
 	content: string;
 	tags: { nodes: { name: string }[] };
@@ -116,6 +118,7 @@ export function wordpressPosts(): Loader { // Astro content loader that reads bl
 					data: {
 						title: decodeEntities(post.title),
 						pubDate: post.date, // WordPress' local time, parsed in the runtime's timezone exactly as the old frontmatter dates were, so post URLs stay the same
+						publishedAt: `${post.dateGmt}Z`, // the real publish instant (WordPress stores it in UTC as dateGmt); only used to decide whether a post is live yet, never for URLs or display
 						description: stripTags(post.excerpt),
 						tags: post.tags.nodes.map((t) => t.name),
 						image: image

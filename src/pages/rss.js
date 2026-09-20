@@ -2,11 +2,12 @@ import rss from '@astrojs/rss';
 import { getCollection, render } from 'astro:content';
 import { getImage } from 'astro:assets';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import { isPublished } from '../utils/getSortedPosts';
 
 
 export async function GET(context) { // Astro API route that generates the RSS feed with full post content and feature images
 	const now = new Date();
-	const posts = await getCollection('blog', ({ data }) => new Date(data.pubDate) <= now);
+	const posts = await getCollection('blog', ({ data }) => isPublished(data, now));
 	const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
 
 	const container = await AstroContainer.create();

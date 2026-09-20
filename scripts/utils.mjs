@@ -1,6 +1,19 @@
 export const BASE_URL = 'https://ronnie.fyi';
 
 /**
+ * True when a page is already live (answers 200). Used so a Bluesky post never links to a page that would 404.
+ * @param {string} url
+ */
+export async function isPageLive(url) {
+	try {
+		const res = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+		return res.ok;
+	} catch {
+		return false;
+	}
+}
+
+/**
  * Parse YAML-like frontmatter from a markdown file's string content.
  * Returns a flat object of string values.
  * @param {string} content

@@ -5,7 +5,7 @@ import Base from '../../../layouts/Base.astro';
 import TagPills from '../../../components/TagPills.astro';
 import IconClock from '../../../components/IconClock.astro';
 import { Image } from 'astro:assets';
-import { formatDate, formatMonthYear, getPostUrl } from '../../../utils/getSortedPosts';
+import { formatDate, formatMonthYear, getPostUrl, isPublished } from '../../../utils/getSortedPosts';
 import { fetchBskyInteractors } from '../../../utils/bsky';
 import type { BskyActor } from '../../../utils/bsky';
 import BskyInteractors from '../../../components/BskyInteractors.tsx';
@@ -14,7 +14,7 @@ import BskyInteractors from '../../../components/BskyInteractors.tsx';
 export async function getStaticPaths() {
 	const now = new Date();
 	const posts = (await getCollection('blog'))
-		.filter((p) => new Date(p.data.pubDate) <= now)
+		.filter((p) => isPublished(p.data, now))
 		.sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
 
 	const { currentlyReading, readByYear } = await getShelf();
