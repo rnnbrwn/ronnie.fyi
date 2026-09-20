@@ -125,9 +125,9 @@ Digest posts appear on the homepage mixed with blog posts but are excluded from 
 
 ## Rebuilds
 
-The deploy workflow (`.github/workflows/deploy.yml`) runs on every push to `main`, on a cron schedule every 2 hours, and when content is published in WordPress:
+The deploy workflow (`.github/workflows/deploy.yml`) runs on every push to `main`, on a cron schedule every 2 hours, on demand (`gh workflow run deploy.yml`), and — once switched on — when content is published in WordPress:
 
-- **On publish:** saving a published post or page in WordPress asks GitHub to rebuild (via `mu-plugins/trigger-frontend-deploy.php` in `rnnbrwn-cms`), so changes are live within a couple of minutes.
+- **On publish (currently OFF):** the mechanism exists — saving a published post or page in WordPress asks GitHub to rebuild (via `mu-plugins/trigger-frontend-deploy.php` in `rnnbrwn-cms`), so changes would be live within a couple of minutes — but it needs a `FRONTEND_DEPLOY_TOKEN` secret in the `ronnie-fyi` GitHub Environment of `rnnbrwn-cms`. Until then, changes appear at the next 2-hourly rebuild, or run the workflow by hand.
 - **Every 2 hours:** anything time-based resolves on its own — `Pinned Until` dates, and Bluesky auto-posts once a post's date passes.
 
 ## Commands

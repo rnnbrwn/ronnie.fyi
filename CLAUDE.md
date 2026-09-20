@@ -44,7 +44,7 @@ Auto-generated weekly Bluesky digests. Schema: `title`, `pubDate`, `description`
 | `post-to-bsky.yml` | After successful deploy | Run `post-to-bsky.mjs` (records the URI back in WordPress) |
 | `bsky-digest.yml` | Fridays 08:00 UTC | Run `generate-bsky-digest.mjs`, commit, trigger deploy |
 
-Publishing or updating a post/page in WordPress also triggers `deploy.yml` (mu-plugin in `rnnbrwn-cms`). The 2-hour cron means `pinnedUntil` dates and Bluesky auto-posts resolve automatically.
+Publishing or updating a post/page in WordPress can also trigger `deploy.yml` (mu-plugin in `rnnbrwn-cms`), but that is **off until a `FRONTEND_DEPLOY_TOKEN` is set** in the `ronnie-fyi` GitHub Environment; until then use the 2-hour cron or run the workflow manually (`/deploy-site ronnie.fyi`). The cron means `pinnedUntil` dates and Bluesky auto-posts resolve automatically.
 
 ## WordPress CMS (headless)
 
@@ -80,16 +80,16 @@ node scripts/post-to-bsky.mjs           # post to Bluesky (needs BSKY_* and WP_A
 
 ## Custom agents and commands
 
-Defined in `.claude/agents/` and `.claude/commands/` (`/new-post`, `/post-status`, `/publish`, `blog-writer` and `site-auditor` assume the old Markdown workflow and need rewriting or retiring):
+Defined in `.claude/agents/` and `.claude/commands/` (committed to the repo; only `settings.local.json` is local). The post commands work against WordPress over SSH (`scripts/wp-create-draft.php`, `scripts/wp-post-status.php`, credentials from `platform/rnnbrwn-cms/.env.local`):
 
-- `/new-post` — scaffold a new draft blog post
-- `/post-status` — show scheduled, pinned, stale, pending-bsky, and draft posts
-- `/publish` — prepare a draft post for publishing (branch → merge → push)
+- `/new-post` — create a draft post in WordPress (block markup, excerpt, tags)
+- `/post-status` — show scheduled, pinned, stale, pending-bsky, and draft posts (read-only)
+- `/publish` — publish or schedule a draft in WordPress, then rebuild the site
 - `/bsky-digest` — run the Bluesky digest script locally
-- `/hardcover-id` — look up a Hardcover book ID from its slug, for blog post frontmatter
+- `/hardcover-id` — look up a Hardcover book ID from its slug, for the post's Hardcover IDs field
 - `/audit-scss` — scan all SCSS for token violations, duplication, and missed mixins
 - `/audit-html` — scan all Astro templates for semantic HTML and accessibility issues
 - `/dry-check` — find duplicated markup, style blocks, and prop shapes across components
-- `blog-writer` agent — draft blog posts in Ronnie's voice
-- `site-auditor` agent — audit post health and site state
+- `blog-writer` agent — draft blog posts in Ronnie's voice, hands off to `/new-post`
+- `site-auditor` agent — audit post health and site state from the live CMS
 - `web-reviewer` agent — interactive code reviewer; knows the full design token system
