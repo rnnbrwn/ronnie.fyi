@@ -80,6 +80,11 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 		return new Date(`${post.dateGmt}Z`) <= new Date(); // not scheduled for the future
 	});
 
+	if (targets.length === 0) {
+		console.log('No posts flagged for Bluesky.');
+		return;
+	}
+
 	// A deploy can succeed without containing a brand-new post, and a Bluesky link to a page that
 	// isn't live yet is a 404 for anyone who clicks it. Leave such posts flagged: the next successful
 	// deploy runs this script again and picks them up.
@@ -94,7 +99,7 @@ async function main() { // finds posts flagged for Bluesky, authenticates, and p
 	}
 
 	if (ready.length === 0) {
-		console.log('No posts flagged for Bluesky are live yet.');
+		console.log('None of the flagged posts are live on the site yet.');
 		return;
 	}
 

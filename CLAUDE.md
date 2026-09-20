@@ -16,7 +16,7 @@ Personal website/blog at ronnie.fyi. Built with Astro, styled with Sass, deploye
 
 Blog posts live in the headless WordPress at `cms.ronnie.fyi`, not in this repo. `src/loaders/wordpress-posts.ts` is an Astro content loader that reads them via WPGraphQL into the `blog` collection (schema in `src/content.config.ts`), so pages still use `getCollection('blog')` and `entry.rendered.html`.
 
-Fields (WordPress → collection): title, slug (= `id`, URL is `/year/month/slug`), date (parsed in the runtime's timezone, like the old frontmatter dates, so URLs don't move), excerpt → `description`, tags, featured image → `image` (`url`, `alt`, `source`, `width`, `height`), and the **Blog Post Meta** ACF group (`rnnbrwn-themes/ronnie.fyi/acf-json/group_blog_post_meta.json`): `pinned`, `pinnedFrom`, `pinnedUntil`, `stale`, `postToBsky`, `bskyPostUri`, `hardcoverIds` (comma-separated), plus `image_alt`/`image_source`. Unpublished posts have `draft: true` and only appear in dev.
+Fields (WordPress → collection): title, slug (= `id`, URL is `/year/month/slug`), date (parsed in the runtime's timezone, like the old frontmatter dates, so URLs don't move). **WordPress' `date` is local time (Europe/London) and `dateGmt` is UTC**: `pubDate` (from `date`) is only for URLs and display; the real publish instant is `publishedAt` (from `dateGmt`) and `isPublished()` in `src/utils/getSortedPosts.ts` is the one place that decides whether a post is live yet. Never compare `pubDate` with `new Date()`: in British Summer Time it runs an hour ahead and hides a new post for an hour, excerpt → `description`, tags, featured image → `image` (`url`, `alt`, `source`, `width`, `height`), and the **Blog Post Meta** ACF group (`rnnbrwn-themes/ronnie.fyi/acf-json/group_blog_post_meta.json`): `pinned`, `pinnedFrom`, `pinnedUntil`, `stale`, `postToBsky`, `bskyPostUri`, `hardcoverIds` (comma-separated), plus `image_alt`/`image_source`. Unpublished posts have `draft: true` and only appear in dev.
 
 - The loader **throws** on any fetch failure or zero posts, so a CMS outage fails the build instead of deploying an empty site.
 - HTML post-processing in the loader: CMS links → site-relative (`/year/month/slug`), YouTube embeds → `.youtube-embed` (nocookie). Media URLs stay on `cms.ronnie.fyi`.
@@ -44,7 +44,7 @@ Auto-generated weekly Bluesky digests. Schema: `title`, `pubDate`, `description`
 | `post-to-bsky.yml` | After successful deploy | Run `post-to-bsky.mjs` (records the URI back in WordPress) |
 | `bsky-digest.yml` | Fridays 08:00 UTC | Run `generate-bsky-digest.mjs`, commit, trigger deploy |
 
-Publishing or updating a post/page in WordPress can also trigger `deploy.yml` (mu-plugin in `rnnbrwn-cms`), but that is **off until a `FRONTEND_DEPLOY_TOKEN` is set** in the `ronnie-fyi` GitHub Environment; until then use the 2-hour cron or run the workflow manually (`/deploy-site ronnie.fyi`). The cron means `pinnedUntil` dates and Bluesky auto-posts resolve automatically.
+Publishing or updating a post/page in WordPress can also trigger `deploy.yml` (mu-plugin in `rnnbrwn-cms`), and that is **on** (`FRONTEND_DEPLOY_TOKEN` is set in the `ronnie-fyi` GitHub Environment): a post published at 20:44:32 UTC on 2026-09-20 started a `workflow_dispatch` deploy 27 seconds later. Otherwise use the 2-hour cron or run the workflow manually (`/deploy-site ronnie.fyi`). The cron means `pinnedUntil` dates and Bluesky auto-posts resolve automatically.
 
 ## WordPress CMS (headless)
 
