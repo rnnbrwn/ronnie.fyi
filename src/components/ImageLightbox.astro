@@ -83,13 +83,14 @@ import IconChevronRight from './IconChevronRight.astro';
 		display: grid;
 		place-items: center;
 		color: colors.$light;
-		background-color: rgba(0, 0, 0, 0.35);
+		background-color: rgba(0, 0, 0, 0.45);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 		border-radius: 50%;
 		width: spacing.$space-12;
 		height: spacing.$space-12;
 
 		&:hover {
-			background-color: rgba(0, 0, 0, 0.55);
+			background-color: rgba(0, 0, 0, 0.65);
 		}
 
 		&:focus-visible {
@@ -139,8 +140,9 @@ import IconChevronRight from './IconChevronRight.astro';
 	}
 
 	function initImageLightbox() {
-		const dialog = document.getElementById('image-lightbox');
-		if (!(dialog instanceof HTMLDialogElement)) return;
+		const el = document.getElementById('image-lightbox');
+		if (!(el instanceof HTMLDialogElement)) return;
+		const dialog: HTMLDialogElement = el; // an explicitly-typed const, so it stays non-null in every closure below
 
 		const imageEl = dialog.querySelector<HTMLImageElement>('.lightbox-image')!;
 		const captionEl = dialog.querySelector<HTMLElement>('.lightbox-caption')!;
@@ -151,6 +153,29 @@ import IconChevronRight from './IconChevronRight.astro';
 		let items: LightboxItem[] = [];
 		let index = 0;
 		let trigger: HTMLElement | null = null; // the button that opened the dialog, so focus can return to it
+		let scrollY = 0; // page scroll position to restore once the dialog closes
+
+		// <dialog>'s own modal behaviour doesn't reliably stop the page behind it from
+		// scrolling on a touch device, so lock it by hand: pin the body in place at its
+		// current scroll position, then undo that and jump back to it on close.
+		function lockPageScroll() {
+			scrollY = window.scrollY;
+			document.body.style.position = 'fixed';
+			document.body.style.top = `-${scrollY}px`;
+			document.body.style.left = '0';
+			document.body.style.right = '0';
+		}
+
+		function unlockPageScroll() {
+			document.body.style.position = '';
+			document.body.style.top = '';
+			document.body.style.left = '';
+			document.body.style.right = '';
+			// Deferred a frame: restoring the scroll position in the same tick as
+			// removing `position: fixed` can run before the browser reflows the page
+			// back to its normal height, so the restore gets clamped short.
+			requestAnimationFrame(() => window.scrollTo(0, scrollY));
+		}
 
 		function show(newIndex: number) {
 			index = (newIndex + items.length) % items.length; // wrap around at either end
@@ -177,6 +202,7 @@ import IconChevronRight from './IconChevronRight.astro';
 
 			trigger = clicked;
 			show(triggers.indexOf(clicked));
+			lockPageScroll();
 			dialog.showModal();
 		}
 
@@ -202,8 +228,40 @@ import IconChevronRight from './IconChevronRight.astro';
 		});
 
 		// Fires however the dialog closed (X, backdrop click, or the native Escape
-		// handling above), so focus reliably returns to whichever image was open.
-		dialog.addEventListener('close', () => trigger?.focus());
+		// handling above), so focus reliably returns and the page scroll unlocks
+		// no matter which way the dialog was dismissed.
+		dialog.addEventListener('close', () => {
+			unlockPageScroll();
+			trigger?.focus({ preventScroll: true }); // .focus() otherwise scrolls the page to bring the trigger into view, fighting the scroll position we're restoring above
+		});
+
+		// Swipe left/right anywhere on the dialog (the image, the caption, the
+		// backdrop) to move to the next/previous image — the touch equivalent of the
+		// arrow buttons and arrow keys. A mostly-vertical drag is ignored, so it
+		// doesn't fire on an accidental diagonal touch.
+		let touchStartX = 0;
+		let touchStartY = 0;
+		const SWIPE_THRESHOLD = 40; // px
+
+		dialog.addEventListener(
+			'touchstart',
+			(event) => {
+				touchStartX = event.touches[0].clientX;
+				touchStartY = event.touches[0].clientY;
+			},
+			{ passive: true }
+		);
+
+		dialog.addEventListener(
+			'touchend',
+			(event) => {
+				const dx = event.changedTouches[0].clientX - touchStartX;
+				const dy = event.changedTouches[0].clientY - touchStartY;
+				if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+				show(index + (dx < 0 ? 1 : -1));
+			},
+			{ passive: true }
+		);
 	}
 
 	if (document.readyState === 'loading') {
