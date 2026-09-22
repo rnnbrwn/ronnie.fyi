@@ -118,7 +118,7 @@ export function wordpressPosts(): Loader { // Astro content loader that reads bl
 					data: {
 						title: decodeEntities(post.title),
 						pubDate: post.date, // WordPress' local time, parsed in the runtime's timezone exactly as the old frontmatter dates were, so post URLs stay the same
-						publishedAt: `${post.dateGmt}Z`, // the real publish instant (WordPress stores it in UTC as dateGmt); only used to decide whether a post is live yet, never for URLs or display
+						publishedAt: optionalDate(post.dateGmt ? `${post.dateGmt}Z` : null), // the real publish instant (WordPress stores it in UTC as dateGmt); null for a post that's never been published (draft/pending), which only ever shows up in dev. Only used to decide whether a post is live yet, never for URLs or display
 						description: stripTags(post.excerpt),
 						tags: post.tags.nodes.map((t) => t.name),
 						image: image
