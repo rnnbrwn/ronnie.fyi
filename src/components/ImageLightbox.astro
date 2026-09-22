@@ -1,0 +1,214 @@
+---
+// Mounted once, globally, in Base.astro. Its script listens for clicks on any
+// .image-group-trigger button anywhere on the page (there can be several, one per
+// grouped set of images — see src/utils/imageGroups.ts) and opens this single
+// modal, navigating within whichever group was clicked.
+import IconClose from './IconClose.astro';
+import IconChevronLeft from './IconChevronLeft.astro';
+import IconChevronRight from './IconChevronRight.astro';
+---
+
+<dialog id='image-lightbox' aria-label='Image viewer'>
+	<button type='button' class='lightbox-close' aria-label='Close'>
+		<IconClose size={28} />
+	</button>
+	<button type='button' class='lightbox-prev' aria-label='Previous image'>
+		<IconChevronLeft size={32} />
+	</button>
+	<img class='lightbox-image' alt='' />
+	<button type='button' class='lightbox-next' aria-label='Next image'>
+		<IconChevronRight size={32} />
+	</button>
+	<p class='lightbox-caption'></p>
+</dialog>
+
+<style lang='scss'>
+	@use '../styles/abstracts/breakpoints';
+	@use '../styles/abstracts/colors';
+	@use '../styles/abstracts/layout';
+	@use '../styles/abstracts/spacing';
+	@use '../styles/abstracts/typography';
+
+	dialog#image-lightbox {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100vh;
+		max-width: 100vw;
+		max-height: 100vh;
+		margin: 0;
+		padding: spacing.$space-6;
+		border: none;
+		background: transparent;
+		align-items: center;
+		justify-content: center;
+
+		&[open] {
+			display: flex;
+		}
+
+		&::backdrop {
+			background: colors.$dark;
+			opacity: 0.92;
+		}
+	}
+
+	.lightbox-image {
+		display: block;
+		max-width: 100%;
+		max-height: calc(100vh - spacing.$space-24);
+		object-fit: contain;
+	}
+
+	.lightbox-caption {
+		position: absolute;
+		bottom: spacing.$space-4;
+		left: spacing.$space-4;
+		right: spacing.$space-4;
+		margin: 0;
+		text-align: center;
+		color: colors.$light;
+		@include typography.caption-text;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.lightbox-close,
+	.lightbox-prev,
+	.lightbox-next {
+		@include layout.button-reset;
+		position: absolute;
+		display: grid;
+		place-items: center;
+		color: colors.$light;
+		background-color: rgba(0, 0, 0, 0.35);
+		border-radius: 50%;
+		width: spacing.$space-12;
+		height: spacing.$space-12;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.55);
+		}
+
+		&:focus-visible {
+			@include layout.focus-ring(colors.$light);
+		}
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	.lightbox-close {
+		top: spacing.$space-4;
+		right: spacing.$space-4;
+	}
+
+	.lightbox-prev,
+	.lightbox-next {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	.lightbox-prev {
+		left: spacing.$space-2;
+	}
+
+	.lightbox-next {
+		right: spacing.$space-2;
+	}
+
+	@media (min-width: breakpoints.$md) {
+		.lightbox-prev {
+			left: spacing.$space-6;
+		}
+
+		.lightbox-next {
+			right: spacing.$space-6;
+		}
+	}
+</style>
+
+<script>
+	interface LightboxItem {
+		full: string;
+		alt: string;
+		caption: string;
+	}
+
+	function initImageLightbox() {
+		const dialog = document.getElementById('image-lightbox');
+		if (!(dialog instanceof HTMLDialogElement)) return;
+
+		const imageEl = dialog.querySelector<HTMLImageElement>('.lightbox-image')!;
+		const captionEl = dialog.querySelector<HTMLElement>('.lightbox-caption')!;
+		const closeBtn = dialog.querySelector<HTMLButtonElement>('.lightbox-close')!;
+		const prevBtn = dialog.querySelector<HTMLButtonElement>('.lightbox-prev')!;
+		const nextBtn = dialog.querySelector<HTMLButtonElement>('.lightbox-next')!;
+
+		let items: LightboxItem[] = [];
+		let index = 0;
+		let trigger: HTMLElement | null = null; // the button that opened the dialog, so focus can return to it
+
+		function show(newIndex: number) {
+			index = (newIndex + items.length) % items.length; // wrap around at either end
+			const item = items[index];
+			imageEl.src = item.full;
+			imageEl.alt = item.alt;
+			captionEl.textContent = item.caption;
+
+			const multiple = items.length > 1;
+			prevBtn.hidden = !multiple;
+			nextBtn.hidden = !multiple;
+		}
+
+		function open(clicked: HTMLElement) {
+			const group = clicked.closest('[data-image-group]');
+			if (!group) return;
+
+			const triggers = Array.from(group.querySelectorAll<HTMLElement>('.image-group-trigger'));
+			items = triggers.map((t) => ({
+				full: t.dataset.full ?? '',
+				alt: t.querySelector('img')?.alt ?? '',
+				caption: t.dataset.caption ?? '',
+			}));
+
+			trigger = clicked;
+			show(triggers.indexOf(clicked));
+			dialog.showModal();
+		}
+
+		document.addEventListener('click', (event) => {
+			const clicked = (event.target as HTMLElement).closest<HTMLElement>('.image-group-trigger');
+			if (clicked) open(clicked);
+		});
+
+		closeBtn.addEventListener('click', () => dialog.close());
+		prevBtn.addEventListener('click', () => show(index - 1));
+		nextBtn.addEventListener('click', () => show(index + 1));
+
+		// A click that lands on the dialog's own box (not one of the elements above)
+		// is a click on the backdrop area — close, same as clicking the X.
+		dialog.addEventListener('click', (event) => {
+			if (event.target === dialog) dialog.close();
+		});
+
+		dialog.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowLeft') show(index - 1);
+			if (event.key === 'ArrowRight') show(index + 1);
+			// Escape closes natively — <dialog> handles that without any code here.
+		});
+
+		// Fires however the dialog closed (X, backdrop click, or the native Escape
+		// handling above), so focus reliably returns to whichever image was open.
+		dialog.addEventListener('close', () => trigger?.focus());
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initImageLightbox);
+	} else {
+		initImageLightbox();
+	}
+</script>

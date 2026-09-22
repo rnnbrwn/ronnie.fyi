@@ -1,5 +1,7 @@
 import type { Loader } from 'astro/loaders';
 import { fetchGraphQLStrict, WORDPRESS_API_URL, WORDPRESS_CMS_URL } from '../utils/wordpress';
+import { decodeEntities, stripTags } from '../utils/html';
+import { groupSequentialImages } from '../utils/imageGroups';
 
 const POSTS_QUERY = `
 	query BlogPosts($after: String, $stati: [PostStatusEnum]) {
@@ -21,19 +23,6 @@ const POSTS_QUERY = `
 		}
 	}
 `;
-
-const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', hellip: '…', ndash: '–', mdash: '—', lsquo: '‘', rsquo: '’', ldquo: '“', rdquo: '”' };
-
-function decodeEntities(text: string): string { // decodes the numeric and common named HTML entities WordPress emits in titles and excerpts
-	return text
-		.replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-		.replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-		.replace(/&([a-z]+);/gi, (m, name) => ENTITIES[name.toLowerCase()] ?? m);
-}
-
-function stripTags(html: string): string { // reduces an HTML fragment (e.g. an excerpt) to plain text
-	return decodeEntities(html.replace(/<[^>]+>/g, '')).trim();
-}
 
 function escapeRegExp(text: string): string { // escapes a string for literal use inside a RegExp
 	return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -140,7 +129,7 @@ export function wordpressPosts(): Loader { // Astro content loader that reads bl
 						draft: post.status === 'draft' || post.status === 'pending',
 					},
 				});
-				const html = convertYouTubeEmbeds(rewriteLinks(post.content));
+				const html = groupSequentialImages(convertYouTubeEmbeds(rewriteLinks(post.content)));
 				store.set({ id, data, rendered: { html }, digest: generateDigest({ data, html }) });
 			}
 			logger.info(`Loaded ${posts.length} posts from WordPress${includeUnpublished ? ' (dev: including drafts and scheduled)' : ''}`);

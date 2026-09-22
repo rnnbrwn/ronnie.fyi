@@ -50,6 +50,66 @@
     }
   }
 
+  // WordPress image-block grouping (src/utils/imageGroups.ts) — a run of 3+ Image
+  // blocks becomes one feature image + a small thumbnail grid below it; every
+  // image opens ImageLightbox.astro on click. Nested here (rather than a
+  // standalone rule) so these can reach the raw HTML WordPress content injects.
+  // Its `img` selectors chain three classes (.image-group .image-group-item img)
+  // rather than the more obvious `.image-group-trigger img`, purely to
+  // out-specificity the `img:not(...):not(...)` rule above — each :not() clause
+  // counts as a class for specificity, so a plain two-class override loses to it.
+  .image-group {
+    margin-bottom: spacing.$space-6;
+  }
+
+  .image-group-item {
+    margin: 0;
+  }
+
+  .image-group-trigger {
+    @include layout.button-reset;
+    display: block;
+    width: 100%;
+    cursor: zoom-in;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &:focus-visible {
+      @include layout.focus-ring(colors.$tertiary);
+    }
+  }
+
+  .image-group .image-group-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .image-group-feature {
+    margin-bottom: spacing.$space-2;
+
+    &.image-group-item img {
+      border-radius: layout.$radius-sm;
+    }
+  }
+
+  .image-group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: spacing.$space-2;
+
+    .image-group-trigger img {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: layout.$radius-sm;
+    }
+  }
+
   h2 {
     @include typography.prose-h2;
   }

@@ -1,0 +1,8 @@
+---
+import Icon from './Icon.astro';
+interface Props { class?: string; size?: number; }
+const props = Astro.props;
+---
+<Icon viewBox='0 0 24 24' {...props}>
+	<path d='M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z' />
+</Icon>
