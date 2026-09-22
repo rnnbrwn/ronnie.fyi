@@ -56,6 +56,10 @@ Related repos: `rnnbrwn-cms` (deployment), `rnnbrwn-themes` (themes), `rnnbrwn-p
 
 Generated at build time via `src/pages/og/[slug].png.ts` using Satori + sharp. Only posts with both a feature image and Post to Bluesky ticked get an OG image (1200×630 PNG); the image is fetched from WordPress at build time.
 
+## Image grouping and lightbox
+
+A run of 3+ WordPress Image blocks in a row (or a Gallery block, which is unwrapped to the same shape first) is transformed by `src/utils/imageGroups.ts` into one full-width feature image plus a small thumbnail grid; 1-2 images are left as WordPress rendered them. `src/components/ImageLightbox.astro` is mounted once in `Base.astro` and opens on a click anywhere in a group, showing the full-size image with prev/next (buttons, arrow keys, or swipe on touch), Escape/X/backdrop-click to close, and a page-scroll lock while open. Styles live in `src/styles/components/_index.scss` nested under `.prose` — see the comment there on why the `img` overrides chain three classes (out-specificitying `img:not(...):not(...)`) rather than the more obvious two. Known gap: a single image wrapped in WordPress's Group block breaks adjacency the same as a paragraph would; only Gallery-block wrappers are unwrapped.
+
 ## Post images — standard dimensions
 
 At content width of 793px:
